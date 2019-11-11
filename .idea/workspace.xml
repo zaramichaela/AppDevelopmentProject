@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="46435dd5-4fe1-4384-ae6a-c9172a48a269" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/venv/backend/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/templates/create_sales.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/templates/list_sales_items.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/easy-install.pth" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/easy-install.pth" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/setuptools-40.8.0-py3.7.egg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-3.7-script.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-3.7.exe" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/easy_install-3.7.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install-script.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/easy_install.exe" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/easy_install.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/backend/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/backend/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/backend/sales_entry.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/sales_entry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/backend/sales_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/sales_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/backend/sales_items.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/sales_items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/backend/sales_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/sales_objects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/backend/sales_package.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/sales_package.py" afterDir="false" />
-    </list>
+    <list default="true" id="46435dd5-4fe1-4384-ae6a-c9172a48a269" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
