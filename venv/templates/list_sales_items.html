@@ -1,0 +1,52 @@
+{%block title %}
+{%endblock %}
+
+{%block body %}
+
+<table>
+    <tr>
+        <th>
+            UID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            image_url
+        </th>
+        <th>
+            stocks
+        </th>
+
+
+    </tr>
+    {%for i in sales %}
+    <tr>
+        <td>
+            {{i.get_UID()}}
+        </td>
+        <td>
+            {{i.get_name()}}
+        </td>
+        <td>
+            {{i.get_description()}}
+        </td>
+        <td>
+            {{i.get_price()}}
+        </td>
+        <td>
+            {{i.get_image_url()}}
+        </td>
+        <td>
+            {{i.get_stocks()}}
+        </td>
+        {% endfor %}
+    </tr>
+</table>
+{%endblock %}
