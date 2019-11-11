@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="46435dd5-4fe1-4384-ae6a-c9172a48a269" name="Default Changelist" comment="" />
+    <list default="true" id="46435dd5-4fe1-4384-ae6a-c9172a48a269" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/venv/templates/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/backend/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/venv/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/templates/create_sales.html" beforeDir="false" afterPath="$PROJECT_DIR$/venv/templates/create_sales.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/templates/list_sales_items.html" beforeDir="false" afterPath="$PROJECT_DIR$/venv/templates/list_sales_items.html" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,10 +27,21 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1SuWtJLUNniy1BOxz9yD7tqhas4" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv\templates\static" />
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv\templates" />
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv\static\css" />
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv\Include" />
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -133,6 +151,9 @@
   </component>
   <component name="SvnConfiguration">
     <configuration />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

@@ -4,8 +4,10 @@ from werkzeug.utils import secure_filename
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 import os
 from backend.sales_factory import *
+from flask import send_from_directory
 
-app = Flask(__name__, template_folder='../templates')
+app = Flask(__name__, template_folder='../templates', static_url_path="/templates/static")
+
 
 factory = sales_factory()
 
@@ -21,11 +23,12 @@ configure_uploads(app, (images,))
 
 
 
-
 @app.route('/')
 def home():
     return "gg"
     return render_template('index.html', {})
+
+
 
 @app.route('/create/')
 def create():
@@ -51,6 +54,7 @@ def add_shop_item():
         print("failed")
         context = {"message": "You did not managed to create the item"}
     return render_template('create_sales.html', form=form, message=context)
+
 
 @app.route('/list/items')
 def list_items():
