@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{%block title %}
+Input a new product
+{%endblock %}
+
+{%block body %}
+
+<form action="" method="POST" novalidate enctype="multipart/form-data">
+{{ form.csrf_token }}
+    <p>
+        {{form.UID.label}}
+        {{form.UID()}}
+
+    </p>
+    <p>
+        {{form.name.label}}
+        {{form.name()}}
+    </p>
+    <p>
+        {{form.description.label}}
+        {{form.description()}}
+    </p>
+    <p>
+        {{form.price.label}}
+        {{form.price()}}
+    </p>
+    <p>
+        {{form.stocks.label}}
+        {{form.stocks()}}
+    </p>
+
+    <p>
+        {{form.image.label}}
+        {{form.image()}}
+    </p>
+
+    <p>{{form.submit()}}</p>
+</form>
+{%endblock %}
