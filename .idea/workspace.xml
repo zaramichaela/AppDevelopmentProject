@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="46435dd5-4fe1-4384-ae6a-c9172a48a269" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/backend/sales_item.db.bak" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/sales_item.db.bak" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/backend/sales_item.db.dat" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/sales_item.db.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/backend/sales_item.db.dir" beforeDir="false" afterPath="$PROJECT_DIR$/venv/backend/sales_item.db.dir" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/venv/templates/base.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,10 +26,25 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1SuWtJLUNniy1BOxz9yD7tqhas4" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$USER_HOME$" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+>>>>>>> d0d04caf09c39f4e3e77fbd69f5f45523b42deeb
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv\templates\static" />
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv\templates" />
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv\static\css" />
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv\Include" />
+      <recent name="C:\Users\zarat\PycharmProjects\AppDevTCM\venv" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -61,6 +80,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="forms" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="AppDevTCM" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/backend" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/backend/forms.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="routes" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AppDevTCM" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -82,7 +122,11 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+<<<<<<< HEAD
     <configuration name="sales_objects" type="PythonConfigurationType" factoryName="Python" temporary="true">
+=======
+    <configuration name="sales_entry" type="PythonConfigurationType" factoryName="Python" temporary="true">
+>>>>>>> d0d04caf09c39f4e3e77fbd69f5f45523b42deeb
       <module name="AppDevTCM" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -91,10 +135,17 @@
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/backend" />
+<<<<<<< HEAD
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/backend/sales_objects.py" />
+=======
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/backend/sales_entry.py" />
+>>>>>>> d0d04caf09c39f4e3e77fbd69f5f45523b42deeb
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -107,12 +158,17 @@
       <list>
         <item itemvalue="Python.sales_objects" />
         <item itemvalue="Python.__init__" />
+        <item itemvalue="Python.sales_entry" />
+        <item itemvalue="Python.forms" />
         <item itemvalue="Python.routes" />
       </list>
     </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -138,5 +194,15 @@
         <option value="1" />
       </set>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/venv/backend/sales_entry.py</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

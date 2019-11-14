@@ -10,4 +10,5 @@ class sales_items(sales_objects):
         super().__init__(UID,name, description, price, image_url)
         self.stocks = stocks
 
-
+    def get_stocks(self):
+        return self.stocks

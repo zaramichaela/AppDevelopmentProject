@@ -31,6 +31,7 @@ class sales_objects:
     def save(self):
         s = shelve.open(settings.ITEMS_DB)
         try:
+            print(self.UID)
             s[self.UID] = self.serialize()
             return True
         finally:
@@ -48,3 +49,20 @@ class sales_objects:
 
     def set_description(self, description):
         self.description = description
+
+    def get_description(self):
+        return self.description
+
+    def get_image_url(self):
+        return self.image_url
+
+    def get_price(self):
+        return self.price
+
+    def subtract_sessions(self):
+        pass
+
+    def package_flag(self):
+        return False
+
+
