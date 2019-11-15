@@ -25,6 +25,7 @@ class sales_factory:
             print(e)
             return None
 
+
     #create service items
     #can be use to generate a new one or recreate from database
     #dictionary defined
@@ -54,6 +55,40 @@ class sales_factory:
     def get_all_items(self):
         items = []
         s = shelve.open(settings.ITEMS_DB)
+        try:
+            for key in s:
+                items.append(self.create_items(s[key]))
+        finally:
+            s.close()
+        print(items)
+        return items
+
+
+    def get_all_services(self):
+        items = []
+        s = shelve.open(settings.SERVICES_DB)
+        try:
+            for key in s:
+                items.append(self.create_items(s[key]))
+        finally:
+            s.close()
+        print(items)
+        return items
+
+    def get_all_package(self):
+        items = []
+        s = shelve.open(settings.PACKAGES_DB)
+        try:
+            for key in s:
+                items.append(self.create_items(s[key]))
+        finally:
+            s.close()
+        print(items)
+        return items
+
+    def get_all_items(self):
+        items = []
+        s = shelve.open(settings.SERVICES_DB)
         try:
             for key in s:
                 items.append(self.create_items(s[key]))
@@ -101,3 +136,5 @@ class sales_factory:
     def buy_product(self, user, salesitem, quantity=1):
         salesentry = sales_entry(sales_object=sales_entry, quantity=quantity)
         salesentry.save()
+
+    def check_UID(self):
