@@ -4,7 +4,7 @@ from backend.sales_items import *
 from backend.sales_objects import *
 from backend.sales_entry import *
 from backend.sales_services import *
-
+import jsons
 
 #class for creating objects using dictionary
 #doesnt save
@@ -19,7 +19,8 @@ class sales_factory:
       #e.g. {'UID':'2', 'name':'name', 'description':'description','price':1,'image_url':1, 'stocks':4}    def create_salesitems(self, dict):
     def create_items(self,dict):
         try:
-            item = sales_items(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["stocks"])
+            # item = sales_items(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["stocks"])
+            item = sales_items.from_json(dict)
             return item
         except Exception as e:
             print(e)
@@ -138,3 +139,4 @@ class sales_factory:
         salesentry.save()
 
     def check_UID(self):
+        pass

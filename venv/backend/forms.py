@@ -17,8 +17,8 @@ class create_sales_item(FlaskForm):
     stocks = IntegerField("Stocks amount: ",  validators=[DataRequired()])
     submit = SubmitField()
 
-#form to create a new sales item
-class create_sales_item(FlaskForm):
+#form to create a coupon item
+class coupon_form(FlaskForm):
     UID = StringField("UniqueID: ", validators=[DataRequired()])
     coupon_code = StringField("Coupon Code: ", validators=[DataRequired()])
     percentage = IntegerField("Discount Percentage(%): ", validators=[DataRequired()])

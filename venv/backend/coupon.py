@@ -10,6 +10,7 @@ class Coupon:
         self.minimumspent = minimumspent
         self.expiredate = expiredate
 
+
     #check date expires
     def check_validity(self):
         if(date.today() > self.expiredate):
@@ -32,6 +33,11 @@ class Coupon:
             return 0
 
 
+    def serialize(self):
+        if isinstance(self, date):
+            serial = self.isoformat()
+            return serial
+        return self.__dict__
 
     def save(self):
        s = shelve.open(settings.COUPON_DB)
@@ -42,11 +48,3 @@ class Coupon:
             s.close()
        return False
 
-    def save(self):
-       s = shelve.open(settings.)
-       try:
-            s[self.UID] = self.serialize()
-            return True
-       finally:
-            s.close()
-       return False

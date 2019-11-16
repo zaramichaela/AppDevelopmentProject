@@ -1,10 +1,10 @@
-import json
 from datetime import date
 import shelve
 from backend import settings
+import simplejson as jsons
 
 #superclass for all sales objects
-class sales_objects:
+class sales_objects(jsons.JsonSerializable):
     #default init for creating a new object
     def __init__(self, UID,name, description, price, image_url):
         self.UID = UID #all item should have their unique UID

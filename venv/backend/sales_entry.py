@@ -1,6 +1,6 @@
 from datetime import datetime
 from backend import settings
-
+import shelve
 #class represents each sales item made
 #if needed can have subclass
 class sales_entry:

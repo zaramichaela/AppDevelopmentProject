@@ -19,7 +19,7 @@ class sales_package(sales_objects):
        return False
 
     #when users that has a package book a new session
-    def subtract_sessions(self):
+    def book_session(self, datetime):
         self.remaining_sess -= 1
 
     def package_flag(self):

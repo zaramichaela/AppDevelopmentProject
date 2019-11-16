@@ -1,0 +1,17 @@
+Click==7.0
+DateTime==4.3
+Flask==1.1.1
+Flask-Uploads==0.2.1
+Flask-WTF==0.14.2
+itsdangerous==1.1.0
+Jinja2==2.10.3
+jsons==1.0.0
+MarkupSafe==1.1.1
+pip-tools==4.2.0
+pytz==2019.3
+Shelves==0.3.8
+six==1.13.0
+typish==1.2.0
+Werkzeug==0.16.0
+WTForms==2.2.1
+zope.interface==4.6.0
