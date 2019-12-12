@@ -4,12 +4,14 @@ from werkzeug.utils import secure_filename
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 import os
 from backend.sales_factory import *
+from backend.coupon_factory import *
 from flask import send_from_directory
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/templates/static")
 
 
-factory = sales_factory()
+sfactory = sales_factory()
+cfactory = coupon_factory()
 
 UPLOAD_FOLDER = '/uploads/'
 app.config['UPLOADED_IMAGES_DEST'] = '/uploads/'
@@ -28,16 +30,25 @@ def home():
     return "gg"
     return render_template('index.html', {})
 
+@app.route('/create/coupons')
+def add_coupons():
+    context = {}
+    cform = coupon_form()
+    if request.method == 'POST' and cform.validate():
+        new_coupon = cfactory.create_coupon(cform.data)
+        print(new_coupon.save())
+    return render_template('create_coupons.html', form=cform, message=context)
+
 
 
 @app.route('/create/')
 def create():
-    return "GG"
+    return ""
 
 @app.route('/add/items/', methods= ['GET','POST'])
 def add_shop_item():
     context = {"message": ""}
-    form = create_sales_item()
+    form = new_sales_item()
 
     if request.method == 'POST' and form.validate():
         f = form.image.data
@@ -47,7 +58,7 @@ def add_shop_item():
         update_form = form.data.copy()
         update_form["image_url"] = filename
 
-        item = factory.create_items(update_form)
+        item = sfactory.create_items(update_form)
         print(item.save())
         context ={"message":"You have created a new item"}
     else:
@@ -58,7 +69,7 @@ def add_shop_item():
 
 @app.route('/list/items')
 def list_items():
-    sales = factory.get_all_items()
+    sales = sfactory.get_all_items()
     return render_template('list_sales_items.html', sales=sales)
 
 @app.route('/AccountCreation', methods = ['GET', 'POST'])
