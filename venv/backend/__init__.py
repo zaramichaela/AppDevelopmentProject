@@ -1,5 +1,5 @@
 from flask import url_for, redirect, render_template, Flask, request
-from backend.forms import create_sales_item
+from backend.forms import new_sales_item
 from werkzeug.utils import secure_filename
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 import os
@@ -15,7 +15,7 @@ cfactory = coupon_factory()
 
 UPLOAD_FOLDER = '/uploads/'
 app.config['UPLOADED_IMAGES_DEST'] = '/uploads/'
-app.config['SECRET_KEY'] = 'THISISNOTAMAMASECRET'
+app.config['SECRET_KEY'] = 'THISISNOTASECRET'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOAD_PRODUCT'] = UPLOAD_FOLDER , 'product/'
 
@@ -27,8 +27,7 @@ configure_uploads(app, (images,))
 
 @app.route('/')
 def home():
-    return "gg"
-    return render_template('index.html', {})
+    return render_template('base.html')
 
 @app.route('/create/coupons')
 def add_coupons():
@@ -59,11 +58,10 @@ def add_shop_item():
         update_form["image_url"] = filename
 
         item = sfactory.create_items(update_form)
-        print(item.save())
-        context ={"message":"You have created a new item"}
-    else:
-        print("failed")
-        context = {"message": "You did not managed to create the item"}
+        if (item.save()):
+            context ={"message":"You have created a new item"}
+        else:
+            context ={"error":"You have an error."}
     return render_template('create_sales.html', form=form, message=context)
 
 
