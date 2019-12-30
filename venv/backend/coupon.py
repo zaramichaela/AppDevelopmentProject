@@ -5,10 +5,35 @@ class Coupon:
     def __init__(self, UID, couponcode,percentage,discountlimit, minimumspent, expiredate):
         self.UID = UID
         self.couponcode = couponcode
-        self.percentage = percentage
-        self.discountlimit = discountlimit
+        self.set_percentage(percentage)
+        self.set_discountlimit(discountlimit)
+        self.set_minimumspent(minimumspent)
+        self.set_expiry_date(expiredate)
+
+    #set discount percentage
+    #check if within percentage otherwise, set to 0
+    def set_couponcode(self, couponcode):
+        self.couponcode = couponcode
+
+    def set_minimumspent(self, minimumspent):
         self.minimumspent = minimumspent
-        self.expiredate = expiredate
+
+    #set expiry date, make sure it is in DD-MM-YYYY otherwise exception
+    def set_expiry_date(self, expiredate):
+        try:
+            datetime.datetime.strptime(date_text, '%d-%m-%Y')
+        except ValueError:
+            raise ValueError("Incorrect data format, should be YYYY-MM-DD")
+
+    def set_percentage(self, percentage):
+        if percentage >= 0 and percentage < 100:
+            self.percentage = percentage
+        else:
+            self.percentage = 0
+
+    #set discount limit amount.
+    def set_discountlimit(self, discountlimit):
+        self.discountlimit = discountlimit
 
 
     #check date expires
@@ -48,3 +73,5 @@ class Coupon:
             s.close()
        return False
 
+    def get_UID(self):
+        return self.UID
