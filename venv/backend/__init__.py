@@ -1,7 +1,9 @@
 from flask import url_for, redirect, render_template, Flask, request
 from backend.forms import new_sales_item,coupon_form,new_package,new_service
 from werkzeug.utils import secure_filename
+"""
 from flask_uploads import UploadSet, IMAGES,configure_uploads
+"""
 import os
 from backend.itemscontroller import *
 from flask import send_from_directory
@@ -17,15 +19,20 @@ app.config['SECRET_KEY'] = 'THISISNOTASECRET'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOAD_PRODUCT'] = UPLOAD_FOLDER , 'product/'
 
-
+"""
 images = UploadSet('images', IMAGES)
+"""
+"""
 configure_uploads(app, (images,))
-
-
-
+"""
 @app.route('/')
 def home():
     return render_template('base.html')
+
+@app.route('/register')
+def register():
+    form = RegistrationForm()
+    return render_template('__init__/register.html', form=form)
 
 @app.route('/add/coupons')
 def add_coupons():
@@ -110,41 +117,6 @@ def list_items():
 @app.route('/list/items/<int:itemid>/edit/')
 def edit_item(itemid):
     return "GG"
-
-@app.route('/AccountCreation', methods = ['GET', 'POST'])
-def createAccount():
-    createAccountForm = CreateAccountForm(request.form)
-    if request.method == 'POST' and createAccountForm.validate():
-        AccountDict = {}
-        db = shelve.open('storage.db', 'c')
-
-        try:
-            AccountDict = db['Users']
-        except:
-            print("Error in retrieving Users from storage.db")
-
-        account = Account.Account(createAccountForm.firstName.data, createAccountForm.lastName.data, createAccountForm.gender.data)
-        AccountDict[account.account.get_userID()] = account
-        db['Account'] = AccountDict
-        db.close()
-
-        return redirect(url_for('RetrieveAccount'))
-    return render_template('AccountCreation.html', form=createAccountForm)
-
-@app.route('/RetrieveAccount')
-def retrieveAccount():
-    accountDict = {}
-    db = shelve.open('storage.db', 'r')
-    accountDict = db['Account']
-    db.close()
-
-    accountList = []
-    for key in accountDict:
-        account = accountDict.get(key)
-        accountList.append(user)
-
-    return render_template('RetrieveAccount.html', accountList = accountList, count =len(accountList))
-
 
 
 if __name__ == '__main__':

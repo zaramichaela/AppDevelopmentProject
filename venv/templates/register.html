@@ -1,0 +1,38 @@
+<h2>Registration</h2>
+<div class="registration-grids">
+    <div class="reg-form">
+        <div class="reg">
+            <p>Welcome, please enter the following details to continue.</p>
+            <p>If you have previously registered with us, <a href="/login">click here to login</a></p>
+            <form action="/__init__/create" method="POST">
+                <ul>
+                    <li class="text-info">First Name: </li>
+                    <li>{{ form.firstName() }}</li>
+                </ul>
+                <ul>
+                    <li class="text-info">Last Name: </li>
+                    <li>{{ form.lastName() }}</li>
+                </ul>
+                <ul>
+                    <li class="text-info">Email: </li>
+                    <li>{{ form.email() }}</li>
+                </ul>
+                <ul>
+                    <li class="text-info">Username: </li>
+                    <li>{{ form.username() }}</li>
+                </ul>
+                <ul>
+                    <li class="text-info">Password: </li>
+                    <li>{{ form.password() }}</li>
+                </ul>
+                <ul>
+                    <li class="text-info">Re-enter Password: </li>
+                    <li>{{ form.confirmPassword() }}</li>
+                </ul>
+
+                <input type="submit" value="REGISTER NOW"/>
+                <p class="click">By clicking this button, you are agreeing to my<a href="#">Policy Terms and Conditions.</a></p>
+            </form>
+        </div>
+    </div>
+</div>
