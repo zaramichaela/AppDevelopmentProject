@@ -8,7 +8,7 @@ import os
 images = UploadSet('images', IMAGES)
 
 #form to create a new sales item
-class create_sales_item(FlaskForm):
+class new_sales_item(FlaskForm):
     UID = StringField("UniqueID:", validators=[DataRequired()])
     name = StringField("Name: ", validators=[DataRequired()])
     description = TextAreaField("Description: ", validators=[DataRequired()])
@@ -23,7 +23,7 @@ class coupon_form(FlaskForm):
     coupon_code = StringField("Coupon Code: ", validators=[DataRequired()])
     percentage = IntegerField("Discount Percentage(%): ", validators=[DataRequired()])
     discountlimit = IntegerField("Maximum amount of discount($): ", validators=[DataRequired()])
-    minimumspent = IntegerField("minimum spending($): ", validators=[DataRequired()])
+    minimumspent = IntegerField("Minimum spending($): ", validators=[DataRequired()])
     expiredate = DateField("Expiry Date: ", validators=[DataRequired()])
     submit = SubmitField()
 

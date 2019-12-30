@@ -1,11 +1,8 @@
 from flask import url_for, redirect, render_template, Flask, request
 <<<<<<< HEAD
-<<<<<<< HEAD
 """ 
 from backend.forms import create_sales_item
 """
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 =======
 >>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 from backend.forms import new_sales_item
@@ -18,10 +15,7 @@ import os
 from backend.sales_factory import *
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 """
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 =======
 >>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 from backend.coupon_factory import *
@@ -30,12 +24,9 @@ from flask import send_from_directory
 app = Flask(__name__, template_folder='../templates', static_url_path="/templates/static")
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 """
 factory = sales_factory()
 """
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 =======
 >>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 
@@ -57,15 +48,12 @@ configure_uploads(app, (images,))
 @app.route('/')
 def home():
 <<<<<<< HEAD
-<<<<<<< HEAD
     return 'gg'
 
 @app.route('/register')
 def register():
     form = RegistrationForm()
     return render_template('__init__/register.html', form=form)
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 =======
 >>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
     return render_template('base.html')

@@ -1,4 +1,4 @@
-import date as date
+import datetime as date
 import backend.settings as settings
 ## coupon object
 class Coupon:
@@ -46,5 +46,5 @@ class Coupon:
             return True
        finally:
             s.close()
-       return False
+        return False
 

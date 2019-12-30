@@ -19,8 +19,7 @@ class sales_factory:
       #e.g. {'UID':'2', 'name':'name', 'description':'description','price':1,'image_url':1, 'stocks':4}    def create_salesitems(self, dict):
     def create_items(self,dict):
         try:
-            # item = sales_items(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["stocks"])
-            item = sales_items.from_json(dict)
+            item = sales_items(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["stocks"])
             return item
         except Exception as e:
             print(e)
@@ -34,9 +33,10 @@ class sales_factory:
     def create_services(self,dict):
         try:
             item = sales_services(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["datetime"])
+            item.save()
             return item
         except Exception as e:
-            print(e)
+            print(e.message)
             return None
 
 

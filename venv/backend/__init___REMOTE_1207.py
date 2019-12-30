@@ -1,43 +1,14 @@
 from flask import url_for, redirect, render_template, Flask, request
-<<<<<<< HEAD
-<<<<<<< HEAD
-""" 
-from backend.forms import create_sales_item
-"""
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 from backend.forms import new_sales_item
 from werkzeug.utils import secure_filename
-"""
 from flask_uploads import UploadSet, IMAGES,configure_uploads
-"""
 import os
-"""
 from backend.sales_factory import *
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-"""
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 from backend.coupon_factory import *
 from flask import send_from_directory
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/templates/static")
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-"""
-factory = sales_factory()
-"""
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
 
 sfactory = sales_factory()
 cfactory = coupon_factory()
@@ -48,26 +19,14 @@ app.config['SECRET_KEY'] = 'THISISNOTASECRET'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOAD_PRODUCT'] = UPLOAD_FOLDER , 'product/'
 
-"""
+
 images = UploadSet('images', IMAGES)
-"""
-"""
 configure_uploads(app, (images,))
-"""
+
+
+
 @app.route('/')
 def home():
-<<<<<<< HEAD
-<<<<<<< HEAD
-    return 'gg'
-
-@app.route('/register')
-def register():
-    form = RegistrationForm()
-    return render_template('__init__/register.html', form=form)
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
-=======
->>>>>>> d7d0ff20df54b0eb8c0330239b043c36f5b7abaf
     return render_template('base.html')
 
 @app.route('/create/coupons')
@@ -110,6 +69,41 @@ def add_shop_item():
 def list_items():
     sales = sfactory.get_all_items()
     return render_template('list_sales_items.html', sales=sales)
+
+@app.route('/AccountCreation', methods = ['GET', 'POST'])
+def createAccount():
+    createAccountForm = CreateAccountForm(request.form)
+    if request.method == 'POST' and createAccountForm.validate():
+        AccountDict = {}
+        db = shelve.open('storage.db', 'c')
+
+        try:
+            AccountDict = db['Users']
+        except:
+            print("Error in retrieving Users from storage.db")
+
+        account = Account.Account(createAccountForm.firstName.data, createAccountForm.lastName.data, createAccountForm.gender.data)
+        AccountDict[account.account.get_userID()] = account
+        db['Account'] = AccountDict
+        db.close()
+
+        return redirect(url_for('RetrieveAccount'))
+    return render_template('AccountCreation.html', form=createAccountForm)
+
+@app.route('/RetrieveAccount')
+def retrieveAccount():
+    accountDict = {}
+    db = shelve.open('storage.db', 'r')
+    accountDict = db['Account']
+    db.close()
+
+    accountList = []
+    for key in accountDict:
+        account = accountDict.get(key)
+        accountList.append(user)
+
+    return render_template('RetrieveAccount.html', accountList = accountList, count =len(accountList))
+
 
 
 if __name__ == '__main__':

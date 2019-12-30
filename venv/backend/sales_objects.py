@@ -4,7 +4,7 @@ from backend import settings
 import simplejson as jsons
 
 #superclass for all sales objects
-class sales_objects(jsons.JsonSerializable):
+class sales_objects():
     #default init for creating a new object
     def __init__(self, UID,name, description, price, image_url):
         self.UID = UID #all item should have their unique UID
@@ -64,5 +64,3 @@ class sales_objects(jsons.JsonSerializable):
 
     def package_flag(self):
         return False
-
-
