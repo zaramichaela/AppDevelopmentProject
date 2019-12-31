@@ -1,18 +1,22 @@
 from flask import url_for, redirect, render_template, Flask, request
+"""
 from backend.forms import new_sales_item,coupon_form,new_package,new_service
+"""
 from werkzeug.utils import secure_filename
 """
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 """
 import os
+"""
 from backend.itemscontroller import *
+"""
 from flask import send_from_directory
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/templates/static")
-
+"""
 #main items controller
 itemcontroller = itemscontroller()
-
+"""
 UPLOAD_FOLDER = '/uploads/'
 app.config['UPLOADED_IMAGES_DEST'] = '/uploads/'
 app.config['SECRET_KEY'] = 'THISISNOTASECRET'
@@ -25,14 +29,28 @@ images = UploadSet('images', IMAGES)
 """
 configure_uploads(app, (images,))
 """
+
+
 @app.route('/')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/register')
+def about():
+    return render_template('register.html')
+
+
+@app.route('/home')
 def home():
     return render_template('base.html')
 
-@app.route('/register')
-def register():
-    form = RegistrationForm()
-    return render_template('__init__/register.html', form=form)
+
+@app.route('/login_validation', methods=['POST'])
+def login_validation():
+    email=request.form.get('email')
+    password=request.form.get('password')
+    return "The email is {} and the password is {}".format(email, password)
 
 @app.route('/add/coupons')
 def add_coupons():
