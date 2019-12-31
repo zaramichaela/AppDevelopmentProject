@@ -34,3 +34,11 @@ class sales_package(sales_objects):
     def package_flag(self):
         return True
 
+    def get_sessions(self):
+        return self.sessions
+
+    def get_remaining_sessions(self):
+        return self.remaining_sess
+
+    def get_expiry_duration(self):
+        return self.expiry_duration

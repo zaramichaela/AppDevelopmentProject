@@ -5,7 +5,7 @@ import simplejson as jsons
 import pickle
 
 #superclass for all sales objects
-class sales_objects():
+class sales_objects(object):
     #default init for creating a new object
     def __init__(self, UID,name, description, price, image_url):
         self.UID = UID #all item should have their unique UID
@@ -72,3 +72,12 @@ class sales_objects():
 
     def package_flag(self):
         return False
+
+    def to_html_header(self):
+        return 1
+
+    def to_html_tr(self):
+        html = ''
+        for i,v in a.__dict__:
+            html += v
+        return html

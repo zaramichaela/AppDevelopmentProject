@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{%block title %}
+Add a new service
+{%endblock %}
+
+{%block body %}
+
+{% if message.message %}
+<div class="alert alert-success" role="alert">
+  {{ message.message }}
+</div>
+{% endif %}
+
+
+{% from "adding/_formhelper.html" import render_field %}
+<form action="" method="POST" novalidate enctype="multipart/form-data">
+{{ form.csrf_token }}
+      <dl>
+    {{ render_field(form.UID) }}
+    {{ render_field(form.name) }}
+    {{ render_field(form.description) }}
+    {{ render_field(form.price) }}
+    {{ render_field(form.image) }}
+    {{form.submit}}
+  </dl>
+</form>
+{%endblock %}

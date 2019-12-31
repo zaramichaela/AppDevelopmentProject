@@ -48,7 +48,17 @@ class itemscontroller:
             return None
 
 
+    def get_all_sales_items(self):
+        return self.all_items
 
+    def get_all_sales_services(self):
+        return self.all_services
+
+    def get_all_sales_packages(self):
+        return self.all_packages
+
+    def get_all_coupons(self):
+        return self.all_coupons
 
 
     ###################################################
@@ -63,6 +73,7 @@ class itemscontroller:
         try:
             item = sfactory.create_item(dict)
             self.all_items.append(item)
+            item.save()
         except:
             print(Exception)
         return item

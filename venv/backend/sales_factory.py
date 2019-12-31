@@ -68,7 +68,6 @@ class sales_factory:
                 items.append(self.deserialize(s[key]))
         finally:
             s.close()
-        print(items)
         return items
 
     # return all services from service database
@@ -80,7 +79,6 @@ class sales_factory:
                 items.append(self.deserialize(s[key]))
         finally:
             s.close()
-        print(items)
         return items
 
     #return all packages from package database
@@ -92,7 +90,6 @@ class sales_factory:
                 items.append(self.deserialize(s[key]))
         finally:
             s.close()
-        print(items)
         return items
 
     #get a item with the specific UID

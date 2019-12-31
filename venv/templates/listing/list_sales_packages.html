@@ -6,8 +6,11 @@
 
 {% block body %}
 
-<table border="1">
+<table border="1"  id="sales_packages">
     <tr>
+        <th>
+            <center><b>Image</b></center>
+        </th>
         <th>
             <center><b>UID</b></center>
         </th>
@@ -21,35 +24,18 @@
             <center><b>Price</b></center>
         </th>
         <th>
-            <center><b>Image URL</b></center>
-        </th>
-        <th>
             <center><b>Stocks</b></center>
         </th>
 
 
-    </tr>
-    {%for i in sales %}
+     </tr>
+
+    {% from "listing/_listhelper.html" import render_package_table %}
+    {%for i in items %}
     <tr>
-        <td>
-            {{i.get_UID()}}
-        </td>
-        <td>
-            {{i.get_name()}}
-        </td>
-        <td>
-            {{i.get_description()}}
-        </td>
-        <td>
-            {{i.get_price()}}
-        </td>
-        <td>
-            {{i.get_image_url()}}
-        </td>
-        <td>
-            {{i.get_stocks()}}
-        </td>
-        {% endfor %}
+    {{ render_package_table(i) }}
     </tr>
+    {% endfor %}
+
 </table>
 {%endblock %}

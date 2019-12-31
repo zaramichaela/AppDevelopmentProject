@@ -1,0 +1,29 @@
+{% extends 'bootstrap/base.html' %}
+{% block scripts %}
+  {{ super() }}
+  {{ datepicker.loader() }} {# to load jQuery-ui #}
+  {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+
+
+{%block content %}
+
+{% if message.message %}
+<div class="alert alert-success" role="alert">
+  {{ message.message }}
+</div>
+{% endif %}
+
+{% from "adding/_formhelper.html" import render_field %}
+<form action="" method="POST" novalidate enctype="multipart/form-data">
+{{ form.csrf_token }}
+      <dl>
+    {{ render_field(form.UID) }}
+    {{ render_field(form.coupon_code) }}
+    {{ render_field(form.discountlimit) }}
+    {{ render_field(form.minimumspent) }}
+    {{ render_field(form.expiredate,  class='dp') }}
+    {{form.submit}}
+  </dl>
+</form>
+{%endblock %}

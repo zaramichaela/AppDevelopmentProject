@@ -1,0 +1,75 @@
+<!--all these macro functions helps to organize the project and allow cleaner html files-->
+
+{% macro render_coupon_table(i) %}
+{% endmacro %}
+
+<!--this is a macro to help render the table-->
+<!--its is like a function and is able to accept parameters-->
+<!--this macro prints sales item in a table format-->
+{% macro render_item_table(i) %}
+        <td>
+            <img src='{{i.get_image_url()}}'/>
+        </td>
+        <td>
+            {{i.get_UID()}}
+        </td>
+        <td>
+            {{i.get_name()}}
+        </td>
+        <td>
+            {{i.get_description()}}
+        </td>
+        <td>
+            {{i.get_price()}}
+        </td>
+        <td>
+            {{i.get_stocks()}}
+        </td>
+
+{% endmacro %}
+
+{% macro render_package_table(i) %}
+        <td>
+            {{i.get_image_url()}}
+        </td>
+        <td>
+            {{i.get_UID()}}
+        </td>
+        <td>
+            {{i.get_name()}}
+        </td>
+        <td>
+            {{i.get_description()}}
+        </td>
+        <td>
+            {{i.get_expiry_duration()}}
+        </td>
+        <td>
+            {{i.get_sessions()}}
+        </td>
+        <td>
+            {{i.get_price()}}
+        </td>
+
+
+{% endmacro %}
+
+{% macro render_services_table(i) %}
+        <td>
+            {{i.get_image_url()}}
+        </td>
+
+        <td>
+            {{i.get_UID()}}
+        </td>
+        <td>
+            {{i.get_name()}}
+        </td>
+        <td>
+            {{i.get_description()}}
+        </td>
+        <td>
+            {{i.get_price()}}
+        </td>
+
+{% endmacro %}

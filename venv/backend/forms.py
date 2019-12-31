@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,BooleanField,SubmitField,DecimalField,TextAreaField,IntegerField,DateField
 from flask_wtf.file import FileField, FileRequired,FileAllowed
 from wtforms.validators import DataRequired
+import wtforms.validators as validators
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 import os
 import re
@@ -15,9 +16,9 @@ class new_sales_item(FlaskForm):
     UID = StringField("Unique ID:", validators=[DataRequired()])
     name = StringField("Name: ", validators=[DataRequired()])
     description = TextAreaField("Description: ", validators=[DataRequired()])
-    price = DecimalField("Price: ", validators=[DataRequired()])
+    price = DecimalField("Price: ", validators=[DataRequired()])# Regexp("^((\d+$", message="Price value must be 0.XX or X+.XX where X is a number"
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
-    stocks = IntegerField("Stocks amount: ",  validators=[DataRequired()])
+    stocks = IntegerField("Stocks amount: ",  validators=[DataRequired()])#,Regexp("^\d+$", message="value must be a whole number")
     submit = SubmitField()
 
 #form to create a new sales item

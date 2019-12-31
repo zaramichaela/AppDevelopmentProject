@@ -71,7 +71,7 @@ class Coupon:
             return True
        finally:
             s.close()
-        return False
+       return False
 
     def get_UID(self):
         return self.UID
