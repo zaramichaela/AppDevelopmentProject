@@ -1,13 +1,9 @@
 from flask import url_for, redirect, render_template, Flask, request
-"""
 from backend.forms import new_sales_item,coupon_form,new_package,new_service
-"""
 from werkzeug.utils import secure_filename
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 import os
-"""
 from backend.itemscontroller import *
-"""
 from flask import send_from_directory
 from flask_bootstrap import Bootstrap
 from flask_datepicker import datepicker
