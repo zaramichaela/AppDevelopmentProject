@@ -1,23 +1,20 @@
-from flask import url_for, redirect, render_template, Flask, request
+from flask import url_for, redirect, render_template, Flask, request, flash,session
 from backend.forms import new_sales_item,coupon_form,new_package,new_service
 from werkzeug.utils import secure_filename
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 import os
 from backend.itemscontroller import *
 from flask import send_from_directory
-from flask_bootstrap import Bootstrap
-from flask_datepicker import datepicker
+from login.login_controller import *
 
-app = Flask(__name__, template_folder='../templates', static_url_path="/templates/static")
+app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
-Bootstrap(app)
-datepicker(app)
 
 #main items controller
 itemcontroller = itemscontroller()
-ITEMSDIR= '../../uploads/items/'
-PACKAGEDIR = '../../uploads/packages/'
-SERVICEDIR = '../../uploads/services/'
+ITEMSDIR= 'static/uploads/items/'
+PACKAGEDIR = 'static/uploads/packages/'
+SERVICEDIR = 'static/uploads/services/'
 UPLOAD_FOLDER = '/uploads/'
 app.config['UPLOADED_IMAGES_DEST'] = '/uploads/'
 app.config['SECRET_KEY'] = 'THISISNOTASECRET'
@@ -30,7 +27,6 @@ configure_uploads(app, (images,))
 @app.route('/')
 def login():
     return render_template('login.html')
-
 
 @app.route('/register')
 def about():
@@ -47,6 +43,42 @@ def login_validation():
     email=request.form.get('email')
     password=request.form.get('password')
     return "The email is {} and the password is {}".format(email, password)
+
+
+
+#-------------------------------------------------------------------
+#to move to another url blueprint
+
+@app.route('/admin')
+def admin():
+    if not session.get('admin_logged_in'):
+        return render_template('admin/admin_login.html')
+    else:
+        return render_template('base.html')
+
+
+
+@app.route('/admin/login', methods=['POST'])
+def do_admin_login():
+    username = request.form['username']
+    password = request.form['password']
+    login = login_admin("Zarateo", password)
+    if(login):
+        session['admin_logged_in'] = True
+    else:
+        flash('Wrong password!')
+    return admin()
+
+@app.route('/admin/logout')
+def admin_logout():
+    session['admin_logged_in'] = False
+    return do_admin_login()
+
+
+# @app.route('/accounts/add/admin')
+# def add_admin_accounts():
+#     context = {}
+#
 
 @app.route('/add/coupons')
 def add_coupons():

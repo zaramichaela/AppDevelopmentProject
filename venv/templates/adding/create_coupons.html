@@ -1,12 +1,9 @@
-{% extends 'bootstrap/base.html' %}
-{% block scripts %}
-  {{ super() }}
-  {{ datepicker.loader() }} {# to load jQuery-ui #}
-  {{ datepicker.picker(id=".dp") }}
+{% extends 'base.html' %}
+
+{% block title %}
+Add a new coupon
 {% endblock %}
-
-
-{%block content %}
+{%block body %}
 
 {% if message.message %}
 <div class="alert alert-success" role="alert">
@@ -15,16 +12,25 @@
 {% endif %}
 
 
+<div class="row d-flex justify-content-center">
+
 {% from "adding/_formhelper.html" import render_field %}
+<div class="forms col-md-6">
+    <div class="title">
+<h2>Add a new coupon for additional discount!</h2>
+</div>
+
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
-    {{ render_field(form.UID) }}
-    {{ render_field(form.coupon_code) }}
-    {{ render_field(form.discountlimit) }}
-    {{ render_field(form.minimumspent) }}
-    {{ render_field(form.expiredate,  class='dp') }}
+    {{ render_field(form.UID, class='form-control') }}
+    {{ render_field(form.coupon_code, class='form-control') }}
+    {{ render_field(form.discountlimit, class='form-control') }}
+    {{ render_field(form.minimumspent, class='form-control') }}
+    {{ render_field(form.expiredate,  class='dp form-control') }}
     {{form.submit}}
   </dl>
 </form>
+    </div>
+</div>
 {%endblock %}
