@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Create User{% endblock %}
+{% block content %}
+{% from "includes/_ProductFormHelper.html" import render_field %}
+<h1 class="display-4">Create User</h1>
+<form method="POST" action="">
+ <div class="form-group">
+ {{ render_field(form.ProductID, class="form-control") }}
+ </div>
+ <div class="form-group">
+ {{ render_field(form.ProductName, class="form-control") }}
+ </div>
+ <div class="form-group">
+ {{ render_field(form.Cost, class="form-control") }}
+ </div>
+  <div class="form-group">
+ {{ render_field(form.UserID, class="form-control") }}
+ </div>
+ <div id="prof">
+ </div>
+ <input type="submit" value="Submit" class="btn btn-primary"/>
+</form>
+{% endblock %}
