@@ -23,7 +23,7 @@ class Coupon:
         try:
             datetime.datetime.strptime(date_text, '%d-%m-%Y')
         except ValueError:
-            raise ValueError("Incorrect data format, should be YYYY-MM-DD")
+            raise ValueError("Incorrect data format, should be DD-MM-YYYY")
 
     def set_percentage(self, percentage):
         if percentage >= 0 and percentage < 100:

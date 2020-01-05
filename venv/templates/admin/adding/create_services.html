@@ -1,0 +1,37 @@
+{% extends 'admin/base.html' %}
+
+{%block title %}
+Add a new service
+{%endblock %}
+
+{%block body %}
+
+{% if message.message %}
+<div class="alert alert-success" role="alert">
+  {{ message.message }}
+</div>
+{% endif %}
+
+
+<div class="row d-flex justify-content-center">
+
+{% from "admin/adding/_formhelper.html" import render_field %}
+<div class="forms col-md-6">
+    <div class="title">
+<h2>Add a new service</h2>
+</div>
+
+<form action="" method="POST" novalidate enctype="multipart/form-data">
+{{ form.csrf_token }}
+      <dl>
+    {{ render_field(form.UID, class='form-control', placeholder="123") }}
+    {{ render_field(form.name, class='form-control', placeholder="Tui Na") }}
+    {{ render_field(form.description, class='form-control', placeholder="Input description of service here." ) }}
+    {{ render_field(form.price, class='form-control', placeholder="$20.00" ) }}
+    {{ render_field(form.image, class='form-control') }}
+    {{form.submit}}
+  </dl>
+</form>
+    </div>
+</div>
+{%endblock %}

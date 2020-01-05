@@ -8,7 +8,7 @@ cfactory = coupon_factory()
 #keeps all items in memory
 #for fast searching, requires more memory.
 
-class itemscontroller:
+class items_controller:
 
 
     def __init__(self):
@@ -60,6 +60,21 @@ class itemscontroller:
     def get_all_coupons(self):
         return self.all_coupons
 
+
+    ####################################################
+    ####################################################
+    ### check if UID exists, if does, return False ####
+    def sales_item_check(self, UID):
+        for i in self.all_items:
+            if UID == i.getUID():
+                return False
+        return True
+
+
+
+
+
+    ####################################################
 
     ###################################################
     ###create item via here and thus updating memory###

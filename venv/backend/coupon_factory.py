@@ -8,19 +8,19 @@ class coupon_factory:
 
     def get_all_coupons(self):
         s = shelve.open(settings.COUPON_DB)
-        error_flag = False
+        items = []
         try:
-            self.all_coupons.append(self.unserialize_coupon(self.serialize_coupon(s[key])))
+            for key in s:
+                items.append(self.deserialize(s[key]))
         except Exception as e:
-            error_flag = True
+            print(e)
         finally:
             s.close()
-        return error_flag
+        return items
 
 
 
-
-    def unserialize_coupon(self, dict):
+    def deserialize(self, dict):
         try:
             return pickle.loads(dict)
         except:

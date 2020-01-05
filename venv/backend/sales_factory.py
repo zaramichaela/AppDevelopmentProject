@@ -66,6 +66,8 @@ class sales_factory:
         try:
             for key in s:
                 items.append(self.deserialize(s[key]))
+        except Exception as e:
+            print(e)
         finally:
             s.close()
         return items
