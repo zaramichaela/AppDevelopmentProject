@@ -3,7 +3,7 @@ import shelve
 import backend.settings as settings
 from flask import flash
 
-class admin_login_controller():
+class login_controller():
     def __init__(self):
         self.all_admins = get_all_admin()
 

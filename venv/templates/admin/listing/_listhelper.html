@@ -25,6 +25,9 @@
         <td>
             {{i.get_stocks()}}
         </td>
+        <td>
+            <a href="{{url_for('admin_pages.edit_item', itemid=i.get_UID())}}">Edit</a>
+        </td>
 
 {% endmacro %}
 

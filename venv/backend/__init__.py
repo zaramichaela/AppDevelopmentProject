@@ -1,15 +1,15 @@
 from flask import url_for, redirect, render_template, Flask, request, flash,session
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 from backend.admin_url import admin_pages
+from backend.settings import *
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
+
 
 
 app.register_blueprint(admin_pages)
 #main items controller
 
-ITEMSDIR= 'static/uploads/items/'
-PACKAGEDIR = 'static/uploads/packages/'
-SERVICEDIR = 'static/uploads/services/'
+
 UPLOAD_FOLDER = '/uploads/'
 app.config['UPLOADED_IMAGES_DEST'] = '/uploads/'
 app.config['SECRET_KEY'] = 'THISISNOTASECRET'
@@ -22,6 +22,8 @@ configure_uploads(app, (images,))
 @app.route('/')
 def login():
     return render_template('login.html')
+
+
 
 @app.route('/register')
 def about():

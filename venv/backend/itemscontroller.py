@@ -39,13 +39,25 @@ class items_controller:
             return False
 
 
-    def check_item_by_UID(self, item_UID):
+    def get_item_by_UID(self, UID):
         #check and return 1 item finding via item_UID. if more than 1, return None.
-        found_item = [items for items in self.all_coupons if items.couponcode == couponcode]
-        if(len(found_item) == 1):
-            return found_item
-        else:
-            return None
+        for i in self.all_items:
+            if(i.get_UID() == UID):
+                return i
+        return None
+
+    def get_service_by_UID(self, UID):
+        #check and return 1 item finding via item_UID. if more than 1, return None.
+        for i in self.all_services:
+            if(i.get_UID() == UID):
+                return i
+        return None
+    def get_package_by_UID(self, UID):
+        #check and return 1 item finding via item_UID. if more than 1, return None.
+        for i in self.all_packages:
+            if(i.get_UID() == UID):
+                return i
+        return None
 
 
     def get_all_sales_items(self):
@@ -70,7 +82,17 @@ class items_controller:
                 return False
         return True
 
+    def remove_sales_item(self, item):
+        return self.all_items.remove(item)
 
+    def remove_sales_package(self, item):
+        return self.all_packages.remove(item)
+
+    def remove_sales_service(self, item):
+        return self.all_services.remove(item)
+
+    def remove_sales_coupon(self, item):
+        return self.all_coupons.remove(item)
 
 
 
@@ -80,17 +102,18 @@ class items_controller:
     ###create item via here and thus updating memory###
     ### this is done to remove the limitation of the###
     ### shelves being##################################
-    ### adds checks if UID exists #####################
+    ### ###############################################
+    ### overwrites old UID ############################
     ###################################################
+
+
+
 
     def create_and_save_item(self, dict):
         #create and save item in database and current memory
-        try:
-            item = sfactory.create_item(dict)
-            self.all_items.append(item)
-            item.save()
-        except:
-            print(Exception)
+        item = sfactory.create_item(dict)
+        self.all_items.append(item)
+        item.save()
         return item
 
     def create_and_save_package(self, dict):

@@ -1,18 +1,16 @@
-from flask import Blueprint
+from flask import Blueprint, abort
 from flask import render_template, request, flash,session,redirect, url_for
 from jinja2 import TemplateNotFound
 from backend.forms import new_sales_item,coupon_form,new_package,new_service
 from werkzeug.utils import secure_filename
-from backend.itemscontroller import *
-from login.login_controller import *
+
 from functools import wraps
 from login.forms import create_admin_account
-
+from backend.settings import *
 
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
 
-itemcontroller = items_controller()
-logincontroller = admin_login_controller()
+
 
 
 def authorize(f):
@@ -88,11 +86,10 @@ def add_shop_service():
 
     if request.method == 'POST' and form.validate():
         f = form.image.data
-        filename = secure_filename(f.filename)
-        f.save(SERVICEDIR + filename)
+        f.save(SERVICEDIR + form.UID.data)
         # form["image_url"] = filename
         update_form = form.data.copy()
-        update_form["image_url"] = filename
+        update_form["image_url"] = SERVICEDIR + form.UID.data
 
         item = sfactory.create_items(update_form)
         if (item.save()):
@@ -110,11 +107,10 @@ def add_shop_item():
 
     if request.method == 'POST' and form.validate():
         f = form.image.data
-        filename = secure_filename(f.filename)
-        f.save(ITEMSDIR + filename)
+        f.save(ITEMSDIR + form.UID.data)
         # form["image_url"] = filename
         update_form = form.data.copy()
-        update_form["image_url"] = filename
+        update_form["image_url"] = ITEMSDIR + form.UID.data
 
         item = itemcontroller.create_and_save_item(update_form)
         if (item):
@@ -131,11 +127,9 @@ def add_shop_package():
 
     if request.method == 'POST' and form.validate():
         f = form.image.data
-        filename = secure_filename(f.filename)
-        f.save(PACKAGEDIR + filename)
-        # form["image_url"] = filename
+        f.save(PACKAGEDIR + form.UID.data)
         update_form = form.data.copy()
-        update_form["image_url"] = filename
+        update_form["image_url"] = PACKAGEDIR + form.UID.data
 
         item = itemcontroller.create_and_save_item(update_form)
         if (item):
@@ -146,7 +140,7 @@ def add_shop_package():
 
 
 
-@admin_pages.route('/admin/list/sales_items')
+@admin_pages.route('/admin/list/items')
 @authorize
 def list_sales_items():
     sales = itemcontroller.get_all_sales_items()
@@ -154,14 +148,33 @@ def list_sales_items():
     return render_template('admin/listing/list_sales_items.html', items=sales)
 
 
+
 #########################################################################################
 ############### editing each objects information ########################################
 #########################################################################################
 
-@admin_pages.route('/admin/list/items/<int:itemid>/edit/')
+@admin_pages.route('/admin/list/items/<itemid>/edit/')
 @authorize
 def edit_item(itemid):
-    return "GG"
+    context = {"message": ""}
+    item = itemcontroller.get_item_by_UID(itemid)
+    if(not item):
+        abort(404)
+    form = new_sales_item(formdata=request.form, obj=item)
+
+    if request.method == 'POST' and form.validate():
+        f = form.image.data
+        filename = secure_filename(f.filename)
+        f.save(ITEMSDIR + filename)
+        update_form = form.data.copy()
+        update_form["image_url"] = ITEMDIR + filename
+
+        item = itemcontroller.create_and_save_item(update_form)
+        if (item):
+            context ={"message":"You have created a new item"}
+        else:
+            context ={"error":"A error have occured..."}
+    return render_template('admin/adding/create_items.html', form=form, message=context)
 
 
 @admin_pages.route('/admin/list/sales_packages')
