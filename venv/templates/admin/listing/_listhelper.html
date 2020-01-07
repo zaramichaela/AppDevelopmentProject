@@ -33,7 +33,7 @@
 
 {% macro render_package_table(i) %}
         <td>
-            {{i.get_image_url()}}
+            <img src='{{i.get_image_url()}}'/>
         </td>
         <td>
             {{i.get_UID()}}
@@ -52,6 +52,9 @@
         </td>
         <td>
             {{i.get_price()}}
+        </td>
+        <td>
+            <a href="{{url_for('admin_pages.edit_package', packageid=i.get_UID())}}">Edit</a>
         </td>
 
 
@@ -74,6 +77,9 @@
         <td>
             {{i.get_price()}}
         </td>
+        <td>
+            <a href="{{url_for('admin_pages.edit_service', serviceid=i.get_UID())}}">Edit</a>
+        </td>
 
 {% endmacro %}
 
@@ -83,24 +89,30 @@
         </td>
             {{i.coupon_code}}
         <td>
-           {{i.discountlimit}}
+           {{i.percentage}}
         </td>
+
         <td>
             {{i.minimumspent}}
+        </td>
+        <td>
+           {{i.discountlimit}}
         </td>
         <td>
             {{i.expiredate}}
         </td>
         <td>
-
+            <a href="{{url_for('admin_pages.edit_coupon', couponid=i.get_UID())}}">Edit</a>
         </td>
+
 
 {% endmacro %}
 
 
 {% macro render_admin_table(i) %}
         <td>
-            {{i["username"]}}
+            {{i['username']}}
         </td>
-
+        <td>
+        </td>
 {% endmacro %}

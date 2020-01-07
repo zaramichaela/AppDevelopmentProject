@@ -18,7 +18,7 @@
 
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sidenav.css') }}">
  {% block head %}
 
 
@@ -71,7 +71,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ url_for('admin_pages.create_admin_accounts') }}">Add Admin Account</a>
-          <a class="dropdown-item" href="{{ url_for('admin_pages.create_admin_accounts') }}">View Admin Accounts</a>
+          <a class="dropdown-item" href="{{ url_for('admin_pages.list_admin_accounts') }}">View Admin Accounts</a>
           <a class="dropdown-item" href="{{ url_for('admin_pages.create_admin_accounts') }}">View User Accounts</a>
         </div>
       </li>

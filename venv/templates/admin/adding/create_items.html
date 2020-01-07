@@ -1,5 +1,7 @@
 {% extends 'admin/base.html' %}
 
+{% block head %}
+{% endblock %}
 {%block title %}
 {%endblock %}
 
@@ -11,26 +13,28 @@
 </div>
 {% endif %}
 
+{% from "admin/adding/_formhelper.html" import render_field %}
+
 
 <div class="row d-flex justify-content-center">
 
-{% from "admin/adding/_formhelper.html" import render_field %}
+
 <div class="forms col-md-6">
     <div class="title">
 <h2>Add a new shop item</h2>
 </div>
 
-<form action="" method="POST" novalidate enctype="multipart/form-data">
+
 {{ form.csrf_token }}
       <dl>
-    {{ render_field(form.UID, class='form-control', placeholder="123") }}
+            {{ render_field(form.UID, class='form-control', placeholder="123") }}
     {{ render_field(form.name, class='form-control' , placeholder="Prescribed Herbal Medicine") }}
     {{ render_field(form.description, class='form-control', placeholder="Input description of product here.
 Include things like manufacture date, expiry date and allergen information.") }}
     {{ render_field(form.price, class='form-control', placeholder="SGD$9.99") }}
     {{ render_field(form.stocks, class='form-control', placeholder="100") }}
     {{ render_field(form.image, class='form-control') }}
-    {{form.submit}}
+    {{form.submit(class="btn btn-primary")}}
   </dl>
 </form>
     </div>

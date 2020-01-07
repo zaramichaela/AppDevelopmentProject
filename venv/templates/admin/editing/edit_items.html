@@ -1,8 +1,7 @@
 {% extends 'admin/base.html' %}
 
 {%block title %}
-create a new package
-{% endblock %}
+{%endblock %}
 
 {%block body %}
 
@@ -12,29 +11,29 @@ create a new package
 </div>
 {% endif %}
 
+
 <div class="row d-flex justify-content-center">
 
 {% from "admin/adding/_formhelper.html" import render_field %}
 <div class="forms col-md-6">
     <div class="title">
-<h2>Add a new package</h2>
+<h2>Add a new shop item</h2>
 </div>
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
     {{ render_field(form.UID, class='form-control', placeholder="123") }}
-    {{ render_field(form.name, class='form-control', placeholder="Tui Na Package") }}
-    {{ render_field(form.description, class='form-control', placeholder="Input description of package here.") }}
-    {{ render_field(form.price, class='form-control', placeholder="SGD$100.00") }}
-    {{ render_field(form.expiry_duration, class='form-control' , placeholder="100") }}
-    {{ render_field(form.sessions, class='form-control', placeholder="20") }}
+    {{ render_field(form.name, class='form-control' , placeholder="Prescribed Herbal Medicine") }}
+    {{ render_field(form.description, class='form-control', placeholder="Input description of product here.
+Include things like manufacture date, expiry date and allergen information.") }}
+    {{ render_field(form.price, class='form-control', placeholder="SGD$9.99") }}
+    {{ render_field(form.stocks, class='form-control', placeholder="100") }}
     {{ render_field(form.image, class='form-control') }}
-    {{form.submit(class="btn btn-primary")}}
+    {{form.submit}}
   </dl>
 </form>
     </div>
 </div>
 
 {%endblock %}
-

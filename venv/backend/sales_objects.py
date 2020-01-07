@@ -72,12 +72,3 @@ class sales_objects(object):
 
     def package_flag(self):
         return False
-
-    def to_html_header(self):
-        return 1
-
-    def to_html_tr(self):
-        html = ''
-        for i,v in a.__dict__:
-            html += v
-        return html

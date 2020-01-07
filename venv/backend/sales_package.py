@@ -1,6 +1,6 @@
 import shelve
 from backend import settings
-import datetime
+from datetime import date
 from backend.sales_objects import *
 
 #class for each package that contains multiple sessions and session remaining.
@@ -9,8 +9,8 @@ class sales_package(sales_objects):
         super().__init__(UID,name, description, price, image_url)
         self.expiry_duration = expiry_duration #days to expiry date
         self.sessions = sessions
-        self.remaining_sess = remaining_sess
-        self.bought_date = datetime.today()
+        self.remaining_sess = sessions
+        self.bought_date = date.today()
 
     def check_expiry(self):
         if(self.bought_date+ timedelta(days=expiry_duration) <= datetime.today() ):
