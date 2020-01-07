@@ -49,7 +49,7 @@ class coupon_form(FlaskForm):
     percentage = IntegerField("Discount Percentage (%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired()])
     discountlimit = DecimalField("Maximum amount of discount ($): ", validators=[validators.NumberRange(min=0.1),DataRequired()])
     minimumspent = IntegerField("Minimum spending ($): ", validators=[validators.NumberRange(min=1, max=2000),DataRequired()])
-    expiredate = DateField("Expiry Date (DD/MM/YYYY): ", validators=[DataRequired()])
+    expiredate = DateField("Expiry Date (DD/MM/YYYY): ",  format='%d/%m/%Y', validators=[DataRequired()])
     submit = SubmitField()
 
 

@@ -59,7 +59,9 @@ class login_controller():
         finally:
             s.close()
 
-
+    def get_all_admins(self):
+        print(self.all_admins)
+        return self.all_admins
 
 
 def delete_admin_from_shelve(username):

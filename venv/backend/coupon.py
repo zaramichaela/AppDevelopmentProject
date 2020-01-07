@@ -1,5 +1,7 @@
-import datetime as date
+import datetime
 import backend.settings as settings
+import shelve
+import pickle
 ## coupon object
 class Coupon:
     def __init__(self, UID, couponcode,percentage,discountlimit, minimumspent, expiredate):
@@ -20,10 +22,7 @@ class Coupon:
 
     #set expiry date, make sure it is in DD-MM-YYYY otherwise exception
     def set_expiry_date(self, expiredate):
-        try:
-            datetime.datetime.strptime(date_text, '%d-%m-%Y')
-        except ValueError:
-            raise ValueError("Incorrect data format, should be DD-MM-YYYY")
+        self.expiredate = expiredate
 
     def set_percentage(self, percentage):
         if percentage >= 0 and percentage < 100:
@@ -38,7 +37,7 @@ class Coupon:
 
     #check date expires
     def check_validity(self):
-        if(date.today() > self.expiredate):
+        if(datetime.date.today() > self.expiredate):
             return False
         return True
 
@@ -59,19 +58,18 @@ class Coupon:
 
 
     def serialize(self):
-        if isinstance(self, date):
-            serial = self.isoformat()
-            return serial
-        return self.__dict__
+        return pickle.dumps(self)
 
-    def save(self):
-       s = shelve.open(settings.COUPON_DB)
-       try:
-            s[self.UID] = self.serialize()
-            return True
-       finally:
-            s.close()
-       return False
 
     def get_UID(self):
         return self.UID
+
+    def save(self):
+        s = shelve.open(settings.COUPON_DB)
+        try:
+            print(self.UID)
+            s[self.UID] = self.serialize()
+            return True
+        finally:
+            s.close()
+        return False

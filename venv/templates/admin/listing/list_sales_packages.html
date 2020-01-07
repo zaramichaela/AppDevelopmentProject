@@ -22,26 +22,34 @@ All Packages
 <div class="tables">
 <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"  border="1"  id="sales_packages">
     <thead>
-    <tr>
+   <tr>
         <th class="th-sm">
             <center><b>Image</b></center>
         </th>
+
         <th class="th-sm">
             <center><b>UID</b></center>
         </th>
         <th class="th-sm">
             <center><b>Name</b></center>
         </th>
+
         <th class="th-sm">
             <center><b>Description</b></center>
+        </th>
+                <th class="th-sm">
+            <center><b>Expiry Date</b></center>
+        </th>
+        <th class="th-sm">
+            <center><b>Total Sessions</b></center>
         </th>
         <th class="th-sm">
             <center><b>Price</b></center>
         </th>
         <th class="th-sm">
-            <center><b>Stocks</b></center>
+            <center><b>Edit</b></center>
         </th>
-     </tr>
+    </tr>
     </thead>
     <tbody>
     {% from "admin/listing/_listhelper.html" import render_package_table %}

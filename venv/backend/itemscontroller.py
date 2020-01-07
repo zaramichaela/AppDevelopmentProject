@@ -127,7 +127,7 @@ class items_controller:
         #create and save service in database and current memory
         service = sfactory.create_service(dict)
         service.save()
-        self.all_services.append(servoce)
+        self.all_services.append(service)
         return service
 
 

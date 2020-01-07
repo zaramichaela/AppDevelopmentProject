@@ -46,7 +46,7 @@ class sales_factory:
           #e.g. {'UID':'2', 'name':'name', 'description':'description','price':1,'image_url':1, 'expiry_duration':days, 'session':}
     def create_package(self, dict):
         try:
-            item = shop_package(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"], dict["expiry_duration"],dict["sessions"],dict["remaining_sess"])
+            item = sales_package(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"], dict["expiry_duration"],dict["sessions"])
             return item
         except Exception as e:
             print(e)

@@ -39,9 +39,7 @@ def login_validation():
     return "The email is {} and the password is {}".format(email, password)
 
 
-@app.route('/static/uploads/')
-def useless():
-    return "GG"
-
 if __name__ == '__main__':
  app.run(debug=True)
+
+
