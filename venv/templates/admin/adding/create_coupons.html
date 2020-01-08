@@ -32,14 +32,14 @@ Add a new coupon
 {% from "admin/adding/_formhelper.html" import render_field %}
 <div class="forms col-md-6">
     <div class="title">
-<h2>Add a new coupon</h2>
+<h1 class="title1">Add a new coupon</h1>
 </div>
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
     {{ render_field(form.UID, class='form-control', placeholder="123") }}
-    {{ render_field(form.coupon_code, class='form-control', placeholder="DISC10") }}
+    {{ render_field(form.couponcode, class='form-control', placeholder="DISC10") }}
     {{ render_field(form.percentage, class='form-control', placeholder="50%") }}
     {{ render_field(form.discountlimit, class='form-control', placeholder="SGD$50.00") }}
     {{ render_field(form.minimumspent, class='form-control', placeholder="SGD$100.00") }}

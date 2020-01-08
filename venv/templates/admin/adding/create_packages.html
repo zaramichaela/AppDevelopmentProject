@@ -32,9 +32,9 @@ create a new package
 {% from "admin/adding/_formhelper.html" import render_field %}
 <div class="forms col-md-6">
     <div class="title">
-<h2>Add a new package</h2>
+<h1 class="title1">Add a new package</h1>
 </div>
-
+<div class="form-fields">
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
@@ -49,6 +49,7 @@ create a new package
     {{form.submit(class="btn btn-primary")}}
   </dl>
 </form>
+    </div>
     </div>
 </div>
 
