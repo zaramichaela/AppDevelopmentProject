@@ -1,7 +1,7 @@
 {% extends 'admin/base.html' %}
 
 {%block title %}
-create a new package
+editing Package #{{item.get_UID()}}
 {% endblock %}
 
 {%block body %}
@@ -12,12 +12,29 @@ create a new package
 </div>
 {% endif %}
 
+				{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-success" role="alert">
+      <ul class=flashes>
+
+    {% for message in messages %}
+
+    <li>{{ message }}</li>
+
+
+    {% endfor %}
+    </ul>
+      </div>    <!-- Optional JavaScript -->
+
+  {% endif %}
+{% endwith %}
+
 <div class="row d-flex justify-content-center">
 
 {% from "admin/adding/_formhelper.html" import render_field %}
 <div class="forms col-md-6">
     <div class="title">
-<h2>Add a new package</h2>
+<h2>Edit Package #{{item.get_UID()}}</h2>
 </div>
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
@@ -30,7 +47,8 @@ create a new package
     {{ render_field(form.expiry_duration, class='form-control' , placeholder="100") }}
     {{ render_field(form.sessions, class='form-control', placeholder="20") }}
     {{ render_field(form.image, class='form-control') }}
-    {{form.submit}}
+          <small>If no new image is uploaded, the old image will be used.</small>
+     <p></p>{{form.submit(class="btn btn-primary")}}
   </dl>
 </form>
     </div>

@@ -19,6 +19,24 @@ All Items
 {% endblock %}
 
 {% block body %}
+
+				{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-success" role="alert">
+      <ul class=flashes>
+
+    {% for message in messages %}
+
+    <li>{{ message }}</li>
+
+
+    {% endfor %}
+    </ul>
+      </div>    <!-- Optional JavaScript -->
+
+  {% endif %}
+{% endwith %}
+
 <div class="tables">
 <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"  border="1" id="sales_items">
     <thead>

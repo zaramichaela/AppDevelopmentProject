@@ -23,11 +23,10 @@ class items_controller:
         #check and find 1 coupon with the coupon_UID
         #return None if more than 1 found
         #can be used to check or search
-        coupon_item = [items for items in self.all_coupons if items.UID == coupon_UID]
-        if(coupon_item == 1):
-            return coupon_item[0]
-        else:
-            return None
+        for i in self.all_coupons:
+            if(i.get_UID() == coupon_UID):
+                return i
+        return False
 
     def get_coupon_by_code(self, coupon_code):
         #check and find 1 coupon with the couponcode
@@ -135,7 +134,6 @@ class items_controller:
     def create_and_save_coupon(self, dict):
         #create and save coupon in database and current memory
         coupon = cfactory.create_coupon(dict)
-        coupon.save()
         self.all_coupons.append(coupon)
         return coupon
 

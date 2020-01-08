@@ -1,6 +1,7 @@
 {% extends 'admin/base.html' %}
 
 {%block title %}
+editing item #{{item.get_UID()}}
 {%endblock %}
 
 {%block body %}
@@ -10,14 +11,28 @@
   {{ message.message }}
 </div>
 {% endif %}
+				{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-danger" role="alert">
+      <ul class=flashes>
+
+    {% for message in messages %}
+
+    <li>{{ message }}</li>
 
 
+    {% endfor %}
+    </ul>
+      </div>    <!-- Optional JavaScript -->
+
+  {% endif %}
+{% endwith %}
 <div class="row d-flex justify-content-center">
 
 {% from "admin/adding/_formhelper.html" import render_field %}
 <div class="forms col-md-6">
     <div class="title">
-<h2>Add a new shop item</h2>
+<h2>Edit item #{{item.get_UID()}}</h2>
 </div>
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
@@ -30,7 +45,9 @@ Include things like manufacture date, expiry date and allergen information.") }}
     {{ render_field(form.price, class='form-control', placeholder="SGD$9.99") }}
     {{ render_field(form.stocks, class='form-control', placeholder="100") }}
     {{ render_field(form.image, class='form-control') }}
-    {{form.submit}}
+          <small>If no new image is uploaded, the old image will be used.</small>
+          <p></p>
+     {{form.submit(class="btn btn-primary")}}
   </dl>
 </form>
     </div>

@@ -50,7 +50,7 @@ class login_controller():
                 s[username] = hash
                 item = dict()
                 item["username"] = username
-                item["hash"] = password
+                item["hash"] = hash
                 self.all_admins.append(item)
                 return True
         except Exception as e:

@@ -1,7 +1,7 @@
 {% extends 'admin/base.html' %}
 
 {% block title %}
-Edit Coupons
+Edit Coupons #{{item.get_UID()}}
 {% endblock %}
 {%block body %}
 
@@ -11,24 +11,57 @@ Edit Coupons
 </div>
 {% endif %}
 
+					{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-danger" role="alert">
+      <ul class=flashes>
 
+    {% for message in messages %}
+
+    <li>{{ message }}</li>
+
+
+    {% endfor %}
+    </ul>
+      </div>    <!-- Optional JavaScript -->
+
+  {% endif %}
+{% endwith %}
 <div class="row d-flex justify-content-center">
 
 {% from "admin/adding/_formhelper.html" import render_field %}
 <div class="forms col-md-6">
     <div class="title">
-<h2>Edit coupon</h2>
+<h2>Edit coupon #{{item.get_UID()}}</h2>
 </div>
+
+
+				{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-success" role="alert">
+      <ul class=flashes>
+
+    {% for message in messages %}
+
+    <li>{{ message }}</li>
+
+
+    {% endfor %}
+    </ul>
+      </div>    <!-- Optional JavaScript -->
+
+  {% endif %}
+{% endwith %}
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
     {{ render_field(form.UID, class='form-control', placeholder="123") }}
-    {{ render_field(form.coupon_code, class='form-control', placeholder="DISC10") }}
+    {{ render_field(form.couponcode, class='form-control', placeholder="DISC10") }}
     {{ render_field(form.discountlimit, class='form-control', placeholder="SGD$50.00") }}
     {{ render_field(form.minimumspent, class='form-control', placeholder="SGD$100.00") }}
     {{ render_field(form.expiredate,  class='dp form-control', placeholder="11/12/20") }}
-    {{form.submit}}
+     {{form.submit(class="btn btn-primary")}}
   </dl>
 </form>
     </div>

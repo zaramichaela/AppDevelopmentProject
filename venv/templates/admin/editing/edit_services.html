@@ -1,7 +1,7 @@
 {% extends 'admin/base.html' %}
 
 {%block title %}
-Add a new service
+editing service #{{item.get_UID()}}
 {%endblock %}
 
 {%block body %}
@@ -12,13 +12,31 @@ Add a new service
 </div>
 {% endif %}
 
+				{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="alert alert-danger" role="alert">
+      <ul class=flashes>
 
+    {% for message in messages %}
+
+    <li>{{ message }}</li>
+
+
+    {% endfor %}
+    </ul>
+      </div>    <!-- Optional JavaScript -->
+
+  {% endif %}
+{% endwith %}
+
+    </ul>
+      </div>    <!-- Optional JavaScript -->
 <div class="row d-flex justify-content-center">
 
 {% from "admin/adding/_formhelper.html" import render_field %}
 <div class="forms col-md-6">
     <div class="title">
-<h2>Add a new service</h2>
+<h2>Edit service #{{item.get_UID()}}</h2>
 </div>
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
@@ -29,7 +47,9 @@ Add a new service
     {{ render_field(form.description, class='form-control', placeholder="Input description of service here." ) }}
     {{ render_field(form.price, class='form-control', placeholder="SGD$20.00" ) }}
     {{ render_field(form.image, class='form-control') }}
-    {{form.submit}}
+          <small>If no new image is uploaded, the old image will be used.</small>
+          <p></p>
+     {{form.submit(class="btn btn-primary")}}
   </dl>
 </form>
     </div>

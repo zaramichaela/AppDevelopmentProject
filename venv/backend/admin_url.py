@@ -1,8 +1,6 @@
 from flask import Blueprint, abort
 from flask import render_template, request, flash,session,redirect, url_for
-from jinja2 import TemplateNotFound
-from backend.forms import new_sales_item,coupon_form,new_package,new_service
-from werkzeug.utils import secure_filename
+from backend.forms import *
 
 from functools import wraps
 from login.forms import create_admin_account
@@ -107,6 +105,7 @@ def add_shop_item():
 
     if request.method == 'POST' and form.validate():
         f = form.image.data
+
         f.save(ITEMSDIR + form.UID.data)
         # form["image_url"] = filename
         update_form = form.data.copy()
@@ -148,107 +147,6 @@ def list_sales_items():
     return render_template('admin/listing/list_sales_items.html', items=sales)
 
 
-
-#########################################################################################
-############### editing each objects information ########################################
-#########################################################################################
-
-@admin_pages.route('/admin/list/items/<itemid>/edit/', methods= ['GET','POST'])
-@authorize
-def edit_item(itemid):
-    context = {"message": ""}
-    item = itemcontroller.get_item_by_UID(itemid)
-    if(not item):
-        abort(404)
-    form = new_sales_item(formdata=request.form, obj=item)
-
-    if request.method == 'POST' and form.validate():
-        f = form.image.data
-        filename = secure_filename(f.filename)
-        f.save(ITEMSDIR + filename)
-        update_form = form.data.copy()
-        update_form["image_url"] = ITEMDIR + filename
-
-        item = itemcontroller.create_and_save_item(update_form)
-        if (item):
-            context ={"message":"You have created a new item"}
-        else:
-            context ={"error":"A error have occured..."}
-    return render_template('admin/editing/edit_items.html', form=form, message=context)
-
-
-@admin_pages.route('/admin/list/packages/<packageid>/edit/', methods= ['GET','POST'])
-@authorize
-def edit_package(packageid):
-    context = {"message": ""}
-    item = itemcontroller.get_package_by_UID(packageid)
-    if(not item):
-        abort(404)
-    form = new_package(formdata=request.form, obj=item)
-
-    if request.method == 'POST' and form.validate():
-        f = form.image.data
-        filename = secure_filename(f.filename)
-        f.save(ITEMSDIR + filename)
-        update_form = form.data.copy()
-        update_form["image_url"] = PACKAGEDIR + filename
-
-        item = itemcontroller.create_and_save_package(update_form)
-        if (item):
-            context ={"message":"You have edited and updated the package"}
-        else:
-            context ={"error":"A error have occured..."}
-    return render_template('admin/editing/edit_packages.html', form=form, message=context)
-
-
-@admin_pages.route('/admin/list/packages/<serviceid>/edit/', methods= ['GET','POST'])
-@authorize
-def edit_service(serviceid):
-    context = {"message": ""}
-    item = itemcontroller.get_service_by_UID(serviceid)
-    if(not item):
-        abort(404)
-    form = new_service(formdata=request.form, obj=item)
-
-    if request.method == 'POST' and form.validate():
-        f = form.image.data
-        filename = secure_filename(f.filename)
-        f.save(ITEMSDIR + filename)
-        update_form = form.data.copy()
-        update_form["image_url"] = SERVICEDIR + filename
-
-        item = itemcontroller.create_and_save_package(update_form)
-        if (item):
-            context ={"message":"You have edited and updated the service"}
-        else:
-            context ={"error":"A error have occured..."}
-    return render_template('admin/editing/edit_services.html', form=form, message=context)
-
-
-@admin_pages.route('/admin/list/coupons/<couponid>/edit/', methods= ['GET','POST'])
-@authorize
-def edit_coupon(couponid):
-    context = {"message": ""}
-    item = itemcontroller.get_coupon_by_UID(couponid)
-    if(not item):
-        abort(404)
-    form = coupon_form(formdata=request.form, obj=item)
-
-    if request.method == 'POST' and form.validate():
-        f = form.image.data
-        filename = secure_filename(f.filename)
-        f.save(ITEMSDIR + filename)
-        update_form = form.data.copy()
-        update_form["image_url"] = COUPONDIR + filename
-
-        item = itemcontroller.create_and_save_package(update_form)
-        if (item):
-            context ={"message":"You have edited and updated the coupon"}
-        else:
-            context ={"error":"A error have occured..."}
-        return render_template('admin/editing/edit_coupons.html', form=form, message=context)
-
-
 @admin_pages.route('/admin/list/sales_packages')
 @authorize
 def list_sales_packages():
@@ -271,6 +169,114 @@ def list_coupons():
 
 
 
+#########################################################################################
+############### editing each objects information ########################################
+#########################################################################################
+
+@admin_pages.route('/admin/list/items/<itemid>/edit/', methods= ['GET','POST'])
+@authorize
+def edit_item(itemid):
+    context = {"message": ""}
+    item = itemcontroller.get_item_by_UID(itemid)
+    if(not item):
+        abort(404)
+    form = edit_sales_item(formdata=request.form, obj=item)
+
+    if request.method == 'POST' and form.validate():
+        f = form.image.data
+        if(f):
+            f.save(ITEMSDIR + form.UID.data)
+        update_form = form.data.copy()
+        update_form["image_url"] = ITEMSDIR + form.UID.data
+
+        item2 = itemcontroller.create_and_save_item(update_form)
+        if (item2):
+            context ={"message":"You have created a new item"}
+            itemcontroller.remove_sales_item(item)
+            flash("You have updated the item "+ item.get_UID() +" information")
+            return redirect(url_for("admin_pages.list_sales_items"))
+        else:
+            context ={"error":"A error have occured..."}
+    return render_template('admin/editing/edit_items.html', form=form, message=context, item=item)
+
+
+@admin_pages.route('/admin/list/packages/<packageid>/edit/', methods= ['GET','POST'])
+@authorize
+def edit_package(packageid):
+    context = {"message": ""}
+    item = itemcontroller.get_package_by_UID(packageid)
+    if(not item):
+        abort(404)
+    form = edit_package_form(formdata=request.form, obj=item)
+
+    if request.method == 'POST' and form.validate():
+        f = form.image.data
+        if(f):
+            f.save(PACKAGEDIR + form.UID.data)
+        update_form = form.data.copy()
+        update_form["image_url"] = PACKAGEDIR + form.UID.data
+
+        item2 = itemcontroller.create_and_save_package(update_form)
+        if (item2):
+            context ={"message":"You have edited and updated the package"}
+            itemcontroller.remove_sales_package(item)
+            flash("You have updated the package "+ item2.get_UID() +" information")
+            return redirect(url_for("admin_pages.list_sales_packages"))
+        else:
+            context ={"error":"A error have occured..."}
+    return render_template('admin/editing/edit_packages.html', form=form, message=context, item=item)
+
+
+@admin_pages.route('/admin/list/services/<serviceid>/edit/', methods= ['GET','POST'])
+@authorize
+def edit_service(serviceid):
+    context = {"message": ""}
+    item = itemcontroller.get_service_by_UID(serviceid)
+    if(not item):
+        abort(404)
+    form = edit_service_form(formdata=request.form, obj=item)
+
+    if request.method == 'POST' and form.validate():
+        f = form.image.data
+        if(f):
+            f.save(SERVICEDIR + form.UID.data)
+        update_form = form.data.copy()
+        update_form["image_url"] = SERVICEDIR + form.UID.data
+
+        item2 = itemcontroller.create_and_save_service(update_form)
+        if (item2):
+            context ={"message":"You have edited and updated the service"}
+            itemcontroller.remove_sales_service(item)
+            flash("You have updated the service "+ item2.get_UID() +" information")
+            return redirect(url_for("admin_pages.list_sales_services"))
+        else:
+            context ={"error":"A error have occured..."}
+    return render_template('admin/editing/edit_services.html', form=form, message=context, item=item)
+
+
+@admin_pages.route('/admin/list/coupons/<couponid>/edit/', methods= ['GET','POST'])
+@authorize
+def edit_coupon(couponid):
+    context = {"message": ""}
+    item = itemcontroller.get_coupon_by_UID(couponid)
+    if(not item):
+        abort(404)
+    form = coupon_form(formdata=request.form, obj=item)
+
+    if request.method == 'POST' and form.validate():
+
+
+        item2 = itemcontroller.create_and_save_coupon(form.data)
+        if (item2):
+            itemcontroller.remove_sales_coupon(item)
+            flash("You have updated the coupon "+ item.get_UID() +" information")
+            return redirect(url_for("admin_pages.list_coupons"))
+        else:
+            context ={"error":"A error have occured..."}
+    return render_template('admin/editing/edit_coupons.html', form=form, message=context, item=item)
+
+
+
 
 @admin_pages.route('/admin/accounts/add', methods= ['GET','POST'])
 @authorize
@@ -278,7 +284,7 @@ def create_admin_accounts():
     context = {}
     form = create_admin_account()
     if request.method == 'POST' and form.validate():
-        success_flag = logincontroller.add_admin_account(form.password.data, form.password.data)
+        success_flag = logincontroller.add_admin_account(form.username.data, form.password.data)
         if (not success_flag):
             pass
         else:

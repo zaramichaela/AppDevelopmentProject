@@ -27,7 +27,8 @@ class coupon_factory:
             return None
 
     def create_coupon(self, dict):
-        return Coupon(dict['UID'], dict['coupon_code'],dict['percentage'],dict['discountlimit'], dict['minimumspent'], dict['expiredate'])
+        c1 = Coupon(dict['UID'], dict['couponcode'],dict['percentage'],dict['discountlimit'], dict['minimumspent'], dict['expiredate'])
+        return c1
 
     def check_coupon(self,coupon_code):
         #returns the coupons
