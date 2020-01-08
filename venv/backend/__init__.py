@@ -51,9 +51,7 @@ def cart():
     for u in userList:
         print(u.get_productName(), u.get_ID(), u.get_price(), u.get_quantity())
         print(u.computeTotalProduct())
-
-
-    return render_template("Cart.html", usersList=usersList, count=len(usersList))
+    return render_template("cart.html", usersList=usersList, count=len(usersList))
 
 
 @app.route('/login_validation', methods=['POST'])
