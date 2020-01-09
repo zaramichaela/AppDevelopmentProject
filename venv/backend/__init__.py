@@ -6,7 +6,7 @@ app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
 
 
-# app.register_blueprint(admin_pages)
+app.register_blueprint(admin_pages)
 #main items controller
 
 
