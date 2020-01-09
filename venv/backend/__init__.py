@@ -65,14 +65,17 @@ def login_validation():
 def not_found(e):
     return render_template('error_pages/404.html'), 404
 
+# To add custom error 403 page
 @app.errorhandler(403)
 def not_found(e):
     return render_template('error_pages/403.html'), 403
 
+# To add custom error 410 page
 @app.errorhandler(410)
 def not_found(e):
     return render_template('error_pages/410.html'), 410
 
+# To add custom error 500 page
 @app.errorhandler(500)
 def not_found(e):
     return render_template('error_pages/500.html'), 500
