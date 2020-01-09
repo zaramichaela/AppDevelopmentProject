@@ -105,12 +105,9 @@ def add_shop_item():
 
     if request.method == 'POST' and form.validate():
         f = form.image.data
-
         f.save(ITEMSDIR + form.UID.data)
-        # form["image_url"] = filename
         update_form = form.data.copy()
         update_form["image_url"] = ITEMSDIR + form.UID.data
-
         item = itemcontroller.create_and_save_item(update_form)
         if (item):
             context ={"message":"You have created a new item"}
@@ -286,10 +283,10 @@ def create_admin_accounts():
     if request.method == 'POST' and form.validate():
         success_flag = logincontroller.add_admin_account(form.username.data, form.password.data)
         if (not success_flag):
-            pass
+            flash("Error, you cannot create an account")
         else:
             context["message"] = "Account created."
-
+        form = create_admin_account()
     return render_template('admin/accounts/create_admin_accounts.html', form=form, message=context)
 
 @admin_pages.route('/admin/accounts/view')
