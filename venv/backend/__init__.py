@@ -24,7 +24,7 @@ def login():
     return render_template('login.html')
 
 @app.route('/register')
-def about():
+def register():
     return render_template('register.html')
 
 @app.route('/cart')
