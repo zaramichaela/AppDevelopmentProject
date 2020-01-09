@@ -1,7 +1,7 @@
 from flask import url_for, redirect, render_template, Flask, request, flash,session
 from flask_uploads import UploadSet, IMAGES,configure_uploads
-# from backend.admin_url import admin_pages
-# from backend.settings import *
+from backend.admin_url import admin_pages
+from backend.settings import *
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
 
@@ -60,6 +60,22 @@ def login_validation():
     password=request.form.get('password')
     return "The email is {} and the password is {}".format(email, password)
 
+# To add custom error 404 page
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('error_pages/404.html'), 404
+
+@app.errorhandler(403)
+def not_found(e):
+    return render_template('error_pages/403.html'), 403
+
+@app.errorhandler(410)
+def not_found(e):
+    return render_template('error_pages/410.html'), 410
+
+@app.errorhandler(500)
+def not_found(e):
+    return render_template('error_pages/500.html'), 500
 
 if __name__ == '__main__':
  app.run(debug=True)
