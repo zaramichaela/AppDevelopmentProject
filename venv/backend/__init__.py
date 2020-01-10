@@ -52,7 +52,7 @@ def add_shop_item():
         context ={"message":"You have created a new item"}
     else:
         print("failed")
-        context = {"message": "You did not managed to create the item"}
+        context = {"message": "You did not manage to create the item"}
     return render_template('create_sales.html', form=form, message=context)
 
 
@@ -94,7 +94,6 @@ def retrieveAccount():
         accountList.append(user)
 
     return render_template('RetrieveAccount.html', accountList = accountList, count =len(accountList))
-
 
 
 if __name__ == '__main__':
