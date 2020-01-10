@@ -11,9 +11,9 @@
 </body>
 </head>
 <body>
-     {% block navbar %}%}
-
-     {% endblock 
+     {% block navbar %}
+        {%html 'html/_Home.html' %}
+     {% endblock}
      <div class="container-fluid">
          {% block content %}
          {% endblock %}
