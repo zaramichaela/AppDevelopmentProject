@@ -1,11 +1,12 @@
 from flask import url_for, redirect, render_template, Flask, request, flash,session
 from flask_uploads import UploadSet, IMAGES,configure_uploads
-
-from backend.admin_url import admin_pages
-from backend.settings import *
+# from frontend.Forms import create_customer_account
+# import shelve
+ from backend.admin_url import admin_pages
+ from backend.settings import *
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
-app.register_blueprint(admin_pages)
+ app.register_blueprint(admin_pages)
 #main items controller
 
 
@@ -20,10 +21,24 @@ configure_uploads(app, (images,))
 
 @app.route('/')
 def login():
+
     return render_template('login.html')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
+    regCustomer = create_customer_account(request.form)
+    if request.method == 'POST' and create_customer_account.validate():
+        customerDict = {}
+        c = shelve.open('customers.db', 'c')
+
+        try:
+            customerDict = c['Customers']
+        except:
+            print('Error in retrieving Customers from customers.db.')
+
+        customer = Customer.Customer(create_customer_account.username.data, create_customer_account.password.data, create_customer_account.cfm_password.data, create_customer_account.email.data)
+
+        return redirect(url_for('home'))
     return render_template('register.html')
 
 
@@ -111,12 +126,6 @@ def cart():
         print(u.computeTotalProduct())
     return render_template("cart.html", usersList=usersList, count=len(usersList))
 
-
-@app.route('/login_validation', methods=['POST'])
-def login_validation():
-    email=request.form.get('email')
-    password=request.form.get('password')
-    return "The email is {} and the password is {}".format(email, password)
 
 # To add custom error 404 page
 @app.errorhandler(404)
