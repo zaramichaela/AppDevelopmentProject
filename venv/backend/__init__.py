@@ -5,8 +5,6 @@ from backend.admin_url import admin_pages
 from backend.settings import *
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
-
-
 app.register_blueprint(admin_pages)
 #main items controller
 
@@ -15,7 +13,7 @@ UPLOAD_FOLDER = '/uploads/'
 app.config['UPLOADED_IMAGES_DEST'] = '/uploads/'
 app.config['SECRET_KEY'] = 'THISISNOTASECRET'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['UPLOAD_PRODUCT'] = UPLOAD_FOLDER , 'product/'
+app.config['UPLOAD_PRODUCT'] = UPLOAD_FOLDER, 'product/'
 
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))

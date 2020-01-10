@@ -193,8 +193,7 @@ def edit_item(itemid):
     if request.method == 'POST' and form.validate():
         f = form.image.data
         if(f):
-            if os.path.exists(ITEMSDIR + form.UID.data):
-                os.remove(ITEMSDIR + form.UID.data)
+            os.remove(ITEMSDIR + form.UID.data)
             f.save(ITEMSDIR + form.UID.data)
         update_form = form.data.copy()
         update_form["image_url"] = ITEMSDIR + form.UID.data
