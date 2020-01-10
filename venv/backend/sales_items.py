@@ -12,3 +12,7 @@ class sales_items(sales_objects):
 
     def get_stocks(self):
         return self.stocks
+
+    def display_html(self):
+        html = "testing"
+        return html

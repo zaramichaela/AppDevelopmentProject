@@ -1,26 +1,34 @@
 from backend.coupon import *
 import shelve
+import pickle
 
 class coupon_factory:
     def __init__(self):
         pass
 
-    #create coupon code with dictionary
-    def create_coupon(self, dict):
-        coupon(dict[''],)
-
-
-    def delete_coupon(self, UID):
+    def get_all_coupons(self):
         s = shelve.open(settings.COUPON_DB)
-        error_flag = False
+        items = []
         try:
-            del s[UID]
-        except:
-            print(Exception)
-            error_flag = True
+            for key in s:
+                items.append(self.deserialize(s[key]))
+        except Exception as e:
+            print(e)
         finally:
             s.close()
-        return error_flag
+        return items
+
+
+
+    def deserialize(self, dict):
+        try:
+            return pickle.loads(dict)
+        except:
+            return None
+
+    def create_coupon(self, dict):
+        c1 = Coupon(dict['UID'], dict['couponcode'],dict['percentage'],dict['discountlimit'], dict['minimumspent'], dict['expiredate'])
+        return c1
 
     def check_coupon(self,coupon_code):
         #returns the coupons

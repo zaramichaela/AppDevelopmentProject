@@ -2,9 +2,10 @@ from datetime import date
 import shelve
 from backend import settings
 import simplejson as jsons
+import pickle
 
 #superclass for all sales objects
-class sales_objects(jsons.JsonSerializable):
+class sales_objects(object):
     #default init for creating a new object
     def __init__(self, UID,name, description, price, image_url):
         self.UID = UID #all item should have their unique UID
@@ -19,12 +20,9 @@ class sales_objects(jsons.JsonSerializable):
         self.UID = UID
 
 
-    #convert to dictionary to store in shelve
+    #convert to pickle to store in shelve
     def serialize(self):
-        if isinstance(self, date):
-            serial = self.isoformat()
-            return serial
-        return self.__dict__
+        return pickle.dumps(self)
 
 
     #run this to update the database
@@ -37,6 +35,16 @@ class sales_objects(jsons.JsonSerializable):
         finally:
             s.close()
         return False
+
+    def delete(self):
+        s = shelve.open(settings.ITEMS_DB)
+        try:
+            del s[self.UID]
+            return True
+        finally:
+            s.close()
+        return False
+
 
     def get_UID(self):
         return self.UID
@@ -64,5 +72,3 @@ class sales_objects(jsons.JsonSerializable):
 
     def package_flag(self):
         return False
-
-

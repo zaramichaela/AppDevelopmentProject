@@ -1,19 +1,43 @@
-import date as date
+import datetime
 import backend.settings as settings
+import shelve
+import pickle
 ## coupon object
 class Coupon:
     def __init__(self, UID, couponcode,percentage,discountlimit, minimumspent, expiredate):
         self.UID = UID
         self.couponcode = couponcode
-        self.percentage = percentage
-        self.discountlimit = discountlimit
+        self.set_percentage(percentage)
+        self.set_discountlimit(discountlimit)
+        self.set_minimumspent(minimumspent)
+        self.set_expiry_date(expiredate)
+
+    #set discount percentage
+    #check if within percentage otherwise, set to 0
+    def set_couponcode(self, couponcode):
+        self.couponcode = couponcode
+
+    def set_minimumspent(self, minimumspent):
         self.minimumspent = minimumspent
+
+    #set expiry date, make sure it is in DD-MM-YYYY otherwise exception
+    def set_expiry_date(self, expiredate):
         self.expiredate = expiredate
+
+    def set_percentage(self, percentage):
+        if percentage >= 0 and percentage < 100:
+            self.percentage = percentage
+        else:
+            self.percentage = 0
+
+    #set discount limit amount.
+    def set_discountlimit(self, discountlimit):
+        self.discountlimit = discountlimit
 
 
     #check date expires
     def check_validity(self):
-        if(date.today() > self.expiredate):
+        if(datetime.date.today() > self.expiredate):
             return False
         return True
 
@@ -34,17 +58,18 @@ class Coupon:
 
 
     def serialize(self):
-        if isinstance(self, date):
-            serial = self.isoformat()
-            return serial
-        return self.__dict__
+        return pickle.dumps(self)
+
+
+    def get_UID(self):
+        return self.UID
 
     def save(self):
-       s = shelve.open(settings.COUPON_DB)
-       try:
+        s = shelve.open(settings.COUPON_DB)
+        try:
+            print(self.UID)
             s[self.UID] = self.serialize()
             return True
-       finally:
+        finally:
             s.close()
-       return False
-
+        return False

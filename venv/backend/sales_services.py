@@ -1,11 +1,11 @@
 from backend.sales_objects import sales_objects
 from backend import settings
+import shelve
 
 class sales_services(sales_objects):
 
-    def __init__(self, UID,name, description, price, image_url, datetime):
+    def __init__(self, UID,name, description, price, image_url):
         super().__init__(UID,name, description, price, image_url)
-        self.datetime = datetime #available times
 
     #save function override
     #save in service database
