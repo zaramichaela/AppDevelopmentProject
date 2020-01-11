@@ -1,12 +1,11 @@
 from flask import url_for, redirect, render_template, Flask, request, flash,session
 from flask_uploads import UploadSet, IMAGES,configure_uploads
-# from frontend.Forms import create_customer_account
 # import shelve
- from backend.admin_url import admin_pages
- from backend.settings import *
+from backend.admin_url import admin_pages
+from backend.settings import *
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
- app.register_blueprint(admin_pages)
+app.register_blueprint(admin_pages)
 #main items controller
 
 
@@ -26,19 +25,7 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    regCustomer = create_customer_account(request.form)
-    if request.method == 'POST' and create_customer_account.validate():
-        customerDict = {}
-        c = shelve.open('customers.db', 'c')
 
-        try:
-            customerDict = c['Customers']
-        except:
-            print('Error in retrieving Customers from customers.db.')
-
-        customer = Customer.Customer(create_customer_account.username.data, create_customer_account.password.data, create_customer_account.cfm_password.data, create_customer_account.email.data)
-
-        return redirect(url_for('home'))
     return render_template('register.html')
 
 
