@@ -4,6 +4,7 @@ from flask_uploads import UploadSet, IMAGES,configure_uploads
 from backend.admin_url import admin_pages
 from backend.settings import *
 from flask_login import LoginManager
+from login.forms import customer_registration
 
 
 
@@ -50,7 +51,17 @@ def do_user_login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    form = customer_registration()
+    if request.method == 'POST' and form.validate():
+
+        flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
+        print(flag)
+        if(flag):
+            flash("You have registered, please login", "success")
+            return redirect(url_for('login'))
+        else:
+            flash("you have failed to register, something went wrong, try again", "error")
+    return render_template('register.html', form=form)
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -167,3 +178,5 @@ def not_found(e):
 
 if __name__ == '__main__':
  app.run(debug=True)
+
+

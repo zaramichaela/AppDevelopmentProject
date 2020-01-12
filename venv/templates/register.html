@@ -52,28 +52,19 @@
 
   {% endif %}
 {% endwith %}
-				<form class="login100-form validate-form p-b-33 p-t-5" action="{{ url_for('login')}}" method="POST">
 
-					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="Username">
-						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
-					</div>
-                    <div class="wrap-input100 validate-input" data-validate = "Enter email">
-						<input class="input100" type="text" name="email" placeholder="Email">
-						<span class="focus-input100" data-placeholder="&#x2709;"></span>
-					</div>
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="password" placeholder="Password">
-						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
-					</div>
-                    <div class="wrap-input100 validate-input" data-validate="Enter password again">
-						<input class="input100" type="password" name="confirm-password" placeholder="Confirm Password">
-						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
-					</div>
+				{% from "includes/_register_form_helper.html" import render_email,render_username,render_password %}
+				{% from "includes/_formHelper.html" import render_field %}
+
+				<form class="login100-form validate-form p-b-33 p-t-5" action="{{ url_for('register')}}" method="POST">
+					{{render_email(form.email, placeholder="Email",class="input100")}}
+					{{render_username(form.username, placeholder="Username",class="input100")}}
+					{{render_password(form.password, placeholder="Password", class="input100")}}
+					{{render_password(form.cfm_password, placeholder="Confirm Password", class="input100")}}
+
+
 					<div class="container-login100-form-btn m-t-32">
-						<button class="login100-form-btn">
-							Login
-						</button>
+						{{form.submit(class="login100-form-btn")}}
 					</div>
 
 					<div>

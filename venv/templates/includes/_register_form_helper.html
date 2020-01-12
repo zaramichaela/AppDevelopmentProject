@@ -1,0 +1,50 @@
+<!--all these macro functions helps to organize the project and allow cleaner html files-->
+
+
+
+{% macro render_username(i) %}
+<div class="wrap-input100">
+{{ i(**kwargs)|safe }}
+<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+</div>
+    {% if i.errors %}
+        {% for error in i.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+
+{% endmacro %}
+
+
+
+{% macro render_email(i) %}
+<div class="wrap-input100 validate-input">
+	{{ i(**kwargs)|safe }}
+	<span class="focus-input100" data-placeholder="&#x2709;"></span>
+
+
+</div>
+	    {% if i.errors %}
+        {% for error in i.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+
+{% macro render_password(i) %}
+
+<div class="wrap-input100 ">
+{{ i(**kwargs)|safe }}
+<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+
+
+</div>
+	    {% if i.errors %}
+        {% for error in i.errors %}
+            <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+
