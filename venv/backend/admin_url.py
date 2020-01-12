@@ -66,6 +66,9 @@ def add_coupons():
     context = {}
     cform = coupon_form()
     if request.method == 'POST' and cform.validate():
+        if(itemcontroller.get_coupon_by_UID(cform.UID.data)):
+            flash("You have input an UID that exists, please try again.")
+            return render_template('admin/adding/create_coupons.html', form=cform, message=context)
         new_coupon = itemcontroller.create_and_save_coupon(cform.data)
         if(new_coupon.save()):
             context={
@@ -83,6 +86,9 @@ def add_shop_service():
     form = new_service()
 
     if request.method == 'POST' and form.validate():
+        if(itemcontroller.get_service_by_UID(form.UID.data)):
+            flash("You have input an UID that exists, please try again.")
+            return render_template('admin/adding/create_services.html', form=form, message=context)
         f = form.image.data
         f.save(SERVICEDIR + form.UID.data)
         # form["image_url"] = filename
@@ -104,6 +110,8 @@ def add_shop_item():
     form = new_sales_item()
 
     if request.method == 'POST' and form.validate():
+        if(itemcontroller.get_item_by_UID(form.UID.data)):
+            flash("You have input an UID that exists, please try again.")
         f = form.image.data
         f.save(ITEMSDIR + form.UID.data)
         update_form = form.data.copy()
@@ -122,6 +130,9 @@ def add_shop_package():
     form = new_package()
 
     if request.method == 'POST' and form.validate():
+        if(itemcontroller.get_package_by_UID(form.UID.data)):
+            flash("You have input an UID that exists, please try again.")
+            return render_template('admin/adding/create_packages.html', form=form, message=context)
         f = form.image.data
         f.save(PACKAGEDIR + form.UID.data)
         update_form = form.data.copy()
@@ -246,6 +257,7 @@ def edit_item(itemid):
     if request.method == 'POST' and form.validate():
         f = form.image.data
         if(f):
+            os.remove(ITEMSDIR + form.UID.data)
             f.save(ITEMSDIR + form.UID.data)
         update_form = form.data.copy()
         update_form["image_url"] = ITEMSDIR + form.UID.data
@@ -273,6 +285,8 @@ def edit_package(packageid):
     if request.method == 'POST' and form.validate():
         f = form.image.data
         if(f):
+            if os.path.exists(PACKAGEDIR + form.UID.data):
+                os.remove(PACKAGEDIR + form.UID.data)
             f.save(PACKAGEDIR + form.UID.data)
         update_form = form.data.copy()
         update_form["image_url"] = PACKAGEDIR + form.UID.data
@@ -300,6 +314,8 @@ def edit_service(serviceid):
     if request.method == 'POST' and form.validate():
         f = form.image.data
         if(f):
+            if os.path.exists(SERVICEDIR + form.UID.data):
+                os.remove(SERVICEDIR + form.UID.data)
             f.save(SERVICEDIR + form.UID.data)
         update_form = form.data.copy()
         update_form["image_url"] = SERVICEDIR + form.UID.data
