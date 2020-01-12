@@ -23,15 +23,41 @@ app.config['UPLOAD_PRODUCT'] = UPLOAD_FOLDER, 'product/'
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+
 @app.route('/login')
 def login():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return render_template('home.html')
 
-    return render_template('login.html')
+@app.route('/login/validation', methods=['POST'])
+def do_user_login():
+    username = request.form['username']
+    password = request.form['password']
+    if(logincontroller.login_user(username, password)):
+        session['logged_in'] = True
+        session['logged_in_user'] = username
+    else:
+        flash('Wrong credentials!')
+    return redirect(url_for("login"))
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-
     return render_template('register.html')
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session['logged_in'] = False
+    session['logged_in_user'] = ''
+    return redirect(url_for('home'))
+
 
 
 @app.route('/add/items/', methods= ['GET','POST'])

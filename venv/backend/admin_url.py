@@ -219,10 +219,10 @@ def delete_service(serviceid):
         abort(404)
     flag = itemcontroller.remove_sales_service(item)
     if flag:
-        context["message"] = "You have succeed in removing item" + item.get_UID()
+        flash("You have succeed in removing item" + item.get_UID(), "success")
     else:
-        context["error"] = "There's been a error removing" + item.get_UID()
-    return render_template("", context=context)
+        flash("There's been a error removing" + item.get_UID(), "failure")
+    return redirect(url_for("admin_pages.list_sales_services"))
 
 
 @admin_pages.route('/admin/list/coupon/<couponid>/delete/', methods= ['GET','POST'])
@@ -256,6 +256,8 @@ def edit_item(itemid):
 
     if request.method == 'POST' and form.validate():
         f = form.image.data
+        print(f)
+        print(os.path.exists(PACKAGEDIR + form.UID.data))
         if(f):
             os.remove(ITEMSDIR + form.UID.data)
             f.save(ITEMSDIR + form.UID.data)
