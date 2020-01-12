@@ -165,6 +165,70 @@ def list_coupons():
     return render_template('admin/listing/list_coupons.html', items=sales)
 
 
+#########################################################################################
+############### deleting items and objects ########################################
+#########################################################################################
+
+@admin_pages.route('/admin/list/items/<itemid>/delete/', methods= ['GET','POST'])
+@authorize
+def delete_sales_item(itemid):
+    context = {"message": ""}
+    item = itemcontroller.get_item_by_UID(itemid)
+    if(not item):
+        abort(404)
+    flag = itemcontroller.remove_sales_item(item)
+    if flag:
+        context["message"] = "You have succeed in removing item" + item.get_UID()
+    else:
+        context["error"] = "There's been a error removing" + item.get_UID()
+    return render_template("", context=context)
+
+
+@admin_pages.route('/admin/list/package/<packageid>/delete/', methods= ['GET','POST'])
+@authorize
+def delete_package(packageid):
+    context = {"message": ""}
+    item = itemcontroller.get_package_by_UID(packageid)
+    if(not item):
+        abort(404)
+    flag = itemcontroller.remove_sales_package(item)
+    if flag:
+        context["message"] = "You have succeed in removing item" + item.get_UID()
+    else:
+        context["error"] = "There's been a error removing" + item.get_UID()
+    return render_template("", context=context)
+
+
+@admin_pages.route('/admin/list/service/<serviceid>/delete/', methods= ['GET','POST'])
+@authorize
+def delete_service(serviceid):
+    context = {"message": ""}
+    item = itemcontroller.get_service_by_UID(serviceid)
+    if(not item):
+        abort(404)
+    flag = itemcontroller.remove_sales_service(item)
+    if flag:
+        context["message"] = "You have succeed in removing item" + item.get_UID()
+    else:
+        context["error"] = "There's been a error removing" + item.get_UID()
+    return render_template("", context=context)
+
+
+@admin_pages.route('/admin/list/coupon/<couponid>/delete/', methods= ['GET','POST'])
+@authorize
+def delete_coupon(couponid):
+    context = {"message": ""}
+    item = itemcontroller.get_coupon_by_UID(couponid)
+    if(not item):
+        abort(404)
+    flag = itemcontroller.remove_sales_coupon(item)
+    if flag:
+        context["message"] = "You have succeed in removing item" + item.get_UID()
+    else:
+        context["error"] = "There's been a error removing" + item.get_UID()
+    return render_template("", context=context)
+
+
 
 #########################################################################################
 ############### editing each objects information ########################################

@@ -95,36 +95,3 @@ def get_all_admin():
     finally:
         s.close()
     return all
-# def find_admin_username(username):
-#       userhash = ''
-#       s = shelve.open(settings.ADMIN_DB)
-#       try:
-#           userhash = s[str(username)]
-#           return userhash
-#       except Exception as e:
-#           print(e)
-#           return False
-#       finally:
-#           s.close()
-#       return userhash
-
-# def login_admin(username, password):
-#     found_hash = find_admin_username("Zarateo")
-#     password_hash = hash_password(password)
-#     if(found_hash and password_hash == found_hash):
-#         return True
-#     else:
-#         return False
-#
-
-#
-# def delete_admin_account(username):
-#     s = shelve.open(settings.ADMIN_DB)
-#     try:
-#         del s[username]
-#     except:
-#         print(Exception)
-#         return False
-#     finally:
-#         s.close()
-#     return True

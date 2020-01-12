@@ -136,3 +136,37 @@ class sales_factory:
         salesentry = sales_entry(sales_object=sales_entry, quantity=quantity)
         return salesentry
 
+
+    def delete_db_sales_item(self, itemuid):
+        #delete item from shelve database
+        s = shelve.open(settings.ITEMS_DB)
+        try:
+            del s[itemuid]
+            return True
+        except:
+            return False
+        finally:
+            s.close()
+
+    def delete_db_sales_service(self, serviceuid):
+        #delete service from shelve database
+        s = shelve.open(settings.SERVICES_DB)
+        try:
+            del s[serviceuid]
+            return True
+        except:
+            return False
+        finally:
+            s.close()
+
+    def delete_db_sales_package(self, packageuid):
+        #delete packages from shelve database
+        s = shelve.open(settings.PACKAGES_DB)
+        try:
+            del s[packageuid]
+            return True
+        except:
+            return False
+        finally:
+            s.close()
+

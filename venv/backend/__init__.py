@@ -2,10 +2,13 @@ from flask import url_for, redirect, render_template, Flask, request, flash,sess
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 from backend.admin_url import admin_pages
 from backend.settings import *
+from flask_login import LoginManager
+
+
+
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
-
-
+login = LoginManager(app)
 app.register_blueprint(admin_pages)
 #main items controller
 
@@ -19,7 +22,7 @@ app.config['UPLOAD_PRODUCT'] = UPLOAD_FOLDER , 'product/'
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
-@app.route('/')
+@app.route('/login')
 def login():
     return render_template('login.html')
 
