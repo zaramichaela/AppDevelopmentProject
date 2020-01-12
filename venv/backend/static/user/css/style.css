@@ -8846,7 +8846,7 @@ h1, h2, h3, h4, h5,
   transition: all 0.3s ease; }
   @media (max-width: 991.98px) {
     .product {
-      margin-bottom: 30px; } }
+      margin-bottom: 1px; } }
   .product .img-prod {
     position: relative;
     display: block;

@@ -28,6 +28,9 @@ configure_uploads(app, (images,))
 def home():
     return render_template('home.html')
 
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
 
 @app.route('/login')
 def login():
