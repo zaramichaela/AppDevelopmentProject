@@ -1,5 +1,23 @@
 {% extends 'admin/base.html' %}
 
+{% block head%}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+<script>
+    $(document).ready(function(){
+      var date_input=$('input[name="expiredate"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'dd/mm/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>
+{% endblock %}
 {% block title %}
 Add a new coupon
 {% endblock %}
@@ -36,8 +54,8 @@ Add a new coupon
 </div>
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
-{{ form.csrf_token }}
       <dl>
+          {{ form.csrf_token }}
     {{ render_field(form.UID, class='form-control', placeholder="123") }}
     {{ render_field(form.couponcode, class='form-control', placeholder="DISC10") }}
     {{ render_field(form.percentage, class='form-control', placeholder="50%") }}

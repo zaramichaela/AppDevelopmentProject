@@ -8,11 +8,11 @@ USER_DB = "user.db"
 
 class user_account(object):
 
-    def __init__(self, username, email, password):
+    def __init__(self, username, email, password, ban_flag=False):
         self.username = username
         self.email = email
         self.set_password(password)
-        self.ban_flag = False
+        self.ban_flag = ban_flag
 
 
     def get_username(self):

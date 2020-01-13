@@ -76,10 +76,11 @@ def do_user_login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = customer_registration()
-    print("GG")
+    if(logincontroller.find_user_username(form.username.data)):
+        flash("Username exists, please  choose another.", "error")
     if request.method == 'POST' and form.validate():
+
         flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
-        print(flag)
         if(flag):
             flash("You have registered, please login", "success")
             return redirect(url_for('login'))

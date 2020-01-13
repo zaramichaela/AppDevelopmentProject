@@ -50,40 +50,14 @@
     </ul>
       </div>    <!-- Optional JavaScript -->
 
-
   {% endif %}
 {% endwith %}
-
-  <div class="alert alert-danger" role="alert">
-      <ul class=flashes>
-{% if form.email.errors %}
-    {% for error in form.email.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-		  {%endif%}
-{% if form.email.username %}
-    {% for error in form.username.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-		  {%endif%}
-
-{% if form.email.password %}
-    {% for error in form.password.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-		  {%endif%}
-{% if form.cfm_password.errors %}
-    {% for error in form.cfm_password.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-		  {%endif%}
-    </ul>
-      </div>    <!-- Optional JavaScript -->
 
 				{% from "includes/_register_form_helper.html" import render_email,render_username,render_password %}
 				{% from "includes/_formHelper.html" import render_field %}
 
-				<form class="login100-form validate-form p-b-33 p-t-5" action="{{ url_for('register')}}" method="POST">
+				<form class="login100-form validate-form p-b-33 p-t-5" method="POST">
+					{{ form.csrf_token }}
 					{{render_email(form.email, placeholder="Email",class="input100")}}
 					{{render_username(form.username, placeholder="Username",class="input100")}}
 					{{render_password(form.password, placeholder="Password", class="input100")}}

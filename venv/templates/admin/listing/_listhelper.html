@@ -128,13 +128,16 @@
             {{i.get_username()}}
         </td>
         <td>
+            {{i.get_ban_flag()}}
+        </td>
+        <td>
              <center>
                  {% if i.get_ban_flag() %}
-            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i.get_username())}}">unBan</a>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.ban_user_account', username=i.get_username())}}">unBan</a>
                 {%else%}
-             <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i.get_username())}}">Ban</a>
+             <a class="btn btn-primary" href="{{url_for('admin_pages.ban_user_account', username=i.get_username())}}">Ban</a>
                  {% endif %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.edit_item', itemid=i.get_username())}}">Delete</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.del_user_account', username=i.get_username())}}">Delete</a>
              </center>
         </td>
 {% endmacro %}

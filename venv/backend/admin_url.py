@@ -5,6 +5,7 @@ from backend.forms import *
 from functools import wraps
 from login.forms import create_admin_account
 from backend.settings import *
+from login.user_account import *
 
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
 
@@ -44,6 +45,7 @@ def do_admin_login():
     password = request.form['password']
     if(logincontroller.login_admin(username, password)):
         session['admin_logged_in'] = True
+        session['admin_username'] = request.form['username']
     else:
         flash('Wrong credentials!')
     return redirect(url_for("admin_pages.admin"))
@@ -52,6 +54,7 @@ def do_admin_login():
 @authorize
 def admin_logout():
     session['admin_logged_in'] = False
+    session['admin_username'] = ""
     return redirect(url_for("admin_pages.admin"))
 
 
@@ -192,7 +195,7 @@ def delete_sales_item(itemid):
     if flag:
         flash("You have succeed in removing item " + item.get_UID(), "success")
     else:
-        flash("There's been a error removing " + item.get_UID(), "failure")
+        flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_sales_items"))
 
 
@@ -205,9 +208,9 @@ def delete_package(packageid):
         abort(404)
     flag = itemcontroller.remove_sales_package(item)
     if flag:
-        context["message"] = "You have succeed in removing item " + item.get_UID()
+        flash("You have succeed in removing item " + item.get_UID(), "success")
     else:
-        context["error"] = "There's been a error removing " + item.get_UID()
+        flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_sales_packages"))
 
 
@@ -222,7 +225,7 @@ def delete_service(serviceid):
     if flag:
         flash("You have succeed in removing item " + item.get_UID(), "success")
     else:
-        flash("There's been a error removing " + item.get_UID(), "failure")
+        flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_sales_services"))
 
 
@@ -235,9 +238,9 @@ def delete_coupon(couponid):
         abort(404)
     flag = itemcontroller.remove_sales_coupon(item)
     if flag:
-        context["message"] = "You have succeed in removing item " + item.get_UID()
+        flash("You have succeed in removing item " + item.get_UID(),"success")
     else:
-        context["error"] = "There's been a error removing " + item.get_UID()
+        flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_coupons"))
 
 
@@ -256,9 +259,8 @@ def edit_item(itemid):
     form = edit_sales_item(formdata=request.form, obj=item)
 
     if request.method == 'POST' and form.validate_on_submit():
-
+        f = form.image.data
         print(os.getcwd())
-        print(f)
         print(os.path.exists(PACKAGEDIR + form.UID.data))
         if(f):
             os.remove(ITEMSDIR + form.UID.data)
@@ -296,7 +298,7 @@ def edit_package(packageid):
                 os.remove(PACKAGEDIR + form.UID.data)
         else:
             os.rename(PACKAGEDIR+packageid,PACKAGEDIR+form.UID.data)
-            f.save(PACKAGEDIR + form.UID.data)
+
         update_form = form.data.copy()
         update_form["image_url"] = PACKAGEDIR + form.UID.data
         itemcontroller.remove_sales_package(item)
@@ -306,7 +308,7 @@ def edit_package(packageid):
             flash("You have updated the package "+ item2.get_UID() +" information")
             return redirect(url_for("admin_pages.list_sales_packages"))
         else:
-            context ={"error":"A error have occured..."}
+            context ={"error":"A error have occurred..."}
             itemcontroller.all_packages(item)
             item.save()
     return render_template('admin/editing/edit_packages.html', form=form, message=context, item=item)
@@ -328,7 +330,7 @@ def edit_service(serviceid):
                 os.remove(SERVICEDIR + form.UID.data)
         else:
             os.rename(SERVICEDIR+serviceid,SERVICEDIR+form.UID.data)
-            f.save(SERVICEDIR + form.UID.data)
+
         update_form = form.data.copy()
         update_form["image_url"] = SERVICEDIR + form.UID.data
 
@@ -381,7 +383,7 @@ def create_admin_accounts():
         if (not success_flag):
             flash("Error, you cannot create an account")
         else:
-            context["message"] = "Account created."
+            context["message"] = "Admin account created."
         form = create_admin_account()
     return render_template('admin/accounts/create_admin_accounts.html', form=form, message=context)
 
@@ -392,18 +394,29 @@ def list_admin_accounts():
     items = logincontroller.get_all_admins()
     return render_template('admin/accounts/list_admin_accounts.html',items=items)
 
-@admin_pages.route('/admin/accounts/admin/<username>/delete')
+@admin_pages.route('/admin/accounts/admins/<username>/delete/')
 @authorize
 def del_admin_account(username):
-    flag = logincontroller.delete_admin_account(username)
+    flag = logincontroller.find_user_username(username)
     if(not flag):
         abort(404)
     if flag:
-        flash("You have deleted the account " + username, "success")
+        flash("You have deleted the admin user " + username, "success")
+        logincontroller.delete_admin_account(username)
     else:
-        flash("an error have occurred, please try again", "failure")
-    items = logincontroller.get_all_admins()
-    return redirect(url_for("list_admin_accounts"))
+        flash("an error have occurred, please try again", "error")
+    return redirect(url_for("admin_pages.list_admin_accounts"))
+
+@admin_pages.route('/admin/accounts/admin/changepassword/', methods= ['GET','POST'])
+@authorize
+def change_admin_password():
+    context={}
+    item = logincontroller.find_user_username(session['admin_username'])
+    form = edit_admin_account()
+    if(request.method == "POST" and form.validate()):
+        username = session["admin_username"]
+        logincontroller.change_admin_password(username, form.old_password.data, form.password.data)
+    return render_template('admin/accounts/edit_admin_accounts.html',form =form,message=context)
 
 
 @admin_pages.route('/admin/accounts/users/view')
@@ -412,3 +425,36 @@ def list_users_accounts():
     context = {}
     items = logincontroller.get_all_users()
     return render_template('admin/accounts/list_users_accounts.html',items=items)
+
+
+
+@admin_pages.route('/admin/accounts/users/<username>/delete/')
+@authorize
+def del_user_account(username):
+    item = logincontroller.find_user_username(username)
+    if(not item):
+        abort(404)
+    if item:
+        flash("You have deleted the user " + username, "success")
+        logincontroller.del_user_account(username)
+    else:
+        flash("an error have occurred, please try again", "error")
+    items = logincontroller.get_all_admins()
+    return redirect(url_for("admin_pages.list_users_accounts"))
+
+@admin_pages.route('/admin/accounts/users/<username>/ban/')
+@authorize
+def ban_user_account(username):
+    user = logincontroller.find_user_username(username)
+    if(not user):
+        abort(404)
+    if user:
+        flash("You have ban the user " + username, "success")
+        if(user.get_ban_flag()):
+            logincontroller.set_ban_user_flag(user, False)
+        else:
+            logincontroller.set_ban_user_flag(user, True)
+    else:
+        flash("an error have occurred, please try again", "error")
+    items = logincontroller.get_all_admins()
+    return redirect(url_for("admin_pages.list_users_accounts"))

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,BooleanField,SubmitField,DecimalField,TextAreaField,IntegerField,DateField, validators
+from wtforms import StringField,BooleanField,SubmitField,DecimalField,TextAreaField,IntegerField,DateField, validators, PasswordField
 from flask_wtf.file import FileField, FileRequired,FileAllowed
 from wtforms.validators import DataRequired
 from flask_uploads import UploadSet, IMAGES,configure_uploads
@@ -82,3 +82,14 @@ class edit_service_form(FlaskForm):
     price = DecimalField("Price: ", validators=[validators.NumberRange(min=1),DataRequired()])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!') ])
     submit = SubmitField()
+
+
+
+
+
+class edit_admin_account(FlaskForm):
+    old_password = PasswordField("Old Password:", validators=[validators.Length(min=8, max=16) ,DataRequired()])
+    password = PasswordField("New Password:", validators=[validators.Length(min=8, max=16) ,DataRequired(), validators.EqualTo('cfm_password', message='Passwords must match')])
+    cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16) ,DataRequired()])
+    submit = SubmitField()
+

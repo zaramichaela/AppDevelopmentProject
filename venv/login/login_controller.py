@@ -22,7 +22,7 @@ class login_controller():
 
     def find_user_username(self, username):
         for i in self.all_users:
-            if(i.get_username == username):
+            if(i.get_username() == username):
                 return i
         return False
 
@@ -35,15 +35,21 @@ class login_controller():
 
     def del_user_account(self, username):
         user = self.find_user_username(username)
+        print(username)
         self.all_users.remove(user)
         s = shelve.open(settings.USER_DB)
         try:
             del s[username]
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
         finally:
             s.close()
+
+    def set_ban_user_flag(self,user ,flag):
+        user.set_ban_flag(flag)
+        user.save()
 
     def user_change_pass(self, username, oldpassword, newpassword):
         user = self.login_admin(username, oldpassword)
@@ -83,11 +89,10 @@ class login_controller():
     def login_admin(self, username, password):
         details = self.find_admin_username(username)
         print(details)
-        print(self.all_admins)
         if(not details):
             return False
         if(hash_password(password) == details["hash"]):
-            return True
+            return details
         return False
 
     def add_admin_account(self, username, password):
@@ -127,6 +132,16 @@ class login_controller():
             else:
                 return False
 
+    def change_admin_password(self, username, oldpassword, newpassword):
+        user = self.login_admin(username, oldpassword)
+        if(user):
+            user["hash"] = hash_password(newpassword)
+            self.add_admin_account(username, newpassword)
+            flash("Password is changed", "success")
+            return True
+        else:
+            flash("Old password is wrong", "error")
+            return False
 
     def get_all_admins(self):
         print(self.all_admins)
