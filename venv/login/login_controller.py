@@ -128,8 +128,6 @@ class login_controller():
                 return False
 
 
-
-
     def get_all_admins(self):
         print(self.all_admins)
         return self.all_admins

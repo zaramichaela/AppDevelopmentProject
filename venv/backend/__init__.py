@@ -76,6 +76,7 @@ def do_user_login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = customer_registration()
+    print("GG")
     if request.method == 'POST' and form.validate():
         flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
         print(flag)
@@ -84,6 +85,7 @@ def register():
             return redirect(url_for('login'))
         else:
             flash("you have failed to register, something went wrong, try again", "error")
+
     return render_template('register.html', form=form)
 
 @app.route('/logout', methods=['GET', 'POST'])
