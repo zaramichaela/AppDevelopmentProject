@@ -34,7 +34,7 @@
 		    		<div class="row d-flex">
 		    			<div class="col-md pr-4 d-flex topper align-items-center" style="color:white;">
 							{% if session['logged_in']%}
-							Hello, {{session['logged_in_user']}}
+							Hello, {{session['logged_in_user']}}!
 							{% else %}
 							Hello Stranger
 								{% endif %}
@@ -75,7 +75,7 @@
 	          <li class="nav-item active"><a href="{{url_for('about')}}" class="nav-link">About</a></li>
 <!--	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>-->
 	          <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item cta cta-colored"><a href="{{url_for('cart')}}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
 
 	        </ul>
 	      </div>
@@ -211,71 +211,105 @@
             <div class="carousel-testimony owl-carousel ftco-animate">
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_1.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrlee.jpeg)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">Marketing Manager</span>
+                    <p class="mb-4 pl-4 line">
+                        Karen's TCM is trustworthy, it has been established for a very long time and has recently
+                        offer online shopping, when you purchase something online, it also comes with free delivery
+                        services. The delivery is quite fast, usually ranging from 1 to 3 days and the goods have
+                        always arrived in perfect condition.(I myself personally shopped online for more than 10 time).
+                    </p>
+                    <p class="name">Mr Lee</p>
+                    <span class="position">Accountant</span>
                   </div>
                 </div>
               </div>
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_2.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrsrena.jpg)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">Interface Designer</span>
+                    <p class="mb-4 pl-4 line">
+                        This TCM is one of the most unique ones i have ever visited online, typically it is hard to find
+                        TCM online stores, however it is even harder to find online Traditional Chinese treatments, with
+                        patients waiting for the doctors to arrive instead of queuing up at the clinic. This allows my
+                        mother to seek treatment such as Acupuncture at home without me having to worry about her queue
+                        for long hours outside waiting for the treatment. The prices of the door to door treatment is
+                        also very reasonable.
+                    </p>
+                    <p class="name">Mrs Rena</p>
+                    <span class="position">Manager</span>
                   </div>
                 </div>
               </div>
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_3.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mdmaisha.jfif)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
+                    <p class="mb-4 pl-4 line">
+                        This store is without a doubt one of the best to buy TCM products from. The instructions provided
+                        on how to use the medicines provided is also very clear and concise and I was able to understand it
+                        very easily. The prices are very affordable and reasonable. The handling of customers and
+                        queries posed were professional and serve as a testament to the fact that the company has
+                        spared no expense in training the staff members. Overall, Ill rate this a definite 10/10
+                        for customer service.
+                    </p>
+                    <p class="name">Mdm Aisha</p>
                     <span class="position">UI Designer</span>
                   </div>
                 </div>
               </div>
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user//person_1.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrchia.jpg)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">Web Developer</span>
+                    <p class="mb-4 pl-4 line">
+                        First off, the customer
+                        service. The customer service is flawless and all the staff members treat every customer with courtesy and respect which many big companies fail to do.
+                        Secondly, the website. The website has been designed
+                        extremely well, and all the tool-tips and tabs were intricately designed. Lastly, the products. They are effective and the speed of their product delivery is also
+                        nothing to be looked down upon. Even for the people who are new to to TCM, I recommend checking this store out.
+
+                    </p>
+                    <p class="name">Mr Chia</p>
+                    <span class="position">Cybersecurity Specialist</span>
                   </div>
                 </div>
               </div>
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_1.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrsoh.jpg)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">System Analyst</span>
+                    <p class="mb-4 pl-4 line">
+                        This store is amazing, I placed my orders at 3am in the morning and I manage to to receive my
+                        goods on the same evening. The products they supply are trustworthy and up to
+                        standard. Totally worth the price I am paying for, in fact the packaged herbs they supply
+                        might be more effective than the ones weighed out at some other shops. Housewives if you are
+                        busy and need Traditional Chinese Medicine, you can take a look at this webpage and order to
+                        your hearts content without having to carry the products home as they offer free and fast
+                        delivery services.
+                    </p>
+                    <p class="name">Mrs Oh</p>
+                    <span class="position">Financial Advisor</span>
                   </div>
                 </div>
               </div>

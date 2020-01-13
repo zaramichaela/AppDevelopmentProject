@@ -34,7 +34,7 @@
 		    		<div class="row d-flex">
 		    			<div class="col-md pr-4 d-flex topper align-items-center" style="color:white;">
 							{% if session['logged_in']%}
-							Hello, {{session['logged_in_user']}}
+							Hello, {{session['logged_in_user']}}!
 							{% else %}
 							Hello Stranger
 								{% endif %}
@@ -75,7 +75,7 @@
 	          <li class="nav-item"><a href="{{url_for('about')}}" class="nav-link">About</a></li>
 <!--	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>-->
 	          <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item cta cta-colored"><a href="{{url_for('cart')}}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
 
 	        </ul>
 	      </div>
@@ -476,9 +476,9 @@
           <div class="col-lg-7">
           	<div class="heading-section ftco-animate mb-5">
 	            <h2 class="mb-4">Our satisfied customers</h2>
-				<p>From our free and efficient delivery to our friendly and helpful support staff, we pride ourselves
-					on providing the best possible service. We want you to enjoy the benefits of using
-				Traditional Chinese Medicine to remedy your illnesses!</p>
+<!--				<p>From our free and efficient delivery to our friendly and helpful support staff, we pride ourselves-->
+<!--					on providing the best possible service. We want you to enjoy the benefits of using-->
+<!--				Traditional Chinese Medicine to remedy your illnesses!</p>-->
 	          </div>
             <div class="carousel-testimony owl-carousel">
               <div class="item">
@@ -503,56 +503,81 @@
               </div>
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_2.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrswong.jpg">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">Interface Designer</span>
+                    <p class="mb-4 pl-4 line">
+						This TCM offers a wide variety of herbs, the website is also very helpful as the goods have
+						English names on them, allowing folks who do not understand Chinese to shop with ease of not
+						getting wrong items.The store offers fast delivery, based on my last delivery order, my goods
+						arrived one day after  ordered them. Highly recommend this shop if you want to get your products
+						within a short period of time.</p>
+                    <p class="name">Mrs Wong</p>
+                    <span class="position">Property Agent</span>
                   </div>
                 </div>
               </div>
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_3.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrchong.jpg)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">UI Designer</span>
+                    <p class="mb-4 pl-4 line">
+						Karen's TCM is one of my favorite stores to shop at, the shop's goods are sold
+						at a very reasonable price, its safe to say that the prices they offer might be even
+						cheaper than the prices of herbs sold at the market. The store also offers free delivery
+						services, convenient for customer like me who like to buy goods in bulks. Overall I had a
+						good shopping experience at this TCM's online shop .
+					</p>
+                    <p class="name">Mr Chong</p>
+                    <span class="position">Retiree</span>
                   </div>
                 </div>
               </div>
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_1.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrong.jpg)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">Web Developer</span>
+                    <p class="mb-4 pl-4 line">
+						Karen's TCM has been one of the most popular TCMs'around Singapore. It offers a wide variety of
+						herbs and other products, services as well as appointments, etc. This is by far
+one of my most frequent TCM shop. Prices of the herbs, products, services and other TCM plans that Karen's TCM offers
+						are very affordable so we do not need to worry about the cost.
+Furthermore, I love the free delivery service provided. A few days ago,
+I ordered 5 carton of nutritious drinks via Karen's TCM website. As it was processing my request, I actually expected the
+						delivered goods to arrive within 2 days, but NO, it arrived as quick as lightning.
+As soon as I placed the order, it took only 1 day to deliver my wanted order. Hence, I was really satisfied with Karen's
+						TCM.
+					</p>
+                    <p class="name">Mr Ong</p>
+                    <span class="position">General Manager</span>
                   </div>
                 </div>
               </div>
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_1.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mstracy.jpg)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
+                    <p class="mb-4 pl-4 line">This TCM is very special, it is rare to find online shops to get
+						traditional chinese, much less offer home treatments. This shop is very convenient for someone
+						like me who is not able to travel convienently to to seek certain medical treatments such as
+						Tui Na and accupuncture as i have difficulties walking for a long distance. With door to door
+						services at a reasonable price, i do not have to worry about not being able to seek treatments. </p>
+                    <p class="name">Ms Tracy</p>
                     <span class="position">System Analyst</span>
                   </div>
                 </div>
