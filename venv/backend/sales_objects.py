@@ -29,8 +29,8 @@ class sales_objects(object):
     def save(self):
         s = shelve.open(settings.ITEMS_DB)
         try:
-            print(self.UID)
             s[self.UID] = self.serialize()
+
             return True
         finally:
             s.close()

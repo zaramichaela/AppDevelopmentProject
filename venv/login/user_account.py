@@ -12,6 +12,7 @@ class user_account(object):
         self.username = username
         self.email = email
         self.set_password(password)
+        self.ban_flag = False
 
 
     def get_username(self):
@@ -27,6 +28,7 @@ class user_account(object):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+
     def save(self):
         s = shelve.open(USER_DB)
         try:
@@ -36,6 +38,21 @@ class user_account(object):
             s.close()
         return False
 
+    def delete(self):
+        s = shelve.open(USER_DB)
+        try:
+            del s[self.username]
+            return True
+        finally:
+            s.close()
+        return False
+
     #convert to pickle to store in shelve
     def serialize(self):
         return pickle.dumps(self)
+
+    def set_ban_flag(self, flag):
+        self.ban_flag = flag
+
+    def get_ban_flag(self):
+        return self.ban_flag

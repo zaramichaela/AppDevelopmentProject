@@ -26,8 +26,10 @@
             {{i.get_stocks()}}
         </td>
         <td>
+            <center>
             <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i.get_UID())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.edit_item', itemid=i.get_UID())}}">Delete</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_sales_item', itemid=i.get_UID())}}">Delete</a>
+            </center>
         </td>
 
 {% endmacro %}
@@ -55,9 +57,10 @@
             {{i.get_price()}}
         </td>
         <td>
+            <center>
         <a class="btn btn-primary" href="{{url_for('admin_pages.edit_package', packageid=i.get_UID())}}">Edit</a>
         <a class="btn btn-danger" href="{{url_for('admin_pages.delete_package', packageid=i.get_UID())}}">Delete</a>
-
+            </center>
         </td>
 
 
@@ -81,9 +84,10 @@
             {{i.get_price()}}
         </td>
         <td>
+            <center>
             <a class="btn btn-primary" href="{{url_for('admin_pages.edit_service', serviceid=i.get_UID())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.edit_service', serviceid=i.get_UID())}}">Delete</a>
-
+            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_service', serviceid=i.get_UID())}}">Delete</a>
+            </center>
         </td>
 
 {% endmacro %}
@@ -109,21 +113,42 @@
             {{i.expiredate}}
         </td>
         <td>
+            <center>
             <a class="btn btn-primary" href="{{url_for('admin_pages.edit_coupon', couponid=i.get_UID())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.edit_coupon', couponid=i.get_UID())}}">Delete</a>
-
+            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_coupon', couponid=i.get_UID())}}">Delete</a>
+            </center>
         </td>
 
 
 {% endmacro %}
 
+
+{% macro render_user_table(i) %}
+        <td>
+            {{i.get_username()}}
+        </td>
+        <td>
+             <center>
+                 {% if i.get_ban_flag() %}
+            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i.get_username())}}">unBan</a>
+                {%else%}
+             <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i.get_username())}}">Ban</a>
+                 {% endif %}
+            <a class="btn btn-danger" href="{{url_for('admin_pages.edit_item', itemid=i.get_username())}}">Delete</a>
+             </center>
+        </td>
+{% endmacro %}
 
 {% macro render_admin_table(i) %}
         <td>
             {{i['username']}}
         </td>
         <td>
-            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i.get_UID())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.edit_item', itemid=i.get_UID())}}">Delete</a>
+             <center>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i['username'])}}">Edit</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.del_admin_account', username=i['username'])}}">Delete</a>
+             </center>
         </td>
 {% endmacro %}
+
+

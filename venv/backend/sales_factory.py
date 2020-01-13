@@ -148,7 +148,7 @@ class sales_factory:
         finally:
             s.close()
 
-    def delete_db_sales_service(self, serviceuid):
+    def delete_db_service(self, serviceuid):
         #delete service from shelve database
         s = shelve.open(settings.SERVICES_DB)
         try:

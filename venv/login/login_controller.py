@@ -11,13 +11,13 @@ class login_controller():
     def __init__(self):
         self.all_admins = get_all_admin()
         self.all_users = get_all_users()
-        print(self.all_users)
+
 
 
     def login_user(self, username, password):
         for i in self.all_users:
             if(i.check_login(username,password)):
-                return True
+                return i
         return False
 
     def find_user_username(self, username):
@@ -36,7 +36,7 @@ class login_controller():
     def del_user_account(self, username):
         user = self.find_user_username(username)
         self.all_users.remove(user)
-        s = shelve.open(USER_DB)
+        s = shelve.open(settings.USER_DB)
         try:
             del s[username]
             return True
@@ -44,6 +44,24 @@ class login_controller():
             return False
         finally:
             s.close()
+
+    def user_change_pass(self, username, oldpassword, newpassword):
+        user = self.login_admin(username, oldpassword)
+        if (user):
+            self.all_users.remove(user)
+            user.set_password(newpassword)
+            user.save()
+            self.all_users.append(user)
+            flash("Your password has been changed.", "success")
+        else:
+            flash("You have input the wrong password, password is not changed.", "error")
+            return False
+
+    def get_all_users(self):
+        print(self.all_users)
+        return self.all_users
+
+
 
     def find_admin_username(self, username):
         for i in self.all_admins:
@@ -108,6 +126,7 @@ class login_controller():
                 return True
             else:
                 return False
+
 
 
 

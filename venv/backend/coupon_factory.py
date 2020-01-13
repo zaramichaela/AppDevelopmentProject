@@ -60,7 +60,7 @@ class coupon_factory:
 
     def delete_db_coupon(self, couponuid):
         #delete item from shelve database
-        s = shelve.open(settings.PACKAGES_DB)
+        s = shelve.open(settings.COUPON_DB)
         try:
             del s[couponuid]
             return True

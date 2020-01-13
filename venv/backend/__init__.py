@@ -5,7 +5,7 @@ from backend.admin_url import admin_pages
 from backend.settings import *
 from flask_login import LoginManager
 from login.forms import customer_registration
-
+from login.user_account import user_account
 
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
@@ -63,7 +63,8 @@ def login():
 def do_user_login():
     username = request.form['username']
     password = request.form['password']
-    if(logincontroller.login_user(username, password)):
+    user = logincontroller.login_user(username, password)
+    if user:
         session['logged_in'] = True
         session['logged_in_user'] = username
     else:
@@ -76,7 +77,6 @@ def do_user_login():
 def register():
     form = customer_registration()
     if request.method == 'POST' and form.validate():
-
         flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
         print(flag)
         if(flag):
@@ -198,6 +198,21 @@ def not_found(e):
 @app.errorhandler(500)
 def not_found(e):
     return render_template('error_pages/500.html'), 500
+
+
+
+
+@app.route('/account/changepassword', methods = ['GET', 'POST'])
+def change_pass():
+
+    return render_template("base.html")
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
  app.run(debug=True)
