@@ -28,6 +28,26 @@ configure_uploads(app, (images,))
 def home():
     return render_template('home.html')
 
+@app.route('/shop')
+def shop():
+    return render_template('shop.html')
+
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/checkout')
+def checkout():
+    return render_template('checkout.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 @app.route('/feedback')
 def feedback():
     return render_template('feedback.html')
@@ -125,38 +145,38 @@ def createAccount():
 def retrieveAccount():
     accountDict = {}
 
-@app.route('/cart')
-def cart():
-    usersDict = {}
-    db = shelve.open('storage.db', 'r')
-    usersDict = db['ShoppingCart']
-    db.close()
-
-    accountList = []
-    for key in accountDict:
-        account = accountDict.get(key)
-        accountList.append(user)
-
-    return render_template('RetrieveAccount.html', accountList = accountList, count =len(accountList))
-
-    usersList = []
-   #create user object 1, store in variable u1
-    u1 = ShoppingCart.ShoppingCart("Medicine1", "D11", 4.00, 1)
-    usersList.append(u1)
-   #create user object 2, store in variable u2
-    u2 = ShoppingCart.ShoppingCart("Medicine2", "D12", 2.00, 3)
-    usersList.append(u2)
-    u3 = ShoppingCart.ShoppingCart("Medicine3", "D13", 1.00, 2)
-    usersList.append(u3)
-
-    for key in usersDict:
-        user = usersDict.get(key)
-        usersList.append(user)
-
-    for u in userList:
-        print(u.get_productName(), u.get_ID(), u.get_price(), u.get_quantity())
-        print(u.computeTotalProduct())
-    return render_template("cart.html", usersList=usersList, count=len(usersList))
+# @app.route('/cart')
+# def cart():
+#     usersDict = {}
+#     db = shelve.open('storage.db', 'r')
+#     usersDict = db['ShoppingCart']
+#     db.close()
+#
+#     accountList = []
+#     for key in accountDict:
+#         account = accountDict.get(key)
+#         accountList.append(user)
+#
+#     return render_template('RetrieveAccount.html', accountList = accountList, count =len(accountList))
+#
+#     usersList = []
+#    #create user object 1, store in variable u1
+#     u1 = ShoppingCart.ShoppingCart("Medicine1", "D11", 4.00, 1)
+#     usersList.append(u1)
+#    #create user object 2, store in variable u2
+#     u2 = ShoppingCart.ShoppingCart("Medicine2", "D12", 2.00, 3)
+#     usersList.append(u2)
+#     u3 = ShoppingCart.ShoppingCart("Medicine3", "D13", 1.00, 2)
+#     usersList.append(u3)
+#
+#     for key in usersDict:
+#         user = usersDict.get(key)
+#         usersList.append(user)
+#
+#     for u in userList:
+#         print(u.get_productName(), u.get_ID(), u.get_price(), u.get_quantity())
+#         print(u.computeTotalProduct())
+#     return render_template("cart.html", usersList=usersList, count=len(usersList))
 
 
 # To add custom error 404 page

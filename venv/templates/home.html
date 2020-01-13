@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Karen's TCM Home</title>
+    <title>Karen's TCM Home Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -62,19 +62,19 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav" style="padding-top:20px;">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+	          <li class="nav-item active"><a href="{{url_for('home')}}" class="nav-link">Home</a></li>
 	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item" href="shop.html">Shop</a>
+              	<a class="dropdown-item" href="{{url_for('shop')}}">Shop</a>
                 <a class="dropdown-item" href="product-single.html">Single Product</a>
-                <a class="dropdown-item" href="cart.html">Cart</a>
-                <a class="dropdown-item" href="checkout.html">Checkout</a>
+                <a class="dropdown-item" href="{{url_for('cart')}}">Cart</a>
+                <a class="dropdown-item" href="{{url_for('checkout')}}">Checkout</a>
               </div>
             </li>
-	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+	          <li class="nav-item"><a href="{{url_for('about')}}" class="nav-link">About</a></li>
+<!--	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>-->
+	          <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">Contact</a></li>
 	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
 
 	        </ul>
@@ -96,7 +96,7 @@
 				            <h1 class="mb-4 mt-3">As a token of our appreciation...</h1>
 				            <p class="mb-4">Here is a 20% off coupon for all purchases, with minimum spending of $50. Simply quote "<b>OPENING</b>" before you check out.</p>
 
-				            <p><a href="shop.html" class="btn-custom">Shop Now!</a></p>
+				            <p><a href="{{url_for('shop')}}" class="btn-custom">Shop Now!</a></p>
 				          </div>
 		            </div>
 		          </div>
@@ -475,21 +475,29 @@
         	</div>
           <div class="col-lg-7">
           	<div class="heading-section ftco-animate mb-5">
-	            <h2 class="mb-4">Our satisfied customer says</h2>
-	            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in</p>
+	            <h2 class="mb-4">Our satisfied customers</h2>
+				<p>From our free and efficient delivery to our friendly and helpful support staff, we pride ourselves
+					on providing the best possible service. We want you to enjoy the benefits of using
+				Traditional Chinese Medicine to remedy your illnesses!</p>
 	          </div>
             <div class="carousel-testimony owl-carousel">
               <div class="item">
                 <div class="testimony-wrap">
-                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_1.jpg)">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mstan.jpg)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
                   </div>
                   <div class="text">
-                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <p class="name">Garreth Smith</p>
-                    <span class="position">Marketing Manager</span>
+                    <p class="mb-4 pl-4 line">The store offers fast delivery, placed my orders and it
+						has arrived in a few days. The prices of the medicine offered at the TCM
+						is very reasonable. The store imports lots of traditional Chinese medicine
+						that can hardly be found anywhere, hence it is a good place to shop at if
+						you require rare herbs. The herbs are also sold at a decent price even
+						though they are being imported, so you need not worry about being over
+						charged  </p>
+                    <p class="name">Ms Tan</p>
+                    <span class="position">Housewife</span>
                   </div>
                 </div>
               </div>
@@ -631,7 +639,7 @@
             <div class="ftco-footer-widget mb-4 ml-md-5">
               <h2 class="ftco-heading-2">Help</h2>
               <ul class="list-unstyled">
-				<li><a href="#" class="py-2 d-block">Contact Us</a></li>
+				<li><a href="{{url_for('contact')}}" class="py-2 d-block">Contact Us</a></li>
 				<li><a href="#" class="py-2 d-block">Feedback</a></li>
               </ul>
             </div>
@@ -641,9 +649,9 @@
               <h2 class="ftco-heading-2">Menu</h2>
               <div class="d-flex">
 	              <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
-	                <li><a href="#" class="py-2 d-block">Home Page</a></li>
-	                <li><a href="#" class="py-2 d-block">About Us</a></li>
-	                <li><a href="#" class="py-2 d-block">Shop</a></li>
+	                <li><a href="{{url_for('home')}}" class="py-2 d-block">Home Page</a></li>
+	                <li><a href="{{url_for('about')}}" class="py-2 d-block">About Us</a></li>
+	                <li><a href="{{url_for('shop')}}" class="py-2 d-block">Shop</a></li>
 <!--	                <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>-->
 	              </ul>
 	              <ul class="list-unstyled">
@@ -659,8 +667,8 @@
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">180 Ang Mo Kio Ave 8, Singapore 569830</span></li><br>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+65 6123-4567</span></a></li><br>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">support@karenstcm.com</span></a></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text"><a href="tel://61234567">+65 6123-4567</a></span></a></li><br>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text"><a href="mailto:support@karenstcm.com">support@karenstcm.com</a></span></a></li>
 	              </ul>
 	            </div>
             </div>

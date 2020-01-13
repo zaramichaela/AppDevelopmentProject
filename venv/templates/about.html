@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>About Us</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/user/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="static/user/css/animate.css">
+
+    <link rel="stylesheet" href="static/user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="static/user/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="static/user/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="static/user/css/aos.css">
+
+    <link rel="stylesheet" href="static/user/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="static/user/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="static/user/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="static/user/css/flaticon.css">
+    <link rel="stylesheet" href="static/user/css/icomoon.css">
+    <link rel="stylesheet" href="static/user/css/style.css">
+  </head>
+    <body class="goto-here">
+		<div class="py-1 bg-black">
+    	<div class="container">
+    		<div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
+	    		<div class="col-lg-12 d-block">
+		    		<div class="row d-flex">
+		    			<div class="col-md pr-4 d-flex topper align-items-center" style="color:white;">
+							{% if session['logged_in']%}
+							Hello, {{session['logged_in_user']}}
+							{% else %}
+							Hello Stranger
+								{% endif %}
+						</div>
+					    <div class="col-md pr-4 d-flex topper align-items-center">
+					    </div>
+					    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
+							{% if session['logged_in']%}
+							<a class="text"><a href="{{url_for('logout')}}" class="btn btn-light">Logout</a></span>
+								{% else %}
+							<a class="text"><a href="{{url_for('login')}}" class="btn btn-light">Login</a></span>
+								{% endif %}
+					    </div>
+				    </div>
+			    </div>
+		    </div>
+		  </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html">Karen's TCM</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item"><a href="{{url_for('home')}}" class="nav-link">Home</a></li>
+	          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown04">
+              	<a class="dropdown-item" href="{{url_for('shop')}}">Shop</a>
+                <a class="dropdown-item" href="product-single.html">Single Product</a>
+                <a class="dropdown-item" href="{{url_for('cart')}}">Cart</a>
+                <a class="dropdown-item" href="{{url_for('checkout')}}">Checkout</a>
+              </div>
+            </li>
+	          <li class="nav-item active"><a href="{{url_for('about')}}" class="nav-link">About</a></li>
+<!--	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>-->
+	          <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">Contact</a></li>
+	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+
+    <div class="hero-wrap hero-bread" style="background-image: url('static/user/images/bg_6.jpg');">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+          	<p class="breadcrumbs"><span class="mr-2"><a href="{{url_for('home')}}">Home</a></span></p>
+            <h1 class="mb-0 bread">About Us</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+			<div class="container">
+				<div class="row no-gutters ftco-services">
+          <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services p-4 py-md-5">
+              <div class="icon d-flex justify-content-center align-items-center mb-4">
+            		<span class="flaticon-bag"></span>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Free Delivery</h3>
+                <p>We offer free standard delivery within Singapore. We pride ourselves on fast and efficient delivery, with our delivery services guaranteed to reach you within 3-5 business days for standard delivery and 1 day for express delivery.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services p-4 py-md-5">
+              <div class="icon d-flex justify-content-center align-items-center mb-4">
+            		<span class="flaticon-customer-service"></span>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Customer Support</h3>
+                <p>Our customers are very important to us, that's why we provide free refunds. If you have any queries, feel free to email our support team at <b><i>support@karenstcm.com</b></i> or call <b><i>+65 6123-4567</b></i>. We will reply within 3-5 days.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services p-4 py-md-5">
+              <div class="icon d-flex justify-content-center align-items-center mb-4">
+            		<span class="flaticon-payment-security"></span>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Secure Payments</h3>
+                <p>Your credit card details are encrypted using the SSL protocol and are never transmitted in plaintext over the network. We have no access to your details and do not keep them on the server, which is why it is safe to shop with us.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
+		</section>
+
+    <section class="ftco-section ftco-no-pb ftco-no-pt bg-light">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(static/user/images/bg.jpg);">
+						</a>
+					</div>
+					<div class="col-md-7 py-md-5 wrap-about pb-md-5 ftco-animate">
+	          <div class="heading-section-bold mb-4 mt-md-5">
+	          	<div class="ml-md-0">
+		            <h2 class="mb-4">Established Since 2000</h2>
+	            </div>
+	          </div>
+	          <div class="pb-md-5 pb-4">
+                  <P>Since Karen's TCM opened in 2000, we have been the top Traditional Chinese
+                  Medicine (TCM) store in the whole of Ang Mo Kio! <br><br>Our wide range of medicines
+                  and herbs have helped numerous customers with their illnesses and needs. We carry
+                  products like chrysanthemum teas to fresh and dried herbs to maternity products.</P>
+							<p><a href="{{url_for('shop')}}" class="btn btn-primary">Shop now</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+    <section class="ftco-section testimony-section">
+      <div class="container">
+        <div class="row">
+        	<div class="col-lg-5">
+        		<div class="services-flow">
+        			<div class="services-2 p-4 d-flex ftco-animate">
+        				<div class="icon">
+        					<span class="flaticon-bag"></span>
+        				</div>
+        				<div class="text">
+	        				<h3>Free Delivery</h3>
+	        				<p class="mb-0">We offer free standard delivery within Singapore (3-5 business days).</p>
+        				</div>
+        		</div>
+        			<div class="services-2 p-4 d-flex ftco-animate">
+        				<div class="icon">
+        					<span class="flaticon-heart-box"></span>
+        				</div>
+        				<div class="text">
+	        				<h3>Gift Services</h3>
+	        				<p class="mb-0">Want to get something as a gift? Let us know and we will get it wrapped for you, free of charge.</p>
+	        			</div>
+        			</div>
+        			<div class="services-2 p-4 d-flex ftco-animate">
+        				<div class="icon">
+        					<span class="flaticon-payment-security"></span>
+        				</div>
+        				<div class="text">
+	        				<h3>Secure Payments</h3>
+	        				<p class="mb-0">No banking information about you is transmitted via the online shop. Your credit card details are <strong><i>never</i></strong> transmitted in plaintext over the network and we do <strong><i>not</i></strong> store your data!</p>
+	        			</div>
+        			</div>
+        			<div class="services-2 p-4 d-flex ftco-animate">
+        				<div class="icon">
+        					<span class="flaticon-customer-service"></span>
+        				</div>
+        				<div class="text">
+	        				<h3>All Day Support</h3>
+	        				<p class="mb-0">Contact our team at <b><i>support@karenstcm.com</i></b> or call <br><b><i>+65 6123-4567</i></b>. We will do our best to support you!</p>
+	        			</div>
+        			</div>
+        		</div>
+        	</div>
+          <div class="col-lg-7">
+          	<div class="heading-section ftco-animate mb-5">
+	           <h2 class="mb-4">Our satisfied customers</h2>
+				<p>From our free and efficient delivery to our friendly and helpful support staff, we pride ourselves
+					on providing the best possible service. We want you to enjoy the benefits of using
+				Traditional Chinese Medicine to remedy your illnesses!</p>
+            </div>
+            <div class="carousel-testimony owl-carousel ftco-animate">
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_1.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="name">Garreth Smith</p>
+                    <span class="position">Marketing Manager</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_2.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="name">Garreth Smith</p>
+                    <span class="position">Interface Designer</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_3.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="name">Garreth Smith</p>
+                    <span class="position">UI Designer</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user//person_1.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="name">Garreth Smith</p>
+                    <span class="position">Web Developer</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/person_1.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="name">Garreth Smith</p>
+                    <span class="position">System Analyst</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+       <footer class="ftco-footer ftco-section">
+      <div class="container">
+      	<div class="row">
+      		<div class="mouse">
+						<a href="#" class="mouse-icon">
+							<div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+						</a>
+					</div>
+      	</div>
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Karen's TCM</h2>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Help</h2>
+              <ul class="list-unstyled">
+				<li><a href="{{url_for('contact')}}" class="py-2 d-block">Contact Us</a></li>
+				<li><a href="#" class="py-2 d-block">Feedback</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Menu</h2>
+              <div class="d-flex">
+	              <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
+	                <li><a href="{{url_for('home')}}" class="py-2 d-block">Home Page</a></li>
+	                <li><a href="{{url_for('about')}}" class="py-2 d-block">About Us</a></li>
+	                <li><a href="{{url_for('shop')}}" class="py-2 d-block">Shop</a></li>
+	              </ul>
+	              <ul class="list-unstyled">
+	                <li><a href="#" class="py-2 d-block">Services</a></li>
+	                <li><a href="#" class="py-2 d-block">Packages</a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Have a Question?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">180 Ang Mo Kio Ave 8, Singapore 569830</span></li><br>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text"><a href="tel://61234567">+65 6123-4567</a></span></a></li><br>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text"><a href="mailto:support@karenstcm.com">support@karenstcm.com</a></span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p>
+						  Copyright Karen's TCM &copy;<script>document.write(new Date().getFullYear());</script> || All rights reserved
+						</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="static/user/js/jquery.min.js"></script>
+  <script src="static/user/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="static/user/js/popper.min.js"></script>
+  <script src="static/user/js/bootstrap.min.js"></script>
+  <script src="static/user/js/jquery.easing.1.3.js"></script>
+  <script src="static/user/js/jquery.waypoints.min.js"></script>
+  <script src="static/user/js/jquery.stellar.min.js"></script>
+  <script src="static/user/js/owl.carousel.min.js"></script>
+  <script src="static/user/js/jquery.magnific-popup.min.js"></script>
+  <script src="static/user/js/aos.js"></script>
+  <script src="static/user/js/jquery.animateNumber.min.js"></script>
+  <script src="static/user/js/bootstrap-datepicker.js"></script>
+  <script src="static/user/js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="static/user/js/google-map.js"></script>
+  <script src="static/user/js/main.js"></script>
+
+  </body>
+</html>
