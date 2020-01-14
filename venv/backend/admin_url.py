@@ -113,6 +113,7 @@ def add_shop_item():
     form = new_sales_item()
 
     if request.method == 'POST' and form.validate():
+
         if(itemcontroller.get_item_by_UID(form.UID.data)):
             flash("You have input an UID that exists, please try again.")
             return render_template('admin/adding/create_items.html', form=form, message=context)
@@ -259,12 +260,9 @@ def edit_item(itemid):
     form = edit_sales_item(formdata=request.form, obj=item)
 
     if request.method == 'POST' and form.validate_on_submit():
-        f = form.image.data
-        print(os.getcwd())
-        print(os.path.exists(PACKAGEDIR + form.UID.data))
-        if(f):
-            os.remove(ITEMSDIR + form.UID.data)
-            f.save(ITEMSDIR + form.UID.data)
+        file_ = request.files["image"]
+        if(file_):
+            file_.save(ITEMSDIR+form.UID.data)
         else:
             os.rename(ITEMSDIR+itemid,ITEMSDIR+form.UID.data)
         update_form = form.data.copy()
@@ -272,11 +270,10 @@ def edit_item(itemid):
         itemcontroller.remove_sales_item(item)
         item2 = itemcontroller.create_and_save_item(update_form)
         if (item2):
-            context ={"message":"You have created a new item"}
-            flash("You have updated the item "+ item.get_UID() +" information")
+            flash("You have updated the item "+ item.get_UID() +" information", "success")
             return redirect(url_for("admin_pages.list_sales_items"))
         else:
-            context ={"error":"A error have occured..."}
+            context ={"error":"A error have occurred..."}
             itemcontroller.all_items.append(item)
             item.save()
     return render_template('admin/editing/edit_items.html', form=form, message=context, item=item)
@@ -292,10 +289,9 @@ def edit_package(packageid):
     form = edit_package_form(formdata=request.form, obj=item)
 
     if request.method == 'POST' and form.validate():
-        f = form.image.data
-        if(f):
-            if os.path.exists(PACKAGEDIR + form.UID.data):
-                os.remove(PACKAGEDIR + form.UID.data)
+        file_ = request.files["image"]
+        if(file_):
+            file_.save(PACKAGEDIR+form.UID.data)
         else:
             os.rename(PACKAGEDIR+packageid,PACKAGEDIR+form.UID.data)
 
@@ -304,8 +300,7 @@ def edit_package(packageid):
         itemcontroller.remove_sales_package(item)
         item2 = itemcontroller.create_and_save_package(update_form)
         if (item2):
-            context ={"message":"You have edited and updated the package"}
-            flash("You have updated the package "+ item2.get_UID() +" information")
+            flash("You have updated the package "+ item2.get_UID() +" information", "success")
             return redirect(url_for("admin_pages.list_sales_packages"))
         else:
             context ={"error":"A error have occurred..."}
@@ -324,10 +319,10 @@ def edit_service(serviceid):
     form = edit_service_form(formdata=request.form, obj=item)
 
     if request.method == 'POST' and form.validate():
-        f = form.image.data
-        if(f):
-            if os.path.exists(SERVICEDIR + form.UID.data):
-                os.remove(SERVICEDIR + form.UID.data)
+
+        file_ = request.files["image"]
+        if(file_):
+            file_.save(SERVICEDIR+form.UID.data)
         else:
             os.rename(SERVICEDIR+serviceid,SERVICEDIR+form.UID.data)
 
@@ -337,9 +332,7 @@ def edit_service(serviceid):
         item2 = itemcontroller.create_and_save_service(update_form)
         itemcontroller.remove_sales_service(item)
         if (item2):
-            context ={"message":"You have edited and updated the service"}
-
-            flash("You have updated the service "+ item2.get_UID() +" information")
+            flash("You have updated the service "+ item2.get_UID() +" information", "success")
             return redirect(url_for("admin_pages.list_sales_services"))
         else:
             context ={"error":"A error have occurred..."}
@@ -362,7 +355,7 @@ def edit_coupon(couponid):
 
         item2 = itemcontroller.create_and_save_coupon(form.data)
         if (item2):
-            flash("You have updated the coupon "+ item.get_UID() +" information")
+            flash("You have updated the coupon "+ item.get_UID() +" information","success")
             return redirect(url_for("admin_pages.list_coupons"))
         else:
             context ={"error":"A error have occurred..."}
@@ -381,9 +374,9 @@ def create_admin_accounts():
     if request.method == 'POST' and form.validate():
         success_flag = logincontroller.add_admin_account(form.username.data, form.password.data)
         if (not success_flag):
-            flash("Error, you cannot create an account")
+            flash("Error, you cannot create an account", "error")
         else:
-            context["message"] = "Admin account created."
+            flash("Admin account created.", "success")
         form = create_admin_account()
     return render_template('admin/accounts/create_admin_accounts.html', form=form, message=context)
 
@@ -397,14 +390,14 @@ def list_admin_accounts():
 @admin_pages.route('/admin/accounts/admins/<username>/delete/')
 @authorize
 def del_admin_account(username):
-    flag = logincontroller.find_user_username(username)
-    if(not flag):
-        abort(404)
+    flag = logincontroller.find_admin_username(username)
     if flag:
+        a = logincontroller.delete_admin_account(username)
+        print(a)
         flash("You have deleted the admin user " + username, "success")
-        logincontroller.delete_admin_account(username)
     else:
         flash("an error have occurred, please try again", "error")
+        abort(404)
     return redirect(url_for("admin_pages.list_admin_accounts"))
 
 @admin_pages.route('/admin/accounts/admin/changepassword/', methods= ['GET','POST'])

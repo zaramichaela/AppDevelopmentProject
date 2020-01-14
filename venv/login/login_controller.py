@@ -76,14 +76,6 @@ class login_controller():
         return None
 
 
-    def delete_admin_account(self, username):
-        for i in self.all_admins:
-            if(i["username"] == username):
-                self.all_admins.remove(i)
-                delete_admin_from_shelve(username)
-                return True
-            else:
-                return False
 
 
     def login_admin(self, username, password):
@@ -129,8 +121,8 @@ class login_controller():
                 self.all_admins.remove(i)
                 delete_admin_from_shelve(username)
                 return True
-            else:
-                return False
+
+        return False
 
     def change_admin_password(self, username, oldpassword, newpassword):
         user = self.login_admin(username, oldpassword)
