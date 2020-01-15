@@ -1,7 +1,6 @@
 from flask import Blueprint, abort
 from flask import render_template, request, flash,session,redirect, url_for
 from backend.forms import *
-
 from functools import wraps
 from login.forms import create_admin_account
 from backend.settings import *
@@ -9,16 +8,7 @@ from login.user_account import *
 
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
 
-
-
-
 def authorize(f):
-    """
-    Wrapper function to make sure that the user is logged in as admin
-    before being able to access the pages that the wrapper protects.
-    e.g. you need to login as admin
-    otherwise you wont be able to access links like /admin/add/coupons and etc...
-    """
     @wraps(f)
     def decorated_function(*args, **kws):
         if(session.get('admin_logged_in')):
@@ -28,7 +18,6 @@ def authorize(f):
             return redirect(url_for("admin_pages.admin"))
     return decorated_function
 
-
 @admin_pages.route('/admin')
 def admin():
     print(session.get('admin_logged_in'))
@@ -36,8 +25,6 @@ def admin():
         return render_template('admin/admin_login.html')
     else:
         return render_template('admin/base.html')
-
-
 
 @admin_pages.route('/admin/login', methods=['POST'])
 def do_admin_login():
@@ -56,12 +43,6 @@ def admin_logout():
     session['admin_logged_in'] = False
     session['admin_username'] = ""
     return redirect(url_for("admin_pages.admin"))
-
-
-# @app.route('/accounts/add/admin')
-# def add_admin_accounts():
-#     context = {}
-#
 
 @admin_pages.route('/admin/add/coupons', methods= ['GET','POST'])
 @authorize
@@ -102,7 +83,7 @@ def add_shop_service():
         if (item.save()):
             context ={"message":"You have created a new item"}
         else:
-            context ={"error":"an error have occurred."}
+            context ={"error":"An error has occurred."}
     return render_template('admin/adding/create_services.html', form=form, message=context)
 
 
@@ -125,7 +106,7 @@ def add_shop_item():
         if (item):
             context ={"message":"You have created a new item"}
         else:
-            context ={"error":"A error have occurred..."}
+            context ={"error":"A error has occurred."}
     return render_template('admin/adding/create_items.html', form=form, message=context)
 
 @admin_pages.route('/admin/add/packages/', methods= ['GET','POST'])
@@ -147,7 +128,7 @@ def add_shop_package():
         if (item):
             context ={"message":"You have created a new package"}
         else:
-            context ={"error":"A error have occurred..."}
+            context ={"error":"A error has occurred."}
     return render_template('admin/adding/create_packages.html', form=form, message=context)
 
 

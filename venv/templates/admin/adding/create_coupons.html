@@ -48,6 +48,7 @@ Add a new coupon
 
 <div class="row d-flex justify-content-center">
 
+<!-- import render field from form helper -->
 {% from "admin/adding/_formhelper.html" import render_field %}
 <div class="forms col-md-6">
     <div class="title">
@@ -57,6 +58,7 @@ Add a new coupon
 <form action="" method="POST" novalidate enctype="multipart/form-data">
       <dl>
           {{ form.csrf_token }}
+<!--          calls macro render_field for each form field, to display the form-->
     {{ render_field(form.UID, class='form-control', placeholder="123") }}
     {{ render_field(form.couponcode, class='form-control', placeholder="DISC10") }}
     {{ render_field(form.percentage, class='form-control', placeholder="50%") }}

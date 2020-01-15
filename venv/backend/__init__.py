@@ -11,7 +11,7 @@ from login.user_account import user_account
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
 login = LoginManager(app)
-app.register_blueprint(admin_pages)
+app.register_blueprint(admin_pages) #split url to 2 files: admin_url and init
 #main items controller
 
 

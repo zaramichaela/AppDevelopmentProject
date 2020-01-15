@@ -4,16 +4,10 @@ import pickle
 from login.user_account import user_account
 import backend.settings as settings
 import shelve
-
-
-
 class login_controller():
     def __init__(self):
         self.all_admins = get_all_admin()
         self.all_users = get_all_users()
-
-
-
     def login_user(self, username, password):
         for i in self.all_users:
             if(i.check_login(username,password)):
@@ -23,20 +17,17 @@ class login_controller():
                 return i
         flash('Wrong credentials!', "error")
         return False
-
     def find_user_username(self, username):
         for i in self.all_users:
             if(i.get_username() == username):
                 return i
         return False
-
     def create_user_account(self, username , password, email):
         u1 = user_account(username, email, password)
         if(u1.save()):
             self.all_users.append(u1)
             return True
         return False
-
     def del_user_account(self, username):
         user = self.find_user_username(username)
         print(username)
@@ -50,11 +41,9 @@ class login_controller():
             return False
         finally:
             s.close()
-
     def set_ban_user_flag(self,user ,flag):
         user.set_ban_flag(flag)
         user.save()
-
     def user_change_pass(self, username, oldpassword, newpassword):
         user = self.login_admin(username, oldpassword)
         if (user):
@@ -66,13 +55,9 @@ class login_controller():
         else:
             flash("You have input the wrong password, password is not changed.", "error")
             return False
-
     def get_all_users(self):
         print(self.all_users)
         return self.all_users
-
-
-
     def find_admin_username(self, username):
         for i in self.all_admins:
             if i["username"] == username:
