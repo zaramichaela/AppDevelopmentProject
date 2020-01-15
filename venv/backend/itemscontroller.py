@@ -1,5 +1,5 @@
 from backend.sales_factory import *
-from backend.coupon_factory  import *
+from backend.coupon_factory import *
 import os
 
 sfactory = sales_factory()
@@ -9,8 +9,6 @@ cfactory = coupon_factory()
 #for fast searching, requires more memory.
 
 class items_controller:
-
-
     def __init__(self):
         #initiate and store all data into memory
         self.all_coupons = cfactory.get_all_coupons()

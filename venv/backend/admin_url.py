@@ -102,7 +102,7 @@ def add_shop_service():
         if (item.save()):
             context ={"message":"You have created a new item"}
         else:
-            context ={"error":"an error have occurred."}
+            context ={"error":"An error has occurred."}
     return render_template('admin/adding/create_services.html', form=form, message=context)
 
 
@@ -125,7 +125,7 @@ def add_shop_item():
         if (item):
             context ={"message":"You have created a new item"}
         else:
-            context ={"error":"A error have occurred..."}
+            context ={"error":"A error has occurred."}
     return render_template('admin/adding/create_items.html', form=form, message=context)
 
 @admin_pages.route('/admin/add/packages/', methods= ['GET','POST'])
@@ -147,7 +147,7 @@ def add_shop_package():
         if (item):
             context ={"message":"You have created a new package"}
         else:
-            context ={"error":"A error have occurred..."}
+            context ={"error":"A error has occurred."}
     return render_template('admin/adding/create_packages.html', form=form, message=context)
 
 
