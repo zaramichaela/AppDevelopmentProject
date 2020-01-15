@@ -24,7 +24,7 @@ class sales_package(sales_objects):
     def save(self):
        s = shelve.open(settings.PACKAGES_DB)
        try:
-            s[self.__UID] = self.serialize()
+            s[self.get_UID()] = self.serialize()
             return True
        finally:
             s.close()

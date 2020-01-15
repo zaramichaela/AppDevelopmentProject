@@ -422,7 +422,7 @@ def edit_coupon(couponid):
             flash("You have updated the coupon "+ item.get_UID() +" information","success")
             return redirect(url_for("admin_pages.list_coupons"))
         else:
-            context ={"error":"A error have occurred..."}
+            flash("A error have occurred...", "error")
             itemcontroller.all_coupons(item)
             item.save()
     else:
@@ -430,8 +430,8 @@ def edit_coupon(couponid):
             form.couponcode.data = item.get_couponcode()
             form.percentage.data = item.get_percentage()
             form.discountlimit.data = item.get_discountlimit()
-            form.minimumspent.data = item.minimumspent()
-            form.expiredate.data = item.expiredate()
+            form.minimumspent.data = item.get_minimumspent()
+            form.expiredate.data = item.get_expiredate()
     return render_template('admin/editing/edit_coupons.html', form=form, message=context, item=item)
 
 
@@ -563,8 +563,10 @@ def edit_suppliers(supplierid):
         print(new_item)
         if (not new_item):
             flash("Error, you cannot edit the supplier " + item.get_UID(), "error")
+            return redirect(url_for("admin_pages.list_suppliers"))
         else:
             flash("You have edited the supplier", "success")
+            return redirect(url_for("admin_pages.list_suppliers"))
     else:
             form.UID.data = item.get_UID()
             form.name.data = item.get_name()
@@ -585,7 +587,7 @@ def delete_suppliers(supplierid):
         flash("Error, you cannot delete the supplier " + supplier.get_UID(), "error")
     else:
         flash("The supplier" + supplier.get_UID +  " has been deleted", "success")
-    return redirect(url_for("admin_pages.list_suppliers"))
+
 
 
 @admin_pages.route('/admin/suppliers/view')
@@ -618,6 +620,7 @@ def create_suppliers_orders():
             flash("Error, you cannot list a new supplier", "error")
         else:
             flash("A new supplier has been listed", "success")
+            return redirect(url_for("admin_pages.list_suppliers_orders"))
     return render_template('admin/suppliers/create_suppliers_orders.html', form=form)
 
 

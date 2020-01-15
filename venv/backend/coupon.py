@@ -81,7 +81,7 @@ class Coupon:
         s = shelve.open(settings.COUPON_DB)
         try:
             print(self.__UID)
-            s[self.__UID] = self.serialize()
+            s[self.get_UID()] = self.serialize()
             return True
         finally:
             s.close()
