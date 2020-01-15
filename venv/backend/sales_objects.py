@@ -8,17 +8,17 @@ import pickle
 class sales_objects(object):
     #default init for creating a new object
     def __init__(self, UID,name, description, price, image_url):
-        self._UID = UID #all item should have their unique UID
+        self.__UID = UID #all item should have their unique UID
         #a string to be able to save to database shelve requirement
-        self._name = name
-        self._description = description
-        self._price = price
-        self._image_url = image_url
-        self._available_flag = True
+        self.__name = name
+        self.__description = description
+        self.__price = price
+        self.__image_url = image_url
+        self.__available_flag = True
 
     #for finding objects in shelves
     def set_UID(self, UID):
-        self._UID = UID
+        self.__UID = UID
 
 
     #convert to pickle to store in shelve
@@ -30,7 +30,7 @@ class sales_objects(object):
     def save(self):
         s = shelve.open(settings.ITEMS_DB)
         try:
-            s[self._UID] = self.serialize()
+            s[self.__UID] = self.serialize()
 
             return True
         finally:
@@ -40,7 +40,7 @@ class sales_objects(object):
     def delete(self):
         s = shelve.open(settings.ITEMS_DB)
         try:
-            del s[self._UID]
+            del s[self.__UID]
             return True
         finally:
             s.close()
@@ -48,25 +48,25 @@ class sales_objects(object):
 
 
     def get_UID(self):
-        return self._UID
+        return self.__UID
 
     def get_name(self):
-        return self._name
+        return self.__name
 
     def set_name(self, name):
-        self._name = name
+        self.__name = name
 
     def set_description(self, description):
-        self._description = description
+        self.__description = description
 
     def get_description(self):
-        return self._description
+        return self.__description
 
     def get_image_url(self):
-        return self._image_url
+        return self.__image_url
 
     def get_price(self):
-        return self._price
+        return self.__price
 
     def subtract_sessions(self):
         pass
@@ -75,7 +75,7 @@ class sales_objects(object):
         return False
 
     def get_available_flag(self):
-        return self._available_flag
+        return self.__available_flag
 
     def set_available_flag(self, flag):
-        self._available_flag = flag
+        self.__available_flag = flag

@@ -11,10 +11,10 @@ class sales_items(sales_objects):
         self.stocks = stocks
 
     def get_stocks(self):
-        return self.stocks
+        return self.__stocks
 
     def set_stocks(self,stocks):
-        self.stocks = stocks
+        self.__stocks = stocks
 
     def display_html(self):
         html = "testing"

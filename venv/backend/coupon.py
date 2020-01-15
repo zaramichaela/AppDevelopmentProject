@@ -12,6 +12,7 @@ class Coupon:
         self.set_minimumspent(minimumspent)
         self.set_expiry_date(expiredate)
 
+
     #set discount percentage
     #check if within percentage otherwise, set to 0
     def set_couponcode(self, couponcode):
@@ -34,7 +35,7 @@ class Coupon:
 
     #check date expires
     def check_validity(self):
-        if(datetime.date.today() > self.__expiredate):
+        if(datetime.date.today() > self.expiredate):
             return False
         return True
 
@@ -46,7 +47,7 @@ class Coupon:
             return 0
         try:
             discount = price/100 * self.percentage
-            if(discount > self.__discountlimit):
+            if(discount > self_discountlimit):
                 return self.__discountlimit
             return discount
         except:
