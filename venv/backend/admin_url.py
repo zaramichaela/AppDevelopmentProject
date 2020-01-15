@@ -47,7 +47,7 @@ def do_admin_login():
         session['admin_logged_in'] = True
         session['admin_username'] = request.form['username']
     else:
-        flash('Wrong credentials!')
+        flash('Wrong credentials!', "error")
     return redirect(url_for("admin_pages.admin"))
 
 @admin_pages.route('/admin/logout')
