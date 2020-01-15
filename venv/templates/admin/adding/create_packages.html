@@ -45,7 +45,8 @@ create a new package
     {{ render_field(form.price, class='form-control', placeholder="SGD$100.00") }}
     {{ render_field(form.expiry_duration, class='form-control' , placeholder="100") }}
     {{ render_field(form.sessions, class='form-control', placeholder="20") }}
-    {{ render_field(form.image, class='form-control') }}
+    {{ render_field(form.image, class='form-control', onchange="preview_image(event)") }}
+         <center><br><img id="output_image"/><br></center>
           <p></p>
     {{form.submit(class="btn btn-primary")}}
   </dl>
