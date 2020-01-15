@@ -2,11 +2,11 @@ from flask import url_for, redirect, render_template, Flask, request, flash,sess
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 # from frontend.Forms import create_customer_account
 # import shelve
- from backend.admin_url import admin_pages
- from backend.settings import *
+ #from backend.admin_url import admin_pages
+ #from backend.settings import *
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
- app.register_blueprint(admin_pages)
+ #app.register_blueprint(admin_pages)
 #main items controller
 
 
