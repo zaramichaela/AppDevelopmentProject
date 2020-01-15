@@ -4,6 +4,7 @@ from backend.sales_items import *
 from backend.sales_entry import *
 from backend.sales_services import *
 from backend.sales_package import *
+from backend.suppliers import *
 import jsons
 import pickle
 
@@ -87,6 +88,17 @@ class sales_factory:
     def get_all_packages(self):
         items = []
         s = shelve.open(settings.PACKAGES_DB)
+        try:
+            for key in s:
+                items.append(self.deserialize(s[key]))
+        finally:
+            s.close()
+        return items
+
+        #return all packages from package database
+    def get_all_suppliers(self):
+        items = []
+        s = shelve.open(settings.SUPPLIERS_DB)
         try:
             for key in s:
                 items.append(self.deserialize(s[key]))

@@ -11,5 +11,6 @@ USER_DB = "user.db"
 ITEMSDIR= 'static/uploads/items/'
 PACKAGEDIR = 'static/uploads/packages/'
 SERVICEDIR = 'static/uploads/services/'
+SUPPLIERS_DB = "suppliers.db"
 itemcontroller = items_controller()
 logincontroller = login_controller()

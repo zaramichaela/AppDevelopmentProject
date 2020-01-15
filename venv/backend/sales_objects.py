@@ -14,6 +14,7 @@ class sales_objects(object):
         self.description = description
         self.price = price
         self.image_url = image_url
+        self.available_flag = True
 
     #for finding objects in shelves
     def set_UID(self, UID):
@@ -72,3 +73,9 @@ class sales_objects(object):
 
     def package_flag(self):
         return False
+
+    def get_available_flag(self):
+        return self.available_flag
+
+    def set_available_flag(self, flag):
+        self.available_flag = flag
