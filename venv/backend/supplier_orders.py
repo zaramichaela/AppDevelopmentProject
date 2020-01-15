@@ -14,6 +14,7 @@ class supplier_orders:
         self.__progress = progress
         self.__date_of_order = date_of_order
 
+
     def get_oid(self):
         return self.__oid
 
@@ -68,6 +69,8 @@ class supplier_orders:
 
     def set_progress(self,progress):
         self.__progress = progress
+
+
 
 
     def save(self):

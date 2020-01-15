@@ -32,14 +32,19 @@ class suppliers_controller:
         return self.__suppliers_orders
 
     def remove_sales_supplier_order(self, item):
-        if(not delete_db_supplier(item.get_UID())):
+        if(not delete_db_supplier_order(item.get_oid())):
             return False
-        self.__all_suppliers.remove(item)
+        self.__suppliers_orders.remove(item)
         return True
+
+    def update_sales_supplier(self, orderID, status):
+        item = self.get_suppliers_orders_by_UID(orderID)
+        item.set_progress()
+        item.save()
+
 
     def create_and_save_suppliers(self, dict):
 
-        #create and save service in database and current memory
         supplier = create_suppliers(dict)
         print(supplier.get_UID())
         supplier.save()
@@ -47,7 +52,6 @@ class suppliers_controller:
         return supplier
 
     def create_and_save_supplier_order(self, dict):
-        #create and save service in database and current memory
         sup = self.get_suppliers_by_UID(dict['supplier'])
         if(not sup):
             flash("supplier not found, error", "error")
@@ -73,6 +77,11 @@ class suppliers_controller:
             all_choice.append(temp)
         return all_choice
 
+    def add_supplier(self, item):
+        self.__all_suppliers.append(item)
+
+    def add_supplier_order(self, item):
+        self.__suppliers_orders.append(item)
 
 def create_suppliers(dict):
     try:
@@ -95,6 +104,18 @@ def get_all_suppliers_db():
 def delete_db_supplier(supplieruid):
     #delete packages from shelve database
     s = shelve.open(settings.SUPPLIERS_DB)
+    try:
+        print(supplieruid)
+        del s[supplieruid]
+        return True
+    except:
+        return False
+    finally:
+        s.close()
+
+def delete_db_supplier_order(supplieruid):
+    #delete packages from shelve database
+    s = shelve.open(settings.ORDER_DB)
     try:
         print(supplieruid)
         del s[supplieruid]
@@ -137,3 +158,4 @@ def deserialize(dict):
         return pickle.loads(dict)
     except:
         return None
+

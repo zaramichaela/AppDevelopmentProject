@@ -621,18 +621,26 @@ def create_suppliers_orders():
     return render_template('admin/suppliers/create_suppliers_orders.html', form=form)
 
 
-@admin_pages.route('/admin/suppliersorders/<orderid>/edit', methods= ['GET','POST'])
+@admin_pages.route('/admin/suppliersorders/<orderid>/cancel', methods= ['GET','POST'])
 @authorize
-def edit_suppliers_order():
-    form = buy_orders_supplier()
-    if request.method == 'POST' and form.validate():
-        if(suppliercontroller.get_suppliers_orders_by_UID(form.UID.data)):
-            flash("Error, UID exists, please choose another UID", "error")
-            return render_template('admin/suppliers/create_suppliers.html', form=form)
+def cancel_suppliers_order(orderid):
+    item = suppliercontroller.get_suppliers_orders_by_UID(orderid)
+    if(not item):
+        abort(404)
+    item.set_progress("cancelled")
+    item.save()
+    flash("you have cancelled the order.", "success")
+    return redirect(url_for("admin_pages.list_suppliers_orders"))
 
-        success_flag = suppliercontroller.create_and_save_supplier_order(form.data.supplier)
-        if (not success_flag):
-            flash("Error, you cannot list a new supplier", "error")
-        else:
-            flash("A new supplier has been listed", "success")
-    return render_template('admin/suppliers/create_suppliers.html', form=form)
+@admin_pages.route('/admin/suppliersorders/<orderid>/received', methods= ['GET','POST'])
+@authorize
+def received_suppliers_order(orderid):
+    item = suppliercontroller.get_suppliers_orders_by_UID(orderid)
+    if(not item):
+        abort(404)
+    suppliercontroller.remove_sales_supplier_order(item)
+    item.set_progress("received")
+    item.save()
+    suppliercontroller.add_supplier_order(item)
+    flash("you have received the order.", "success")
+    return redirect(url_for("admin_pages.list_suppliers_orders"))

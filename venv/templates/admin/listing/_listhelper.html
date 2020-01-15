@@ -229,12 +229,13 @@
        <td>
             {{i.get_progress()}}
         </td>
-        <td>
-            <center>
-            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_suppliers', supplierid=i.get_oid())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_suppliers', supplierid=i.get_oid())}}">Delete</a>
-            </center>
-        </td>
+<!--        <td>-->
+<!--            <center>-->
+
+<!--            <a class="btn btn-primary" href="{{url_for('admin_pages.received_suppliers_order', orderid=i.get_oid())}}">Received</a>-->
+<!--            <a class="btn btn-danger" href="{{url_for('admin_pages.cancel_suppliers_order', orderid=i.get_oid())}}">Delete</a>-->
+<!--            </center>-->
+<!--        </td>-->
 
 
 {% endmacro %}
