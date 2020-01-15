@@ -17,7 +17,11 @@ class login_controller():
     def login_user(self, username, password):
         for i in self.all_users:
             if(i.check_login(username,password)):
+                if (i.get_ban_flag()):
+                    flash("your account have been banned", "error")
+                    return False
                 return i
+        flash('Wrong credentials!', "error")
         return False
 
     def find_user_username(self, username):
