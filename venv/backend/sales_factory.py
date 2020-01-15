@@ -125,7 +125,7 @@ class sales_factory:
             item = self.deserialize(s[UID])
         finally:
             s.close()
-        return self.create_items(item)
+        return self.__create_items(item)
 
     #get service with the UID
     def get_services(self, UID):
@@ -138,7 +138,7 @@ class sales_factory:
             service = self.deserialize(s[UID])
         finally:
             s.close()
-        return self.create_services(service)
+        return self.__create_services(service)
 
     #get the package with UID
     def get_package(self, UID):
@@ -148,7 +148,7 @@ class sales_factory:
             package = self.deserialize(s[UID])
         finally:
             s.close()
-        return self.create_package(package)
+        return self.__create_package(package)
 
     #for buying a product. will add to a new database
     def buy_product(self, user, salesitem, quantity=1):

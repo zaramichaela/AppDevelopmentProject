@@ -295,7 +295,7 @@ def edit_item(itemid):
     item = itemcontroller.get_item_by_UID(itemid)
     if(not item):
         abort(404)
-    form = edit_sales_item(formdata=request.form, obj=item)
+    form = edit_sales_item()
 
     if request.method == 'POST' and form.validate_on_submit():
         file_ = request.files["image"]

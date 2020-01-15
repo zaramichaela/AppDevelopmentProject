@@ -8,17 +8,17 @@ import pickle
 class sales_objects(object):
     #default init for creating a new object
     def __init__(self, UID,name, description, price, image_url):
-        self.UID = UID #all item should have their unique UID
+        self._UID = UID #all item should have their unique UID
         #a string to be able to save to database shelve requirement
-        self.name = name
-        self.description = description
-        self.price = price
-        self.image_url = image_url
-        self.available_flag = True
+        self._name = name
+        self._description = description
+        self._price = price
+        self._image_url = image_url
+        self._available_flag = True
 
     #for finding objects in shelves
     def set_UID(self, UID):
-        self.UID = UID
+        self._UID = UID
 
 
     #convert to pickle to store in shelve
@@ -30,7 +30,7 @@ class sales_objects(object):
     def save(self):
         s = shelve.open(settings.ITEMS_DB)
         try:
-            s[self.UID] = self.serialize()
+            s[self._UID] = self.serialize()
 
             return True
         finally:
@@ -40,7 +40,7 @@ class sales_objects(object):
     def delete(self):
         s = shelve.open(settings.ITEMS_DB)
         try:
-            del s[self.UID]
+            del s[self._UID]
             return True
         finally:
             s.close()
@@ -48,25 +48,25 @@ class sales_objects(object):
 
 
     def get_UID(self):
-        return self.UID
+        return self._UID
 
     def get_name(self):
-        return self.name
+        return self._name
 
     def set_name(self, name):
-        self.name = name
+        self._name = name
 
     def set_description(self, description):
-        self.description = description
+        self._description = description
 
     def get_description(self):
-        return self.description
+        return self._description
 
     def get_image_url(self):
-        return self.image_url
+        return self._image_url
 
     def get_price(self):
-        return self.price
+        return self._price
 
     def subtract_sessions(self):
         pass
