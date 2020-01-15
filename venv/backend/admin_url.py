@@ -47,7 +47,7 @@ def do_admin_login():
         session['admin_logged_in'] = True
         session['admin_username'] = request.form['username']
     else:
-        flash('Wrong credentials!')
+        flash('Wrong credentials!', "error")
     return redirect(url_for("admin_pages.admin"))
 
 @admin_pages.route('/admin/logout')
@@ -74,7 +74,7 @@ def add_coupons():
             return render_template('admin/adding/create_coupons.html', form=cform, message=context)
         new_coupon = itemcontroller.create_and_save_coupon(cform.data)
         if(new_coupon.save()):
-            context={
+            context = {
                 "message": "You have successfully create a new coupon for users to use."
             }
     return render_template('admin/adding/create_coupons.html', form=cform, message=context)

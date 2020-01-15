@@ -133,7 +133,7 @@
         <td>
              <center>
                  {% if i.get_ban_flag() %}
-            <a class="btn btn-primary" href="{{url_for('admin_pages.ban_user_account', username=i.get_username())}}">unBan</a>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.ban_user_account', username=i.get_username())}}">Unban</a>
                 {%else%}
              <a class="btn btn-primary" href="{{url_for('admin_pages.ban_user_account', username=i.get_username())}}">Ban</a>
                  {% endif %}
