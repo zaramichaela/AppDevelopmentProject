@@ -1,42 +1,30 @@
 {% extends 'admin/base.html' %}
-
 {% block title %}
 Add an admin account
 {% endblock %}
 {%block body %}
-
 {% if message.message %}
 <div class="alert alert-success" role="alert">
   {{ message.message }}
 </div>
 {% endif %}
-
 				{% with messages = get_flashed_messages() %}
   {% if messages %}
   <div class="alert alert-danger" role="alert">
       <ul class=flashes>
-
     {% for message in messages %}
-
     <li>{{ message }}</li>
-
-
     {% endfor %}
     </ul>
-      </div>    <!-- Optional JavaScript -->
-
+      </div>
   {% endif %}
 {% endwith %}
-
-
 <div class="row d-flex justify-content-center">
-
 {% from "admin/adding/_formhelper.html" import render_field %}
 <div class="forms col-md-6">
     <div class="title">
 <h1 class="title1">Add a new Admin account</h1>
 </div>
-
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>

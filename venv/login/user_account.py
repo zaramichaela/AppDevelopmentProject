@@ -1,19 +1,14 @@
-
 from werkzeug.security import generate_password_hash, check_password_hash
 import shelve
 import pickle
 
-
 USER_DB = "user.db"
-
 class user_account(object):
-
     def __init__(self, username, email, password, ban_flag=False):
         self.username = username
         self.email = email
         self.set_password(password)
         self.ban_flag = ban_flag
-
 
     def get_username(self):
         return self.username
@@ -27,7 +22,6 @@ class user_account(object):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
 
     def save(self):
         s = shelve.open(USER_DB)
@@ -47,7 +41,6 @@ class user_account(object):
             s.close()
         return False
 
-    #convert to pickle to store in shelve
     def serialize(self):
         return pickle.dumps(self)
 

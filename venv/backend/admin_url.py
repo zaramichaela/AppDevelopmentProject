@@ -9,16 +9,7 @@ from login.user_account import *
 
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
 
-
-
-
 def authorize(f):
-    """
-    Wrapper function to make sure that the user is logged in as admin
-    before being able to access the pages that the wrapper protects.
-    e.g. you need to login as admin
-    otherwise you wont be able to access links like /admin/add/coupons and etc...
-    """
     @wraps(f)
     def decorated_function(*args, **kws):
         if(session.get('admin_logged_in')):
@@ -28,7 +19,6 @@ def authorize(f):
             return redirect(url_for("admin_pages.admin"))
     return decorated_function
 
-
 @admin_pages.route('/admin')
 def admin():
     print(session.get('admin_logged_in'))
@@ -36,8 +26,6 @@ def admin():
         return render_template('admin/admin_login.html')
     else:
         return render_template('admin/base.html')
-
-
 
 @admin_pages.route('/admin/login', methods=['POST'])
 def do_admin_login():
@@ -56,12 +44,6 @@ def admin_logout():
     session['admin_logged_in'] = False
     session['admin_username'] = ""
     return redirect(url_for("admin_pages.admin"))
-
-
-# @app.route('/accounts/add/admin')
-# def add_admin_accounts():
-#     context = {}
-#
 
 @admin_pages.route('/admin/add/coupons', methods= ['GET','POST'])
 @authorize

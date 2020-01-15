@@ -15,7 +15,7 @@ class new_sales_item(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200) ,DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=3000) ,DataRequired()])
-    price = DecimalField("Price: ", validators=[DataRequired()])# Regexp(
+    price = DecimalField("Price: ", validators=[DataRequired()])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
     stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),DataRequired()])
     submit = SubmitField()
