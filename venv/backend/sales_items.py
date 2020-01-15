@@ -15,7 +15,7 @@ class sales_items(sales_objects):
 
     def set_stocks(self,stocks):
         self.stocks = stocks
-        
+
     def display_html(self):
         html = "testing"
         return html
