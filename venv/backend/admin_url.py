@@ -300,7 +300,7 @@ def edit_item(itemid):
     form.name.data = item.get_name()
     form.description.data = item.get_description()
     form.price.data = item.get_price()
-    form.image_url.data = item.image_url()
+
     form.stocks.data = item.get_stocks()
 
 
@@ -336,7 +336,7 @@ def edit_package(packageid):
     form.name.data = item.get_name()
     form.description.data = item.get_description()
     form.price.data = item.get_price()
-    form.image_url.data = item.image_url()
+
     form.expiry_duration.data = item.get_expiry_duration()
     form.sessions.data = item.get_sessions()
     form.bought_date.data = item.get_bought_date()
@@ -375,7 +375,7 @@ def edit_service(serviceid):
     form.name.data = item.get_name()
     form.description.data = item.get_description()
     form.price.data = item.get_price()
-    form.image_url.data = item.image_url()
+
 
     if request.method == 'POST' and form.validate():
 
@@ -533,7 +533,10 @@ def ban_user_account(username):
 def create_suppliers():
     form = create_supplier()
     if request.method == 'POST' and form.validate():
-        success_flag = itemcontroller.create_and_save_suppliers(form.data)
+        if(suppliercontroller.get_suppliers_by_UID(form.UID.data)):
+            flash("Error, UID exists, please choose another UID", "error")
+            return render_template('admin/suppliers/create_suppliers.html', form=form)
+        success_flag = suppliercontroller.create_and_save_suppliers(form.data)
         if (not success_flag):
             flash("Error, you cannot list a new supplier", "error")
         else:
@@ -543,35 +546,84 @@ def create_suppliers():
 @admin_pages.route('/admin/suppliers/<supplierid>/edit', methods= ['GET','POST'])
 @authorize
 def edit_suppliers(supplierid):
-    item = itemcontroller.get_suppliers_by_UID(supplierid)
+    item = suppliercontroller.get_suppliers_by_UID(supplierid)
     if(not item):
         abort(404)
-    form = create_supplier(formdata=request.form, obj=item)
+    form = create_supplier(formdata=request.form)
+    form.UID.data = item.get_UID()
+    form.name.data = item.get_name()
+    form.address.data = item.get_address()
+    form.phone_num.data = item.get_phone_num()
+    form.product.data = item.get_product()
+    form.price.data = item.get_price()
+
     if request.method == 'POST' and form.validate():
-        success_flag = itemcontroller.create_and_save_suppliers(form.data)
+        suppliercontroller.remove_supplier(item)
+        success_flag = suppliercontroller.create_and_save_suppliers(form.data)
         if (not success_flag):
             flash("Error, you cannot edit the supplier " + item.get_UID(), "error")
         else:
             flash("A new supplier has been listed", "success")
-    return render_template('admin/suppliers/create_suppliers.html', form=form)
+    return render_template('admin/suppliers/edit_suppliers.html', form=form)
 
 @admin_pages.route('/admin/suppliers/<supplierid>/delete', methods= ['GET','POST'])
 @authorize
 def delete_suppliers(supplierid):
-    supplier = itemcontroller.get_suppliers_by_UID(supplierid)
+    supplier = suppliercontroller.get_suppliers_by_UID(supplierid)
     if(not supplier):
         abort(404)
-        success_flag = itemcontroller.remove_supplier(supplier)
-        if (not success_flag):
-            flash("Error, you delete the supplier " + supplier.get_UID(), "error")
-        else:
-            flash("The supplier has been deleted", "success")
-    return redirect(url_for("list_suppliers"))
+    success_flag = suppliercontroller.remove_supplier(supplier)
+    if (not success_flag):
+        flash("Error, you cannot delete the supplier " + supplier.get_UID(), "error")
+    else:
+        flash("The supplier" +supplier.get_UID +  " has been deleted", "success")
+    return redirect(url_for("admin_pages.list_suppliers"))
 
 
 @admin_pages.route('/admin/suppliers/view')
 @authorize
 def list_suppliers():
     context = {}
-    items = itemcontroller.get_all_suppliers()
+    items = suppliercontroller.get_all_suppliers()
     return render_template('admin/suppliers/list_suppliers.html',items=items)
+
+
+@admin_pages.route('/admin/suppliersorders/view')
+@authorize
+def list_suppliers_orders():
+    context = {}
+    items = suppliercontroller.get_all_suppliers_orders()
+    return render_template('admin/suppliers/list_suppliers_orders.html',items=items)
+
+@admin_pages.route('/admin/suppliersorders/add', methods= ['GET','POST'])
+@authorize
+def create_suppliers_orders():
+    form = buy_orders_supplier()
+    if request.method == 'POST' and form.validate():
+        if(suppliercontroller.get_suppliers_orders_by_UID(form.UID.data)):
+            flash("Error, UID exists, please choose another UID", "error")
+            return render_template('admin/suppliers/create_suppliers.html', form=form)
+
+        success_flag = suppliercontroller.create_and_save_supplier_order(form.data)
+        if (not success_flag):
+            flash("Error, you cannot list a new supplier", "error")
+        else:
+            flash("A new supplier has been listed", "success")
+    return render_template('admin/suppliers/create_suppliers_orders.html', form=form)
+
+
+@admin_pages.route('/admin/suppliersorders/<orderid>/edit', methods= ['GET','POST'])
+@authorize
+def edit_suppliers_order():
+    form = buy_orders_supplier()
+    if request.method == 'POST' and form.validate():
+        if(suppliercontroller.get_suppliers_orders_by_UID(form.UID.data)):
+            flash("Error, UID exists, please choose another UID", "error")
+            return render_template('admin/suppliers/create_suppliers.html', form=form)
+
+        success_flag = suppliercontroller.create_and_save_supplier_order(form.data.supplier)
+        if (not success_flag):
+            flash("Error, you cannot list a new supplier", "error")
+        else:
+            flash("A new supplier has been listed", "success")
+    return render_template('admin/suppliers/create_suppliers.html', form=form)

@@ -3,7 +3,7 @@ from backend import settings
 import shelve
 import pickle
 class supplier_orders:
-    def __init__(self, oid, sid, sname, pname, amt, unit_price, date_of_order=datetime.now()):
+    def __init__(self, oid, sid, sname, pname, amt, unit_price,progress="In-progress", date_of_order=datetime.now()):
         self.__oid = oid
         self.__sid = sid
         self.__sname = sname
@@ -11,6 +11,7 @@ class supplier_orders:
         self.__amt = amt
         self.__unit_price = unit_price
         self.__total_price = amt * unit_price
+        self.__progress = progress
         self.__date_of_order = date_of_order
 
     def get_oid(self):
@@ -62,10 +63,17 @@ class supplier_orders:
         self.__date_of_order = date_of_order
 
 
+    def get_progress(self):
+        return self.__progress
+
+    def set_progress(self,progress):
+        self.__progress = progress
+
+
     def save(self):
        s = shelve.open(settings.SUPPLIERS_DB)
        try:
-            s[self.__UID] = self.serialize()
+            s[self.__oid] = self.serialize()
             return True
        finally:
             s.close()

@@ -3,7 +3,7 @@ from wtforms import StringField,BooleanField,SubmitField,DecimalField,TextAreaFi
 from flask_wtf.file import FileField, FileRequired,FileAllowed
 from wtforms.validators import DataRequired
 from flask_uploads import UploadSet, IMAGES,configure_uploads
-from backend.settings import itemcontroller
+from backend.settings import suppliercontroller
 import re
 
 images = UploadSet('images', IMAGES)
@@ -95,13 +95,12 @@ class create_supplier(FlaskForm):
 
 
 class buy_orders_supplier(FlaskForm):
-    all = itemcontroller.get_all_suppliers()
+    all = suppliercontroller.get_all_suppliers()
     all_choice = []
     for i in all:
         temp = (i.get_UID(), i.get_name())
         all_choice.append(temp)
-
-    UID = StringField("Order ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
+    UID = StringField("Order UID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     supplier = SelectField("Supplier", choices=all_choice)
     number = IntegerField("Number of orders:", validators=[validators.NumberRange(min=1), DataRequired()])
     submit = SubmitField()

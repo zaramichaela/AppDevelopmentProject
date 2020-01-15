@@ -11,10 +11,10 @@ cfactory = coupon_factory()
 class items_controller:
     def __init__(self):
         #initiate and store all data into memory
-        self.all_coupons = cfactory.get_all_coupons_db()
-        self.all_items = sfactory.get_all_items_db()
-        self.all_packages = sfactory.get_all_packages_db()
-        self.all_services = sfactory.get_all_services_db()
+        self.__all_coupons = cfactory.get_all_coupons_db()
+        self.__all_items = sfactory.get_all_items_db()
+        self.__all_packages = sfactory.get_all_packages_db()
+        self.__all_services = sfactory.get_all_services_db()
 
 
     def get_coupon_by_UID(self, coupon_UID):
