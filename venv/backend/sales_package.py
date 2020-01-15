@@ -7,13 +7,13 @@ from backend.sales_objects import *
 class sales_package(sales_objects):
     def __init__(self, UID,name, description, price, image_url, expiry_duration, sessions):
         super().__init__(UID,name, description, price, image_url)
-        self.expiry_duration = expiry_duration #days to expiry date
-        self.sessions = sessions
-        self.remaining_sess = sessions
-        self.bought_date = date.today()
+        self._expiry_duration = expiry_duration #days to expiry date
+        self._sessions = sessions
+        self._remaining_sess = sessions
+        self._bought_date = date.today()
 
     def check_expiry(self):
-        if(self.bought_date+ timedelta(days=expiry_duration) <= datetime.today() ):
+        if(self._bought_date+ timedelta(days=expiry_duration) <= datetime.today() ):
             return True
         else:
             return False
@@ -21,7 +21,7 @@ class sales_package(sales_objects):
     def save(self):
        s = shelve.open(settings.PACKAGES_DB)
        try:
-            s[self.UID] = self.serialize()
+            s[self._UID] = self.serialize()
             return True
        finally:
             s.close()
@@ -29,16 +29,16 @@ class sales_package(sales_objects):
 
     #when users that has a package book a new session
     def book_session(self, datetime):
-        self.remaining_sess -= 1
+        self._remaining_sess -= 1
 
     def package_flag(self):
         return True
 
     def get_sessions(self):
-        return self.sessions
+        return self._sessions
 
     def get_remaining_sessions(self):
-        return self.remaining_sess
+        return self._remaining_sess
 
     def get_expiry_duration(self):
-        return self.expiry_duration
+        return self._expiry_duration

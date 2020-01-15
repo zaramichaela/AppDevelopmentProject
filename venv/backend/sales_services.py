@@ -12,7 +12,7 @@ class sales_services(sales_objects):
     def save(self):
        s = shelve.open(settings.SERVICES_DB)
        try:
-            s[self.UID] = self.serialize()
+            s[self._UID] = self.serialize()
             return True
        finally:
             s.close()

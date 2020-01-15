@@ -17,4 +17,3 @@ class sales_entry:
        finally:
             s.close()
        return False
-
