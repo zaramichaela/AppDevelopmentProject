@@ -1,15 +1,11 @@
 {% extends 'admin/base.html' %}
 
 {% block title %}
-Add an admin account
+list a new supplier
 {% endblock %}
 {%block body %}
 
-{% if message.message %}
-<div class="alert alert-success" role="alert">
-  {{ message.message }}
-</div>
-{% endif %}
+
 
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -42,6 +38,7 @@ Add an admin account
     {{ render_field(form.name, class='form-control') }}
     {{ render_field(form.address, class='form-control') }}
     {{ render_field(form.product, class='form-control') }}
+    {{ render_field(form.phone_num, class='form-control') }}
     {{ render_field(form.price, class='form-control') }}
     {{form.submit(class="btn btn-primary")}}
   </dl>

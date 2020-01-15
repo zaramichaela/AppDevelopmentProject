@@ -432,3 +432,35 @@ def ban_user_account(username):
         flash("an error have occurred, please try again", "error")
     items = logincontroller.get_all_admins()
     return redirect(url_for("admin_pages.list_users_accounts"))
+
+
+
+
+###########################################################################
+##########################################################################
+###########################################################################
+##########################################################################
+###########################################################################
+##########################################################################
+#for suppliers#############################################################
+##########################################################################
+@admin_pages.route('/admin/suppliers/add', methods= ['GET','POST'])
+@authorize
+def create_suppliers():
+    form = create_supplier()
+    print(form.validate())
+    if request.method == 'POST' and form.validate():
+        success_flag = itemcontroller.create_and_save_suppliers(form.data)
+        if (not success_flag):
+            flash("Error, you cannot list a new supplier", "error")
+        else:
+            flash("A new supplier has been listed", "success")
+    return render_template('admin/suppliers/create_suppliers.html', form=form)
+
+
+@admin_pages.route('/admin/suppliers/view')
+@authorize
+def list_suppliers():
+    context = {}
+    items = itemcontroller.get_all_suppliers()
+    return render_template('admin/suppliers/list_suppliers.html',items=items)

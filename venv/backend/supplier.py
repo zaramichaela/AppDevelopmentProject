@@ -3,58 +3,58 @@ import shelve
 from backend import settings
 import pickle
 
-class suppliers():
+class suppliers(object):
 
     #overwrite super for adding stocks to shop items
     def __init__(self, UID,name, address, phone_num,product,  price):
-        self.UID = UID
-        self.name = name
-        self.address = address
-        self.phone_num = phone_num
-        self.product = product
-        self.price = price
+        self.__UID = UID
+        self.__name = name
+        self.__address = address
+        self.__phone_num = phone_num
+        self.__product = product
+        self.__price = price
 
 
     def get_UID(self):
-        return self.UID
+        return self.__UID
 
     def get_name(self):
-        return self.name
+        return self.__name
 
     def get_address(self):
-        return self.address
+        return self.__address
 
     def get_phone_num(self):
-        return self.phone_num
+        return self.__phone_num
 
     def get_product(self):
-        return self.product
+        return self.__product
 
     def get_price(self):
-        return self.price
+        return self.__price
 
     def set_UID(self, UID):
-        self.UID = UID
+        self.__UID = UID
 
     def set_name(self, name):
-        self.name = name
+        self.__name = name
 
     def set_address(self, address):
-        self.address = address
+        self.__address = address
 
-    def set_phone_num(self):
-        self.phone_num = phone_num
+    def set_phone_num(self, phone_num):
+        self.__phone_num = phone_num
 
     def set_product(self,product):
-        self.product = product
+        self.__product = product
 
     def set_price(self, price):
-        self.price = price
+        self.__price = price
 
     def save(self):
        s = shelve.open(settings.SUPPLIERS_DB)
        try:
-            s[self.UID] = self.serialize()
+            s[self.__UID] = self.serialize()
             return True
        finally:
             s.close()

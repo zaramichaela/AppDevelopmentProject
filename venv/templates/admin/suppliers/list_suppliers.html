@@ -41,7 +41,22 @@ All Admin
     <thead>
     <tr>
         <th class="th-sm">
-            <center><b>Administrator's Account</b></center>
+            <center><b>UID</b></center>
+        </th>
+        <th class="th-sm">
+            <center><b>Suppliers Name</b></center>
+        </th>
+        <th class="th-sm">
+            <center><b>Address</b></center>
+        </th>
+        <th class="th-sm">
+            <center><b>Phone Number</b></center>
+        </th>
+        <th class="th-sm">
+            <center><b>Brand</b></center>
+        </th>
+        <th class="th-sm">
+            <center><b>Price</b></center>
         </th>
            <th class="th-sm" style="width:200px;">
             <center><b>Action</b></center>
@@ -50,10 +65,10 @@ All Admin
     </thead>
     <tbody>
     </tr>
-    {% from "admin/listing/_listhelper.html" import render_admin_table %}
+    {% from "admin/listing/_listhelper.html" import render_supplier_table %}
     {%for i in items %}
     <tr>
-    {{ render_admin_table(i) }}
+    {{ render_supplier_table(i) }}
     </tr>
     {% endfor %}
 

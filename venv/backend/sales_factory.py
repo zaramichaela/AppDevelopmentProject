@@ -4,7 +4,7 @@ from backend.sales_items import *
 from backend.sales_entry import *
 from backend.sales_services import *
 from backend.sales_package import *
-from backend.suppliers import *
+from backend.supplier import *
 import jsons
 import pickle
 
@@ -53,6 +53,14 @@ class sales_factory:
             print(e)
             return None
 
+    def create_suppliers(self, dict):
+        try:
+            sup = suppliers(dict["UID"],dict["name"], dict["address"], dict["phone_num"], dict["product"], dict["price"])
+            return sup
+        except Exception as e:
+            print(e)
+            return None
+
     def deserialize(self, dict):
         try:
             return pickle.loads(dict)
@@ -61,7 +69,7 @@ class sales_factory:
 
 
     #return all items from item database
-    def get_all_items(self):
+    def get_all_items_db(self):
         items = []
         s = shelve.open(settings.ITEMS_DB)
         try:
@@ -74,7 +82,7 @@ class sales_factory:
         return items
 
     # return all services from service database
-    def get_all_services(self):
+    def get_all_services_db(self):
         items = []
         s = shelve.open(settings.SERVICES_DB)
         try:
@@ -85,7 +93,7 @@ class sales_factory:
         return items
 
     #return all packages from package database
-    def get_all_packages(self):
+    def get_all_packages_db(self):
         items = []
         s = shelve.open(settings.PACKAGES_DB)
         try:
@@ -96,7 +104,7 @@ class sales_factory:
         return items
 
         #return all packages from package database
-    def get_all_suppliers(self):
+    def get_all_suppliers_db(self):
         items = []
         s = shelve.open(settings.SUPPLIERS_DB)
         try:
@@ -171,11 +179,24 @@ class sales_factory:
         finally:
             s.close()
 
+
     def delete_db_sales_package(self, packageuid):
         #delete packages from shelve database
         s = shelve.open(settings.PACKAGES_DB)
         try:
             del s[packageuid]
+            return True
+        except:
+            return False
+        finally:
+            s.close()
+
+
+    def delete_db_supplier(self, supplieruid):
+        #delete packages from shelve database
+        s = shelve.open(settings.SUPPLIERS_DB)
+        try:
+            del s[supplieruid]
             return True
         except:
             return False
