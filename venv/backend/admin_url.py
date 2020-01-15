@@ -361,7 +361,7 @@ def edit_package(packageid):
             form.price.data = item.get_price()
             form.expiry_duration.data = item.get_expiry_duration()
             form.sessions.data = item.get_sessions()
-            form.bought_date.data = item.get_bought_date()
+            
     return render_template('admin/editing/edit_packages.html', form=form, message=context, item=item)
 
 

@@ -104,9 +104,9 @@
             <center>
             <a class="btn btn-primary" href="{{url_for('admin_pages.edit_service', serviceid=i.get_UID())}}">Edit</a>
                 {% if i.get_available_flag() %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', packageid=i.get_UID())}}">Invalidate</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', serviceid=i.get_UID())}}">Invalidate</a>
                 {% else %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', packageid=i.get_UID())}}">Validate</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', serviceid=i.get_UID())}}">Validate</a>
                 {% endif %}
             </center>
         </td>
