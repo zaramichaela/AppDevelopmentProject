@@ -1,12 +1,71 @@
 import hashlib
-import shelve
-import backend.settings as settings
 from flask import flash
+import pickle
+from login.user_account import user_account
+import backend.settings as settings
+import shelve
+
+
 
 class login_controller():
     def __init__(self):
         self.all_admins = get_all_admin()
+        self.all_users = get_all_users()
 
+
+
+    def login_user(self, username, password):
+        for i in self.all_users:
+            if(i.check_login(username,password)):
+                return i
+        return False
+
+    def find_user_username(self, username):
+        for i in self.all_users:
+            if(i.get_username() == username):
+                return i
+        return False
+
+    def create_user_account(self, username , password, email):
+        u1 = user_account(username, email, password)
+        if(u1.save()):
+            self.all_users.append(u1)
+            return True
+        return False
+
+    def del_user_account(self, username):
+        user = self.find_user_username(username)
+        print(username)
+        self.all_users.remove(user)
+        s = shelve.open(settings.USER_DB)
+        try:
+            del s[username]
+            return True
+        except Exception as e:
+            print(e)
+            return False
+        finally:
+            s.close()
+
+    def set_ban_user_flag(self,user ,flag):
+        user.set_ban_flag(flag)
+        user.save()
+
+    def user_change_pass(self, username, oldpassword, newpassword):
+        user = self.login_admin(username, oldpassword)
+        if (user):
+            self.all_users.remove(user)
+            user.set_password(newpassword)
+            user.save()
+            self.all_users.append(user)
+            flash("Your password has been changed.", "success")
+        else:
+            flash("You have input the wrong password, password is not changed.", "error")
+            return False
+
+    def get_all_users(self):
+        print(self.all_users)
+        return self.all_users
 
 
 
@@ -17,28 +76,18 @@ class login_controller():
         return None
 
 
-    def delete_admin_account(self, username):
-        for i in self.all_admins:
-            if(i["username"] == username):
-                self.all_admins.remove(i)
-                delete_admin_from_shelve(username)
-                return True
-            else:
-                return False
 
 
     def login_admin(self, username, password):
         details = self.find_admin_username(username)
         print(details)
-        print(self.all_admins)
         if(not details):
             return False
         if(hash_password(password) == details["hash"]):
-            return True
+            return details
         return False
 
     def add_admin_account(self, username, password):
-
         hash = hash_password(password)
         s = shelve.open(settings.ADMIN_DB)
         try:
@@ -58,6 +107,33 @@ class login_controller():
             return False
         finally:
             s.close()
+
+    def find_admin_username(self, username):
+        for i in self.all_admins:
+            if i["username"] == username:
+                return i
+        return None
+
+
+    def delete_admin_account(self, username):
+        for i in self.all_admins:
+            if(i["username"] == username):
+                self.all_admins.remove(i)
+                delete_admin_from_shelve(username)
+                return True
+
+        return False
+
+    def change_admin_password(self, username, oldpassword, newpassword):
+        user = self.login_admin(username, oldpassword)
+        if(user):
+            user["hash"] = hash_password(newpassword)
+            self.add_admin_account(username, newpassword)
+            flash("Password is changed", "success")
+            return True
+        else:
+            flash("Old password is wrong", "error")
+            return False
 
     def get_all_admins(self):
         print(self.all_admins)
@@ -95,36 +171,28 @@ def get_all_admin():
     finally:
         s.close()
     return all
-# def find_admin_username(username):
-#       userhash = ''
-#       s = shelve.open(settings.ADMIN_DB)
-#       try:
-#           userhash = s[str(username)]
-#           return userhash
-#       except Exception as e:
-#           print(e)
-#           return False
-#       finally:
-#           s.close()
-#       return userhash
 
-# def login_admin(username, password):
-#     found_hash = find_admin_username("Zarateo")
-#     password_hash = hash_password(password)
-#     if(found_hash and password_hash == found_hash):
-#         return True
-#     else:
-#         return False
-#
 
-#
-# def delete_admin_account(username):
-#     s = shelve.open(settings.ADMIN_DB)
-#     try:
-#         del s[username]
-#     except:
-#         print(Exception)
-#         return False
-#     finally:
-#         s.close()
-#     return True
+
+
+
+
+
+def deserialize(dict):
+    try:
+        return pickle.loads(dict)
+    except:
+        return None
+
+def get_all_users():
+    all = []
+    s = shelve.open(settings.USER_DB)
+    try:
+        for i in s:
+            all.append(deserialize(s[i]))
+    except Exception as e:
+        print(e)
+        return False
+    finally:
+        s.close()
+    return all

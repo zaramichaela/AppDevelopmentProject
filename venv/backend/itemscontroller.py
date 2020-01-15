@@ -82,16 +82,29 @@ class items_controller:
         return True
 
     def remove_sales_item(self, item):
-        return self.all_items.remove(item)
+        flag = sfactory.delete_db_sales_item(item.get_UID())
+        if(flag):
+            self.all_items.remove(item)
+            return True
+        return False
 
     def remove_sales_package(self, item):
-        return self.all_packages.remove(item)
+        if(not sfactory.delete_db_sales_package(item.get_UID())):
+            return False
+        self.all_packages.remove(item)
+        return True
 
     def remove_sales_service(self, item):
-        return self.all_services.remove(item)
+        if(not sfactory.delete_db_service(item.get_UID())):
+            return False
+        self.all_services.remove(item)
+        return True
 
     def remove_sales_coupon(self, item):
-        return self.all_coupons.remove(item)
+        if(not cfactory.delete_db_coupon(item.get_UID())):
+            return False
+        self.all_coupons.remove(item)
+        return True
 
 
 
@@ -135,20 +148,8 @@ class items_controller:
         #create and save coupon in database and current memory
         coupon = cfactory.create_coupon(dict)
         self.all_coupons.append(coupon)
+        coupon.save()
         return coupon
-
-
-    def delete_item(self, item):
-        #delete items from the shelve and current memory.
-        try:
-
-            self.all_items.remove(item)
-            item.delete()
-
-            return True
-        except:
-            print(Exception)
-            return False
 
 
 

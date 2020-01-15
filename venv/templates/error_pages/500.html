@@ -150,7 +150,11 @@ body {
 </head>
 
 <body>
-
+			<script>
+			function goBack() {
+			  window.history.back();
+			}
+			</script>
 	<div id="notfound">
 		<div class="notfound">
 			<div class="notfound-500">
@@ -162,7 +166,7 @@ body {
 <!--				<input type="text" placeholder="Search...">-->
 <!--				<button type="button">Search</button>-->
 <!--			</form>-->
-            <a href=#"><span class="arrow"></span>Return To Previous Page</a>
+            <a href="javascript:goBack();"><span class="arrow"></span>Return To Previous Page</a>
 			<br>
 			<br>
 			<a href="{{ url_for('login') }}"><span class="arrow"></span>Return To Homepage</a>

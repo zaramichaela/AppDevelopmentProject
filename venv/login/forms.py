@@ -1,14 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,BooleanField,SubmitField,DecimalField,TextAreaField,IntegerField,DateField, PasswordField,validators
-from wtforms.validators import DataRequired
+from wtforms import *
 import wtforms.validators as validators
-import os
-import re
+from wtforms.validators import DataRequired
+from login.user_account import *
 
 class admin_login_form(FlaskForm):
     username = StringField("Username:", validators=[DataRequired()])
     password = PasswordField("Password:", validators=[DataRequired()])
     submit = SubmitField()
+
 
 class create_admin_account(FlaskForm):
     username = StringField("Username:", validators=[validators.Length(min=3, max=12) ,DataRequired()])
@@ -16,4 +16,12 @@ class create_admin_account(FlaskForm):
     cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16) ,DataRequired()])
     submit = SubmitField()
 
+
+
+class customer_registration(FlaskForm):
+    username = StringField("Username:", validators=[validators.Length(min=6, max=12), DataRequired()])
+    email = StringField("Email:", validators=[validators.Length(min=6, max=60), DataRequired()])
+    password = PasswordField("Password:", validators=[validators.Length(min=8, max=16), DataRequired(), validators.EqualTo('cfm_password', message='Password must match')])
+    cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16), DataRequired()])
+    submit = SubmitField()
 

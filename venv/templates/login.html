@@ -52,7 +52,7 @@
 
   {% endif %}
 {% endwith %}
-				<form class="login100-form validate-form p-b-33 p-t-5" action="{{ url_for('login')}}" method="POST">
+				<form class="login100-form validate-form p-b-33 p-t-5" action="{{ url_for('do_user_login')}}" method="POST">
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
 						<input class="input100" type="text" name="username" placeholder="Username">

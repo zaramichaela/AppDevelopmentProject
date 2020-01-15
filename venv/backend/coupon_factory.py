@@ -56,3 +56,15 @@ class coupon_factory:
         def from_json(cls, json_str):
             json_dict = json.loads(json_str)
             return cls(**json_dict)
+
+
+    def delete_db_coupon(self, couponuid):
+        #delete item from shelve database
+        s = shelve.open(settings.COUPON_DB)
+        try:
+            del s[couponuid]
+            return True
+        except:
+            return False
+        finally:
+            s.close()

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Karen's TCM Home Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/user/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="static/user/css/animate.css">
+
+    <link rel="stylesheet" href="static/user/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="static/user/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="static/user/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="static/user/css/aos.css">
+
+    <link rel="stylesheet" href="static/user/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="static/user/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="static/user/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="static/user/css/flaticon.css">
+    <link rel="stylesheet" href="static/user/css/icomoon.css">
+    <link rel="stylesheet" href="static/user/css/style.css">
+  </head>
+  <body class="goto-here">
+		<div class="py-1 bg-black">
+    	<div class="container">
+    		<div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
+	    		<div class="col-lg-12 d-block">
+		    		<div class="row d-flex">
+		    			<div class="col-md pr-4 d-flex topper align-items-center" style="color:white;">
+							{% if session['logged_in']%}
+							Hello, {{session['logged_in_user']}}!
+							{% else %}
+							Hello Stranger
+								{% endif %}
+						</div>
+					    <div class="col-md pr-4 d-flex topper align-items-center">
+					    </div>
+					    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
+							{% if session['logged_in']%}
+							<a class="text"><a href="{{url_for('logout')}}" class="btn btn-light">Logout</a></span>
+								{% else %}
+							<a class="text"><a href="{{url_for('login')}}" class="btn btn-light">Login</a></span>
+								{% endif %}
+					    </div>
+				    </div>
+			    </div>
+		    </div>
+		  </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html" style="padding-top:20px;">Karen's TCM</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav" style="padding-top:20px;">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item active"><a href="{{url_for('home')}}" class="nav-link">Home</a></li>
+	          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown04">
+              	<a class="dropdown-item" href="{{url_for('shop')}}">Shop</a>
+                <a class="dropdown-item" href="product-single.html">Single Product</a>
+                <a class="dropdown-item" href="{{url_for('cart')}}">Cart</a>
+                <a class="dropdown-item" href="{{url_for('checkout')}}">Checkout</a>
+              </div>
+            </li>
+	          <li class="nav-item"><a href="{{url_for('about')}}" class="nav-link">About</a></li>
+<!--	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>-->
+	          <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">Contact</a></li>
+	          <li class="nav-item cta cta-colored"><a href="{{url_for('cart')}}" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+
+    <section id="home-section" class="hero">
+		  <div class="home-slider owl-carousel">
+	      <div class="slider-item js-fullheight">
+	      	<div class="overlay"></div>
+	        <div class="container-fluid p-0">
+	          <div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end" data-scrollax-parent="true">
+		          <div class="one-third d-flex align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+		          	<div class="text">
+		          		<span class="subheading">#Opening Special</span>
+		          		<div class="horizontal">
+				            <h1 class="mb-4 mt-3">As a token of our appreciation...</h1>
+				            <p class="mb-4">Here is a 20% off coupon for all purchases, with minimum spending of $50. Simply quote "<b>OPENING</b>" before you check out.</p>
+
+				            <p><a href="{{url_for('shop')}}" class="btn-custom">Shop Now!</a></p>
+				          </div>
+		            </div>
+		          </div>
+	        	</div>
+	        </div>
+	      </div>
+
+	      <div class="slider-item js-fullheight">
+	      	<div class="overlay"></div>
+	        <div class="container-fluid p-0">
+	          <div class="row d-flex no-gutters slider-text align-items-center justify-content-end" data-scrollax-parent="true">
+		          <div class="one-third d-flex align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+		          	<div class="text">
+		          		<span class="subheading">#CNY Special</span>
+		          		<div class="horizontal">
+				            <h1 class="mb-4 mt-3">Ate too much heaty food?</h1>
+				            <p class="mb-4">We understand. Here's a 10% off coupon for all items purchased, with a minimum spending of $20. <br>Simply quote "<b>CNY2020</b>" before you check out.</p>
+
+				            <p><a href="shop.html" class="btn-custom">Shop Now!</a></p>
+				          </div>
+		            </div>
+		          </div>
+	        	</div>
+	        </div>
+	      </div>
+	    </div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+			<div class="container">
+				<div class="row no-gutters ftco-services">
+          <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services p-4 py-md-5">
+              <div class="icon d-flex justify-content-center align-items-center mb-4">
+            		<span class="flaticon-bag"></span>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Free Delivery</h3>
+                <p>We offer free standard delivery within Singapore. We pride ourselves on fast and efficient delivery, with our delivery services guaranteed to reach you within 3-5 business days for standard delivery and 1 day for express delivery.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services p-4 py-md-5">
+              <div class="icon d-flex justify-content-center align-items-center mb-4">
+            		<span class="flaticon-customer-service"></span>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Customer Support</h3>
+                <p>Our customers are very important to us, that's why we provide free refunds. If you have any queries, feel free to email our support team at <b><i>support@karenstcm.com</b></i> or call <b><i>+65 6123-4567</b></i>. We will reply within 3-5 days.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services p-4 py-md-5">
+              <div class="icon d-flex justify-content-center align-items-center mb-4">
+            		<span class="flaticon-payment-security"></span>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Secure Payments</h3>
+                <p>Your credit card details are encrypted using the SSL protocol and are never transmitted in plaintext over the network. We have no access to your details and do not keep them on the server, which is why it is safe to shop with us.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
+		</section>
+
+    <section class="ftco-section bg-light">
+    	<div class="container">
+				<div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <h2 class="mb-4">New TCM Arrivals</h2>
+            <p>Check Out Our New Arrivals and Shop Many More Products At <i>Karen's TCM Shop</i>!</p>
+          </div>
+        </div>
+    	</div>
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+    				<div class="product d-flex flex-column">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="static/items/fucha.jpg" >
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 pb-4 px-3">
+<!--    						<div class="d-flex">-->
+<!--    							<div class="cat">-->
+<!--		    						<span>Lifestyle</span>-->
+<!--		    					</div>-->
+<!--		    					<div class="rating">-->
+<!--	    							<p class="text-right mb-0">-->
+<!--	    								<a href="#"><span class="ion-ios-star-outline"></span></a>-->
+<!--	    								<a href="#"><span class="ion-ios-star-outline"></span></a>-->
+<!--	    								<a href="#"><span class="ion-ios-star-outline"></span></a>-->
+<!--	    								<a href="#"><span class="ion-ios-star-filled"></span></a>-->
+<!--	    								<a href="#"><span class="ion-ios-star-outline"></span></a>-->
+<!--	    							</p>-->
+<!--	    						</div>-->
+<!--	    					</div>-->
+    						<h3><a href="#">Hunan Anhua Big Wild Leaves Golden Flowers Fucha Hei Cha Dark Tea Brick 518g</a></h3>
+    						<div class="pricing">
+	    						<p class="price"><span>$40.00</span></p>
+	    					</div>
+	    					<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+    				<div class="product d-flex flex-column">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="static/items/birdsnest.jpg" >
+    						<span class="status">50% Off</span>
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 pb-4 px-3">
+
+    						<h3><a href="#">Imperial Golden Concentrated Bird's Nest With Rock Sugar Mini Treats 小燕宴皇丝燕浓缩冰糖燕</a></h3>
+  							<div class="pricing">
+	    						<p class="price"><span class="mr-2 price-dc">$160.00</span><span class="price-sale">$80.00</span></p>
+	    					</div>
+	    					<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="static/items/boying.jpg">
+	    					<div class="overlay"></div>
+	    				</a>
+    					<div class="text py-3 pb-4 px-3">
+
+    						<h3><a href="#">Bo Ying Compound</a></h3>
+  							<div class="pricing">
+	    						<p class="price"><span>$120.00</span></p>
+	    					</div>
+	    					<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="static/items/chicken.jpg">
+	    					<div class="overlay"></div>
+	    				</a>
+    					<div class="text py-3 pb-4 px-3">
+
+    						<h3><a href="#">Jumbo Family Pack - Essence Of Chicken With Goji Berries & Red Dates 10'S 杞子红枣鸡精</a></h3>
+  							<div class="pricing">
+	    						<p class="price"><span>$29.99</span></p>
+	    					</div>
+	    					<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+				<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="static/items/mum.jpg">
+	    					<div class="overlay"></div>
+	    				</a>
+    					<div class="text py-3 pb-4 px-3">
+
+    						<h3><a href="#">28-Day Essential Kit For New Mum - Postnatal Confinement Care 坐月新生配套</a></h3>
+  							<div class="pricing">
+	    						<p class="price"><span>$319.99</span></p>
+	    					</div>
+	    					<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+				<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="static/items/ginseng.jpg">
+	    					<div class="overlay"></div>
+	    				</a>
+    					<div class="text py-3 pb-4 px-3">
+
+    						<h3><a href="#">Ginseng Chrysanthemum Tea 泡参菊花茶</a></h3>
+  							<div class="pricing">
+	    						<p class="price"><span>$15.00</span></p>
+	    					</div>
+	    					<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+				<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="static/items/bf.jpg">
+	    					<div class="overlay"></div>
+	    				</a>
+    					<div class="text py-3 pb-4 px-3">
+
+    						<h3><a href="#">Gold Label Bak Foong Pill (Large Pills) 金牌白凤丸(大粒装）</a></h3>
+  							<div class="pricing">
+	    						<p class="price"><span>$49.90</span></p>
+	    					</div>
+	    					<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+				<div class="col-sm-12 col-md-6 col-lg-3 ftco-animate d-flex">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="static/items/tianqi.jpg">
+	    					<div class="overlay"></div>
+	    				</a>
+    					<div class="text py-3 pb-4 px-3">
+
+    						<h3><a href="#">Tian Qi Capsules 田七 药囊</a></h3>
+  							<div class="pricing">
+	    						<p class="price"><span>$20.00</span></p>
+	    					</div>
+	    					<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+			</div>
+    		</div>
+    	</div>
+    </section>
+
+
+<!--
+    <section class="ftco-section ftco-choose ftco-no-pb ftco-no-pt">
+    	<div class="container">
+				<div class="row no-gutters">
+					<div class="col-lg-4">
+						<div class="choose-wrap divider-one img p-5 d-flex align-items-end" style="background-image: url(images/choose-1.jpg);">
+
+    					<div class="text text-center text-white px-2">
+								<span class="subheading">Men's Shoes</span>
+    						<h2>Men's Collection</h2>
+    						<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+    						<p><a href="#" class="btn btn-black px-3 py-2">Shop now</a></p>
+    					</div>
+    				</div>
+					</div>
+					<div class="col-lg-8">
+    				<div class="row no-gutters choose-wrap divider-two align-items-stretch">
+    					<div class="col-md-12">
+	    					<div class="choose-wrap full-wrap img align-self-stretch d-flex align-item-center justify-content-end" style="background-image: url(images/choose-2.jpg);">
+	    						<div class="col-md-7 d-flex align-items-center">
+	    							<div class="text text-white px-5">
+	    								<span class="subheading">Women's Shoes</span>
+			    						<h2>Women's Collection</h2>
+			    						<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+			    						<p><a href="#" class="btn btn-black px-3 py-2">Shop now</a></p>
+			    					</div>
+	    						</div>
+	    					</div>
+	    				</div>
+    					<div class="col-md-12">
+    						<div class="row no-gutters">
+    							<div class="col-md-6">
+		    						<div class="choose-wrap wrap img align-self-stretch bg-light d-flex align-items-center">
+		    							<div class="text text-center px-5">
+		    								<span class="subheading">Summer Sale</span>
+				    						<h2>Extra 50% Off</h2>
+				    						<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+				    						<p><a href="#" class="btn btn-black px-3 py-2">Shop now</a></p>
+				    					</div>
+		    						</div>
+	    						</div>
+	    						<div class="col-md-6">
+		    						<div class="choose-wrap wrap img align-self-stretch d-flex align-items-center" style="background-image: url(images/choose-3.jpg);">
+		    							<div class="text text-center text-white px-5">
+		    								<span class="subheading">Shoes</span>
+				    						<h2>Best Sellers</h2>
+				    						<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+				    						<p><a href="#" class="btn btn-black px-3 py-2">Shop now</a></p>
+				    					</div>
+		    						</div>
+	    						</div>
+	    					</div>
+    					</div>
+    				</div>
+    			</div>
+  			</div>
+    	</div>
+    </section> -->
+<!--
+    <section class="ftco-section ftco-deal bg-primary">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-md-6">
+    				<img src="static/user/images/prod-1.png" class="img-fluid" alt="">
+    			</div>
+    			<div class="col-md-6">
+    				<div class="heading-section heading-section-white">
+    					<span class="subheading">Deal of the month</span>
+	            <h2 class="mb-3">Deal of the month</h2>
+	          </div>
+    				<div id="timer" class="d-flex mb-4">
+						  <div class="time" id="days"></div>
+						  <div class="time pl-4" id="hours"></div>
+						  <div class="time pl-4" id="minutes"></div>
+						  <div class="time pl-4" id="seconds"></div>
+						</div>
+						<div class="text-deal">
+							<h2><a href="#">Nike Free RN 2019 iD</a></h2>
+							<p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale">$80.00</span></p>
+							<ul class="thumb-deal d-flex mt-4">
+								<li class="img" style="background-image: url(static/user/images/product-6.png);"></li>
+								<li class="img" style="background-image: url(static/user/images/product-2.png);"></li>
+								<li class="img" style="background-image: url(static/user/images/product-4.png);"></li>
+							</ul>
+						</div>
+    			</div>
+    		</div>
+    	</div>
+    </section> -->
+
+    <section class="ftco-section testimony-section">
+      <div class="container">
+        <div class="row">
+        	<div class="col-lg-5">
+        		<div class="services-flow">
+        			<div class="services-2 p-4 d-flex ftco-animate">
+        				<div class="icon">
+        					<span class="flaticon-bag"></span>
+        				</div>
+        				<div class="text">
+	        				<h3>Free Delivery</h3>
+	        				<p class="mb-0">We offer free standard delivery within Singapore (3-5 business days).</p>
+        				</div>
+        			</div>
+        			<div class="services-2 p-4 d-flex ftco-animate">
+        				<div class="icon">
+        					<span class="flaticon-heart-box"></span>
+        				</div>
+        				<div class="text">
+	        				<h3>Gift Services</h3>
+	        				<p class="mb-0">Want to get something as a gift? Let us know and we will get it wrapped for you, free of charge.</p>
+	        			</div>
+        			</div>
+        			<div class="services-2 p-4 d-flex ftco-animate">
+        				<div class="icon">
+        					<span class="flaticon-payment-security"></span>
+        				</div>
+        				<div class="text">
+	        				<h3>Secure Payments</h3>
+	        				<p class="mb-0">No banking information about you is transmitted via the online shop. Your credit card details are <strong><i>never</i></strong> transmitted in plaintext over the network and we do <strong><i>not</i></strong> store your data!</p>
+	        			</div>
+        			</div>
+        			<div class="services-2 p-4 d-flex ftco-animate">
+        				<div class="icon">
+        					<span class="flaticon-customer-service"></span>
+        				</div>
+        				<div class="text">
+	        				<h3>All Day Support</h3>
+	        				<p class="mb-0">Contact our team at <b><i>support@karenstcm.com</i></b> or call <br><b><i>+65 6123-4567</i></b>. We will do our best to support you!</p>
+	        			</div>
+        			</div>
+        		</div>
+        	</div>
+          <div class="col-lg-7">
+          	<div class="heading-section ftco-animate mb-5">
+	            <h2 class="mb-4">Our satisfied customers</h2>
+<!--				<p>From our free and efficient delivery to our friendly and helpful support staff, we pride ourselves-->
+<!--					on providing the best possible service. We want you to enjoy the benefits of using-->
+<!--				Traditional Chinese Medicine to remedy your illnesses!</p>-->
+	          </div>
+            <div class="carousel-testimony owl-carousel">
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mstan.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">The store offers fast delivery, placed my orders and it
+						has arrived in a few days. The prices of the medicine offered at the TCM
+						is very reasonable. The store imports lots of traditional Chinese medicine
+						that can hardly be found anywhere, hence it is a good place to shop at if
+						you require rare herbs. The herbs are also sold at a decent price even
+						though they are being imported, so you need not worry about being over
+						charged  </p>
+                    <p class="name">Ms Tan</p>
+                    <span class="position">Housewife</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrswong.jpg">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">
+						This TCM offers a wide variety of herbs, the website is also very helpful as the goods have
+						English names on them, allowing folks who do not understand Chinese to shop with ease of not
+						getting wrong items.The store offers fast delivery, based on my last delivery order, my goods
+						arrived one day after  ordered them. Highly recommend this shop if you want to get your products
+						within a short period of time.</p>
+                    <p class="name">Mrs Wong</p>
+                    <span class="position">Property Agent</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrchong.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">
+						Karen's TCM is one of my favorite stores to shop at, the shop's goods are sold
+						at a very reasonable price, its safe to say that the prices they offer might be even
+						cheaper than the prices of herbs sold at the market. The store also offers free delivery
+						services, convenient for customer like me who like to buy goods in bulks. Overall I had a
+						good shopping experience at this TCM's online shop .
+					</p>
+                    <p class="name">Mr Chong</p>
+                    <span class="position">Retiree</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mrong.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">
+						Karen's TCM has been one of the most popular TCMs'around Singapore. It offers a wide variety of
+						herbs and other products, services as well as appointments, etc. This is by far
+one of my most frequent TCM shop. Prices of the herbs, products, services and other TCM plans that Karen's TCM offers
+						are very affordable so we do not need to worry about the cost.
+Furthermore, I love the free delivery service provided. A few days ago,
+I ordered 5 carton of nutritious drinks via Karen's TCM website. As it was processing my request, I actually expected the
+						delivered goods to arrive within 2 days, but NO, it arrived as quick as lightning.
+As soon as I placed the order, it took only 1 day to deliver my wanted order. Hence, I was really satisfied with Karen's
+						TCM.
+					</p>
+                    <p class="name">Mr Ong</p>
+                    <span class="position">General Manager</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap">
+                  <div class="user-img mb-4" style="background-image: url(static/user/images/mstracy.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                  </div>
+                  <div class="text">
+                    <p class="mb-4 pl-4 line">This TCM is very special, it is rare to find online shops to get
+						traditional chinese, much less offer home treatments. This shop is very convenient for someone
+						like me who is not able to travel convienently to to seek certain medical treatments such as
+						Tui Na and accupuncture as i have difficulties walking for a long distance. With door to door
+						services at a reasonable price, i do not have to worry about not being able to seek treatments. </p>
+                    <p class="name">Ms Tracy</p>
+                    <span class="position">System Analyst</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!--    <section class="ftco-gallery">-->
+<!--    	<div class="container">-->
+<!--    		<div class="row justify-content-center">-->
+<!--    			<div class="col-md-8 heading-section text-center mb-4 ftco-animate">-->
+<!--            <h2 class="mb-4">Follow Us On Instagram</h2>-->
+<!--            <p>To get updates on our shipments and new products, follow us <b><i>@karenstcm</i></b></p>-->
+<!--          </div>-->
+<!--    		</div>-->
+<!--    	</div>-->
+<!--    	<div class="container-fluid px-0">-->
+<!--    		<div class="row no-gutters">-->
+<!--					<div class="col-md-4 col-lg-2 ftco-animate">-->
+<!--						<a href="static/user/images/gallery-1.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(static/user/images/gallery-1.jpg);">-->
+<!--							<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
+<!--    						<span class="icon-instagram"></span>-->
+<!--    					</div>-->
+<!--						</a>-->
+<!--					</div>-->
+<!--					<div class="col-md-4 col-lg-2 ftco-animate">-->
+<!--						<a href="static/user/images/gallery-2.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(static/user/images/gallery-2.jpg);">-->
+<!--							<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
+<!--    						<span class="icon-instagram"></span>-->
+<!--    					</div>-->
+<!--						</a>-->
+<!--					</div>-->
+<!--					<div class="col-md-4 col-lg-2 ftco-animate">-->
+<!--						<a href="static/user/images/gallery-3.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(static/user/images/gallery-3.jpg);">-->
+<!--							<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
+<!--    						<span class="icon-instagram"></span>-->
+<!--    					</div>-->
+<!--						</a>-->
+<!--					</div>-->
+<!--					<div class="col-md-4 col-lg-2 ftco-animate">-->
+<!--						<a href="static/user/images/gallery-4.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(static/user/images/gallery-4.jpg);">-->
+<!--							<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
+<!--    						<span class="icon-instagram"></span>-->
+<!--    					</div>-->
+<!--						</a>-->
+<!--					</div>-->
+<!--					<div class="col-md-4 col-lg-2 ftco-animate">-->
+<!--						<a href="static/user/images/gallery-5.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(static/user/images/gallery-5.jpg);">-->
+<!--							<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
+<!--    						<span class="icon-instagram"></span>-->
+<!--    					</div>-->
+<!--						</a>-->
+<!--					</div>-->
+<!--					<div class="col-md-4 col-lg-2 ftco-animate">-->
+<!--						<a href="static/user/images/gallery-6.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(static/user/images/gallery-6.jpg);">-->
+<!--							<div class="icon mb-4 d-flex align-items-center justify-content-center">-->
+<!--    						<span class="icon-instagram"></span>-->
+<!--    					</div>-->
+<!--						</a>-->
+<!--					</div>-->
+<!--        </div>-->
+<!--    	</div>-->
+<!--    </section>-->
+
+    <footer class="ftco-footer ftco-section">
+      <div class="container">
+      	<div class="row">
+      		<div class="mouse">
+						<a href="#" class="mouse-icon">
+							<div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+						</a>
+					</div>
+      	</div>
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Karen's TCM</h2>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Help</h2>
+              <ul class="list-unstyled">
+				<li><a href="{{url_for('contact')}}" class="py-2 d-block">Contact Us</a></li>
+				<li><a href="#" class="py-2 d-block">Feedback</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Menu</h2>
+              <div class="d-flex">
+	              <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
+	                <li><a href="{{url_for('home')}}" class="py-2 d-block">Home Page</a></li>
+	                <li><a href="{{url_for('about')}}" class="py-2 d-block">About Us</a></li>
+	                <li><a href="{{url_for('shop')}}" class="py-2 d-block">Shop</a></li>
+<!--	                <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>-->
+	              </ul>
+	              <ul class="list-unstyled">
+	                <li><a href="#" class="py-2 d-block">Services</a></li>
+	                <li><a href="#" class="py-2 d-block">Packages</a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Have a Question?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">180 Ang Mo Kio Ave 8, Singapore 569830</span></li><br>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text"><a href="tel://61234567">+65 6123-4567</a></span></a></li><br>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text"><a href="mailto:support@karenstcm.com">support@karenstcm.com</a></span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p>
+						  Copyright Karen's TCM &copy;<script>document.write(new Date().getFullYear());</script> || All rights reserved
+						</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="static/user/js/jquery.min.js"></script>
+  <script src="static/user/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="static/user/js/popper.min.js"></script>
+  <script src="static/user/js/bootstrap.min.js"></script>
+  <script src="static/user/js/jquery.easing.1.3.js"></script>
+  <script src="static/user/js/jquery.waypoints.min.js"></script>
+  <script src="static/user/js/jquery.stellar.min.js"></script>
+  <script src="static/user/js/owl.carousel.min.js"></script>
+  <script src="static/user/js/jquery.magnific-popup.min.js"></script>
+  <script src="static/user/js/aos.js"></script>
+  <script src="static/user/js/jquery.animateNumber.min.js"></script>
+  <script src="static/user/js/bootstrap-datepicker.js"></script>
+  <script src="static/user/js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="static/user/js/google-map.js"></script>
+  <script src="static/user/js/main.js"></script>
+
+  </body>
+</html>
