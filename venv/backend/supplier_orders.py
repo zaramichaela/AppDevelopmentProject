@@ -71,7 +71,7 @@ class supplier_orders:
 
 
     def save(self):
-       s = shelve.open(settings.SUPPLIERS_DB)
+       s = shelve.open(settings.ORDER_DB)
        try:
             s[self.__oid] = self.serialize()
             return True

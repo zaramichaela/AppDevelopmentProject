@@ -95,15 +95,11 @@ class create_supplier(FlaskForm):
 
 
 class buy_orders_supplier(FlaskForm):
-    all = suppliercontroller.get_all_suppliers()
-    all_choice = []
-    for i in all:
-        temp = (i.get_UID(), i.get_name())
-        all_choice.append(temp)
     UID = StringField("Order UID:", validators=[validators.Length(min=3, max=10),DataRequired()])
-    supplier = SelectField("Supplier", choices=all_choice)
+    supplier = SelectField("Supplier")
     number = IntegerField("Number of orders:", validators=[validators.NumberRange(min=1), DataRequired()])
     submit = SubmitField()
+
 
 
 

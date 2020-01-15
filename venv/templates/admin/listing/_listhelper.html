@@ -176,6 +176,7 @@
 {% endmacro %}
 
 
+
 {% macro render_supplier_table(i) %}
         <td>
             {{i.get_UID()}}
@@ -199,6 +200,39 @@
             <center>
             <a class="btn btn-primary" href="{{url_for('admin_pages.edit_suppliers', supplierid=i.get_UID())}}">Edit</a>
             <a class="btn btn-danger" href="{{url_for('admin_pages.delete_suppliers', supplierid=i.get_UID())}}">Delete</a>
+            </center>
+        </td>
+
+
+{% endmacro %}
+
+
+{% macro render_suppliesrorder_table(i) %}
+        <td>
+           {{i.get_date_of_order()}}
+        </td>
+        <td>
+            {{i.get_oid()}}
+        </td>
+        <td>
+            {{i.get_sname()}}
+        </td>
+        <td>
+           {{i.get_pname()}}
+        </td>
+        <td>
+            {{i.get_amt()}}
+        </td>
+        <td>
+            {{i.get_total_price()}}
+        </td>
+       <td>
+            {{i.get_progress()}}
+        </td>
+        <td>
+            <center>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_suppliers', supplierid=i.get_oid())}}">Edit</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_suppliers', supplierid=i.get_oid())}}">Delete</a>
             </center>
         </td>
 

@@ -79,6 +79,8 @@ function preview_image(event)
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ url_for('admin_pages.create_suppliers') }}">Add new supplier</a>
           <a class="dropdown-item" href="{{ url_for('admin_pages.list_suppliers') }}">List all suppliers</a>
+          <a class="dropdown-item" href="{{ url_for('admin_pages.create_suppliers_orders') }}">Order product from supplier</a>
+          <a class="dropdown-item" href="{{ url_for('admin_pages.list_suppliers_orders') }}">List all suppliers' order</a>
         </div>
       </li>
     </ul>

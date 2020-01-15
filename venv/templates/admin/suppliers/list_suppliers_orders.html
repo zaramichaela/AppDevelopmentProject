@@ -40,11 +40,16 @@ All Admin
 <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"  border="1" id="sales_items">
     <thead>
     <tr>
+
         <th class="th-sm">
             <center><b>Order ID</b></center>
         </th>
+
         <th class="th-sm">
-            <center><b>Supplier UID</b></center>
+            <center><b>Order Date</b></center>
+        </th>
+        <th class="th-sm">
+            <center><b>Supplier Name</b></center>
         </th>
         <th class="th-sm">
             <center><b>Product</b></center>
@@ -53,11 +58,12 @@ All Admin
             <center><b>Stocks ordered</b></center>
         </th>
         <th class="th-sm">
-            <center><b>Progress</b></center>
-        </th>
-        <th class="th-sm">
             <center><b>Total Price</b></center>
         </th>
+        <th class="th-sm">
+            <center><b>Progress</b></center>
+        </th>
+
            <th class="th-sm" style="width:200px;">
             <center><b>Action</b></center>
         </th>
@@ -65,10 +71,10 @@ All Admin
     </thead>
     <tbody>
     </tr>
-    {% from "admin/listing/_listhelper.html" import render_supplier_table %}
+    {% from "admin/listing/_listhelper.html" import render_suppliesrorder_table %}
     {%for i in items %}
     <tr>
-    {{ render_supplier_table(i) }}
+    {{ render_suppliesrorder_table(i) }}
     </tr>
     {% endfor %}
 

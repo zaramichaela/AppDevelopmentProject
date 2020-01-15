@@ -16,10 +16,10 @@ class suppliers_controller:
                 return i
         return None
 
-    def get_suppliers_orders_by_UID(self, UID):
+    def get_suppliers_orders_by_UID(self, oid):
         #check and return 1 item finding via suppliers_UID. if more than 1, return None.
         for i in self.__suppliers_orders:
-            if(i.get_UID() == UID):
+            if(i.get_oid() == oid):
                 return i
         return None
 
@@ -38,9 +38,10 @@ class suppliers_controller:
         return True
 
     def create_and_save_suppliers(self, dict):
+
         #create and save service in database and current memory
         supplier = create_suppliers(dict)
-        print(supplier)
+        print(supplier.get_UID())
         supplier.save()
         self.__all_suppliers.append(supplier)
         return supplier
@@ -64,6 +65,13 @@ class suppliers_controller:
         self.__all_suppliers.remove(item)
         return True
 
+
+    def get_choice(self):
+        all_choice = []
+        for i in self.get_all_suppliers():
+            temp = (i.get_UID(), i.get_UID())
+            all_choice.append(temp)
+        return all_choice
 
 
 def create_suppliers(dict):
@@ -113,7 +121,6 @@ def get_all_suppliers_orders():
     finally:
         s.close()
     return items
-
 
 
 def delete_db_supplier(UID):
