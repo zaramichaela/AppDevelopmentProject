@@ -1,7 +1,6 @@
 from flask import Blueprint, abort
 from flask import render_template, request, flash,session,redirect, url_for
 from backend.forms import *
-
 from functools import wraps
 from login.forms import create_admin_account
 from backend.settings import *
