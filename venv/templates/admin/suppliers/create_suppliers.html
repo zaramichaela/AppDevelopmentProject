@@ -1,0 +1,48 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}
+list a new supplier
+{% endblock %}
+{%block body %}
+
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {%if category =="success"%}
+        <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+  {{ message }}
+    </div>
+{%endif%}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="row d-flex justify-content-center">
+
+{% from "admin/adding/_formhelper.html" import render_field %}
+<div class="forms col-md-6">
+    <div class="title">
+<h1 class="title1">Create Suppliers</h1>
+</div>
+
+<form action="" method="POST" novalidate enctype="multipart/form-data">
+{{ form.csrf_token }}
+      <dl>
+    {{ render_field(form.UID, class='form-control') }}
+    {{ render_field(form.name, class='form-control') }}
+    {{ render_field(form.address, class='form-control') }}
+    {{ render_field(form.product, class='form-control') }}
+    {{ render_field(form.phone_num, class='form-control') }}
+    {{ render_field(form.price, class='form-control') }}
+    {{form.submit(class="btn btn-primary")}}
+  </dl>
+</form>
+    </div>
+</div>
+{%endblock %}

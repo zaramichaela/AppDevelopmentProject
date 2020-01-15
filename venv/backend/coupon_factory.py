@@ -6,7 +6,7 @@ class coupon_factory:
     def __init__(self):
         pass
 
-    def get_all_coupons(self):
+    def get_all_coupons_db(self):
         s = shelve.open(settings.COUPON_DB)
         items = []
         try:

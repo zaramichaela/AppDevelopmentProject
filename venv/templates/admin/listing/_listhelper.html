@@ -94,23 +94,23 @@
 
 {% macro render_coupon_table(i) %}
         <td>
-            {{i.UID}}
+            {{i.get_UID()}}
         </td>
         <td>
-            {{i.couponcode}}
+            {{i.get_couponcode()}}
         </td>
         <td>
-           {{i.percentage}}
+           {{i.get_percentage()}}
         </td>
 
         <td>
-            {{i.minimumspent}}
+            {{i.get_minimumspent()}}
         </td>
         <td>
-           {{i.discountlimit}}
+           {{i.get_discountlimit()}}
         </td>
         <td>
-            {{i.expiredate}}
+            {{i.get_expiredate()}}
         </td>
         <td>
             <center>
@@ -155,3 +155,31 @@
 {% endmacro %}
 
 
+{% macro render_supplier_table(i) %}
+        <td>
+            {{i.get_UID()}}
+        </td>
+        <td>
+            {{i.get_name()}}
+        </td>
+        <td>
+           {{i.get_address()}}
+        </td>
+        <td>
+            {{i.get_phone_num()}}
+        </td>
+        <td>
+            {{i.get_product()}}
+        </td>
+        <td>
+           {{i.get_price()}}
+        </td>
+        <td>
+            <center>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_coupon', couponid=i.get_UID())}}">Edit</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_coupon', couponid=i.get_UID())}}">Delete</a>
+            </center>
+        </td>
+
+
+{% endmacro %}
