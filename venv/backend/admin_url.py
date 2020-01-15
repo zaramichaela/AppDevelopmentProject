@@ -296,6 +296,13 @@ def edit_item(itemid):
     if(not item):
         abort(404)
     form = edit_sales_item()
+    form.UID.data = item.get_UID()
+    form.name.data = item.get_name()
+    form.description.data = item.get_description()
+    form.price.data = item.get_price()
+    form.image_url.data = item.image_url()
+    form.stocks.data = item.get_stocks()
+
 
     if request.method == 'POST' and form.validate_on_submit():
         file_ = request.files["image"]
@@ -325,6 +332,15 @@ def edit_package(packageid):
     if(not item):
         abort(404)
     form = edit_package_form(formdata=request.form, obj=item)
+    form.UID.data = item.get_UID()
+    form.name.data = item.get_name()
+    form.description.data = item.get_description()
+    form.price.data = item.get_price()
+    form.image_url.data = item.image_url()
+    form.expiry_duration.data = item.get_expiry_duration()
+    form.sessions.data = item.get_sessions()
+    form.bought_date.data = item.get_bought_date()
+
 
     if request.method == 'POST' and form.validate():
         file_ = request.files["image"]
@@ -355,6 +371,11 @@ def edit_service(serviceid):
     if(not item):
         abort(404)
     form = edit_service_form(formdata=request.form, obj=item)
+    form.UID.data = item.get_UID()
+    form.name.data = item.get_name()
+    form.description.data = item.get_description()
+    form.price.data = item.get_price()
+    form.image_url.data = item.image_url()
 
     if request.method == 'POST' and form.validate():
 
@@ -387,6 +408,12 @@ def edit_coupon(couponid):
     if(not item):
         abort(404)
     form = coupon_form(formdata=request.form, obj=item)
+    form.UID.data = item.get_UID()
+    form.couponcode.data = item.get_couponcode()
+    form.percentage.data = item.get_percentage()
+    form.discountlimit.data = item.get_discountlimit()
+    form.minimumspent.data = item.minimumspent()
+    form.expiredate.data = item.expiredate()
 
     if request.method == 'POST' and form.validate():
         itemcontroller.remove_sales_coupon(item)
