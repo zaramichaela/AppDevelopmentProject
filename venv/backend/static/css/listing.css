@@ -21,7 +21,7 @@ div.dataTables_filter input { border: 1px solid black; }
     border-color: #777777;
     display: block;
 overflow: auto;
-    width:80%;
+width:95%;
     min-width:70%;
 
 line-height: 26px;

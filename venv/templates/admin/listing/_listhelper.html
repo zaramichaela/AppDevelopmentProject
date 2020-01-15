@@ -1,7 +1,5 @@
 <!--all these macro functions helps to organize the project and allow cleaner html files-->
 
-{% macro render_coupon_table(i) %}
-{% endmacro %}
 
 <!--this is a macro to help render the table-->
 <!--its is like a function and is able to accept parameters-->
@@ -26,9 +24,16 @@
             {{i.get_stocks()}}
         </td>
         <td>
+            {{i.get_available_flag()}}
+        </td>
+        <td>
             <center>
             <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i.get_UID())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_sales_item', itemid=i.get_UID())}}">Delete</a>
+                {% if i.get_available_flag() %}
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_sales_item', itemid=i.get_UID())}}">Invalidate</a>
+                {% else %}
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_sales_item', itemid=i.get_UID())}}">Validate</a>
+                {% endif %}
             </center>
         </td>
 
@@ -56,10 +61,18 @@
         <td>
             {{i.get_price()}}
         </td>
+       <td>
+            {{i.get_available_flag()}}
+        </td>
+
         <td>
             <center>
         <a class="btn btn-primary" href="{{url_for('admin_pages.edit_package', packageid=i.get_UID())}}">Edit</a>
-        <a class="btn btn-danger" href="{{url_for('admin_pages.delete_package', packageid=i.get_UID())}}">Delete</a>
+                {% if i.get_available_flag() %}
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_package', packageid=i.get_UID())}}">Invalidate</a>
+                {% else %}
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_package', packageid=i.get_UID())}}">Validate</a>
+                {% endif %}
             </center>
         </td>
 
@@ -83,10 +96,18 @@
         <td>
             {{i.get_price()}}
         </td>
+       <td>
+            {{i.get_available_flag()}}
+        </td>
+
         <td>
             <center>
             <a class="btn btn-primary" href="{{url_for('admin_pages.edit_service', serviceid=i.get_UID())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_service', serviceid=i.get_UID())}}">Delete</a>
+                {% if i.get_available_flag() %}
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', packageid=i.get_UID())}}">Invalidate</a>
+                {% else %}
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', packageid=i.get_UID())}}">Validate</a>
+                {% endif %}
             </center>
         </td>
 

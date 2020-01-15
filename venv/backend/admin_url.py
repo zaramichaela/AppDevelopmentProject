@@ -181,6 +181,26 @@ def delete_sales_item(itemid):
     return redirect(url_for("admin_pages.list_sales_items"))
 
 
+
+@admin_pages.route('/admin/list/items/<itemid>/invalidate/', methods= ['GET','POST'])
+@authorize
+def invalidate_sales_item(itemid):
+    context = {"message": ""}
+    item = itemcontroller.get_item_by_UID(itemid)
+    if(not item):
+        abort(404)
+    flag = True
+    if(item.get_available_flag()):
+        flag = False
+    else:
+        flag = True
+    item.set_available_flag(flag)
+    if flag:
+        flash("You have set the item " + item.get_UID() + " to available", "success")
+    else:
+        flash("You have set the item " + item.get_UID() + " to unavailable", "success")
+    return redirect(url_for("admin_pages.list_sales_items"))
+
 @admin_pages.route('/admin/list/package/<packageid>/delete/', methods= ['GET','POST'])
 @authorize
 def delete_package(packageid):
@@ -190,9 +210,28 @@ def delete_package(packageid):
         abort(404)
     flag = itemcontroller.remove_sales_package(item)
     if flag:
-        flash("You have succeed in removing item " + item.get_UID(), "success")
+        flash("You have succeed in removing item #" + item.get_UID(), "success")
     else:
-        flash("There's been a error removing " + item.get_UID(), "error")
+        flash("There's been a error removing #" + item.get_UID(), "error")
+    return redirect(url_for("admin_pages.list_sales_packages"))
+
+@admin_pages.route('/admin/list/items/<packageid>/invalidate/', methods= ['GET','POST'])
+@authorize
+def invalidate_package(packageid):
+    context = {"message": ""}
+    item = itemcontroller.get_package_by_UID(packageid)
+    if(not item):
+        abort(404)
+    flag = True
+    if(item.get_available_flag()):
+        flag = False
+    else:
+        flag = True
+    item.set_available_flag(flag)
+    if flag:
+        flash("You have set the package #" + item.get_UID() + " to available", "success")
+    else:
+        flash("You have set the package #" + item.get_UID() + " to unavailable", "success")
     return redirect(url_for("admin_pages.list_sales_packages"))
 
 
@@ -210,6 +249,24 @@ def delete_service(serviceid):
         flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_sales_services"))
 
+@admin_pages.route('/admin/list/items/<packageid>/invalidate/', methods= ['GET','POST'])
+@authorize
+def invalidate_service(serviceid):
+    context = {"message": ""}
+    item = itemcontroller.get_package_by_UID(serviceid)
+    if(not item):
+        abort(404)
+    flag = True
+    if(item.get_available_flag()):
+        flag = False
+    else:
+        flag = True
+    item.set_available_flag(flag)
+    if flag:
+        flash("You have set the service #" + item.get_UID() + " to available", "success")
+    else:
+        flash("You have set the service #" + item.get_UID() + " to unavailable", "success")
+    return redirect(url_for("admin_pages.list_sales_services"))
 
 @admin_pages.route('/admin/list/coupon/<couponid>/delete/', methods= ['GET','POST'])
 @authorize
