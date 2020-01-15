@@ -67,8 +67,7 @@ def do_user_login():
     if user:
         session['logged_in'] = True
         session['logged_in_user'] = username
-    else:
-        flash('Wrong credentials!')
+    
     return redirect(url_for("login"))
 
 
