@@ -7,10 +7,10 @@ class Coupon:
     def __init__(self, UID, couponcode,percentage,discountlimit, minimumspent, expiredate):
         self.__UID = UID
         self.__couponcode = couponcode
-        self.__set_percentage(percentage)
-        self.__set_discountlimit(discountlimit)
-        self.__set_minimumspent(minimumspent)
-        self.__set_expiry_date(expiredate)
+        self.set_percentage(percentage)
+        self.set_discountlimit(discountlimit)
+        self.set_minimumspent(minimumspent)
+        self.set_expiry_date(expiredate)
 
     #set discount percentage
     #check if within percentage otherwise, set to 0
@@ -25,10 +25,7 @@ class Coupon:
         self.__expiredate = expiredate
 
     def set_percentage(self, percentage):
-        if percentage >= 0 and percentage < 100:
-            self.__percentage = percentage
-        else:
-            self.__percentage = 0
+        self.__percentage = percentage
 
     #set discount limit amount.
     def set_discountlimit(self, discountlimit):
@@ -63,6 +60,21 @@ class Coupon:
 
     def get_UID(self):
         return self.__UID
+
+    def get_couponcode(self):
+        return self.__couponcode
+
+    def get_percentage(self):
+        return self.__percentage
+
+    def get_minimumspent(self):
+        return self.__minimumspent
+
+    def get_discountlimit(self):
+        return self.__discountlimit
+
+    def get_expiredate(self):
+        return self.__expiredate
 
     def save(self):
         s = shelve.open(settings.COUPON_DB)

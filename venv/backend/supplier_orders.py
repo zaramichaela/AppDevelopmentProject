@@ -1,15 +1,16 @@
 from datetime import datetime
 from backend import settings
 import shelve
+import pickle
 class supplier_orders:
-    def __init__(self, oid, sid, sname, pname, amt = 1, unit_price,total_price, date_of_order=datetime.now()):
+    def __init__(self, oid, sid, sname, pname, amt, unit_price, date_of_order=datetime.now()):
         self.__oid = oid
         self.__sid = sid
         self.__sname = sname
         self.__pname = pname
         self.__amt = amt
         self.__unit_price = unit_price
-        self.__total_price = total_price
+        self.__total_price = amt * unit_price
         self.__date_of_order = date_of_order
 
     def get_oid(self):
@@ -59,3 +60,18 @@ class supplier_orders:
 
     def set_date_of_order(self,date_of_order):
         self.__date_of_order = date_of_order
+
+
+    def save(self):
+       s = shelve.open(settings.SUPPLIERS_DB)
+       try:
+            s[self.__UID] = self.serialize()
+            return True
+       finally:
+            s.close()
+       return False
+
+
+    #convert to pickle to store in shelve
+    def serialize(self):
+        return pickle.dumps(self)

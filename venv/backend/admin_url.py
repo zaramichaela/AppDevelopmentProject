@@ -215,7 +215,7 @@ def delete_package(packageid):
         flash("There's been a error removing #" + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_sales_packages"))
 
-@admin_pages.route('/admin/list/items/<packageid>/invalidate/', methods= ['GET','POST'])
+@admin_pages.route('/admin/list/packages/<packageid>/invalidate/', methods= ['GET','POST'])
 @authorize
 def invalidate_package(packageid):
     context = {"message": ""}
@@ -249,7 +249,7 @@ def delete_service(serviceid):
         flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_sales_services"))
 
-@admin_pages.route('/admin/list/items/<packageid>/invalidate/', methods= ['GET','POST'])
+@admin_pages.route('/admin/list/service/<serviceid>/invalidate/', methods= ['GET','POST'])
 @authorize
 def invalidate_service(serviceid):
     context = {"message": ""}
@@ -295,7 +295,7 @@ def edit_item(itemid):
     item = itemcontroller.get_item_by_UID(itemid)
     if(not item):
         abort(404)
-    form = edit_sales_item()
+    form = edit_sales_item(formdata=request.form, obj=item)
 
     if request.method == 'POST' and form.validate_on_submit():
         file_ = request.files["image"]
@@ -505,7 +505,6 @@ def ban_user_account(username):
 @authorize
 def create_suppliers():
     form = create_supplier()
-    print(form.validate())
     if request.method == 'POST' and form.validate():
         success_flag = itemcontroller.create_and_save_suppliers(form.data)
         if (not success_flag):
@@ -513,6 +512,34 @@ def create_suppliers():
         else:
             flash("A new supplier has been listed", "success")
     return render_template('admin/suppliers/create_suppliers.html', form=form)
+
+@admin_pages.route('/admin/suppliers/<supplierid>/edit', methods= ['GET','POST'])
+@authorize
+def edit_suppliers(supplierid):
+    item = itemcontroller.get_suppliers_by_UID(supplierid)
+    if(not item):
+        abort(404)
+    form = create_supplier(formdata=request.form, obj=item)
+    if request.method == 'POST' and form.validate():
+        success_flag = itemcontroller.create_and_save_suppliers(form.data)
+        if (not success_flag):
+            flash("Error, you cannot edit the supplier " + item.get_UID(), "error")
+        else:
+            flash("A new supplier has been listed", "success")
+    return render_template('admin/suppliers/create_suppliers.html', form=form)
+
+@admin_pages.route('/admin/suppliers/<supplierid>/delete', methods= ['GET','POST'])
+@authorize
+def delete_suppliers(supplierid):
+    supplier = itemcontroller.get_suppliers_by_UID(supplierid)
+    if(not supplier):
+        abort(404)
+        success_flag = itemcontroller.remove_supplier(supplier)
+        if (not success_flag):
+            flash("Error, you delete the supplier " + supplier.get_UID(), "error")
+        else:
+            flash("The supplier has been deleted", "success")
+    return redirect(url_for("list_suppliers"))
 
 
 @admin_pages.route('/admin/suppliers/view')

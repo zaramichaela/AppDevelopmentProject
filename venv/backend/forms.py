@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,BooleanField,SubmitField,DecimalField,TextAreaField,IntegerField,DateField, validators, PasswordField
+from wtforms import StringField,BooleanField,SubmitField,DecimalField,TextAreaField,IntegerField,DateField, validators, PasswordField,SelectField
 from flask_wtf.file import FileField, FileRequired,FileAllowed
 from wtforms.validators import DataRequired
 from flask_uploads import UploadSet, IMAGES,configure_uploads
-import os
+from backend.settings import itemcontroller
 import re
 
 images = UploadSet('images', IMAGES)
@@ -62,7 +62,7 @@ class edit_sales_item(FlaskForm):
     stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),DataRequired()])
     submit = SubmitField()
 
-#form to create a new sales item
+
 class edit_package_form(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
@@ -74,7 +74,7 @@ class edit_package_form(FlaskForm):
     submit = SubmitField()
 
 
-#form to create a new sales item
+
 class edit_service_form(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
@@ -84,7 +84,6 @@ class edit_service_form(FlaskForm):
     submit = SubmitField()
 
 
-#form to create a new sales item
 class create_supplier(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Supplier Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
@@ -94,6 +93,18 @@ class create_supplier(FlaskForm):
     price = DecimalField("Price: ", validators=[validators.NumberRange(min=1),DataRequired()])
     submit = SubmitField()
 
+
+class buy_orders_supplier(FlaskForm):
+    all = itemcontroller.get_all_suppliers()
+    all_choice = []
+    for i in all:
+        temp = (i.get_UID(), i.get_name())
+        all_choice.append(temp)
+
+    UID = StringField("Order ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
+    supplier = SelectField("Supplier", choices=all_choice)
+    number = IntegerField("Number of orders:", validators=[validators.NumberRange(min=1), DataRequired()])
+    submit = SubmitField()
 
 
 

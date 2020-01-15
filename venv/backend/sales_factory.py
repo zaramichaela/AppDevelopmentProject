@@ -4,7 +4,7 @@ from backend.sales_items import *
 from backend.sales_entry import *
 from backend.sales_services import *
 from backend.sales_package import *
-from backend.supplier import *
+
 import jsons
 import pickle
 
@@ -53,13 +53,7 @@ class sales_factory:
             print(e)
             return None
 
-    def create_suppliers(self, dict):
-        try:
-            sup = suppliers(dict["UID"],dict["name"], dict["address"], dict["phone_num"], dict["product"], dict["price"])
-            return sup
-        except Exception as e:
-            print(e)
-            return None
+
 
     def deserialize(self, dict):
         try:
@@ -103,16 +97,7 @@ class sales_factory:
             s.close()
         return items
 
-        #return all packages from package database
-    def get_all_suppliers_db(self):
-        items = []
-        s = shelve.open(settings.SUPPLIERS_DB)
-        try:
-            for key in s:
-                items.append(self.deserialize(s[key]))
-        finally:
-            s.close()
-        return items
+
 
     #get a item with the specific UID
     def get_items(self, UID):
@@ -192,14 +177,4 @@ class sales_factory:
             s.close()
 
 
-    def delete_db_supplier(self, supplieruid):
-        #delete packages from shelve database
-        s = shelve.open(settings.SUPPLIERS_DB)
-        try:
-            del s[supplieruid]
-            return True
-        except:
-            return False
-        finally:
-            s.close()
 

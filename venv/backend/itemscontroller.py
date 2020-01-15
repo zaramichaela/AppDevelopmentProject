@@ -15,8 +15,6 @@ class items_controller:
         self.all_items = sfactory.get_all_items_db()
         self.all_packages = sfactory.get_all_packages_db()
         self.all_services = sfactory.get_all_services_db()
-        self.all_suppliers = sfactory.get_all_suppliers_db()
-        # self.get_all_suppliers_orders = s
 
 
     def get_coupon_by_UID(self, coupon_UID):
@@ -78,12 +76,7 @@ class items_controller:
         return self.all_coupons
 
 
-    def get_all_suppliers(self):
-        print(self.all_suppliers)
-        return self.all_suppliers
 
-    def get_all_suppliers_orders(self):
-        return self.suppliers_orders
 
     ####################################################
     ####################################################
@@ -119,17 +112,8 @@ class items_controller:
         self.all_coupons.remove(item)
         return True
 
-    def remove_supplier(self, item):
-        if(not sfactory.delete_db_supplier(item.get_UID())):
-            return False
-        self.all_suppliers.remove(item)
-        return True
 
-    # def remove_sales_supplier_order(self, item):
-    #     if(not sfactory.delete_db_supplier(item.get_UID())):
-    #         return False
-    #     self.all_suppliers.remove(item)
-    #     return True
+
     ####################################################
 
     ###################################################
@@ -175,10 +159,4 @@ class items_controller:
 
 
 
-    def create_and_save_suppliers(self, dict):
-        #create and save service in database and current memory
-        supplier = sfactory.create_suppliers(dict)
-        print(supplier)
-        supplier.save()
-        self.all_suppliers.append(supplier)
-        return supplier
+
