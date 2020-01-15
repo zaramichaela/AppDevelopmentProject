@@ -8,13 +8,13 @@ class sales_items(sales_objects):
     #overwrite super for adding stocks to shop items
     def __init__(self, UID, name, description, price, image_url,stocks):
         super().__init__(UID, name, description, price, image_url)
-        self._stocks = stocks
+        self.stocks = stocks
 
     def get_stocks(self):
-        return self._stocks
+        return self.stocks
 
     def set_stocks(self,stocks):
-        self._stocks = stocks
+        self.stocks = stocks
 
     def display_html(self):
         html = "testing"

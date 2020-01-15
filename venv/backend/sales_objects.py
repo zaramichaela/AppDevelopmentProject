@@ -75,7 +75,7 @@ class sales_objects(object):
         return False
 
     def get_available_flag(self):
-        return self.available_flag
+        return self._available_flag
 
     def set_available_flag(self, flag):
-        self.available_flag = flag
+        self._available_flag = flag
