@@ -34,9 +34,9 @@ list a new supplier
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
-    {{ render_field(form.UID, class='form-control') }}
+    {{ render_field(form.UID, class='form-control', placeholder='123') }}
     {{ render_field(form.supplier, class='form-control') }}
-    {{ render_field(form.number, class='form-control') }}
+    {{ render_field(form.number, class='form-control', placeholder='61234567') }}
     {{form.submit(class="btn btn-primary")}}
   </dl>
 </form>
