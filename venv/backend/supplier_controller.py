@@ -1,4 +1,3 @@
-
 from backend.supplier import *
 from backend.supplier_orders import *
 from flask import flash

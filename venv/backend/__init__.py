@@ -7,7 +7,6 @@ from flask_login import LoginManager
 from login.forms import customer_registration
 from login.user_account import user_account
 
-
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
 login = LoginManager(app)
