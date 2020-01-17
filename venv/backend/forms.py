@@ -8,16 +8,14 @@ import re
 
 images = UploadSet('images', IMAGES)
 
-
-
 #form to create a new sales item
 class new_sales_item(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200) ,DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=3000) ,DataRequired()])
-    price = DecimalField("Price: ", validators=[DataRequired()])
+    price = DecimalField("Price: ", validators=[DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
-    stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),DataRequired()])
+    stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
     submit = SubmitField()
 
 #form to create a new sales item
@@ -25,9 +23,9 @@ class new_package(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5) ,DataRequired()])
-    price = DecimalField("Price: ", validators=[DataRequired()])
-    expiry_duration = IntegerField("Valid for (days):", validators=[DataRequired()])
-    sessions = IntegerField("Number of Sessions:", validators=[validators.NumberRange(min=1), DataRequired()])
+    price = DecimalField("Price: ", validators=[DataRequired(message='You need to input a number!')])
+    expiry_duration = IntegerField("Valid for (days):", validators=[DataRequired(message='You need to input a number!')])
+    sessions = IntegerField("Number of Sessions:", validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
     submit = SubmitField()
 
@@ -37,7 +35,7 @@ class new_service(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=2000) ,DataRequired()])
-    price = DecimalField("Price: ", validators=[validators.NumberRange(min=1),DataRequired()])
+    price = DecimalField("Price: ", validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('No file was selected')])
     submit = SubmitField()
 
@@ -46,9 +44,9 @@ class new_service(FlaskForm):
 class coupon_form(FlaskForm):
     UID = StringField("Unique ID: ", validators=[validators.Length(min=3, max=10),DataRequired()])
     couponcode = StringField("Coupon Code: ", validators=[validators.Length(min=5, max=10),DataRequired()])
-    percentage = IntegerField("Discount Percentage (%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired()])
-    discountlimit = DecimalField("Maximum amount of discount ($): ", validators=[validators.NumberRange(min=0.1),DataRequired()])
-    minimumspent = IntegerField("Minimum spending ($): ", validators=[validators.NumberRange(min=1, max=2000),DataRequired()])
+    percentage = IntegerField("Discount Percentage (%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
+    discountlimit = DecimalField("Maximum amount of discount ($): ", validators=[validators.NumberRange(min=0.1),DataRequired(message='You need to input a number!')])
+    minimumspent = IntegerField("Minimum spending ($): ", validators=[validators.NumberRange(min=1, max=2000),DataRequired(message='You need to input a number!')])
     expiredate = DateField("Expiry Date (DD/MM/YYYY): ",  format='%d/%m/%Y', validators=[DataRequired()])
     submit = SubmitField()
 
@@ -57,20 +55,20 @@ class edit_sales_item(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200) ,DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=3000) ,DataRequired()])
-    price = DecimalField("Price: ", validators=[DataRequired()])# Regexp(
-    image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!')])
-    stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),DataRequired()])
+    price = DecimalField("Price: ", validators=[DataRequired(message='You need to input a number!')])
+    image = FileField("Image of product: ", validators=[FileAllowed(images,'Image only!')])
+    stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
     submit = SubmitField()
 
 
 class edit_package_form(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
-    description = TextAreaField("Description: ", validators=[validators.Length(min=5) ,DataRequired()])
-    price = DecimalField("Price: ", validators=[DataRequired()])
-    expiry_duration = IntegerField("Valid for (days):", validators=[DataRequired()])
-    sessions = IntegerField("Number of Sessions:", validators=[validators.NumberRange(min=1), DataRequired()])
-    image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!')])
+    description = TextAreaField("Description: ", validators=[validators.Length(min=5), DataRequired()])
+    price = DecimalField("Price: ", validators=[DataRequired(message='You need to input a number!')])
+    expiry_duration = IntegerField("Valid for (days):", validators=[DataRequired(message='You need to input a number!')])
+    sessions = IntegerField("Number of Sessions:", validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
+    image = FileField("Image of product: ", validators=[FileAllowed(images, 'Image only!')])
     submit = SubmitField()
 
 
@@ -78,26 +76,26 @@ class edit_package_form(FlaskForm):
 class edit_service_form(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
-    description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=2000) ,DataRequired()])
-    price = DecimalField("Price: ", validators=[validators.NumberRange(min=1),DataRequired()])
-    image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!') ])
+    description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=2000), DataRequired()])
+    price = DecimalField("Price: ", validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
+    image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!')])
     submit = SubmitField()
 
 
 class create_supplier(FlaskForm):
-    UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
-    name = StringField("Supplier Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
-    address = TextAreaField("Address: ", validators=[validators.Length(min=5, max=2000) ,DataRequired()])
-    phone_num = StringField("Phone Number: ",validators=[validators.Length(max=8),validators.Regexp(r'^(?:\+?65)?[689]\d{7}$', message ='Phone number needs to start with 6,8 or 9'),DataRequired()])
+    UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10), DataRequired()])
+    name = StringField("Supplier Name: ", validators=[validators.Length(min=3, max=200), DataRequired()])
+    address = TextAreaField("Address: ", validators=[validators.Length(min=5, max=2000), DataRequired()])
+    phone_num = StringField("Phone Number: ",validators=[validators.Length(max=8), validators.Regexp(r'^(?:\+?65)?[689]\d{7}$', message= 'Phone number needs to start with 6,8 or 9'),DataRequired(message='You need to input a number!')])
     product = StringField("Brand: ", validators=[DataRequired()])
-    price = DecimalField("Price: ", validators=[validators.NumberRange(min=1),DataRequired()])
+    price = DecimalField("Price: ", validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
     submit = SubmitField()
 
 
 class buy_orders_supplier(FlaskForm):
     UID = StringField("Order UID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     supplier = SelectField("Supplier")
-    number = IntegerField("Number of orders:", validators=[validators.NumberRange(min=1), DataRequired()])
+    number = IntegerField("Number of orders:", validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
     submit = SubmitField()
 
 
@@ -106,8 +104,8 @@ class buy_orders_supplier(FlaskForm):
 
 
 class edit_admin_account(FlaskForm):
-    old_password = PasswordField("Old Password:", validators=[validators.Length(min=8, max=16) ,DataRequired()])
-    password = PasswordField("New Password:", validators=[validators.Length(min=8, max=16) ,DataRequired(), validators.EqualTo('cfm_password', message='Passwords must match')])
-    cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16) ,DataRequired()])
+    old_password = PasswordField("Old Password:", validators=[validators.Length(min=8, max=16), DataRequired()])
+    password = PasswordField("New Password:", validators=[validators.Length(min=8, max=16), DataRequired(), validators.EqualTo('cfm_password', message='Passwords must match')])
+    cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16), DataRequired()])
     submit = SubmitField()
 

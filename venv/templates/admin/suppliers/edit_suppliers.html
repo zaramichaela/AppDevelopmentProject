@@ -1,7 +1,7 @@
 {% extends 'admin/base.html' %}
 
 {% block title %}
-edit supplier details
+Edit Supplier's Details
 {% endblock %}
 {%block body %}
 
@@ -34,12 +34,12 @@ edit supplier details
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
-    {{ render_field(form.UID, class='form-control') }}
-    {{ render_field(form.name, class='form-control') }}
-    {{ render_field(form.address, class='form-control') }}
-    {{ render_field(form.product, class='form-control') }}
-    {{ render_field(form.phone_num, class='form-control') }}
-    {{ render_field(form.price, class='form-control') }}
+    {{ render_field(form.UID, class='form-control', placeholder='e.g. 123') }}
+    {{ render_field(form.name, class='form-control', placeholder='e.g. Tan Wei Ming') }}
+    {{ render_field(form.address, class='form-control, placeholder='e.g. 123 Happy Street'') }}
+    {{ render_field(form.product, class='form-control', placeholder='e.g. Nin Jiom') }}
+    {{ render_field(form.phone_num, class='form-control', placeholder='e.g. 61234567') }}
+    {{ render_field(form.price, class='form-control', placeholder='e.g. 20.00') }}
     {{form.submit(class="btn btn-primary")}}
   </dl>
 </form>

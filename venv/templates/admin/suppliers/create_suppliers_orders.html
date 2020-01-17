@@ -1,8 +1,7 @@
 {% extends 'admin/base.html' %}
 
 {% block title %}
-list a new supplier
-{% endblock %}
+Create Supplier Order{% endblock %}
 {%block body %}
 
 
@@ -34,9 +33,9 @@ list a new supplier
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
-    {{ render_field(form.UID, class='form-control', placeholder='123') }}
+    {{ render_field(form.UID, class='form-control', placeholder='e.g. 123') }}
     {{ render_field(form.supplier, class='form-control') }}
-    {{ render_field(form.number, class='form-control', placeholder='100') }}
+    {{ render_field(form.number, class='form-control', placeholder='e.g. 100') }}
     {{form.submit(class="btn btn-primary")}}
   </dl>
 </form>
