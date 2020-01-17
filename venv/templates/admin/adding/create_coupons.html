@@ -59,12 +59,12 @@ Add a new coupon
       <dl>
           {{ form.csrf_token }}
 <!--          calls macro render_field for each form field, to display the form-->
-    {{ render_field(form.UID, class='form-control', placeholder="123") }}
-    {{ render_field(form.couponcode, class='form-control', placeholder="DISC10") }}
-    {{ render_field(form.percentage, class='form-control', placeholder="50%") }}
-    {{ render_field(form.discountlimit, class='form-control', placeholder="SGD$50.00") }}
-    {{ render_field(form.minimumspent, class='form-control', placeholder="SGD$100.00") }}
-    {{ render_field(form.expiredate,  class='dp form-control', placeholder="11/12/20") }}
+    {{ render_field(form.UID, class='form-control', placeholder="e.g. 123") }}
+    {{ render_field(form.couponcode, class='form-control', placeholder="e.g. DISC10") }}
+    {{ render_field(form.percentage, class='form-control', placeholder="e.g. 50%") }}
+    {{ render_field(form.discountlimit, class='form-control', placeholder="e.g. 50.00") }}
+    {{ render_field(form.minimumspent, class='form-control', placeholder="e.g. 100.00") }}
+    {{ render_field(form.expiredate,  class='dp form-control', placeholder="e.g. 11/12/20") }}
     {{form.submit(class="btn btn-primary")}}
   </dl>
 </form>

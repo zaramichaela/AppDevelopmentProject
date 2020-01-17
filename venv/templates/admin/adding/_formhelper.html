@@ -1,7 +1,5 @@
 <!--all these macro functions helps to organize the project and allow cleaner html files-->
-
 {% macro render_field(field) %} <!--  -->
-
 <!--displays uid/name/description/price's label-->
   <dt>{{ field.label }}
 <!--**kwargs is any attribute that is inserted in   -->
@@ -10,7 +8,6 @@
 <!--will show-->
 <!--<input class="form-control" id="UID" name="UID" placeholder="123" required="" type="text" value="">-->
   <dd>{{ field(**kwargs)|safe }}
-
 <!--  field.errors will show the errors if the form is unable to be validated.-->
   {% if field.errors %}
     <ul class=errors>
