@@ -301,6 +301,7 @@ def edit_item(itemid):
         if(file_):
             file_.save(ITEMSDIR+item.get_UID())
         update_form = form.data.copy()
+        update_form["UID"] = item.get_UID()
         update_form["image_url"] = ITEMSDIR + item.get_UID()
         itemcontroller.remove_sales_item(item)
         item2 = itemcontroller.create_and_save_item(update_form)
@@ -334,9 +335,9 @@ def edit_package(packageid):
         file_ = request.files["image"]
         if(file_):
             file_.save(PACKAGEDIR+item.get_UID())
-
         update_form = form.data.copy()
-        update_form["image_url"] = PACKAGEDIR + +item.get_UID()
+        update_form["UID"] = item.get_UID()
+        update_form["image_url"] = PACKAGEDIR +item.get_UID()
         itemcontroller.remove_sales_package(item)
         item2 = itemcontroller.create_and_save_package(update_form)
         if (item2):
@@ -372,6 +373,7 @@ def edit_service(serviceid):
             file_.save(SERVICEDIR+item.get_UID())
 
         update_form = form.data.copy()
+        update_form["UID"] = item.get_UID()
         update_form["image_url"] = SERVICEDIR + item.get_UID()
 
         item2 = itemcontroller.create_and_save_service(update_form)
@@ -397,11 +399,13 @@ def edit_coupon(couponid):
     item = itemcontroller.get_coupon_by_UID(couponid)
     if(not item):
         abort(404)
-    form = coupon_form(formdata=request.form, obj=item)
+    form = edit_coupon_form(formdata=request.form, obj=item)
 
 
     if request.method == 'POST' and form.validate():
         itemcontroller.remove_sales_coupon(item)
+        update_form = form.data.copy()
+        update_form["UID"] = item.get_UID()
 
         item2 = itemcontroller.create_and_save_coupon(form.data)
         if (item2):
