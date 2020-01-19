@@ -26,7 +26,12 @@ editing service #{{item.get_UID()}}
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
-    {{ render_field(form.UID, class='form-control', placeholder="e.g. 123") }}
+         <dl>
+
+          <dt>Service UID:
+              <dd style="">
+    {{item.get_UID()}}
+          </dd>
     {{ render_field(form.name, class='form-control', placeholder="e.g. Tui Na") }}
     {{ render_field(form.description, class='form-control', placeholder="Input description of service here." ) }}
     {{ render_field(form.price, class='form-control', placeholder="e.g. 20.00" ) }}

@@ -23,7 +23,12 @@ editing Package #{{item.get_UID()}}
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
-    {{ render_field(form.UID, class='form-control', placeholder="e.g. 123") }}
+          <dl>
+
+          <dt>Package UID:
+              <dd style="">
+    {{item.get_UID()}}
+          </dd>
     {{ render_field(form.name, class='form-control', placeholder="e.g. Tui Na Package") }}
     {{ render_field(form.description, class='form-control', placeholder="Input description of package here.") }}
     {{ render_field(form.price, class='form-control', placeholder="e.g. 100.00") }}

@@ -23,7 +23,12 @@ editing item #{{item.get_UID()}}
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
-    {{ render_field(form.UID, class='form-control', placeholder="e.g. 123") }}
+          <dl>
+
+          <dt>Item UID:
+              <dd style="">
+    {{item.get_UID()}}
+          </dd>
     {{ render_field(form.name, class='form-control' , placeholder="e.g. Prescribed Herbal Medicine") }}
     {{ render_field(form.description, class='form-control', placeholder="Input description of product here.
 Include things like manufacture date, expiry date and allergen information.") }}

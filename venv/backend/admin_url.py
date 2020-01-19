@@ -296,17 +296,12 @@ def edit_item(itemid):
     if(not item):
         abort(404)
     form = edit_sales_item()
-
-
-
     if request.method == 'POST' and form.validate_on_submit():
         file_ = request.files["image"]
         if(file_):
-            file_.save(ITEMSDIR+form.UID.data)
-        else:
-            os.rename(ITEMSDIR+itemid,ITEMSDIR+form.UID.data)
+            file_.save(ITEMSDIR+item.get_UID())
         update_form = form.data.copy()
-        update_form["image_url"] = ITEMSDIR + form.UID.data
+        update_form["image_url"] = ITEMSDIR + item.get_UID()
         itemcontroller.remove_sales_item(item)
         item2 = itemcontroller.create_and_save_item(update_form)
         if (item2):
@@ -317,7 +312,6 @@ def edit_item(itemid):
             itemcontroller.all_items.append(item)
             item.save()
     else:
-            form.UID.data = item.get_UID()
             form.name.data = item.get_name()
             form.description.data = item.get_description()
             form.price.data = item.get_price()
@@ -339,12 +333,10 @@ def edit_package(packageid):
     if request.method == 'POST' and form.validate():
         file_ = request.files["image"]
         if(file_):
-            file_.save(PACKAGEDIR+form.UID.data)
-        else:
-            os.rename(PACKAGEDIR+packageid,PACKAGEDIR+form.UID.data)
+            file_.save(PACKAGEDIR+item.get_UID())
 
         update_form = form.data.copy()
-        update_form["image_url"] = PACKAGEDIR + form.UID.data
+        update_form["image_url"] = PACKAGEDIR + +item.get_UID()
         itemcontroller.remove_sales_package(item)
         item2 = itemcontroller.create_and_save_package(update_form)
         if (item2):
@@ -355,7 +347,6 @@ def edit_package(packageid):
             itemcontroller.all_packages(item)
             item.save()
     else:
-            form.UID.data = item.get_UID()
             form.name.data = item.get_name()
             form.description.data = item.get_description()
             form.price.data = item.get_price()
@@ -374,18 +365,14 @@ def edit_service(serviceid):
         abort(404)
     form = edit_service_form(formdata=request.form, obj=item)
 
-
-
     if request.method == 'POST' and form.validate():
 
         file_ = request.files["image"]
         if(file_):
-            file_.save(SERVICEDIR+form.UID.data)
-        else:
-            os.rename(SERVICEDIR+serviceid,SERVICEDIR+form.UID.data)
+            file_.save(SERVICEDIR+item.get_UID())
 
         update_form = form.data.copy()
-        update_form["image_url"] = SERVICEDIR + form.UID.data
+        update_form["image_url"] = SERVICEDIR + item.get_UID()
 
         item2 = itemcontroller.create_and_save_service(update_form)
         itemcontroller.remove_sales_service(item)
@@ -397,10 +384,9 @@ def edit_service(serviceid):
             itemcontroller.all_services(item)
             item.save()
     else:
-            form.UID.data = item.get_UID()
-            form.name.data = item.get_name()
-            form.description.data = item.get_description()
-            form.price.data = item.get_price()
+        form.name.data = item.get_name()
+        form.description.data = item.get_description()
+        form.price.data = item.get_price()
     return render_template('admin/editing/edit_services.html', form=form, message=context, item=item)
 
 
@@ -426,7 +412,6 @@ def edit_coupon(couponid):
             itemcontroller.all_coupons(item)
             item.save()
     else:
-            form.UID.data = item.get_UID()
             form.couponcode.data = item.get_couponcode()
             form.percentage.data = item.get_percentage()
             form.discountlimit.data = item.get_discountlimit()

@@ -1,12 +1,15 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,BooleanField,SubmitField,DecimalField,TextAreaField,IntegerField,DateField, validators, PasswordField,SelectField
 from flask_wtf.file import FileField, FileRequired,FileAllowed
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired,ValidationError
 from flask_uploads import UploadSet, IMAGES,configure_uploads
-from backend.settings import suppliercontroller
+from backend.settings import suppliercontroller, itemcontroller
 import re
 
+
 images = UploadSet('images', IMAGES)
+
+
 
 #form to create a new sales item
 class new_sales_item(FlaskForm):
@@ -52,7 +55,6 @@ class coupon_form(FlaskForm):
 
 
 class edit_sales_item(FlaskForm):
-    UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200) ,DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=3000) ,DataRequired()])
     price = DecimalField("Price: ", validators=[DataRequired(message='You need to input a number!')])
@@ -61,8 +63,8 @@ class edit_sales_item(FlaskForm):
     submit = SubmitField()
 
 
+
 class edit_package_form(FlaskForm):
-    UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5), DataRequired()])
     price = DecimalField("Price: ", validators=[DataRequired(message='You need to input a number!')])
@@ -74,13 +76,19 @@ class edit_package_form(FlaskForm):
 
 
 class edit_service_form(FlaskForm):
-    UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=2000), DataRequired()])
     price = DecimalField("Price: ", validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!')])
     submit = SubmitField()
 
+class coupon_form(FlaskForm):
+    couponcode = StringField("Coupon Code: ", validators=[validators.Length(min=5, max=10),DataRequired()])
+    percentage = IntegerField("Discount Percentage (%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
+    discountlimit = DecimalField("Maximum amount of discount ($): ", validators=[validators.NumberRange(min=0.1),DataRequired(message='You need to input a number!')])
+    minimumspent = IntegerField("Minimum spending ($): ", validators=[validators.NumberRange(min=1, max=2000),DataRequired(message='You need to input a number!')])
+    expiredate = DateField("Expiry Date (DD/MM/YYYY): ",  format='%d/%m/%Y', validators=[DataRequired()])
+    submit = SubmitField()
 
 class create_supplier(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10), DataRequired()])

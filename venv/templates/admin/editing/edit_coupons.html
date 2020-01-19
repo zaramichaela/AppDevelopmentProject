@@ -63,7 +63,11 @@ Edit Coupons #{{item.get_UID()}}
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
       <dl>
-    {{ render_field(form.UID, class='form-control', placeholder="e.g. 123") }}
+
+          <dt>Coupon UID:
+              <dd style="">
+    {{item.get_UID()}}
+          </dd>
     {{ render_field(form.couponcode, class='form-control', placeholder="e.g. DISC10") }}
     {{ render_field(form.percentage, class='form-control', placeholder="e.g. 50%") }}
     {{ render_field(form.discountlimit, class='form-control', placeholder="e.g. 50.00") }}
