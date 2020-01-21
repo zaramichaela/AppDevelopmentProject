@@ -33,6 +33,7 @@ editing item #{{item.get_UID()}}
     {{ render_field(form.description, class='form-control', placeholder="Input description of product here.
 Include things like manufacture date, expiry date and allergen information.") }}
     {{ render_field(form.price, class='form-control', placeholder="e.g. 20.00") }}
+    {{ render_field(form.discount, class='form-control', placeholder="e.g. 10") }}
     {{ render_field(form.stocks, class='form-control', placeholder="e.g. 100") }}
     {{ render_field(form.image, class='form-control', onchange="preview_image(event)") }}
           <center><br><img id="output_image"/><br></center>

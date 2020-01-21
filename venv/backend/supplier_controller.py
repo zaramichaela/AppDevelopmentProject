@@ -5,8 +5,7 @@ class suppliers_controller:
     def __init__(self):
         self.__all_suppliers = get_all_suppliers_db()
         self.__suppliers_orders = get_all_suppliers_orders()
-        print(self.__all_suppliers)
-        print(self.__suppliers_orders)
+
 
     def get_suppliers_by_UID(self, UID):
         #check and return 1 item finding via suppliers_UID. if more than 1, return None.

@@ -4,8 +4,8 @@ import shelve
 
 class sales_services(sales_objects):
 
-    def __init__(self, UID,name, description, price, image_url):
-        super().__init__(UID,name, description, price, image_url)
+    def __init__(self, UID,name, description, price, image_url, discount):
+        super().__init__(UID,name, description, price, image_url, discount)
 
     #save function override
     #save in service database

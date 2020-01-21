@@ -137,7 +137,6 @@ def add_shop_package():
 @authorize
 def list_sales_items():
     sales = itemcontroller.get_all_sales_items()
-    print(sales)
     return render_template('admin/listing/list_sales_items.html', items=sales)
 
 
@@ -314,6 +313,7 @@ def edit_item(itemid):
             item.save()
     else:
             form.name.data = item.get_name()
+            form.discount.data = item.get_discount()
             form.description.data = item.get_description()
             form.price.data = item.get_price()
             form.stocks.data = item.get_stocks()
@@ -349,6 +349,7 @@ def edit_package(packageid):
             item.save()
     else:
             form.name.data = item.get_name()
+            form.discount.data = item.get_discount()
             form.description.data = item.get_description()
             form.price.data = item.get_price()
             form.expiry_duration.data = item.get_expiry_duration()
@@ -387,6 +388,7 @@ def edit_service(serviceid):
             item.save()
     else:
         form.name.data = item.get_name()
+        form.discount.data = item.get_discount()
         form.description.data = item.get_description()
         form.price.data = item.get_price()
     return render_template('admin/editing/edit_services.html', form=form, message=context, item=item)
@@ -453,7 +455,6 @@ def del_admin_account(username):
     flag = logincontroller.find_admin_username(username)
     if flag:
         a = logincontroller.delete_admin_account(username)
-        print(a)
         flash("You have deleted the admin user " + username, "success")
     else:
         flash("an error have occurred, please try again", "error")
@@ -549,7 +550,6 @@ def edit_suppliers(supplierid):
     if request.method == 'POST' and form.validate():
         suppliercontroller.remove_supplier(item)
         new_item = suppliercontroller.create_and_save_suppliers(form.data)
-        print(new_item)
         if (not new_item):
             flash("Error, you cannot edit the supplier " + item.get_UID(), "error")
             return redirect(url_for("admin_pages.list_suppliers"))

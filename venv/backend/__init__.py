@@ -1,4 +1,4 @@
-from flask import url_for, redirect, render_template, Flask, request, flash,session
+from flask import url_for, redirect, render_template, Flask, request, flash,session,abort
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 # import shelve
 from backend.admin_url import admin_pages
@@ -6,6 +6,7 @@ from backend.settings import *
 from flask_login import LoginManager
 from login.forms import customer_registration
 from login.user_account import user_account
+
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
@@ -29,7 +30,28 @@ def home():
 
 @app.route('/shop')
 def shop():
-    return render_template('shop.html')
+    sales_items = itemcontroller.get_all_sales_items()
+    return render_template('users/shop.html', items = sales_items)
+
+@app.route('/shop/items/<itemuid>')
+def shop_item(itemuid):
+    item = itemcontroller.get_item_by_UID(itemuid)
+    if(not item):
+        abort(404)
+    return render_template('users/item.html', item = item)
+
+@app.route('/cart/<itemuid>/add')
+def add_item_to_cart(itemuid):
+    item = itemcontroller.get_item_by_UID(itemuid)
+    if(not item):
+        abort(404)
+    if not session['cart']:
+        session['cart'] = []
+    item = dict()
+    item['itemuid'] = itemuid
+    # item['quantity'] = quantity
+    session['cart'].append()
+    return render_template('cart.html')
 
 @app.route('/cart')
 def cart():
@@ -66,7 +88,7 @@ def do_user_login():
     if user:
         session['logged_in'] = True
         session['logged_in_user'] = username
-    
+
     return redirect(url_for("login"))
 
 

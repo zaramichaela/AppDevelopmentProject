@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}
+	Karens' TCM Shop
+{% endblock %}
+
+
+{% block pagetitle %}
+	{{item.get_name()}}
+{% endblock %}
+
+{% block body %}
+    <section class="ftco-section bg-light">
+<div class="container-fluid" style="padding-bottom:200px">
+
+	<div class="row">
+		<div class="col-sm-1"></div>
+	<div class="col-sm-4">
+		<h2>{{item.get_name()}}</h2>
+		<img class="img-fluid" src="{{  url_for('static', filename='uploads/items/'+item.get_UID()) }}">
+	</div>
+
+			<div class="col-sm-6">
+				<h3>Description:</h3>
+				<p style="text-align: justify;">{{item.get_description()}}</p>
+    	</div>
+			</div>
+
+			<div class="row">
+
+				<div class="col-sm-1"></div>
+				<div class="col-sm-4"></div>
+				<div class="col-sm-3">
+					<h4>Price:</h4>
+					<form method="POST" action="url_for('add_item_to_cart', itemuid=item.get_UID())">
+						<label>Quantity:</label>
+						<input type="number" name="quantity" id="quantity"/>
+						<button class="btn btn-success">Add to Cart </button>
+						</form>
+					</div>
+				</div>
+
+    </section>
+
+{% endblock%}

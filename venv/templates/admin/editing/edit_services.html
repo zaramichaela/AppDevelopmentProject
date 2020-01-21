@@ -35,6 +35,7 @@ editing service #{{item.get_UID()}}
     {{ render_field(form.name, class='form-control', placeholder="e.g. Tui Na") }}
     {{ render_field(form.description, class='form-control', placeholder="Input description of service here." ) }}
     {{ render_field(form.price, class='form-control', placeholder="e.g. 20.00" ) }}
+    {{ render_field(form.discount, class='form-control', placeholder="e.g. 10") }}
     {{ render_field(form.image, class='form-control', onchange="preview_image(event)") }}
           <center><br><img id="output_image"/><br></center>
           <small>If no new image is uploaded, the old image will be used.</small>

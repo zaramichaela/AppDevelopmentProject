@@ -20,6 +20,7 @@ div.dataTables_filter input { border: 1px solid black; }
     padding:1%;
     border-color: #777777;
     display: block;
+     text-align: justify;
 overflow: auto;
 width:95%;
     min-width:70%;

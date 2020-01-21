@@ -21,7 +21,7 @@ class sales_factory:
       #e.g. {'UID':'2', 'name':'name', 'description':'description','price':1,'image_url':1, 'stocks':4}    def create_salesitems(self, dict):
     def create_item(self,dict):
         try:
-            item = sales_items(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["stocks"])
+            item = sales_items(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["stocks"],dict["discount"])
             return item
         except Exception as e:
             print(e)
@@ -33,7 +33,7 @@ class sales_factory:
       #e.g. {'UID':'2', 'name':'name', 'description':'description','price':1,'image_url':1, 'datetime':datetime}
     def create_service(self,dict):
         try:
-            item = sales_services(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"])
+            item = sales_services(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["discount"])
             return item
         except Exception as e:
             print(e)
@@ -47,7 +47,7 @@ class sales_factory:
           #e.g. {'UID':'2', 'name':'name', 'description':'description','price':1,'image_url':1, 'expiry_duration':days, 'session':}
     def create_package(self, dict):
         try:
-            item = sales_package(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"], dict["expiry_duration"],dict["sessions"])
+            item = sales_package(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"], dict["expiry_duration"],dict["sessions"],dict["discount"])
             return item
         except Exception as e:
             print(e)
@@ -175,6 +175,3 @@ class sales_factory:
             return False
         finally:
             s.close()
-
-
-

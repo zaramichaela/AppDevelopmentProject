@@ -5,8 +5,8 @@ from backend.sales_objects import *
 
 #class for each package that contains multiple sessions and session remaining.
 class sales_package(sales_objects):
-    def __init__(self, UID,name, description, price, image_url, expiry_duration, sessions):
-        super().__init__(UID,name, description, price, image_url)
+    def __init__(self, UID,name, description, price, image_url, expiry_duration, sessions,discount):
+        super().__init__(UID,name, description, price, image_url, discount)
         self.__expiry_duration = expiry_duration #days to expiry date
         self.__sessions = sessions
         self.__remaining_sess = sessions
