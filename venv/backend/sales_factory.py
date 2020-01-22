@@ -21,7 +21,7 @@ class sales_factory:
       #e.g. {'UID':'2', 'name':'name', 'description':'description','price':1,'image_url':1, 'stocks':4}    def create_salesitems(self, dict):
     def create_item(self,dict):
         try:
-            item = sales_items(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["stocks"],dict["discount"])
+            item = sales_items(dict["UID"],dict["name"], dict["description"], dict["price"], dict["image_url"],dict["stocks"],dict["discount"], dict["category"])
             return item
         except Exception as e:
             print(e)

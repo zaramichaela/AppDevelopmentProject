@@ -7,7 +7,7 @@ import pickle
 #superclass for all sales objects
 class sales_objects(object):
     #default init for creating a new object
-    def __init__(self, UID,name, description, price, image_url, discount):
+    def __init__(self, UID,name, description, price, image_url, discount,category):
         self.__UID = UID #all item should have their unique UID
         #a string to be able to save to database shelve requirement
         self.__name = name
@@ -16,6 +16,7 @@ class sales_objects(object):
         self.__image_url = image_url
         self.__available_flag = True
         self.__discount = discount
+        self.__category = category
 
     #for finding objects in shelves
     def set_UID(self, UID):
@@ -26,6 +27,8 @@ class sales_objects(object):
 
     def set_discount(self, discount):
         self.discount = discount
+
+
 
     def price_before_discount(self):
         return self.__price

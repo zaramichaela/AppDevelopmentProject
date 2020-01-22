@@ -156,3 +156,27 @@ class items_controller:
         self.__all_coupons.append(coupon)
         coupon.save()
         return coupon
+
+
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+#reduce stocks when buying items by users.
+
+
+    def reduce_items_stock(self, itemuid, quantity):
+    #reduce item stocks and create a new sales_entry as logging purposes
+        item = self.get_item_by_UID(itemuid)
+        if(item):
+            stocks = item.get_stocks()
+            if(stocks > quantity):
+                item.set_stocks(stocks-quantity)
+                return True
+            else:
+                flash("Error, Your purchase quantity is higher than available stocks for the item " + item.get_name(), "error")
+                return False
+        else:
+            flash("Error, item with the UID " + itemuid +" not available", "error")
+            return False

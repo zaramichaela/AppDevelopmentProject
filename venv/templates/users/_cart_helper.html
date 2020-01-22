@@ -1,0 +1,24 @@
+
+{% macro list_cart_item(i, quantity, total) %}
+<tr class="text-center {%if i.get_available_flag()%} disabled {% endif %}">
+						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+
+						        <td class="image-prod"><div class="img" style="background-image:url({{  url_for('static', filename='uploads/items/'+i.get_UID()) }});"></div></td>
+
+						        <td class="product-name">
+						        	<h3>{{i.get_name()}}</h3>
+
+						        </td>
+
+						        <td class="price">${{i.price_after_discount()}}</td>
+
+						        <td class="quantity">
+						        	<div class="input-group mb-3">
+					             	<input type="text" name="quantity" class="quantity form-control input-number" value="{{quantity}}" min="1" max="100">
+					          	</div>
+					          </td>
+
+						        <td class="total">${{total}}</td>
+						      </tr><!-- END TR-->
+
+{% endmacro %}

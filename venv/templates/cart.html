@@ -112,47 +112,10 @@
 						      </tr>
 						    </thead>
 						    <tbody>
-						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-						        <td class="image-prod"><div class="img" style="background-image:url(static/user/images/product-3.jpg);"></div></td>
-
-						        <td class="product-name">
-						        	<h3>Nin Jiom Pei Pa Koa</h3>
-						        	<p>Nin Jiom Pei Pa Koa is a traditional Chinese natural herbal remedy used for the relief of sore throat, coughs, hoarseness and aphonia.</p>
-						        </td>
-
-						        <td class="price">$8.90</td>
-
-						        <td class="quantity">
-						        	<div class="input-group mb-3">
-					             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-					          	</div>
-					          </td>
-
-						        <td class="total">$8.90</td>
-						      </tr><!-- END TR-->
-
-						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-						        <td class="image-prod"><div class="img" style="background-image:url(static/user/images/product-4.jpg);"></div></td>
-
-						        <td class="product-name">
-						        	<h3>Brands Essence of Chicken</h3>
-						        	<p>Brands Essence of Chicken is said to help reduce tiredness and improves concentration</p>
-						        </td>
-
-						        <td class="price">$15.70</td>
-
-						        <td class="quantity">
-						        	<div class="input-group mb-3">
-					             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-					          	</div>
-					          </td>
-
-						        <td class="total">$15.70</td>
-						      </tr><!-- END TR-->
+							{% from "users/_cart_helper.html" import list_cart_item %}
+							{% for i in cart_items %}
+							{{ list_cart_item(i["item"], i["quantity"], i["total"]) }}
+							{% endfor %}
 						    </tbody>
 						  </table>
 					  </div>
@@ -164,15 +127,15 @@
     					<h3>Cart Totals</h3>
     					<p class="d-flex">
     						<span>Subtotal</span>
-    						<span>$24.60</span>
+    						<span>${{total_price}}</span>
     					</p>
     					<p class="d-flex">
     						<span>Coupon Code</span>
-    						<span><input type="text" class="html"></input></span>
+    						<span><input type="text" class="discount_voucher"></input></span>
     					</p>
               <p class="d-flex">
     						<span>Total Discount</span>
-    						<span>$7.00</span>
+    						<span id="discount">$7.00</span>
     					</p>
     					<hr>
     					<p class="d-flex total-price">

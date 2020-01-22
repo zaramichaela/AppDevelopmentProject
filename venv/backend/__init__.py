@@ -40,22 +40,59 @@ def shop_item(itemuid):
         abort(404)
     return render_template('users/item.html', item = item)
 
-@app.route('/cart/<itemuid>/add')
+@app.route('/cart/<itemuid>/add', methods=['POST'])
 def add_item_to_cart(itemuid):
+    num = 0
     item = itemcontroller.get_item_by_UID(itemuid)
     if(not item):
         abort(404)
-    if not session['cart']:
+    if not session.get('cart'):
         session['cart'] = []
-    item = dict()
-    item['itemuid'] = itemuid
-    # item['quantity'] = quantity
-    session['cart'].append()
-    return render_template('cart.html')
+    flag = False
+    for i in session['cart']:
+        if(itemuid == i['itemuid']):
+            quantity = request.form['quantity']
+            i['quantity'] += quantity
+            flag = True
+            break
+    if(not flag):
+        appenditem = dict()
+        appenditem['itemuid'] = itemuid
+        quantity = request.form['quantity']
+        if(int(quantity) <= item.get_stocks()):
+            appenditem['quantity'] = quantity
+            session['cart'].append(appenditem)
+            flash("item added to cart.", "success")
+    else:
+        flash("item not added to cart, quantity exceeds stocks available.", "error")
+    return redirect(url_for("shop_item", itemuid=itemuid))
 
 @app.route('/cart')
 def cart():
-    return render_template('cart.html')
+    #need to input coupon code,removing of items and others
+    items = session.get("cart")
+    cart_list = []
+    if(items):
+        total_price = 0
+        for i in items:
+            cart_item = dict()
+            cart_item['item'] = itemcontroller.get_item_by_UID(i['itemuid'])
+            if(cart_item['item']):
+                cart_item['quantity'] = i['quantity']
+                cart_item['total'] = int(i['quantity']) * cart_item['item'].price_after_discount()
+                cart_list.append(cart_item)
+                total_price = total_price + cart_item['total']
+
+        return render_template('cart.html', cart_items=cart_list, total_price=total_price)
+    else:
+        return render_template('cart.html', cart_items=[])
+
+
+@app.route('/cart/clear')
+def del_cart():
+    session.pop('cart', None)
+    return redirect(url_for("cart"))
+
 
 @app.route('/about')
 def about():
