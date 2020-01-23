@@ -1,4 +1,4 @@
-from flask import url_for, redirect, render_template, Flask, request, flash,session,abort
+from flask import url_for, redirect, render_template, Flask, request, flash, session,abort
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 # import shelve
 from backend.admin_url import admin_pages
