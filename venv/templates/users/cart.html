@@ -68,9 +68,6 @@
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="{{url_for('shop')}}">Shop</a>
-                <a class="dropdown-item" href="product-single.html">Single Product</a>
-               <a class="dropdown-item" href="{{url_for('cart')}}">Cart</a>
-                <a class="dropdown-item" href="{{url_for('checkout')}}">Checkout</a>
               </div>
             </li>
 	          <li class="nav-item"><a href="{{url_for('about')}}" class="nav-link">About</a></li>
@@ -121,6 +118,19 @@
 					  </div>
     			</div>
     		</div>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+					<script type="text/javascript">
+								$(document).ready(function(){
+								   $("#quantity").change(function() {
+     								this.form.submit();
+									});
+									$("#code").change(function() {
+     								this.form.submit();
+									});
+								});
+								</script>
+
     		<div class="row justify-content-start">
     			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
     				<div class="cart-total mb-3">
@@ -129,18 +139,23 @@
     						<span>Subtotal</span>
     						<span>${{total_price}}</span>
     					</p>
-    					<p class="d-flex">
+						<form method="POST" >
+    					<p class="d-flex" >
+
     						<span>Coupon Code</span>
-    						<span><input type="text" class="discount_voucher"></input></span>
+
+    						<span ><input type="text" class="discount_voucher" id="code" name="code" value="{{code}}"/></span>
+
     					</p>
+							</form>
               <p class="d-flex">
     						<span>Total Discount</span>
-    						<span id="discount">$7.00</span>
+    						<span id="discount">${{discount}}</span>
     					</p>
     					<hr>
     					<p class="d-flex total-price">
     						<span><b>Total</b></span>
-    						<span>$17.60</span>
+    						<span>${{total_amount}}</span>
     					</p>
     				</div>
     				<p class="text-center"><a href="{{url_for('checkout')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>

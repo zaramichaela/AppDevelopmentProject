@@ -29,9 +29,9 @@ class items_controller:
     def get_coupon_by_code(self, coupon_code):
         #check and find 1 coupon with the couponcode
         #return None if more than 1 found
-        coupon_item = [items for items in self.__all_coupons if items.couponcode == coupon_code]
+        coupon_item = [items for items in self.__all_coupons if items.get_couponcode() == coupon_code]
         if(len(coupon_item) == 1):
-            return coupon_item
+            return coupon_item[0]
         else:
             return False
 

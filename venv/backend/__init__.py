@@ -54,6 +54,7 @@ def add_item_to_cart(itemuid):
             quantity = request.form['quantity']
             i['quantity'] += quantity
             flag = True
+            flash("item already exists in cart, increase quantity by " + quantity, "success")
             break
     if(not flag):
         appenditem = dict()
@@ -63,18 +64,30 @@ def add_item_to_cart(itemuid):
             appenditem['quantity'] = quantity
             session['cart'].append(appenditem)
             flash("item added to cart.", "success")
-    else:
-        flash("item not added to cart, quantity exceeds stocks available.", "error")
+        else:
+            flash("item not added to cart, quantity exceeds stocks available.", "error")
     return redirect(url_for("shop_item", itemuid=itemuid))
 
-@app.route('/cart')
+@app.route('/cart' , methods=['POST', 'GET'])
 def cart():
     #need to input coupon code,removing of items and others
     items = session.get("cart")
     cart_list = []
+    code = ''
+    discount = ''
     if(items):
         total_price = 0
+        if request.method == 'POST' and request.form.get('quantity'):
+            #get value from the individual form of the uid and quantity
+            #when quantity is change, it will update the session item quantity
+            quantity_f = request.form['quantity']
+            itemuid_f = request.form['UID']
+            for i in items:
+                #find the item and update the quantity with the updated value
+                if(itemuid_f ==  i['itemuid']):
+                    i['quantity'] = quantity_f
         for i in items:
+            #this is the getting of the item object, and calculating total price for each item * quantity.
             cart_item = dict()
             cart_item['item'] = itemcontroller.get_item_by_UID(i['itemuid'])
             if(cart_item['item']):
@@ -82,11 +95,29 @@ def cart():
                 cart_item['total'] = int(i['quantity']) * cart_item['item'].price_after_discount()
                 cart_list.append(cart_item)
                 total_price = total_price + cart_item['total']
-
-        return render_template('cart.html', cart_items=cart_list, total_price=total_price)
+        if request.method == 'POST' and request.form.get('code'):
+            #this part is when coupon code is inputted, it will check and update if it is valid by how much you save
+            code = request.form.get('code')
+            coupon =  itemcontroller.get_coupon_by_code(code)
+            if coupon:
+                if coupon.check_validity():
+                    discount = coupon.get_discount(total_price)
+                else:
+                    flash("Coupon code has expired, please try another code.", "nocoupon")
+            else:
+                flash("Coupon does not exists.", "nocoupon")
+        total_amount = total_price - discount
+        return render_template('users/cart.html', cart_items=cart_list, total_price=total_price, discount=discount, code=code, total_amount=total_amount)
     else:
-        return render_template('cart.html', cart_items=[])
+        return render_template('users/cart.html', cart_items=[])
 
+
+# @app.route('/cart/coupon/<couponcode>/<price>')
+# def coupon_check(couponcode, price):
+#     coupon =  itemcontroller.get_coupon_by_code(couponcode)
+#     discount = coupon.get_discount(price)
+#     print(discount)
+#     return discount
 
 @app.route('/cart/clear')
 def del_cart():

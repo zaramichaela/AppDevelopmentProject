@@ -313,6 +313,7 @@ def edit_item(itemid):
             item.save()
     else:
             form.name.data = item.get_name()
+            form.category.data = item.get_category()
             form.discount.data = item.get_discount()
             form.description.data = item.get_description()
             form.price.data = item.get_price()
@@ -408,8 +409,9 @@ def edit_coupon(couponid):
         itemcontroller.remove_sales_coupon(item)
         update_form = form.data.copy()
         update_form["UID"] = item.get_UID()
+        print(item.get_UID())
 
-        item2 = itemcontroller.create_and_save_coupon(form.data)
+        item2 = itemcontroller.create_and_save_coupon(update_form)
         if (item2):
             flash("You have updated the coupon "+ item.get_UID() +" information","success")
             return redirect(url_for("admin_pages.list_coupons"))
@@ -573,9 +575,10 @@ def delete_suppliers(supplierid):
         abort(404)
     success_flag = suppliercontroller.remove_supplier(supplier)
     if (not success_flag):
-        flash("Error, you cannot delete the supplier " + supplier.get_UID(), "error")
+        flash("Error, you cannot delete the supplier " + supplier.get_UID() , "error")
     else:
-        flash("The supplier" + supplier.get_UID +  " has been deleted", "success")
+        flash("The supplier" + supplier.get_UID() +  " has been deleted", "success")
+    return redirect(url_for("admin_pages.list_suppliers"))
 
 
 

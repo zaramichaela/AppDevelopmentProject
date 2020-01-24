@@ -6,7 +6,7 @@
 <!--this macro prints sales item in a table format-->
 {% macro render_item_table(i) %}
         <td>
-            <img src='/{{i.get_image_url()}}' class="img600"/>
+            <center><img src='/{{i.get_image_url()}}' class="img600"/></center>
         </td>
         <td>
             {{i.get_UID()}}
@@ -15,10 +15,16 @@
             {{i.get_name()}}
         </td>
         <td>
+            {{i.get_category()}}
+        </td>
+        <td>
             {{i.get_description()}}
         </td>
         <td>
             {{i.get_price()}}
+        </td>
+        <td>
+            {{i.get_discount()}}
         </td>
         <td>
             {{i.get_stocks()}}
@@ -41,7 +47,7 @@
 
 {% macro render_package_table(i) %}
         <td>
-           <img src='/{{i.get_image_url()}}' class="img600"/>
+          <center> <img src='/{{i.get_image_url()}}' class="img600"/></center>
         </td>
         <td>
             {{i.get_UID()}}
@@ -81,7 +87,7 @@
 
 {% macro render_services_table(i) %}
         <td>
-           <img src='/{{i.get_image_url()}}' class="img600" />
+           <center><img src='/{{i.get_image_url()}}' class="img600" /></center>
         </td>
 
         <td>

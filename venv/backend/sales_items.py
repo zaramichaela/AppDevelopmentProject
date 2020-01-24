@@ -21,7 +21,7 @@ class sales_items(sales_objects):
         return self.__category
 
     def set_category(self, category):
-        self.category = category
+        self.__category = category
 
     def display_html(self):
         html = "testing"

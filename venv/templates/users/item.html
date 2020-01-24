@@ -12,6 +12,22 @@
 
 
     <section class="ftco-section bg-light">
+		{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {%if category =="success"%}
+        <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+  {{ message }}
+    </div>
+{%endif%}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
 <div class="container-fluid" style="padding-bottom:200px">
 
 	<div class="row">
@@ -34,6 +50,7 @@
 				<h3>Available Stocks: <p>{{ item.get_stocks() }}</p> </h3>
 				<div class="col-md-1"></div>
 				<h3>Price:
+					<p class="price"><span class="mr-2 price-dc" style="text-decoration: line-through;">${{ item.price_before_discount() }}</span><span class="price-sale">${{item.price_after_discount()}}</span></p></h3>
 					<p class="price"><span class="mr-2 price-dc" style="text-decoration: line-through;">${{ item.price_before_discount() }}</span><span class="price-sale">${{item.price_after_discount()}}</span></p></h3>
 			</div>
 <			<div class="row">

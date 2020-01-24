@@ -18,7 +18,7 @@ Edit Supplier's Details
         <div class="alert alert-danger" role="alert">
   {{ message }}
     </div>
-{%endif%}
+{% endif %}
     {% endfor %}
   {% endif %}
 {% endwith %}
@@ -36,7 +36,7 @@ Edit Supplier's Details
       <dl>
     {{ render_field(form.UID, class='form-control', placeholder='e.g. 123') }}
     {{ render_field(form.name, class='form-control', placeholder='e.g. Tan Wei Ming') }}
-    {{ render_field(form.address, class='form-control, placeholder='e.g. 123 Happy Street'') }}
+    {{ render_field(form.address, class='form-control', placeholder='e.g. 123 Happy Street') }}
     {{ render_field(form.product, class='form-control', placeholder='e.g. Nin Jiom') }}
     {{ render_field(form.phone_num, class='form-control', placeholder='e.g. 61234567') }}
     {{ render_field(form.price, class='form-control', placeholder='e.g. 20.00') }}
@@ -45,4 +45,4 @@ Edit Supplier's Details
 </form>
     </div>
 </div>
-{%endblock %}
+{% endblock %}

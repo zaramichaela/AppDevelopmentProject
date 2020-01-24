@@ -43,6 +43,7 @@ class BetterDecimalField(DecimalField):
 class new_sales_item(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200) ,DataRequired()])
+    category = StringField("Category: ", validators=[validators.Length(min=3, max=30) ,DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=3000) ,DataRequired()])
     price = BetterDecimalField("Actual Price: ", validators=[DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
@@ -87,6 +88,7 @@ class coupon_form(FlaskForm):
 
 class edit_sales_item(FlaskForm):
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200) ,DataRequired()])
+    category = StringField("Category: ", validators=[validators.Length(min=3, max=30) ,DataRequired()])
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=3000) ,DataRequired()])
     price = BetterDecimalField("Actual Price: ", validators=[DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images,'Image only!')])
@@ -116,15 +118,8 @@ class edit_service_form(FlaskForm):
     discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
     submit = SubmitField()
 
-class coupon_form(FlaskForm):
-    couponcode = StringField("Coupon Code: ", validators=[validators.Length(min=5, max=10),DataRequired()])
-    percentage = IntegerField("Discount Percentage (%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
-    discountlimit = BetterDecimalField("Maximum amount of discount ($): ", validators=[validators.NumberRange(min=0.1),DataRequired(message='You need to input a number!')])
-    minimumspent = IntegerField("Minimum spending ($): ", validators=[validators.NumberRange(min=1, max=2000),DataRequired(message='You need to input a number!')])
-    expiredate = DateField("Expiry Date (DD/MM/YYYY): ",  format='%d/%m/%Y', validators=[DataRequired()])
-    submit = SubmitField()
-
 class edit_coupon_form(FlaskForm):
+    couponcode = StringField("Coupon Code: ", validators=[validators.Length(min=5, max=10),DataRequired()])
     percentage = IntegerField("Discount Percentage (%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
     discountlimit = BetterDecimalField("Maximum amount of discount ($): ", validators=[validators.NumberRange(min=0.1),DataRequired(message='You need to input a number!')])
     minimumspent = IntegerField("Minimum spending ($): ", validators=[validators.NumberRange(min=1, max=2000),DataRequired(message='You need to input a number!')])

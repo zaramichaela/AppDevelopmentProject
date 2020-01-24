@@ -18,6 +18,10 @@ class Coupon:
     def set_couponcode(self, couponcode):
         self.__couponcode = couponcode
 
+
+    def get_couponcode(self):
+        return self.__couponcode
+
     def set_minimumspent(self, minimumspent):
         self.__minimumspent = minimumspent
 
@@ -35,7 +39,7 @@ class Coupon:
 
     #check date expires
     def check_validity(self):
-        if(datetime.date.today() > self.expiredate):
+        if(datetime.date.today() > self.__expiredate):
             return False
         return True
 
@@ -43,11 +47,9 @@ class Coupon:
     #return discount amount
     #return discount limit if over the limit
     def get_discount(self, price):
-        if(not self.__check_validity):
-            return 0
         try:
-            discount = price/100 * self.percentage
-            if(discount > self_discountlimit):
+            discount = price/100 * self.__percentage
+            if(discount > self.__discountlimit):
                 return self.__discountlimit
             return discount
         except:
