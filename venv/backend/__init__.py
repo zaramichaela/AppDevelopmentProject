@@ -8,6 +8,7 @@ from login.forms import customer_registration
 from login.user_account import user_account
 
 
+
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
 login = LoginManager(app)
@@ -74,7 +75,8 @@ def cart():
     items = session.get("cart")
     cart_list = []
     code = ''
-    discount = ''
+    discount = 0.00
+    total_amount = 0
     if(items):
         total_price = 0
         if request.method == 'POST' and request.form.get('quantity'):
@@ -95,6 +97,7 @@ def cart():
                 cart_item['total'] = int(i['quantity']) * cart_item['item'].price_after_discount()
                 cart_list.append(cart_item)
                 total_price = total_price + cart_item['total']
+                total_amount = total_price
         if request.method == 'POST' and request.form.get('code'):
             #this part is when coupon code is inputted, it will check and update if it is valid by how much you save
             code = request.form.get('code')
@@ -106,10 +109,11 @@ def cart():
                     flash("Coupon code has expired, please try another code.", "nocoupon")
             else:
                 flash("Coupon does not exists.", "nocoupon")
-        total_amount = total_price - discount
+        if discount:
+            total_amount = float(total_price) - float(discount)
         return render_template('users/cart.html', cart_items=cart_list, total_price=total_price, discount=discount, code=code, total_amount=total_amount)
     else:
-        return render_template('users/cart.html', cart_items=[])
+        return render_template('users/cart.html', cart_items=[],  total_price=0.00, discount=discount, code=code, total_amount=total_amount)
 
 
 # @app.route('/cart/coupon/<couponcode>/<price>')
@@ -131,6 +135,9 @@ def about():
 
 @app.route('/checkout')
 def checkout():
+    items = session.get("cart")
+    if(items):
+        
     return render_template('checkout.html')
 
 @app.route('/contact')

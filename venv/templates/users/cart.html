@@ -137,6 +137,7 @@
     					<h3>Cart Totals</h3>
     					<p class="d-flex">
     						<span>Subtotal</span>
+							<span>${{'%0.2f'|format(total_price|float)}}</span>
     						<span>${{total_price}}</span>
     					</p>
 						<form method="POST" >
@@ -150,15 +151,15 @@
 							</form>
               <p class="d-flex">
     						<span>Total Discount</span>
-    						<span id="discount">${{discount}}</span>
+    						<span id="discount">${{'%0.2f'|format(discount|float)}}</span>
     					</p>
     					<hr>
     					<p class="d-flex total-price">
     						<span><b>Total</b></span>
-    						<span>${{total_amount}}</span>
+							<span>${{'%0.2f'|format(total_amount|float)}}</span>
     					</p>
     				</div>
-    				<p class="text-center"><a href="{{url_for('checkout')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+    				<p class="text-center"><a  href="{{url_for('checkout')}}" %} class="btn btn-primary py-3 px-4 {% if cart_items %} disabled {% endif %}">Proceed to Checkout</a></p>
     			</div>
     		</div>
 			</div>

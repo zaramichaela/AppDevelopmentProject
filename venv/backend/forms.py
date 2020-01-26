@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,BooleanField,SubmitField,DecimalField,TextAreaField,IntegerField,DateField, validators, PasswordField,SelectField
 from flask_wtf.file import FileField, FileRequired,FileAllowed
-from wtforms.validators import DataRequired,ValidationError
+from wtforms.validators import DataRequired,ValidationError,input_required
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 from backend.settings import suppliercontroller, itemcontroller
 import decimal
@@ -48,7 +48,7 @@ class new_sales_item(FlaskForm):
     price = BetterDecimalField("Actual Price: ", validators=[DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
     stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
-    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
+    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
 
 #form to create a new package item
@@ -60,7 +60,7 @@ class new_package(FlaskForm):
     expiry_duration = IntegerField("Valid for (days):", validators=[DataRequired(message='You need to input a number!')])
     sessions = IntegerField("Number of Sessions:", validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
-    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
+    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
 
 
@@ -71,7 +71,7 @@ class new_service(FlaskForm):
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=2000) ,DataRequired()])
     price = BetterDecimalField("Actual Price: ", validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('No file was selected')])
-    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
+    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
 
 
@@ -93,7 +93,7 @@ class edit_sales_item(FlaskForm):
     price = BetterDecimalField("Actual Price: ", validators=[DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images,'Image only!')])
     stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
-    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
+    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100),DataRequired(message='You need to input a number!')])
     submit = SubmitField()
 
 
@@ -104,7 +104,7 @@ class edit_package_form(FlaskForm):
     price = BetterDecimalField("Actual Price: ", validators=[DataRequired(message='You need to input a number!')])
     expiry_duration = IntegerField("Valid for (days):", validators=[DataRequired(message='You need to input a number!')])
     sessions = IntegerField("Number of Sessions:", validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
-    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
+    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100),DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images, 'Image only!')])
     submit = SubmitField()
 
@@ -115,7 +115,7 @@ class edit_service_form(FlaskForm):
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=2000), DataRequired()])
     price = BetterDecimalField("Actual Price: ", validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!')])
-    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=1, max=100),DataRequired(message='You need to input a number!')])
+    discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100),DataRequired(message='You need to input a number!')])
     submit = SubmitField()
 
 class edit_coupon_form(FlaskForm):
