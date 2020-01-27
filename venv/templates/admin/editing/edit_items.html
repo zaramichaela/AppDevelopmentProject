@@ -37,7 +37,7 @@ Include things like manufacture date, expiry date and allergen information.") }}
     {{ render_field(form.discount, class='form-control', placeholder="e.g. 10") }}
     {{ render_field(form.stocks, class='form-control', placeholder="e.g. 100") }}
     {{ render_field(form.image, class='form-control', onchange="preview_image(event)") }}
-          <center><br><img id="output_image" src="static/uploads/items/{{item.get_UID()}}"/><br></center>
+          <center><br><img id="output_image" src="/static/uploads/items/{{item.get_UID()}}"/><br></center>
           <small>If no new image is uploaded, the old image will be used.</small>
           <p></p>
      {{form.submit(class="btn btn-primary")}}

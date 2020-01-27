@@ -25,9 +25,12 @@ class sales_objects(object):
         return self.__discount
 
     def set_discount(self, discount):
-        self.discount = discount
+        self.__discount = discount
 
-
+    def discounted_flag(self):
+        if self.__discount == 0:
+            return False
+        return True
 
     def price_before_discount(self):
         return self.__price

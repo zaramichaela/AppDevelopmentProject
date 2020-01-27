@@ -4,6 +4,7 @@ from backend.sales_items import *
 from backend.sales_entry import *
 from backend.sales_services import *
 from backend.sales_package import *
+from backend.sales_receipt import *
 
 import jsons
 import pickle
@@ -97,7 +98,16 @@ class sales_factory:
             s.close()
         return items
 
-
+    #return all packages from package database
+    def get_all_receipt_db(self):
+        items = []
+        s = shelve.open(settings.ORDER_DB)
+        try:
+            for key in s:
+                items.append(self.deserialize(s[key]))
+        finally:
+            s.close()
+        return items
 
     #get a item with the specific UID
     def get_items(self, UID):

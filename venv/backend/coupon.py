@@ -47,6 +47,8 @@ class Coupon:
     #return discount amount
     #return discount limit if over the limit
     def get_discount(self, price):
+        if(price < self.__minimumspent):
+            return 0
         try:
             discount = price/100 * self.__percentage
             if(discount > self.__discountlimit):

@@ -51,14 +51,14 @@
 				<div class="col-md-1"></div>
 				<h3>Price:
 <!--					<p class="price"><span class="mr-2 price-dc" style="text-decoration: line-through;">${{ item.price_before_discount() }}</span><span class="price-sale">${{item.price_after_discount()}}</span></p></h3>-->
-					<p class="price"><span class="mr-2 price-dc" style="text-decoration: line-through;">${{ item.price_before_discount() }}</span><span class="price-sale">${{item.price_after_discount()}}</span></p></h3>
+					<p class="price">{% if item.discounted_flag() %}<span class="mr-2 price-dc" style="text-decoration: line-through;">{% endif %}${{ item.price_before_discount() }}{% if item.discounted_flag() %}</span><span class="price-sale">${{item.price_after_discount()}}</span>{% endif %}</p></h3>
 			</div>
 <			<div class="row">
 				<div class="col-md-6"></div>
 				<div class="col-md-4">
 				<form method="POST" action="{{url_for('add_item_to_cart', itemuid=item.get_UID())}}">
 						<label>Quantity:</label>
-						<input type="number" name="quantity" id="quantity" required value="1"/>
+						<input type="number" name="quantity" id="quantity" required value="1" min="1"/>
 						<button class="btn btn-success">Add to Cart </button>
 						</form>
 				</div>

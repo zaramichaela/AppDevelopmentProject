@@ -21,7 +21,7 @@
   {% endif %}
 {% endwith %}
 
-				{%block pagetitle %}Cart{% endblock %}
+				{%block pagetitle %}Receipt # receipt.get_UID(){% endblock %}
 
 				<div class="row">
     			<div class="col-md-12 ftco-animate">
@@ -29,7 +29,7 @@
 	    				<table class="table">
 						    <thead class="thead-primary">
 						      <tr class="text-center">
-						        <th>Delete Item</th>
+
 						        <th>&nbsp;</th>
 						        <th>Product</th>
 						        <th>Price</th>
@@ -49,16 +49,6 @@
     		</div>
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-					<script type="text/javascript">
-								$(document).ready(function(){
-								   $("#quantity").change(function() {
-     								this.form.submit();
-									});
-									$("#code").change(function() {
-     								this.form.submit();
-									});
-								});
-								</script>
 
     		<div class="row justify-content-start">
     			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
@@ -88,7 +78,6 @@
 							<span>${{'%0.2f'|format(total_amount|float)}}</span>
     					</p>
     				</div>
-    				<p class="text-center"><a  href="{{url_for('checkout')}}"  class="btn btn-primary py-3 px-4 {% if not cart_items %} disabled {% endif %}">Proceed to Checkout</a></p>
     			</div>
     		</div>
 			</div>

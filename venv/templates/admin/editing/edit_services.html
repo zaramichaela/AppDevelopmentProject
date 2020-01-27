@@ -37,7 +37,7 @@ editing service #{{item.get_UID()}} | K's TCM Administration
     {{ render_field(form.price, class='form-control', placeholder="e.g. 20.00" ) }}
     {{ render_field(form.discount, class='form-control', placeholder="e.g. 10") }}
     {{ render_field(form.image, class='form-control', onchange="preview_image(event)") }}
-          <center><br><img id="output_image"/><br></center>
+          <center><br><img id="output_image" src="/static/uploads/services/{{item.get_UID()}}"/><br></center>
           <small>If no new image is uploaded, the old image will be used.</small>
           <p></p>
      {{form.submit(class="btn btn-primary")}}

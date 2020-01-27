@@ -1,6 +1,11 @@
 from backend.sales_factory import *
 from backend.coupon_factory import *
+from backend.sales_receipt import *
+from backend.sales_entry import *
+
 import os
+import uuid
+
 
 sfactory = sales_factory()
 cfactory = coupon_factory()
@@ -15,6 +20,7 @@ class items_controller:
         self.__all_items = sfactory.get_all_items_db()
         self.__all_packages = sfactory.get_all_packages_db()
         self.__all_services = sfactory.get_all_services_db()
+        self.__all_receipt = sfactory.get_all_receipt_db()
 
 
     def get_coupon_by_UID(self, coupon_UID):
@@ -59,6 +65,13 @@ class items_controller:
     def get_suppliers_by_UID(self, UID):
         #check and return 1 item finding via suppliers_UID. if more than 1, return None.
         for i in self.__all_suppliers:
+            if(i.get_UID() == UID):
+                return i
+        return None
+
+    def get_receipt_by_UID(self, UID):
+        #check and return 1 item finding via suppliers_UID. if more than 1, return None.
+        for i in self.__all_receipt:
             if(i.get_UID() == UID):
                 return i
         return None
@@ -180,3 +193,26 @@ class items_controller:
         else:
             flash("Error, item with the UID " + itemuid +" not available", "error")
             return False
+
+
+######################################
+#for buying items
+    def checkout_items_users(self, object_lists, coupon, users_details):
+        sales_list = []
+        subtotal_price = 0
+        sales_rept = None
+        for i in object_lists:
+            #this is the getting of the item object, and calculating total price for each item * quantity.
+            item_obj = self.get_item_by_UID(i['itemuid'])
+            if(item_obj):
+                quantity = i['quantity']
+                entry = sales_entry(item_obj, quantity)
+                sales_list.append(entry)
+                subtotal_price = subtotal_price + entry.get_total_price()
+        if(coupon):
+            total_amount = subtotal_price - coupon.get_discount(subtotal_price)
+            sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, total_amount,coupon, users_details)
+        sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, subtotal_price,None, users_details)
+        sales_rept.save()
+        print(sales_rept)
+        return sales_rept

@@ -6,7 +6,8 @@ from backend.settings import *
 from flask_login import LoginManager
 from login.forms import customer_registration
 from login.user_account import user_account
-
+from backend.forms import checkout_form
+from backend.user_details import *
 
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
@@ -52,15 +53,18 @@ def add_item_to_cart(itemuid):
     flag = False
     for i in session['cart']:
         if(itemuid == i['itemuid']):
-            quantity = request.form['quantity']
-            i['quantity'] += quantity
+            quantity = int(request.form['quantity'])
+            i['quantity'] += (quantity)
+            if(i['quantity'] > itemcontroller.get_item_by_UID(itemuid).get_stocks()):
+                flash("Error, item quantity cannot exceed amount of stocks.", "error")
+
             flag = True
-            flash("item already exists in cart, increase quantity by " + quantity, "success")
+            flash("item already exists in cart, increase quantity by " +  str(quantity), "success")
             break
     if(not flag):
         appenditem = dict()
         appenditem['itemuid'] = itemuid
-        quantity = request.form['quantity']
+        quantity = int(request.form['quantity'])
         if(int(quantity) <= item.get_stocks()):
             appenditem['quantity'] = quantity
             session['cart'].append(appenditem)
@@ -76,18 +80,25 @@ def cart():
     cart_list = []
     code = ''
     discount = 0.00
-    total_amount = 0
+    total_amount = 0 # every item add together - discount
     if(items):
-        total_price = 0
+        subtotal_price = 0 #all items
         if request.method == 'POST' and request.form.get('quantity'):
             #get value from the individual form of the uid and quantity
             #when quantity is change, it will update the session item quantity
-            quantity_f = request.form['quantity']
+            quantity_f = int(request.form['quantity'])
             itemuid_f = request.form['UID']
+
             for i in items:
                 #find the item and update the quantity with the updated value
                 if(itemuid_f ==  i['itemuid']):
-                    i['quantity'] = quantity_f
+                    if((quantity_f) == 0):
+                        items.remove(i)
+                    stocks = itemcontroller.get_item_by_UID(i['itemuid']).get_stocks()
+                    if(quantity_f >  stocks):
+                        flash("quantity exceeds stocks available.", "error")
+                    else:
+                        i['quantity'] = (quantity_f)
         for i in items:
             #this is the getting of the item object, and calculating total price for each item * quantity.
             cart_item = dict()
@@ -96,36 +107,36 @@ def cart():
                 cart_item['quantity'] = i['quantity']
                 cart_item['total'] = int(i['quantity']) * cart_item['item'].price_after_discount()
                 cart_list.append(cart_item)
-                total_price = total_price + cart_item['total']
-                total_amount = total_price
+                subtotal_price = subtotal_price + cart_item['total']
+                total_amount = subtotal_price
+
         if request.method == 'POST' and request.form.get('code'):
             #this part is when coupon code is inputted, it will check and update if it is valid by how much you save
             code = request.form.get('code')
-            coupon =  itemcontroller.get_coupon_by_code(code)
+            session['code'] = code
+            coupon = itemcontroller.get_coupon_by_code(code)
             if coupon:
                 if coupon.check_validity():
-                    discount = coupon.get_discount(total_price)
+                    discount = coupon.get_discount(subtotal_price)
+                    session['discount'] = discount
                 else:
                     flash("Coupon code has expired, please try another code.", "nocoupon")
             else:
                 flash("Coupon does not exists.", "nocoupon")
         if discount:
-            total_amount = float(total_price) - float(discount)
-        return render_template('users/cart.html', cart_items=cart_list, total_price=total_price, discount=discount, code=code, total_amount=total_amount)
+            total_amount = float(subtotal_price) - float(discount)
+        session['total_amount'] = total_amount
+        session['subtotal_price'] = subtotal_price
+        return render_template('users/cart.html', cart_items=cart_list, subtotal_price=subtotal_price, discount=discount, code=code, total_amount=total_amount)
     else:
-        return render_template('users/cart.html', cart_items=[],  total_price=0.00, discount=discount, code=code, total_amount=total_amount)
+        return render_template('users/cart.html', cart_items=[],  subtotal_price=0.00, discount=discount, code=code, total_amount=total_amount)
 
 
-# @app.route('/cart/coupon/<couponcode>/<price>')
-# def coupon_check(couponcode, price):
-#     coupon =  itemcontroller.get_coupon_by_code(couponcode)
-#     discount = coupon.get_discount(price)
-#     print(discount)
-#     return discount
 
 @app.route('/cart/clear')
 def del_cart():
     session.pop('cart', None)
+
     return redirect(url_for("cart"))
 
 
@@ -133,12 +144,37 @@ def del_cart():
 def about():
     return render_template('about.html')
 
-@app.route('/checkout')
+@app.route('/checkout' , methods=['POST', 'GET'])
 def checkout():
+    user = session.get('logged_in_user')
+    # if(not user):
+    #     flash("Login or create an account first.", "error")
+    #     return redirect(url_for('login'))
+    form = checkout_form()
     items = session.get("cart")
+    discount = session.get('discount')
+    subtotal_price = session.get('subtotal_price')
+    total_amount = session.get('total_amount')
+    code = session.get('code')
+    voucher = itemcontroller.get_coupon_by_UID(code)
     if(items):
-        
-    return render_template('checkout.html')
+        if form.validate() and request.method == "POST":
+            user = create_user_details(form.data,user)
+            receipt = itemcontroller.checkout_items_users(items, voucher, user)
+            return redirect(url_for("show_receipt", ruid=receipt.get_UID()))
+    else:
+        flash("You have nothing in your cart.", "error")
+        return redirect(url_for("cart"))
+    return render_template('users/checkout.html', form=form, subtotal_price=subtotal_price, total_amount=total_amount, discount=discount)
+
+
+@app.route('/receipt/<ruid>', methods=['GET'])
+def show_receipt(ruid):
+    item = itemcontroller.get_receipt(ruid)
+    if not item:
+        abort(404)
+    return render_template("users/receipt.html", receipt=item)
+
 
 @app.route('/contact')
 def contact():
@@ -192,52 +228,12 @@ def logout():
 
 
 
-@app.route('/add/items/', methods= ['GET','POST'])
-def add_shop_item():
-    context = {"message": ""}
-    form = create_sales_item()
-
-    if request.method == 'POST' and form.validate():
-        f = form.image.data
-        filename = secure_filename(f.filename)
-        f.save('../../uploads/' + filename)
-        # form["image_url"] = filename
-        update_form = form.data.copy()
-        update_form["image_url"] = filename
-
-        item = factory.create_items(update_form)
-        print(item.save())
-        context ={"message":"You have created a new item"}
-    else:
-        print("failed")
-        context = {"message": "You did not manage to create the item"}
-    return render_template('create_sales.html', form=form, message=context)
 
 
-@app.route('/list/items')
-def list_items():
-    sales = factory.get_all_items()
-    return render_template('list_sales_items.html', sales=sales)
 
-@app.route('/AccountCreation', methods = ['GET', 'POST'])
-def createAccount():
-    createAccountForm = CreateAccountForm(request.form)
-    if request.method == 'POST' and createAccountForm.validate():
-        AccountDict = {}
-        db = shelve.open('storage.db', 'c')
 
-        try:
-            AccountDict = db['Users']
-        except:
-            print("Error in retrieving Users from storage.db")
 
-        account = Account.Account(createAccountForm.firstName.data, createAccountForm.lastName.data, createAccountForm.gender.data)
-        AccountDict[account.account.get_userID()] = account
-        db['Account'] = AccountDict
-        db.close()
 
-        return redirect(url_for('RetrieveAccount'))
-    return render_template('AccountCreation.html', form=createAccountForm)
 
 @app.route('/RetrieveAccount')
 def retrieveAccount():

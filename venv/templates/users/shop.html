@@ -14,10 +14,12 @@
     		<div class="row">
     			<div class="col-md-8 col-lg-10 order-md-last">
     				<div class="row">
-							  {% from "users/_shophelper.html" import list_shop_item %}
+							  {% from "users/_shophelper.html" import list_shop_item, list_shop_item_disabled %}
 								{%for i in items %}
 
+                                    {% if i.get_available_flag() %}
 									{{list_shop_item(i)}}
+                                    {% endif %}
 								{% endfor %}
 		    		</div>
 		    		<!-- <div class="row mt-5">
