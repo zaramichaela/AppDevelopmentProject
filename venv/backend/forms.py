@@ -6,6 +6,8 @@ from flask_uploads import UploadSet, IMAGES,configure_uploads
 from backend.settings import suppliercontroller, itemcontroller
 import decimal
 import re
+from wtforms import Form, StringField, RadioField, SelectField,TextAreaField, validators
+from wtforms.fields.html5 import EmailField
 
 
 images = UploadSet('images', IMAGES)
@@ -169,3 +171,21 @@ class checkout_form(FlaskForm):
     exp_year = SelectField(" Expiry Year *: ", validators=[validators.Length(min=3, max=200), DataRequired()], choices=[('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023'), ('2024', '2024'), ('2025', '2025'), ('2026', '2026')])
     CVV = StringField(" CVV / CSV *: ", validators=[validators.Length(min=3, max=4), DataRequired()])
     submit = SubmitField()
+
+
+
+class CreateFeedbackForm(FlaskForm):
+    firstName = StringField('Name', [validators.Regexp('^[a-zA-Z]+$', message="Name must cotain only alphabets"),validators.Length (min = 1, max = 150), validators.DataRequired()])
+    #lastName = StringField('Last Name', [validators.Length (min = 1, max = 150), validators.DataRequired()])
+    category = RadioField('Category', choices = [('G', "General"), ("P", "Product"), ("T", 'Treatment')], default= "G")
+    feedback = TextAreaField('Feedback', [validators.DataRequired()])
+    status = SelectField('Status(**FOR ADMIN USE**)', choices = [('P', 'PENDING'), ('C', 'CLOSED')], default= 'P')
+    email = EmailField('Email', [validators.Email(), validators.DataRequired()])
+
+class UpdateFeedbackForm(FlaskForm):
+    firstName = StringField('Name', [validators.Length (min = 1, max = 150), validators.Optional()])
+    #lastName = StringField('Last Name', [validators.Length (min = 1, max = 150), validators.DataRequired()])
+    category = RadioField('Category', choices = [('G', "General"), ("P", "Product"), ("T", 'Treatment')], default= "G")
+    feedback = TextAreaField('Feedback', [validators.Optional()])
+    status = SelectField('Status(**FOR ADMIN USE**)', choices = [('P', 'PENDING'), ('C', 'CLOSED')], default= 'P')
+    email = EmailField('Email', [validators.Email(), validators.Optional()])

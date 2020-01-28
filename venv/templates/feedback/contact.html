@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+{% block title %} Feedback {% endblock %}
+
+{% block content %}
+{% from "includes/_formhelper.html" import render_field %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -124,29 +130,30 @@
         <div class="row block-9">
           <div class="col-md-6 order-md-last d-flex">
             <form action="#" class="bg-white p-5 contact-form">
+<!--              <div class="form-group">-->
+<!--                <p>Please select your preferred salutation</p>-->
+<!--                <input type="radio" name="gender" value="mr">  Mr<br>-->
+<!--                <input type="radio" name="gender" value="mrs">  Mrs<br>-->
+<!--                <input type="radio" name="gender" value="ms">  Ms<br>-->
+<!--                <input type="radio" name="gender" value="dr">  Dr<br>-->
+<!--                <input type="radio" name="reason" value="">  Other <input type="text" name="other_reason"/>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​              </div>-->
               <div class="form-group">
-                <p>Please select your preferred salutation</p>
-                <input type="radio" name="gender" value="mr">  Mr<br>
-                <input type="radio" name="gender" value="mrs">  Mrs<br>
-                <input type="radio" name="gender" value="ms">  Ms<br>
-                <input type="radio" name="gender" value="dr">  Dr<br>
-                <input type="radio" name="reason" value="">  Other <input type="text" name="other_reason"/>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Name">
+                {{ render_field(form.firstName, class="form-control") }}
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email">
+                 {{ render_field(form.email, class="form-control") }}
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Subject">
+                  {{ render_field(form.category, class="form-control") }}
               </div>
               <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                    {{ render_field(form.feedback, class="form-control") }}
               </div>
               <div class="form-group">
                 <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
               </div>
             </form>
+              {% endblock %}
 
           </div>
 

@@ -1,6 +1,7 @@
 from flask import url_for, redirect, render_template, Flask, request, flash, session,abort
 from flask_uploads import UploadSet, IMAGES,configure_uploads
-# import shelve
+import shelve, Feedback
+from datetime import date
 from backend.admin_url import admin_pages
 from backend.settings import *
 from flask_login import LoginManager
@@ -8,6 +9,7 @@ from login.forms import customer_registration
 from login.user_account import user_account
 from backend.forms import checkout_form
 from backend.user_details import *
+from Forms1 import CreateFeedbackForm, UpdateFeedbackForm
 
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
@@ -176,9 +178,6 @@ def show_receipt(ruid):
     return render_template("users/receipt.html", receipt=item)
 
 
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
 
 @app.route('/feedback')
 def feedback():
@@ -300,6 +299,27 @@ def not_found(e):
 def change_pass():
 
     return render_template("base.html")
+
+@app.route('/createFeedback', methods = ['GET', 'POST'])
+def createFeedback():
+    createFeedbackForm = CreateFeedbackForm(request.form)
+    if request.method == 'POST' and createFeedbackForm.validate():
+        usersDict = {}
+        db = shelve.open('storage.db', 'c')
+
+        try:
+            usersDict = db['Feedback']
+        except:
+            print("Error in retrieving Users from storage.db.")
+
+        feedback = Feedback.Feedback(createFeedbackForm.firstName.data, createFeedbackForm.email.data, createFeedbackForm.category.data, createFeedbackForm.feedback.data, createFeedbackForm.status.data, date= date.today())
+        usersDict[feedback.get_userID()] = feedback
+        db['Feedback'] = usersDict
+        db.close()
+
+        return redirect(url_for('retrieveFeedback'))
+    return render_template('feedback/contact.html', form = createFeedbackForm)
+
 
 
 
