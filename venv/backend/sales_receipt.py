@@ -50,7 +50,7 @@ class sales_receipt(object):
 
 
     def save(self):
-       s = shelve.open(settings.SALES_DB)
+       s = shelve.open(settings.USER_ORDER_DB)
        try:
             s[self.sales_UID] = self.serialize()
             return True

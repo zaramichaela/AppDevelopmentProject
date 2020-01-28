@@ -9,7 +9,6 @@
 						        	<h3>{{i.get_name()}}</h3>
 
 						        </td>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 						        <td class="price">${{i.price_after_discount()}}</td>
 								<script type="text/javascript">
 
@@ -23,7 +22,37 @@
 					          	</div>
 					          </td>
 
-						        <td class="total">${{total}}</td>
+						          <td class="total">${{'%0.2f'|format(total|float)}}</td>
+
 						      </tr><!-- END TR-->
 
 {% endmacro %}
+
+
+
+{% macro list_receipt_item(i) %}
+<tr class="text-center {%if i.get_available_flag()%} disabled {% endif %}">
+						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+
+						        <td class="image-prod"><div class="img" style="background-image:url({{  url_for('static', filename='uploads/items/'+i.get_UID()) }});"></div></td>
+
+						        <td class="product-name">
+						        	<h3>{{i.sales_object.get_name()}}</h3>
+
+						        </td>
+						        <td class="price">${{'%0.2f'|format(i.sales_object.price_after_discount()|float)}}</td>
+								<script type="text/javascript">
+
+								</script>
+						        <td class="quantity">
+									<div class="input-group mb-3">
+										{{i.get_quantity()}}
+					          	</div>
+					          </td>
+
+						        <td class="total">${{'%0.2f'|format(i.get_total_price()|float)}}</td>
+						      </tr><!-- END TR-->
+
+{% endmacro %}
+
+

@@ -214,5 +214,6 @@ class items_controller:
             sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, total_amount,coupon, users_details)
         sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, subtotal_price,None, users_details)
         sales_rept.save()
+        self.__all_receipt.append(sales_rept)
         print(sales_rept)
         return sales_rept

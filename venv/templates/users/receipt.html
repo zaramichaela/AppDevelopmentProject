@@ -38,9 +38,9 @@
 						      </tr>
 						    </thead>
 						    <tbody>
-							{% from "users/_cart_helper.html" import list_cart_item %}
-							{% for i in cart_items %}
-							{{ list_cart_item(i["item"], i["quantity"], i["total"]) }}
+							{% from "users/_cart_helper.html" import list_receipt_item %}
+							{% for i in receipt.sales_entries %}
+							{{ list_receipt_item(i) }}
 							{% endfor %}
 						    </tbody>
 						  </table>
@@ -83,41 +83,6 @@
 			</div>
 		</section>
 
-  <script>
-		$(document).ready(function(){
 
-		var quantity=0;
-		   $('.quantity-right-plus').click(function(e){
-
-		        // Stop acting like a button
-		        e.preventDefault();
-		        // Get the field name
-		        var quantity = parseInt($('#quantity').val());
-
-		        // If is not undefined
-
-		            $('#quantity').val(quantity + 1);
-
-
-		            // Increment
-
-		    });
-
-		     $('.quantity-left-minus').click(function(e){
-		        // Stop acting like a button
-		        e.preventDefault();
-		        // Get the field name
-		        var quantity = parseInt($('#quantity').val());
-
-		        // If is not undefined
-
-		            // Increment
-		            if(quantity>0){
-		            $('#quantity').val(quantity - 1);
-		            }
-		    });
-
-		});
-	</script>
 
 {% endblock %}

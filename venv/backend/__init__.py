@@ -158,8 +158,8 @@ def checkout():
     code = session.get('code')
     voucher = itemcontroller.get_coupon_by_UID(code)
     if(items):
-        if form.validate() and request.method == "POST":
-            user = create_user_details(form.data,user)
+        if form.validate_on_submit() and request.method == "POST":
+            user = create_user_details(form.data, user)
             receipt = itemcontroller.checkout_items_users(items, voucher, user)
             return redirect(url_for("show_receipt", ruid=receipt.get_UID()))
     else:
@@ -170,7 +170,7 @@ def checkout():
 
 @app.route('/receipt/<ruid>', methods=['GET'])
 def show_receipt(ruid):
-    item = itemcontroller.get_receipt(ruid)
+    item = itemcontroller.get_receipt_by_UID(ruid)
     if not item:
         abort(404)
     return render_template("users/receipt.html", receipt=item)

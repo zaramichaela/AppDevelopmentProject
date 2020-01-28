@@ -101,7 +101,7 @@ class sales_factory:
     #return all packages from package database
     def get_all_receipt_db(self):
         items = []
-        s = shelve.open(settings.ORDER_DB)
+        s = shelve.open(settings.USER_ORDER_DB)
         try:
             for key in s:
                 items.append(self.deserialize(s[key]))

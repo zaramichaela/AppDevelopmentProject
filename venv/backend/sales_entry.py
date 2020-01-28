@@ -9,7 +9,8 @@ class sales_entry:
         self.quantity = quantity
         self.total_price = quantity * sales_object.price_after_discount()
 
-
+    def get_quantity(self):
+        return self.quantity
 
     def set_sales_object(self, sales_object):
         #list of items/service/package bought
