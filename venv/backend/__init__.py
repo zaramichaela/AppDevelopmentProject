@@ -9,7 +9,7 @@ from login.forms import customer_registration
 from login.user_account import user_account
 from backend.forms import checkout_form
 from backend.user_details import *
-# from Forms import CreateFeedbackForm, UpdateFeedbackForm
+from backend.forms import CreateFeedbackForm, UpdateFeedbackForm
 
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
@@ -39,6 +39,24 @@ def shop():
 
 @app.route('/contactus', methods=['GET'])
 def contact():
+    createFeedbackForm = CreateFeedbackForm(request.form)
+    if request.method == 'POST' and createFeedbackForm.validate():
+        usersDict = {}
+        db = shelve.open('storage.db', 'c')
+
+        try:
+            usersDict = db['Feedback']
+        except:
+            print("Error in retrieving Users from storage.db.")
+
+        feedback = Feedback.Feedback(createFeedbackForm.firstName.data, createFeedbackForm.email.data, createFeedbackForm.category.data, createFeedbackForm.feedback.data, createFeedbackForm.status.data, date= date.today())
+        usersDict[feedback.get_userID()] = feedback
+        db['Feedback'] = usersDict
+        db.close()
+    return render_template('feedback/contact.html', form = createFeedbackForm)
+
+@app.route('/receipt.html')
+def receipt():
     return render_template("users/receipt.html")
 
 @app.route('/shop/items/<itemuid>')
@@ -289,34 +307,6 @@ def not_found(e):
 # @app.route('/account/changepassword', methods = ['GET', 'POST'])
 # def change_pass():
 #     return render_template("base.html")
-
-
-@app.route('/createFeedback', methods = ['GET', 'POST'])
-def createFeedback():
-    createFeedbackForm = CreateFeedbackForm(request.form)
-    if request.method == 'POST' and createFeedbackForm.validate():
-        usersDict = {}
-        db = shelve.open('storage.db', 'c')
-
-        try:
-            usersDict = db['Feedback']
-        except:
-            print("Error in retrieving Users from storage.db.")
-
-        feedback = Feedback.Feedback(createFeedbackForm.firstName.data, createFeedbackForm.email.data, createFeedbackForm.category.data, createFeedbackForm.feedback.data, createFeedbackForm.status.data, date= date.today())
-        usersDict[feedback.get_userID()] = feedback
-        db['Feedback'] = usersDict
-        db.close()
-
-        return redirect(url_for('retrieveFeedback'))
-    return render_template('feedback/contact.html', form = createFeedbackForm)
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
