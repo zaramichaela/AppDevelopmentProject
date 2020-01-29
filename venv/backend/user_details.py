@@ -17,6 +17,9 @@ class user_details(object):
         self.user_login = user_login
 
 
+    def get_username(self):
+        return self.user_login
+
 def create_user_details(dict, user_acc):
     user_det = user_details(dict['full_name'],dict['country'],dict['street_addr'],dict['city'],dict['postal'],dict['phone'],dict['email'],
                          dict['card_name'],dict['credit_card'],dict['exp_month'],dict['exp_year'], dict['CVV'], user_acc)

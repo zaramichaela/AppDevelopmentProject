@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-
+{%block pagetitle %}Receipt # {{receipt.get_UID()}}{% endblock %}
  {% block body %}
     <section class="ftco-section ftco-cart">
 			<div class="container">
@@ -21,7 +21,7 @@
   {% endif %}
 {% endwith %}
 
-				{%block pagetitle %}Receipt # receipt.get_UID(){% endblock %}
+
 
 				<div class="row">
     			<div class="col-md-12 ftco-animate">
@@ -32,6 +32,7 @@
 
 						        <th>&nbsp;</th>
 						        <th>Product</th>
+								  <th>&nbsp;</th>
 						        <th>Price</th>
 						        <th>Quantity</th>
 						        <th>Total</th>
@@ -55,26 +56,28 @@
     					<h3>Cart Totals</h3>
     					<p class="d-flex">
     						<span>Subtotal</span>
-							<span>${{'%0.2f'|format(subtotal_price|float)}}</span>
+							<span>${{'%0.2f'|format(receipt.get_total()|float)}}</span>
 
     					</p>
 						<form method="POST" >
     					<p class="d-flex" >
 
     						<span>Coupon Code</span>
-
-    						<span ><input type="text" class="discount_voucher" id="code" name="code" value="{{code}}"/></span>
-
+							{% if receipt.get_coupon() %}
+    						<span >{{receipt.get_coupon().get_couponcode()}}</span>
+							{% else %}
+    						<span >NIL</span>
+							{% endif %}
     					</p>
 							</form>
               <p class="d-flex">
     						<span>Total Discount</span>
-    						<span id="discount">${{'%0.2f'|format(discount|float)}}</span>
+    						<span id="discount">${{'%0.2f'|format(receipt.get_discount()|float)}}</span>
     					</p>
     					<hr>
     					<p class="d-flex total-price">
     						<span><b>Total</b></span>
-							<span>${{'%0.2f'|format(total_amount|float)}}</span>
+							<span>${{'%0.2f'|format(receipt.get_total()|float)}}</span>
     					</p>
     				</div>
     			</div>

@@ -45,9 +45,11 @@ class sales_receipt(object):
     def set_total(self, total):
         self.total = total
 
-    def get_total(self):
+    def get_sub_total(self):
         return self.total
 
+    def get_total(self):
+        return self.total - self.get_discount(self.total)
 
     def save(self):
        s = shelve.open(settings.USER_ORDER_DB)

@@ -161,8 +161,12 @@ class items_controller:
         self.__all_services.append(service)
         return service
 
-
-
+    def get_all_receipt_by_name(self, username):
+        users_receipt = []
+        for i in self.__all_receipt:
+            if i.user.get_username() == username:
+                users_receipt.append(i)
+        return users_receipt
     def create_and_save_coupon(self, dict):
         #create and save coupon in database and current memory
         coupon = cfactory.create_coupon(dict)
@@ -210,7 +214,7 @@ class items_controller:
                 sales_list.append(entry)
                 subtotal_price = subtotal_price + entry.get_total_price()
         if(coupon):
-            total_amount = subtotal_price - coupon.get_discount(subtotal_price)
+            total_amount = subtotal_price
             sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, total_amount,coupon, users_details)
         sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, subtotal_price,None, users_details)
         sales_rept.save()
