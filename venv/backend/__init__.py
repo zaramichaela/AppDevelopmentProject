@@ -9,7 +9,7 @@ from login.forms import customer_registration
 from login.user_account import user_account
 from backend.forms import checkout_form
 from backend.user_details import *
-from Forms1 import CreateFeedbackForm, UpdateFeedbackForm
+# from Forms import CreateFeedbackForm, UpdateFeedbackForm
 
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
@@ -36,6 +36,10 @@ def home():
 def shop():
     sales_items = itemcontroller.get_all_sales_items()
     return render_template('users/shop.html', items = sales_items)
+
+@app.route('/contactus', methods=['GET'])
+def contact():
+    return render_template("users/receipt.html")
 
 @app.route('/shop/items/<itemuid>')
 def shop_item(itemuid):
@@ -138,7 +142,9 @@ def cart():
 @app.route('/cart/clear')
 def del_cart():
     session.pop('cart', None)
-
+    session.pop('discount', None)
+    session.pop('subtotal_price', None)
+    session.pop('total_amount', None)
     return redirect(url_for("cart"))
 
 
@@ -238,38 +244,6 @@ def logout():
 def retrieveAccount():
     accountDict = {}
 
-# @app.route('/cart')
-# def cart():
-#     usersDict = {}
-#     db = shelve.open('storage.db', 'r')
-#     usersDict = db['ShoppingCart']
-#     db.close()
-#
-#     accountList = []
-#     for key in accountDict:
-#         account = accountDict.get(key)
-#         accountList.append(user)
-#
-#     return render_template('RetrieveAccount.html', accountList = accountList, count =len(accountList))
-#
-#     usersList = []
-#    #create user object 1, store in variable u1
-#     u1 = ShoppingCart.ShoppingCart("Medicine1", "D11", 4.00, 1)
-#     usersList.append(u1)
-#    #create user object 2, store in variable u2
-#     u2 = ShoppingCart.ShoppingCart("Medicine2", "D12", 2.00, 3)
-#     usersList.append(u2)
-#     u3 = ShoppingCart.ShoppingCart("Medicine3", "D13", 1.00, 2)
-#     usersList.append(u3)
-#
-#     for key in usersDict:
-#         user = usersDict.get(key)
-#         usersList.append(user)
-#
-#     for u in userList:
-#         print(u.get_productName(), u.get_ID(), u.get_price(), u.get_quantity())
-#         print(u.computeTotalProduct())
-#     return render_template("cart.html", usersList=usersList, count=len(usersList))
 
 
 # To add custom error 404 page
