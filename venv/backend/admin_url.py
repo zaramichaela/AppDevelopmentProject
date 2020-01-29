@@ -639,3 +639,195 @@ def received_suppliers_order(orderid):
     suppliercontroller.add_supplier_order(item)
     flash("you have received the order.", "success")
     return redirect(url_for("admin_pages.list_suppliers_orders"))
+
+
+
+@admin_pages.route('/admin/retrieveFeedback')
+@authorize
+def retrieveFeedback():
+    usersDict = {}
+    db = shelve.open('feedstorage.db', 'r')
+    usersDict = db['Feedback']
+    db.close()
+
+    usersList = []
+    for key in usersDict:
+        user = usersDict.get(key)
+        usersList.append(user)
+
+    return render_template('/admin/feedback/retrieveFeedback.html', usersList = usersList, count = len(usersList))
+
+
+
+@admin_pages.route('/admin/deleteFeedback/<int:id>', methods=['POST'])
+@authorize
+def deleteFeedback(id):
+    usersDict = {}
+    db = shelve.open('feedstorage.db', 'w')
+    usersDict = db['Feedback']
+    usersDict.pop(id)
+    db['Feedback'] = usersDict
+    db.close()
+
+    return redirect(url_for('admin_pages.retrieveFeedback'))
+
+
+@admin_pages.route('/admin/updateFeedback/<int:id>/', methods = ['GET', 'POST'])
+@authorize
+def updateFeedback(id):
+    updateFeedbackForm = UpdateFeedbackForm(request.form)
+
+    if request.method == 'POST' and updateFeedbackForm.validate():
+        userDict = {}
+        print("GG")
+        db = shelve.open('feedstorage.db', 'w')
+        userDict = db['Feedback']
+
+        feedback = userDict.get(id)
+        feedback.set_status(updateFeedbackForm.status.data)
+
+        db['Feedback'] = userDict
+        db.close()
+
+        return redirect(url_for('admin_pages.retrieveFeedback'))
+    else:
+        userDict = {}
+        db = shelve.open('feedstorage.db', 'w')
+        userDict = db['Feedback']
+        db.close()
+
+        feedback = userDict.get(id)
+        updateFeedbackForm.firstName.data = feedback.get_firstName()
+        updateFeedbackForm.email.data = feedback.get_email()
+        updateFeedbackForm.category.data = feedback.get_category()
+        updateFeedbackForm.feedback.data = feedback.get_feedback()
+        updateFeedbackForm.status.data = feedback.get_status()
+
+        return render_template('/admin/feedback/updateFeedback.html', form = updateFeedbackForm)
+
+
+labels = []
+values = []
+colors = [
+    "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
+    "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
+    "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
+
+
+
+@admin_pages.route('/admin/feedback/stats')
+def stats():
+    db = shelve.open('feedstorage.db', 'r')
+    countDict = db['Feedback']
+    db.close()
+    for key in countDict:
+        count = countDict.get(key)
+        date = str(count.get_date())
+        datesplit = date.split('-')
+
+    TotalList = []
+    JanList = []
+    FebList = []
+    MarList = []
+    AprList = []
+    MayList = []
+    JunList = []
+    JulList = []
+    AugList = []
+    SepList = []
+    OctList = []
+    NovList = []
+    DecList = []
+    for key in countDict:
+        count = countDict.get(key)
+        date = str(count.get_date())
+        datesplit = date.split('-')
+        TotalList.append(count)
+
+        if datesplit[1] == '01':
+            JanList.append(count)
+        elif datesplit[1] == '02':
+            FebList.append(count)
+        elif datesplit[1] == '03':
+            MarList.append(count)
+        elif datesplit[1] == '04':
+            AprList.append(count)
+        elif datesplit[1] == '05':
+            MayList.append(count)
+        elif datesplit[1] == '06':
+            JunList.append(count)
+        elif datesplit[1] == '07':
+            JulList.append(count)
+        elif datesplit[1] == '08':
+            AugList.append(count)
+        elif datesplit[1] == '09':
+            SepList.append(count)
+        elif datesplit[1] == '10':
+            OctList.append(count)
+        elif datesplit[1] == '11':
+            NovList.append(count)
+        elif datesplit[1]:
+            DecList.append(count)
+
+    return render_template('admin/feedback/Stats.html', TotalList = TotalList, JanList = JanList, FebList = FebList, MarList = MarList, AprList = AprList, MayList = MayList, JunList = JunList, JulList = JulList, AugList = AugList, SepList = SepList, OctList = OctList, NovList = NovList, DecList = DecList,
+                           count = len(TotalList), jancount = len(JanList), febcount = len(FebList), marcount = len(MarList), aprcount = len(AprList), maycount = len(MayList), juncount = len(JunList), julcount = len(JulList), augcount = len(AugList), sepcount = len(SepList), octcount = len(OctList), novcount = len(NovList), deccount = len(DecList))
+
+
+
+@admin_pages.route('/admin/feedback/statgraph')
+def stats1():
+    bar_labels = labels
+    bar_values = values
+    db = shelve.open('feedstorage.db', 'r')
+    countDict = db['Feedback']
+    db.close()
+    for key in countDict:
+        count = countDict.get(key)
+        date = str(count.get_date())
+        datesplit = date.split('-')
+
+    TotalList = []
+    JanList = []
+    FebList = []
+    MarList = []
+    AprList = []
+    MayList = []
+    JunList = []
+    JulList = []
+    AugList = []
+    SepList = []
+    OctList = []
+    NovList = []
+    DecList = []
+    for key in countDict:
+        count = countDict.get(key)
+        date = str(count.get_date())
+        datesplit = date.split('-')
+        TotalList.append(count)
+
+        if datesplit[1] == '01':
+            JanList.append(count)
+        elif datesplit[1] == '02':
+            FebList.append(count)
+        elif datesplit[1] == '03':
+            MarList.append(count)
+        elif datesplit[1] == '04':
+            AprList.append(count)
+        elif datesplit[1] == '05':
+            MayList.append(count)
+        elif datesplit[1] == '06':
+            JunList.append(count)
+        elif datesplit[1] == '07':
+            JulList.append(count)
+        elif datesplit[1] == '08':
+            AugList.append(count)
+        elif datesplit[1] == '09':
+            SepList.append(count)
+        elif datesplit[1] == '10':
+            OctList.append(count)
+        elif datesplit[1] == '11':
+            NovList.append(count)
+        elif datesplit[1]:
+            DecList.append(count)
+    return render_template('admin/feedback/StatGraph.html', title = 'Feedback - Statistics(Graph)', max = 20, labels = bar_labels, values = bar_values, TotalList = TotalList, JanList = JanList, FebList = FebList, MarList = MarList, AprList = AprList, MayList = MayList, JunList = JunList, JulList = JulList, AugList = AugList, SepList = SepList, OctList = OctList, NovList = NovList, DecList = DecList,
+                           count = len(TotalList), jancount = len(JanList), febcount = len(FebList), marcount = len(MarList), aprcount = len(AprList), maycount = len(MayList), juncount = len(JunList), julcount = len(JulList), augcount = len(AugList), sepcount = len(SepList), octcount = len(OctList), novcount = len(NovList), deccount = len(DecList))

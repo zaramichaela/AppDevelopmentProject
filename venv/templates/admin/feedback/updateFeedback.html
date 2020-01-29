@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+{% block title %}Feedback{% endblock %}
+
+{% block body %}
+{% from "includes/_formHelper.html" import render_field %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/tables.js') }}"></script>
+
+
+<div class="tables">
+<h1 class="display-4">Update Feedback</h1>
+<form method="POST">
+
+ <fieldset disabled="disabled">
+   <div class="form-group">
+   {{ render_field(form.firstName, class="form-control") }}
+   </div>
+   <div class="form-group">
+   {{ render_field(form.email, class="form-control") }}
+   </div>
+   <div class="form-group">
+   {{ render_field(form.category, class="form-check") }}
+   </div>
+
+   <div id="prof">
+   <div class="form-group">
+   {{ render_field(form.feedback, class="form-control") }}
+   </div>
+   </div>
+ </fieldset>
+    {{ form.csrf_token }}
+    <div class = 'form-group'>
+          {{  render_field(form.status, class = "form-check") }}
+    </div>
+ <input type="submit" value="Submit" class="btn btn-primary"/>
+</form>
+</div>
+{% endblock %}

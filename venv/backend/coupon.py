@@ -25,6 +25,7 @@ class Coupon:
     def set_minimumspent(self, minimumspent):
         self.__minimumspent = minimumspent
 
+
     #set expiry date, make sure it is in DD-MM-YYYY otherwise exception
     def set_expiry_date(self, expiredate):
         self.__expiredate = expiredate

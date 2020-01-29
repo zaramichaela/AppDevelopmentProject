@@ -1,6 +1,7 @@
 from flask import url_for, redirect, render_template, Flask, request, flash, session,abort
 from flask_uploads import UploadSet, IMAGES,configure_uploads
-import shelve, Feedback
+import shelve
+import backend.Feedback as Feedback
 from datetime import date
 from backend.admin_url import admin_pages
 from backend.settings import *
@@ -37,21 +38,24 @@ def shop():
     sales_items = itemcontroller.get_all_sales_items()
     return render_template('users/shop.html', items = sales_items)
 
-@app.route('/contactus', methods=['GET'])
+@app.route('/contactus', methods=['GET', 'POST'])
 def contact():
     createFeedbackForm = CreateFeedbackForm(request.form)
     if request.method == 'POST' and createFeedbackForm.validate():
         usersDict = {}
-        db = shelve.open('storage.db', 'c')
+        db = shelve.open('feedstorage.db', 'c')
 
         try:
             usersDict = db['Feedback']
+
         except:
+            print(Exception)
             print("Error in retrieving Users from storage.db.")
 
         feedback = Feedback.Feedback(createFeedbackForm.firstName.data, createFeedbackForm.email.data, createFeedbackForm.category.data, createFeedbackForm.feedback.data, createFeedbackForm.status.data, date= date.today())
         usersDict[feedback.get_userID()] = feedback
         db['Feedback'] = usersDict
+
         db.close()
     return render_template('feedback/contact.html', form = createFeedbackForm)
 
@@ -84,7 +88,6 @@ def add_item_to_cart(itemuid):
             i['quantity'] += (quantity)
             if(i['quantity'] > itemcontroller.get_item_by_UID(itemuid).get_stocks()):
                 flash("Error, item quantity cannot exceed amount of stocks.", "error")
-
             flag = True
             flash("item already exists in cart, increase quantity by " +  str(quantity), "success")
             break
@@ -156,6 +159,8 @@ def cart():
             if coupon:
                 if coupon.check_validity():
                     discount = coupon.get_discount(subtotal_price)
+                    if(discount == 0):
+                        flash("Coupon requires a minimum spending of $" + "{0:.2f}".format(coupon.get_minimumspent()) , "nocoupon")
                     session['discount'] = discount
                 else:
                     flash("Coupon code has expired, please try another code.", "nocoupon")
@@ -275,11 +280,6 @@ def logout():
 
 
 
-
-
-@app.route('/RetrieveAccount')
-def retrieveAccount():
-    accountDict = {}
 
 
 

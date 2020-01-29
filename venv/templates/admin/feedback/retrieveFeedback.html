@@ -1,0 +1,75 @@
+
+{% extends "admin/base.html" %}
+{% block title %}All Feedback {% endblock %}
+
+{% block body %}
+<script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/tables.js') }}"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+
+<div class="tables">
+    <h1 class="display-4">Retrieve Feedback</h1>
+<br>
+
+<div>
+    {% if count == 0 %}
+    <h7>There are no feedback.</h7>
+    {% elif count == 1 %}
+    <h7>There is 1 feedback.</h7>
+    {% else %}
+    <h7>There are {{count}} feedbacks.</h7>
+    {% endif %}
+</div>
+<br>
+    <table class="table table-striped" id = "dtBasicExample">
+        <thead>
+            <tr class = "header">
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Category</th>
+                <th>Feedback</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in usersList %}
+            <tr>
+                <td>{{ user.get_userID() }}</td>
+                <td>{{ user.get_firstName() }}</td>
+                <td>{{ user.get_email() }}</td>
+                {% if user.get_category() == "G" %}
+                <td>General</td>
+                {% elif user.get_category() == "P" %}
+                <td>Product</td>
+                {% elif user.get_category() == "T" %}
+                <td>Treatment</td>
+                {% endif %}
+                <td>{{ user.get_feedback() }}</td>
+                {% if user.get_status() == "P" %}
+                <td>PENDING</td>
+                {% elif user.get_status() == "C" %}
+                <td>CLOSED</td>
+                {% endif %}
+                <td>{{ user.get_date() }}</td>
+                <td style="width:300px">
+
+                    <form action ="{{url_for('admin_pages.deleteFeedback', id=user.get_userID())}}" method="POST">
+                         <a href="{{url_for('admin_pages.updateFeedback', id=user   .get_userID())}}" class="btn btn-warning">Update</a>
+                        <input type="submit" value = "Delete" class = "btn btn-danger" onclick = "return confirm('Are you sure you want to delete this feedback?');">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+{% endblock %}

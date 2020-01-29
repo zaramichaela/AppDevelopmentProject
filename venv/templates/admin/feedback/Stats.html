@@ -1,0 +1,83 @@
+
+{% extends "admin/base.html" %}
+{% block title %}Feedback Storage System - Feedback{% endblock %}
+{% block body %}
+{% from "includes/_formHelper.html" import render_field %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
+<div class="tables">
+    <table class = 'table table-striped'>
+        <h1 class="display-4">Feedback Statistics Table</h1>
+        <thead>
+        <tr>
+            <th colspan = '2'>
+                <div>
+                    {% if count == 0 %}
+                    <p>Total Feedback: None</p>
+                    {% elif count == 1 %}
+                    <p>Total Feedback : 1</p>
+                    {% else %}
+                    <p>Total Feedback : {{ count }}</p>
+                    {% endif %}
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>January :</td>
+            <td>{{ jancount }}</td>
+        </tr>
+        <tr>
+            <td>February :</td>
+            <td>{{ febcount }}</td>
+        </tr>
+        <tr>
+            <td>March :</td>
+            <td>{{ marcount }}</td>
+        </tr>
+        <tr>
+            <td>April :</td>
+            <td>{{ aprcount }}</td>
+        </tr>
+        <tr>
+            <td>May :</td>
+            <td>{{ maycount }}</td>
+        </tr>
+        <tr>
+            <td>June :</td>
+            <td>{{ juncount }}</td>
+        </tr>
+        <tr>
+            <td>July :</td>
+            <td>{{ julcount }}</td>
+        </tr>
+        <tr>
+            <td>August :</td>
+            <td>{{ augcount }}</td>
+        </tr>
+        <tr>
+            <td>September :</td>
+            <td>{{ sepcount }}</td>
+        </tr>
+        <tr>
+            <td>October :</td>
+            <td>{{ octcount }}</td>
+        </tr>
+        <tr>
+            <td>November :</td>
+            <td>{{ novcount }}</td>
+        </tr>
+        <tr>
+            <td>December :</td>
+            <td>{{ deccount }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+{% endblock %}
