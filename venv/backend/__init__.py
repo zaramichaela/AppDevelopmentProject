@@ -197,6 +197,10 @@ def show_receipt(ruid):
         abort(404)
     return render_template("users/receipt.html", receipt=item)
 
+@app.route('/allreceipt')
+def show_all_receipt():
+    username = session.get('logged_in_user')
+    return render_template('about.html')
 
 
 @app.route('/feedback')
