@@ -11,6 +11,8 @@ class sales_receipt(object):
         self.coupon = coupon
         self.user = user
 
+    def get_number_entries(self):
+        return len(self.sales_entries)
 
     def get_coupon(self):
         return self.coupon
@@ -49,7 +51,7 @@ class sales_receipt(object):
         return self.total
 
     def get_total(self):
-        return self.total - self.get_discount(self.total)
+        return self.total - self.get_discount()
 
     def save(self):
        s = shelve.open(settings.USER_ORDER_DB)

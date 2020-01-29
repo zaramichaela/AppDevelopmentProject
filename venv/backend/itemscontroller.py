@@ -174,6 +174,9 @@ class items_controller:
         coupon.save()
         return coupon
 
+    def get_all_receipt(self):
+        return self.__all_receipt
+
 
 ######################################################################
 ######################################################################

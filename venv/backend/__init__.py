@@ -200,7 +200,8 @@ def show_receipt(ruid):
 @app.route('/allreceipt')
 def show_all_receipt():
     username = session.get('logged_in_user')
-    return render_template('about.html')
+    all_receipt = itemcontroller.get_all_receipt_by_name(username)
+    return render_template('users/showallreceipt.html', receipts=all_receipt)
 
 
 @app.route('/feedback')
