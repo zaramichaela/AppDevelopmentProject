@@ -48,6 +48,9 @@ def shop_item(itemuid):
         abort(404)
     return render_template('users/item.html', item = item)
 
+
+
+
 @app.route('/cart/<itemuid>/add', methods=['POST'])
 def add_item_to_cart(itemuid):
     num = 0
@@ -78,6 +81,17 @@ def add_item_to_cart(itemuid):
         else:
             flash("item not added to cart, quantity exceeds stocks available.", "error")
     return redirect(url_for("shop_item", itemuid=itemuid))
+
+@app.route('/cart/delete/<itemuid>')
+def del_cart_item(itemuid):
+    items = session.get("cart")
+    remove = None
+    for i in items:
+        if(itemuid ==  i['itemuid']):
+            remove = i
+    items.remove(remove)
+    session['cart'] = items
+    return redirect(url_for("cart"))
 
 @app.route('/cart' , methods=['POST', 'GET'])
 def cart():

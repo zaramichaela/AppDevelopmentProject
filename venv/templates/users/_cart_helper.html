@@ -1,7 +1,7 @@
 
 {% macro list_cart_item(i, quantity, total) %}
 <tr class="text-center {%if i.get_available_flag()%} disabled {% endif %}">
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+						        <td class="product-remove"><a href="{{url_for('del_cart_item', itemuid=i.get_UID())}}"><span class="ion-ios-close"></span></a></td>
 
 						        <td class="image-prod"><div class="img" style="background-image:url({{  url_for('static', filename='uploads/items/'+i.get_UID()) }});"></div></td>
 
@@ -31,10 +31,10 @@
 
 
 {% macro list_receipt_item(i) %}
-<tr class="text-center {%if i.get_available_flag()%} disabled {% endif %}">
+<tr class="text-center">
 						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
 
-						        <td class="image-prod"><div class="img" style="background-image:url({{  url_for('static', filename='uploads/items/'+i.get_UID()) }});"></div></td>
+						        <td class="image-prod"><div class="img" style="background-image:url({{  url_for('static', filename='uploads/items/'+i.sales_object.get_UID()) }});"></div></td>
 
 						        <td class="product-name">
 						        	<h3>{{i.sales_object.get_name()}}</h3>
