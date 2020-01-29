@@ -281,12 +281,10 @@ def not_found(e):
     return render_template('error_pages/500.html'), 500
 
 
+# @app.route('/account/changepassword', methods = ['GET', 'POST'])
+# def change_pass():
+#     return render_template("base.html")
 
-
-@app.route('/account/changepassword', methods = ['GET', 'POST'])
-def change_pass():
-
-    return render_template("base.html")
 
 @app.route('/createFeedback', methods = ['GET', 'POST'])
 def createFeedback():
