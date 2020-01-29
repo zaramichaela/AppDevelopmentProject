@@ -21,13 +21,13 @@
             {{i.get_description()}}
         </td>
         <td>
-            {{i.get_price()}}
+            {{'%0.2f'|format(i.get_price()|float)}}
         </td>
         <td>
-            {{i.get_discount()}}
+            {{'%.0f'|format(i.get_discount()|float)}}
         </td>
         <td>
-            {{i.get_stocks()}}
+            {{'%.0f'|format(i.get_stocks()|float)}}
         </td>
         <td>
             {{i.get_available_flag()}}
@@ -62,10 +62,10 @@
             {{i.get_expiry_duration()}}
         </td>
         <td>
-            {{i.get_sessions()}}
+            {{'%.0f'|format(i.get_sessions()|float)}}
         </td>
         <td>
-            {{i.get_price()}}
+            {{'%0.2f'|format(i.get_price()|float)}}
         </td>
        <td>
             {{i.get_available_flag()}}
@@ -100,7 +100,7 @@
             {{i.get_description()}}
         </td>
         <td>
-            {{i.get_price()}}
+            {{'%0.2f'|format(i.get_price()|float)}}
         </td>
        <td>
             {{i.get_available_flag()}}
@@ -127,14 +127,14 @@
             {{i.get_couponcode()}}
         </td>
         <td>
-           {{i.get_percentage()}}
+           {{'%.0f'|format(i.get_percentage()|float)}}
         </td>
 
         <td>
-            {{i.get_minimumspent()}}
+            {{'%0.2f'|format(i.get_minimumspent()|float)}}
         </td>
         <td>
-           {{i.get_discountlimit()}}
+           {{'%0.2f'|format(i.get_discountlimit()|float)}}
         </td>
         <td>
             {{i.get_expiredate()}}
