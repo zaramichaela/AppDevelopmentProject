@@ -1,13 +1,13 @@
 
 {% extends "admin/base.html" %}
-{% block title %}Feedback Storage System - Feedback{% endblock %}
+{% block title %}Feedback Statistics{% endblock %}
 {% block body %}
 {% from "includes/_formHelper.html" import render_field %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
 <div class="tables">
     <table class = 'table table-striped'>
-        <h1 class="display-4">Feedback Statistics Table</h1>
+        <h1 class="title1" style="text-align: left;">Feedback Statistics Table</h1>
         <thead>
         <tr>
             <th colspan = '2'>
