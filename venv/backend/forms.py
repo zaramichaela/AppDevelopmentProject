@@ -9,10 +9,9 @@ import re
 from wtforms import Form, StringField, RadioField, SelectField,TextAreaField, validators
 from wtforms.fields.html5 import EmailField
 
-
+####################################################################################
 images = UploadSet('images', IMAGES)
-
-
+####################################################################################
 class BetterDecimalField(DecimalField):
     """
     Very similar to WTForms DecimalField, except with the option of rounding
@@ -40,6 +39,7 @@ class BetterDecimalField(DecimalField):
             except (decimal.InvalidOperation, ValueError):
                 self.data = None
                 raise ValueError(self.gettext('Not a valid decimal value'))
+####################################################################################
 
 #form to create a new sales item
 class new_sales_item(FlaskForm):
@@ -52,6 +52,7 @@ class new_sales_item(FlaskForm):
     stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
     discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
+####################################################################################
 
 #form to create a new package item
 class new_package(FlaskForm):
@@ -64,7 +65,7 @@ class new_package(FlaskForm):
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
     discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
-
+####################################################################################
 
 #form to create a new service item
 class new_service(FlaskForm):
@@ -75,7 +76,7 @@ class new_service(FlaskForm):
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('No file was selected')])
     discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
-
+####################################################################################
 
 #form to create a coupon item
 class coupon_form(FlaskForm):
@@ -86,7 +87,7 @@ class coupon_form(FlaskForm):
     minimumspent = IntegerField("Minimum spending ($): ", validators=[validators.NumberRange(min=1, max=2000),DataRequired(message='You need to input a number!')])
     expiredate = DateField("Expiry Date (DD/MM/YYYY): ",  format='%d/%m/%Y', validators=[DataRequired()])
     submit = SubmitField()
-
+####################################################################################
 
 class edit_sales_item(FlaskForm):
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200) ,DataRequired()])
@@ -97,8 +98,7 @@ class edit_sales_item(FlaskForm):
     stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
     discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
-
-
+####################################################################################
 
 class edit_package_form(FlaskForm):
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
@@ -109,8 +109,7 @@ class edit_package_form(FlaskForm):
     discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     image = FileField("Image of product: ", validators=[FileAllowed(images, 'Image only!')])
     submit = SubmitField()
-
-
+####################################################################################
 
 class edit_service_form(FlaskForm):
     name = StringField("Name: ", validators=[validators.Length(min=3, max=200),DataRequired()])
@@ -119,6 +118,7 @@ class edit_service_form(FlaskForm):
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!')])
     discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
+####################################################################################
 
 class edit_coupon_form(FlaskForm):
     couponcode = StringField("Coupon Code: ", validators=[validators.Length(min=5, max=10),DataRequired()])
@@ -127,6 +127,7 @@ class edit_coupon_form(FlaskForm):
     minimumspent = IntegerField("Minimum spending ($): ", validators=[validators.NumberRange(min=1, max=2000),DataRequired(message='You need to input a number!')])
     expiredate = DateField("Expiry Date (DD/MM/YYYY): ",  format='%d/%m/%Y', validators=[DataRequired()])
     submit = SubmitField()
+####################################################################################
 
 class create_supplier(FlaskForm):
     UID = StringField("Unique ID:", validators=[validators.Length(min=3, max=10), DataRequired()])
@@ -136,26 +137,21 @@ class create_supplier(FlaskForm):
     product = StringField("Brand: ", validators=[DataRequired()])
     price = BetterDecimalField("Price: ", validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
     submit = SubmitField()
-
+####################################################################################
 
 class buy_orders_supplier(FlaskForm):
     UID = StringField("Order UID:", validators=[validators.Length(min=3, max=10),DataRequired()])
     supplier = SelectField("Supplier")
     number = IntegerField("Number of orders:", validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
     submit = SubmitField()
-
-
-
-
-
+####################################################################################
 
 class edit_admin_account(FlaskForm):
     old_password = PasswordField("Old Password:", validators=[validators.Length(min=8, max=16), DataRequired()])
     password = PasswordField("New Password:", validators=[validators.Length(min=8, max=16), DataRequired(), validators.EqualTo('cfm_password', message='Passwords must match')])
     cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16), DataRequired()])
     submit = SubmitField()
-
-
+####################################################################################
 
 class checkout_form(FlaskForm):
     full_name = StringField("Full Name *: ", validators=[validators.Length(min=3, max=200), DataRequired()])
@@ -171,8 +167,7 @@ class checkout_form(FlaskForm):
     exp_year = SelectField(" Expiry Year *: ", validators=[validators.Length(min=3, max=200), DataRequired()], choices=[('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023'), ('2024', '2024'), ('2025', '2025'), ('2026', '2026')])
     CVV = StringField(" CVV / CSV *: ", validators=[validators.Length(min=3, max=4), DataRequired()])
     submit = SubmitField()
-
-
+####################################################################################
 
 class CreateFeedbackForm(FlaskForm):
     firstName = StringField('Name', [validators.Regexp('^[a-zA-Z]+$', message="Name must cotain only alphabets"),validators.Length (min = 1, max = 150), validators.DataRequired()])
@@ -181,6 +176,7 @@ class CreateFeedbackForm(FlaskForm):
     feedback = TextAreaField('Feedback', [validators.DataRequired()])
     status = SelectField('Status(**FOR ADMIN USE**)', choices = [('P', 'PENDING'), ('C', 'CLOSED')], default= 'P')
     email = EmailField('Email', [validators.Email(), validators.DataRequired()])
+####################################################################################
 
 class UpdateFeedbackForm(FlaskForm):
     firstName = StringField('Name', [validators.Length (min = 1, max = 150), validators.Optional()])
@@ -189,3 +185,4 @@ class UpdateFeedbackForm(FlaskForm):
     feedback = TextAreaField('Feedback', [validators.Optional()])
     status = SelectField('Status(**FOR ADMIN USE**)', choices = [('P', 'PENDING'), ('C', 'CLOSED')], default= 'P')
     email = EmailField('Email', [validators.Email(), validators.Optional()])
+####################################################################################

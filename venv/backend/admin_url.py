@@ -6,8 +6,10 @@ from login.forms import create_admin_account
 from backend.settings import *
 from login.user_account import *
 
+
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
 
+################### Authorization ##########################################
 def authorize(f):
     @wraps(f)
     def decorated_function(*args, **kws):
@@ -17,7 +19,7 @@ def authorize(f):
             flash("You must log in as an admin first.")
             return redirect(url_for("admin_pages.admin"))
     return decorated_function
-
+####################################################################################
 @admin_pages.route('/admin')
 def admin():
     print(session.get('admin_logged_in'))
@@ -25,7 +27,7 @@ def admin():
         return render_template('admin/admin_login.html')
     else:
         return render_template('admin/base.html')
-
+####################################################################################
 @admin_pages.route('/admin/login', methods=['POST'])
 def do_admin_login():
     username = request.form['username']
@@ -36,14 +38,14 @@ def do_admin_login():
     else:
         flash('Wrong credentials!', "error")
     return redirect(url_for("admin_pages.admin"))
-
+####################################################################################
 @admin_pages.route('/admin/logout')
 @authorize
 def admin_logout():
     session['admin_logged_in'] = False
     session['admin_username'] = ""
     return redirect(url_for("admin_pages.admin"))
-
+####################################################################################
 @admin_pages.route('/admin/add/coupons', methods= ['GET','POST'])
 @authorize
 def add_coupons():
@@ -59,10 +61,7 @@ def add_coupons():
                 "message": "You have successfully create a new coupon for users to use."
             }
     return render_template('admin/adding/create_coupons.html', form=cform, message=context)
-
-
-
-
+####################################################################################
 @admin_pages.route('/admin/add/services/', methods= ['GET','POST'])
 @authorize
 def add_shop_service():
@@ -85,8 +84,7 @@ def add_shop_service():
         else:
             context ={"error":"An error has occurred."}
     return render_template('admin/adding/create_services.html', form=form, message=context)
-
-
+####################################################################################
 @admin_pages.route('/admin/add/items/', methods= ['GET','POST'])
 @authorize
 def add_shop_item():
@@ -108,7 +106,7 @@ def add_shop_item():
         else:
             context ={"error":"A error has occurred."}
     return render_template('admin/adding/create_items.html', form=form, message=context)
-
+####################################################################################
 @admin_pages.route('/admin/add/packages/', methods= ['GET','POST'])
 @authorize
 def add_shop_package():
@@ -130,35 +128,31 @@ def add_shop_package():
         else:
             context ={"error":"A error has occurred."}
     return render_template('admin/adding/create_packages.html', form=form, message=context)
-
-
-
+####################################################################################
 @admin_pages.route('/admin/list/items')
 @authorize
 def list_sales_items():
     sales = itemcontroller.get_all_sales_items()
     return render_template('admin/listing/list_sales_items.html', items=sales)
-
-
+####################################################################################
 @admin_pages.route('/admin/list/sales_packages')
 @authorize
 def list_sales_packages():
     sales = itemcontroller.get_all_sales_packages()
     return render_template('admin/listing/list_sales_packages.html', items=sales)
-
-
-
+####################################################################################
 @admin_pages.route('/admin/list/sales_services')
 @authorize
 def list_sales_services():
     sales = itemcontroller.get_all_sales_services()
     return render_template('admin/listing/list_sales_services.html', items=sales)
-
+####################################################################################
 @admin_pages.route('/admin/list/coupons')
 @authorize
 def list_coupons():
     sales = itemcontroller.get_all_coupons()
     return render_template('admin/listing/list_coupons.html', items=sales)
+####################################################################################
 
 
 #########################################################################################
@@ -178,9 +172,7 @@ def delete_sales_item(itemid):
     else:
         flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_sales_items"))
-
-
-
+####################################################################################
 @admin_pages.route('/admin/list/items/<itemid>/invalidate/', methods= ['GET','POST'])
 @authorize
 def invalidate_sales_item(itemid):
@@ -199,7 +191,7 @@ def invalidate_sales_item(itemid):
     else:
         flash("You have set the item " + item.get_UID() + " to unavailable", "success")
     return redirect(url_for("admin_pages.list_sales_items"))
-
+####################################################################################
 @admin_pages.route('/admin/list/package/<packageid>/delete/', methods= ['GET','POST'])
 @authorize
 def delete_package(packageid):
@@ -213,7 +205,7 @@ def delete_package(packageid):
     else:
         flash("There's been a error removing #" + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_sales_packages"))
-
+####################################################################################
 @admin_pages.route('/admin/list/packages/<packageid>/invalidate/', methods= ['GET','POST'])
 @authorize
 def invalidate_package(packageid):
@@ -232,8 +224,7 @@ def invalidate_package(packageid):
     else:
         flash("You have set the package #" + item.get_UID() + " to unavailable", "success")
     return redirect(url_for("admin_pages.list_sales_packages"))
-
-
+####################################################################################
 @admin_pages.route('/admin/list/service/<serviceid>/delete/', methods= ['GET','POST'])
 @authorize
 def delete_service(serviceid):
@@ -247,7 +238,7 @@ def delete_service(serviceid):
     else:
         flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_sales_services"))
-
+####################################################################################
 @admin_pages.route('/admin/list/service/<serviceid>/invalidate/', methods= ['GET','POST'])
 @authorize
 def invalidate_service(serviceid):
@@ -266,7 +257,7 @@ def invalidate_service(serviceid):
     else:
         flash("You have set the service #" + item.get_UID() + " to unavailable", "success")
     return redirect(url_for("admin_pages.list_sales_services"))
-
+####################################################################################
 @admin_pages.route('/admin/list/coupon/<couponid>/delete/', methods= ['GET','POST'])
 @authorize
 def delete_coupon(couponid):
@@ -280,7 +271,7 @@ def delete_coupon(couponid):
     else:
         flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_coupons"))
-
+####################################################################################
 
 
 #########################################################################################
@@ -319,7 +310,7 @@ def edit_item(itemid):
             form.price.data = item.get_price()
             form.stocks.data = item.get_stocks()
     return render_template('admin/editing/edit_items.html', form=form, message=context, item=item)
-
+####################################################################################
 
 @admin_pages.route('/admin/list/packages/<packageid>/edit/', methods= ['GET','POST'])
 @authorize
@@ -329,8 +320,6 @@ def edit_package(packageid):
     if(not item):
         abort(404)
     form = edit_package_form(formdata=request.form, obj=item)
-
-
 
     if request.method == 'POST' and form.validate():
         file_ = request.files["image"]
@@ -357,8 +346,7 @@ def edit_package(packageid):
             form.sessions.data = item.get_sessions()
 
     return render_template('admin/editing/edit_packages.html', form=form, message=context, item=item)
-
-
+####################################################################################
 @admin_pages.route('/admin/list/services/<serviceid>/edit/', methods= ['GET','POST'])
 @authorize
 def edit_service(serviceid):
@@ -393,8 +381,7 @@ def edit_service(serviceid):
         form.description.data = item.get_description()
         form.price.data = item.get_price()
     return render_template('admin/editing/edit_services.html', form=form, message=context, item=item)
-
-
+####################################################################################
 @admin_pages.route('/admin/list/coupons/<couponid>/edit/', methods= ['GET','POST'])
 @authorize
 def edit_coupon(couponid):
@@ -403,7 +390,6 @@ def edit_coupon(couponid):
     if(not item):
         abort(404)
     form = edit_coupon_form(formdata=request.form, obj=item)
-
 
     if request.method == 'POST' and form.validate():
         itemcontroller.remove_sales_coupon(item)
@@ -426,10 +412,7 @@ def edit_coupon(couponid):
             form.minimumspent.data = item.get_minimumspent()
             form.expiredate.data = item.get_expiredate()
     return render_template('admin/editing/edit_coupons.html', form=form, message=context, item=item)
-
-
-
-
+####################################################################################
 @admin_pages.route('/admin/accounts/add', methods= ['GET','POST'])
 @authorize
 def create_admin_accounts():
@@ -443,14 +426,14 @@ def create_admin_accounts():
             flash("Admin account created.", "success")
         form = create_admin_account()
     return render_template('admin/accounts/create_admin_accounts.html', form=form, message=context)
-
+####################################################################################
 @admin_pages.route('/admin/accounts/admin/view')
 @authorize
 def list_admin_accounts():
     context = {}
     items = logincontroller.get_all_admins()
     return render_template('admin/accounts/list_admin_accounts.html',items=items)
-
+####################################################################################
 @admin_pages.route('/admin/accounts/admins/<username>/delete/')
 @authorize
 def del_admin_account(username):
@@ -462,7 +445,7 @@ def del_admin_account(username):
         flash("an error have occurred, please try again", "error")
         abort(404)
     return redirect(url_for("admin_pages.list_admin_accounts"))
-
+####################################################################################
 @admin_pages.route('/admin/accounts/admin/changepassword/', methods= ['GET','POST'])
 @authorize
 def change_admin_password():
@@ -473,17 +456,14 @@ def change_admin_password():
         username = session["admin_username"]
         logincontroller.change_admin_password(username, form.old_password.data, form.password.data)
     return render_template('admin/accounts/edit_admin_accounts.html',form =form,message=context)
-
-
+####################################################################################
 @admin_pages.route('/admin/accounts/users/view')
 @authorize
 def list_users_accounts():
     context = {}
     items = logincontroller.get_all_users()
     return render_template('admin/accounts/list_users_accounts.html',items=items)
-
-
-
+####################################################################################
 @admin_pages.route('/admin/accounts/users/<username>/delete/')
 @authorize
 def del_user_account(username):
@@ -497,7 +477,7 @@ def del_user_account(username):
         flash("an error have occurred, please try again", "error")
     items = logincontroller.get_all_admins()
     return redirect(url_for("admin_pages.list_users_accounts"))
-
+####################################################################################
 @admin_pages.route('/admin/accounts/users/<username>/ban/')
 @authorize
 def ban_user_account(username):
@@ -514,7 +494,7 @@ def ban_user_account(username):
         flash("an error have occurred, please try again", "error")
     items = logincontroller.get_all_admins()
     return redirect(url_for("admin_pages.list_users_accounts"))
-
+####################################################################################
 
 
 
@@ -540,7 +520,7 @@ def create_suppliers():
         else:
             flash("A new supplier has been listed", "success")
     return render_template('admin/suppliers/create_suppliers.html', form=form)
-
+####################################################################################
 @admin_pages.route('/admin/suppliers/<supplierid>/edit', methods= ['GET','POST'])
 @authorize
 def edit_suppliers(supplierid):
@@ -566,7 +546,7 @@ def edit_suppliers(supplierid):
             form.product.data = item.get_product()
             form.price.data = item.get_price()
     return render_template('admin/suppliers/edit_suppliers.html', form=form)
-
+####################################################################################
 @admin_pages.route('/admin/suppliers/<supplierid>/delete', methods= ['GET','POST'])
 @authorize
 def delete_suppliers(supplierid):
@@ -579,24 +559,21 @@ def delete_suppliers(supplierid):
     else:
         flash("The supplier" + supplier.get_UID() +  " has been deleted", "success")
     return redirect(url_for("admin_pages.list_suppliers"))
-
-
-
+####################################################################################
 @admin_pages.route('/admin/suppliers/view')
 @authorize
 def list_suppliers():
     context = {}
     items = suppliercontroller.get_all_suppliers()
     return render_template('admin/suppliers/list_suppliers.html',items=items)
-
-
+####################################################################################
 @admin_pages.route('/admin/suppliersorders/view')
 @authorize
 def list_suppliers_orders():
     context = {}
     items = suppliercontroller.get_all_suppliers_orders()
     return render_template('admin/suppliers/list_suppliers_orders.html',items=items)
-
+####################################################################################
 @admin_pages.route('/admin/suppliersorders/add', methods= ['GET','POST'])
 @authorize
 def create_suppliers_orders():
@@ -614,8 +591,7 @@ def create_suppliers_orders():
             flash("A new supplier has been listed", "success")
             return redirect(url_for("admin_pages.list_suppliers_orders"))
     return render_template('admin/suppliers/create_suppliers_orders.html', form=form)
-
-
+####################################################################################
 @admin_pages.route('/admin/suppliersorders/<orderid>/cancel', methods= ['GET','POST'])
 @authorize
 def cancel_suppliers_order(orderid):
@@ -626,7 +602,7 @@ def cancel_suppliers_order(orderid):
     item.save()
     flash("you have cancelled the order.", "success")
     return redirect(url_for("admin_pages.list_suppliers_orders"))
-
+####################################################################################
 @admin_pages.route('/admin/suppliersorders/<orderid>/received', methods= ['GET','POST'])
 @authorize
 def received_suppliers_order(orderid):
@@ -639,9 +615,7 @@ def received_suppliers_order(orderid):
     suppliercontroller.add_supplier_order(item)
     flash("you have received the order.", "success")
     return redirect(url_for("admin_pages.list_suppliers_orders"))
-
-
-
+####################################################################################
 @admin_pages.route('/admin/retrieveFeedback')
 @authorize
 def retrieveFeedback():
@@ -656,9 +630,7 @@ def retrieveFeedback():
         usersList.append(user)
 
     return render_template('/admin/feedback/retrieveFeedback.html', usersList = usersList, count = len(usersList))
-
-
-
+####################################################################################
 @admin_pages.route('/admin/deleteFeedback/<int:id>', methods=['POST'])
 @authorize
 def deleteFeedback(id):
@@ -670,8 +642,7 @@ def deleteFeedback(id):
     db.close()
 
     return redirect(url_for('admin_pages.retrieveFeedback'))
-
-
+####################################################################################
 @admin_pages.route('/admin/updateFeedback/<int:id>/', methods = ['GET', 'POST'])
 @authorize
 def updateFeedback(id):
@@ -704,17 +675,13 @@ def updateFeedback(id):
         updateFeedbackForm.status.data = feedback.get_status()
 
         return render_template('/admin/feedback/updateFeedback.html', form = updateFeedbackForm)
-
-
 labels = []
 values = []
 colors = [
     "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
     "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
     "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
-
-
-
+####################################################################################
 @admin_pages.route('/admin/feedback/stats')
 def stats():
     db = shelve.open('feedstorage.db', 'r')
@@ -771,9 +738,7 @@ def stats():
 
     return render_template('admin/feedback/Stats.html', TotalList = TotalList, JanList = JanList, FebList = FebList, MarList = MarList, AprList = AprList, MayList = MayList, JunList = JunList, JulList = JulList, AugList = AugList, SepList = SepList, OctList = OctList, NovList = NovList, DecList = DecList,
                            count = len(TotalList), jancount = len(JanList), febcount = len(FebList), marcount = len(MarList), aprcount = len(AprList), maycount = len(MayList), juncount = len(JunList), julcount = len(JulList), augcount = len(AugList), sepcount = len(SepList), octcount = len(OctList), novcount = len(NovList), deccount = len(DecList))
-
-
-
+####################################################################################
 @admin_pages.route('/admin/feedback/statgraph')
 def stats1():
     bar_labels = labels
@@ -831,3 +796,4 @@ def stats1():
             DecList.append(count)
     return render_template('admin/feedback/StatGraph.html', title = 'Feedback - Statistics(Graph)', max = 20, labels = bar_labels, values = bar_values, TotalList = TotalList, JanList = JanList, FebList = FebList, MarList = MarList, AprList = AprList, MayList = MayList, JunList = JunList, JulList = JulList, AugList = AugList, SepList = SepList, OctList = OctList, NovList = NovList, DecList = DecList,
                            count = len(TotalList), jancount = len(JanList), febcount = len(FebList), marcount = len(MarList), aprcount = len(AprList), maycount = len(MayList), juncount = len(JunList), julcount = len(JulList), augcount = len(AugList), sepcount = len(SepList), octcount = len(OctList), novcount = len(NovList), deccount = len(DecList))
+####################################################################################

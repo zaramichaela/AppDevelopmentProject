@@ -10,7 +10,7 @@ Add a new Item | K's TCM Administration
 
 {% if message.message %}
 <div class="alert alert-success" role="alert">
-  {{ message.message }}
+    {{ message.message }}
 </div>
 {% endif %}
 
@@ -20,16 +20,17 @@ Add a new Item | K's TCM Administration
     {% for category, message in messages %}
       {%if category =="success"%}
         <div class="alert alert-success" role="alert">
-        {{ message }}
+            {{ message }}
     </div>
-    {% else %}
+      {% else %}
         <div class="alert alert-danger" role="alert">
-  {{ message }}
-    </div>
-{%endif%}
+            {{ message }}
+        </div>
+        {%endif%}
     {% endfor %}
   {% endif %}
 {% endwith %}
+
 
 {% from "admin/adding/_formhelper.html" import render_field %}
 
@@ -47,18 +48,17 @@ Add a new Item | K's TCM Administration
       <dl>
     {{ render_field(form.UID, class='form-control', placeholder="e.g. 123") }}
     {{ render_field(form.name, class='form-control' , placeholder="e.g. Prescribed Herbal Medicine") }}
-     {{ render_field(form.category, class='form-control' , placeholder="e.g. Prescribed Herbal Medicine") }}
-    {{ render_field(form.description, class='form-control', placeholder="Input description of product here.
-Include things like manufacture date, expiry date and allergen information.") }}
+    {{ render_field(form.category, class='form-control' , placeholder="e.g. Prescribed Herbal Medicine") }}
+    {{ render_field(form.description, class='form-control', placeholder="Input description of product here. Include things like manufacture date, expiry date and allergen information.") }}
     {{ render_field(form.price, class='form-control', placeholder="e.g. 20.00") }}
     {{ render_field(form.discount, class='form-control', placeholder="e.g. 10") }}
     {{ render_field(form.stocks, class='form-control', placeholder="e.g. 100") }}
     {{ render_field(form.image, class='form-control' , onchange="preview_image(event)") }}
-          <center><br><img id="output_image"/><br></center>
+    <center><br><img id="output_image"/><br></center>
     {{form.submit(class="btn btn-primary")}}
-  </dl>
+        </dl>
 </form>
-    </div>
+</div>
 </div>
 
 {%endblock %}

@@ -17,27 +17,31 @@ app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
 login = LoginManager(app)
 app.register_blueprint(admin_pages) #split url to 2 files: admin_url and init
+
+####################################################################################
 #main items controller
+####################################################################################
 
 
 UPLOAD_FOLDER = '/uploads/'
 app.config['UPLOADED_IMAGES_DEST'] = '/uploads/'
-app.config['SECRET_KEY'] = 'THISISNOTASECRET'
+app.config['SECRET_KEY'] = 'THISISNOTASECRETKEY'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOAD_PRODUCT'] = UPLOAD_FOLDER, 'product/'
 
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
+####################################################################################
 @app.route('/')
 def home():
     return render_template('home.html')
-
+####################################################################################
 @app.route('/shop')
 def shop():
     sales_items = itemcontroller.get_all_sales_items()
     return render_template('users/shop.html', items = sales_items)
-
+####################################################################################
 @app.route('/contactus', methods=['GET', 'POST'])
 def contact():
     createFeedbackForm = CreateFeedbackForm(request.form)
@@ -58,7 +62,7 @@ def contact():
 
         db.close()
     return render_template('feedback/contact.html', form = createFeedbackForm)
-
+####################################################################################
 @app.route('/receipt.html')
 def receipt():
     return render_template("users/receipt.html")
@@ -69,10 +73,7 @@ def shop_item(itemuid):
     if(not item):
         abort(404)
     return render_template('users/item.html', item = item)
-
-
-
-
+####################################################################################
 @app.route('/cart/<itemuid>/add', methods=['POST'])
 def add_item_to_cart(itemuid):
     num = 0
@@ -102,7 +103,7 @@ def add_item_to_cart(itemuid):
         else:
             flash("item not added to cart, quantity exceeds stocks available.", "error")
     return redirect(url_for("shop_item", itemuid=itemuid))
-
+####################################################################################
 @app.route('/cart/delete/<itemuid>')
 def del_cart_item(itemuid):
     items = session.get("cart")
@@ -113,7 +114,7 @@ def del_cart_item(itemuid):
     items.remove(remove)
     session['cart'] = items
     return redirect(url_for("cart"))
-
+####################################################################################
 @app.route('/cart' , methods=['POST', 'GET'])
 def cart():
     #need to input coupon code,removing of items and others
@@ -173,9 +174,7 @@ def cart():
         return render_template('users/cart.html', cart_items=cart_list, subtotal_price=subtotal_price, discount=discount, code=code, total_amount=total_amount)
     else:
         return render_template('users/cart.html', cart_items=[],  subtotal_price=0.00, discount=discount, code=code, total_amount=total_amount)
-
-
-
+####################################################################################
 @app.route('/cart/clear')
 def del_cart():
     session.pop('cart', None)
@@ -183,12 +182,11 @@ def del_cart():
     session.pop('subtotal_price', None)
     session.pop('total_amount', None)
     return redirect(url_for("cart"))
-
-
+####################################################################################
 @app.route('/about')
 def about():
     return render_template('about.html')
-
+####################################################################################
 @app.route('/checkout' , methods=['POST', 'GET'])
 def checkout():
     user = session.get('logged_in_user')
@@ -211,33 +209,31 @@ def checkout():
         flash("You have nothing in your cart.", "error")
         return redirect(url_for("cart"))
     return render_template('users/checkout.html', form=form, subtotal_price=subtotal_price, total_amount=total_amount, discount=discount)
-
-
+####################################################################################
 @app.route('/receipt/<ruid>', methods=['GET'])
 def show_receipt(ruid):
     item = itemcontroller.get_receipt_by_UID(ruid)
     if not item:
         abort(404)
     return render_template("users/receipt.html", receipt=item)
-
+####################################################################################
 @app.route('/allreceipt')
 def show_all_receipt():
     username = session.get('logged_in_user')
     all_receipt = itemcontroller.get_all_receipt_by_name(username)
     return render_template('users/showallreceipt.html', receipts=all_receipt)
-
-
+####################################################################################
 @app.route('/feedback')
 def feedback():
     return render_template('feedback.html')
-
+####################################################################################
 @app.route('/login')
 def login():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
         return render_template('home.html')
-
+####################################################################################
 @app.route('/login/validation', methods=['POST'])
 def do_user_login():
     username = request.form['username']
@@ -248,9 +244,7 @@ def do_user_login():
         session['logged_in_user'] = username
 
     return redirect(url_for("login"))
-
-
-
+####################################################################################
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = customer_registration()
@@ -266,23 +260,13 @@ def register():
             flash("you have failed to register, something went wrong, try again", "error")
 
     return render_template('register.html', form=form)
-
+####################################################################################
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session['logged_in'] = False
     session['logged_in_user'] = ''
     return redirect(url_for('home'))
-
-
-
-
-
-
-
-
-
-
-
+####################################################################################
 # To add custom error 404 page
 @app.errorhandler(404)
 def not_found(e):
@@ -302,12 +286,6 @@ def not_found(e):
 @app.errorhandler(500)
 def not_found(e):
     return render_template('error_pages/500.html'), 500
-
-
-# @app.route('/account/changepassword', methods = ['GET', 'POST'])
-# def change_pass():
-#     return render_template("base.html")
-
-
+####################################################################################
 if __name__ == '__main__':
  app.run(debug=True)

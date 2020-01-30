@@ -2,6 +2,8 @@ from backend.coupon import *
 import shelve
 import pickle
 
+
+
 class coupon_factory:
     def __init__(self):
         pass
@@ -17,19 +19,17 @@ class coupon_factory:
         finally:
             s.close()
         return items
-
-
-
+####################################################################################
     def deserialize(self, dict):
         try:
             return pickle.loads(dict)
         except:
             return None
-
+####################################################################################
     def create_coupon(self, dict):
         c1 = Coupon(dict['UID'], dict['couponcode'],dict['percentage'],dict['discountlimit'], dict['minimumspent'], dict['expiredate'])
         return c1
-
+####################################################################################
     def check_coupon(self,coupon_code):
         #returns the coupons
         s = shelve.open(settings.COUPON_DB)
@@ -52,13 +52,11 @@ class coupon_factory:
                 return i
         return None
 
-
         def from_json(cls, json_str):
             json_dict = json.loads(json_str)
             return cls(**json_dict)
 
-
-    def delete_db_coupon(self, couponuid):
+####################################################################################    def delete_db_coupon(self, couponuid):
         #delete item from shelve database
         s = shelve.open(settings.COUPON_DB)
         try:

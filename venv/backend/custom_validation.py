@@ -1,6 +1,5 @@
 import re
 
-
 class validate_coupon_UID(object):
     """
     Validates whether coupon UID is unique

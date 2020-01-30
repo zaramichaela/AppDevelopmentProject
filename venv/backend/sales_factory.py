@@ -5,9 +5,8 @@ from backend.sales_entry import *
 from backend.sales_services import *
 from backend.sales_package import *
 from backend.sales_receipt import *
-
-import jsons
 import pickle
+
 
 #class for creating objects using dictionary
 #doesnt save
@@ -41,7 +40,6 @@ class sales_factory:
             return None
 
 
-
     #create package items
     #can be use to generate a new one or recreate from database
     #dictionary defined
@@ -53,7 +51,6 @@ class sales_factory:
         except Exception as e:
             print(e)
             return None
-
 
 
     def deserialize(self, dict):
@@ -76,6 +73,7 @@ class sales_factory:
             s.close()
         return items
 
+
     # return all services from service database
     def get_all_services_db(self):
         items = []
@@ -86,6 +84,7 @@ class sales_factory:
         finally:
             s.close()
         return items
+
 
     #return all packages from package database
     def get_all_packages_db(self):
@@ -98,6 +97,7 @@ class sales_factory:
             s.close()
         return items
 
+
     #return all packages from package database
     def get_all_receipt_db(self):
         items = []
@@ -108,6 +108,7 @@ class sales_factory:
         finally:
             s.close()
         return items
+
 
     #get a item with the specific UID
     def get_items(self, UID):
@@ -122,6 +123,7 @@ class sales_factory:
             s.close()
         return self.__create_items(item)
 
+
     #get service with the UID
     def get_services(self, UID):
         #get shop services with UID
@@ -135,6 +137,7 @@ class sales_factory:
             s.close()
         return self.__create_services(service)
 
+
     #get the package with UID
     def get_package(self, UID):
         package = None
@@ -144,6 +147,7 @@ class sales_factory:
         finally:
             s.close()
         return self.__create_package(package)
+
 
     #for buying a product. will add to a new database
     def buy_product(self, user, salesitem, quantity=1):
@@ -162,6 +166,7 @@ class sales_factory:
             return False
         finally:
             s.close()
+
 
     def delete_db_service(self, serviceuid):
         #delete service from shelve database

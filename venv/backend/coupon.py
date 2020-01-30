@@ -59,7 +59,7 @@ class Coupon:
             print("percentage cannot be 0")
             return 0
 
-
+    # dumps() is to serialize an object hierarchy
     def serialize(self):
         return pickle.dumps(self)
 

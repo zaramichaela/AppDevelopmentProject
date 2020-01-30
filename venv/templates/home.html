@@ -1,15 +1,21 @@
+<!--Template for all user sides-->
 {% extends 'base.html' %}
 
+<!--Name of the page (shown in title of web page-->
 {% block title %}
 Home | Karen's TCM
 {% endblock %}
 
+<!--Name of the page-->
 {%block pagetitle %}
 Home
 {% endblock %}
 
+<!--Override pagebanner from base.html, keeping it empty-->
+<!--Essentially removing page banner-->
 {% block Pagebanner %}
 {% endblock %}
+
 {% block body %}
     <section id="home-section" class="hero">
 		  <div class="home-slider owl-carousel">
