@@ -200,21 +200,6 @@ class items_controller:
 ######################################################################
 
 
-    def reduce_items_stock(self, itemuid, quantity):
-    #reduce item stocks and create a new sales_entry as logging purposes
-        item = self.get_item_by_UID(itemuid)
-        if(item):
-            stocks = item.get_stocks()
-            if(stocks > quantity):
-                item.set_stocks(stocks-quantity)
-                return True
-            else:
-                flash("Error, Your purchase quantity is higher than available stocks for the item " + item.get_name(), "error")
-                return False
-        else:
-            flash("Error, item with the UID " + itemuid +"is not available", "error")
-            return False
-
 
 ######################################
 #for buying items
@@ -227,9 +212,11 @@ class items_controller:
             item_obj = self.get_item_by_UID(i['itemuid'])
             if(item_obj):
                 quantity = i['quantity']
+                stocks = item_obj.get_stocks()
                 entry = sales_entry(item_obj, quantity)
                 sales_list.append(entry)
                 subtotal_price = subtotal_price + entry.get_total_price()
+                item_obj.set_stocks(stocks - quantity)
         if(coupon):
             total_amount = subtotal_price
             sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, total_amount,coupon, users_details)
