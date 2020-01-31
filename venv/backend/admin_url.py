@@ -52,8 +52,8 @@ def add_coupons():
     context = {}
     cform = coupon_form()
     if request.method == 'POST' and cform.validate():
-        if(itemcontroller.get_coupon_by_UID(cform.UID.data)):
-            flash("You have input an UID that exists, please try again.")
+        if(itemcontroller.get_coupon_by_UID(cform.UID.data) or itemcontroller.get_coupon_by_code(cform.couponcode.data)):
+            flash("You have input an UID or coupon code that exists, please try again.", "error")
             return render_template('admin/adding/create_coupons.html', form=cform, message=context)
         new_coupon = itemcontroller.create_and_save_coupon(cform.data)
         if(new_coupon.save()):
@@ -392,6 +392,10 @@ def edit_coupon(couponid):
     form = edit_coupon_form(formdata=request.form, obj=item)
 
     if request.method == 'POST' and form.validate():
+
+        if(itemcontroller.get_coupon_by_code(form.couponcode.data)):
+            flash("You have input an UID or coupon code that exists, please try again.", "error")
+            return render_template('admin/editing/edit_coupons.html', form=form, message=context, item=item)
         itemcontroller.remove_sales_coupon(item)
         update_form = form.data.copy()
         update_form["UID"] = item.get_UID()

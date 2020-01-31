@@ -169,6 +169,7 @@ def cart():
             #this part is when coupon code is inputted, it will check and update if it is valid by how much you save
             code = request.form.get('code')
             session['code'] = code
+            print(session.get('code'))
             coupon = itemcontroller.get_coupon_by_code(code)
             if coupon:
                 if coupon.check_validity():
@@ -203,22 +204,24 @@ def about():
 @app.route('/checkout' , methods=['POST', 'GET'])
 @user_authorize
 def checkout():
+    code = session.get('code')
     user = session.get('logged_in_user')
-    # if(not user):
-    #     flash("Login or create an account first.", "error")
-    #     return redirect(url_for('login'))
-    form = checkout_form()
     items = session.get("cart")
     discount = session.get('discount')
     subtotal_price = session.get('subtotal_price')
     total_amount = session.get('total_amount')
-    code = session.get('code')
-    voucher = itemcontroller.get_coupon_by_UID(code)
+    form = checkout_form()
+    voucher = itemcontroller.get_coupon_by_code(code)
+    print(voucher)
     if(items):
         if form.validate_on_submit() and request.method == "POST":
             user = create_user_details(form.data, user)
-            receipt = itemcontroller.checkout_items_users(items, voucher, user)
-            return redirect(url_for("show_receipt", ruid=receipt.get_UID()))
+            receiptz = itemcontroller.checkout_items_users(items, voucher, user)
+            session.pop('cart', None)
+            session.pop('discount', None)
+            session.pop('subtotal_price', None)
+            session.pop('total_amount', None)
+            return redirect(url_for("show_receipt", ruid=receiptz.get_UID()))
     else:
         flash("You have nothing in your cart.", "error")
         return redirect(url_for("cart"))

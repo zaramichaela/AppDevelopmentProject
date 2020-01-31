@@ -203,7 +203,8 @@ class items_controller:
 
 ######################################
 #for buying items
-    def checkout_items_users(self, object_lists, coupon, users_details):
+    def checkout_items_users(self, object_lists, ccoupon, users_details):
+        print(ccoupon)
         sales_list = []
         subtotal_price = 0
         sales_rept = None
@@ -214,13 +215,17 @@ class items_controller:
                 quantity = i['quantity']
                 stocks = item_obj.get_stocks()
                 entry = sales_entry(item_obj, quantity)
+                self.__all_items.remove(item_obj)
                 sales_list.append(entry)
                 subtotal_price = subtotal_price + entry.get_total_price()
                 item_obj.set_stocks(stocks - quantity)
-        if(coupon):
+                item_obj.save()
+                print(ccoupon)
+        if(ccoupon):
             total_amount = subtotal_price
-            sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, total_amount,coupon, users_details)
-        sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, subtotal_price,None, users_details)
+            sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, subtotal_price, ccoupon, users_details)
+        else:
+            sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, subtotal_price,None, users_details)
         sales_rept.save()
         self.__all_receipt.append(sales_rept)
         print(sales_rept)
