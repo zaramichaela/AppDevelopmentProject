@@ -91,7 +91,7 @@ min-height: 20vh;
 }
 
 .nav-color {
-  background: #c2a942;
+  background: #3f6ad8;
 }
 
 /*//////////////////////////////////////////////////////////////////
@@ -371,7 +371,7 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  background: #c2a942;
+  background: #3f6ad8;
 }
 
 .focus-input100::after {
@@ -399,7 +399,7 @@ iframe {
 
 .input100:focus + .focus-input100::after {
   left: 23px;
-  color: #c2a942;
+  color:#3f6ad8;
 }
 
 .input100:focus + .focus-input100::before {
@@ -408,7 +408,7 @@ iframe {
 
 .has-val.input100 + .focus-input100::after {
   left: 23px;
-  color: #c2a942;
+  color: #3f6ad8;
 }
 
 .has-val.input100 + .focus-input100::before {
@@ -452,7 +452,7 @@ iframe {
   height: 42px;
   border-radius: 21px;
 
-  background: #c2a942;
+  background:#3f6ad8;
 
   position: relative;
   z-index: 1;
