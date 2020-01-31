@@ -6,7 +6,7 @@
 <!--this macro prints sales item in a table format-->
 {% macro render_item_table(i) %}
         <td>
-            <center><img src='/{{i.get_image_url()}}' class="img600"/></center>
+            <center><img src='/{{i.get_image_url()}}' style="width:300px;height:250px;" class="img600"/></center>
         </td>
         <td>
             {{i.get_UID()}}

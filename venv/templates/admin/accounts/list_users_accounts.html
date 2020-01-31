@@ -1,4 +1,4 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin_base.html' %}
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
@@ -13,6 +13,11 @@
 {% block title %}
 All Users
 {% endblock %}
+
+{% block pagetitle %}
+All Users
+{% endblock %}
+
 {% block body %}
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}

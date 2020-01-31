@@ -1,5 +1,10 @@
-{% extends "admin/base.html" %}
-{% block title %}Feedback{% endblock %}
+{% extends "admin/admin_base.html" %}
+{% block title %} Update Feedback{% endblock %}
+
+
+{% block pagetitle %}
+Update Feedback
+{% endblock %}
 
 {% block body %}
 {% from "includes/_formHelper.html" import render_field %}
@@ -10,7 +15,9 @@
 <script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/tables.js') }}"></script>
 
 
-<div class="tables">
+<div class="main-card mb-3 card">
+
+<div class="card-body">
 <h1 class="display-4">Update Feedback</h1>
 <form method="POST">
 
@@ -37,5 +44,6 @@
     </div>
  <input type="submit" value="Submit" class="btn btn-primary"/>
 </form>
+</div>
 </div>
 {% endblock %}

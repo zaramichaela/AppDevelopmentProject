@@ -1,6 +1,7 @@
 <!--all these macro functions helps to organize the project and allow cleaner html files-->
 {% macro render_field(field) %} <!--  -->
 <!--displays uid/name/description/price's label-->
+<div class="position-relative form-group">
   <dt>{{ field.label }}
 <!--**kwargs is any attribute that is inserted in   -->
 <!--field() is to insert input box-->
@@ -17,4 +18,6 @@
     </ul>
   {% endif %}
   </dd>
+</div>
+
 {% endmacro %}

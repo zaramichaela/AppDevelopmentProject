@@ -1,8 +1,13 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin_base.html' %}
 
 {% block title %}
-List a new supplier
+List A New Supplier
 {% endblock %}
+
+{% block pagetitle %}
+List A New Supplier
+{% endblock %}
+
 {%block body %}
 
 
@@ -23,13 +28,12 @@ List a new supplier
   {% endif %}
 {% endwith %}
 
-<div class="row d-flex justify-content-center">
+<div class="main-card mb-3 card">
+
+<div class="card-body">
 
 {% from "admin/adding/_formhelper.html" import render_field %}
-<div class="forms col-md-6">
-    <div class="title">
-<h1 class="title1">Create Suppliers</h1>
-</div>
+
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}

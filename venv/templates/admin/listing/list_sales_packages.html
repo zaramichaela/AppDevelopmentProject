@@ -1,4 +1,9 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin_base.html' %}
+
+
+{% block pagetitle %}
+All Packages
+{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
@@ -84,4 +89,3 @@ All Packages
 </table>
 {%endblock %}
 </div>
-

@@ -21,6 +21,30 @@
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
 <link href="/static/assets/main.css" rel="stylesheet"></head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sidenav.css') }}">
+<script type='text/javascript'>
+function preview_image(event)
+{
+ var reader = new FileReader();
+ reader.onload = function()
+ {
+  var output = document.getElementById('output_image');
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
+
+{%block head%}
+{% endblock %}
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
@@ -72,7 +96,7 @@
                                 <div class="widget-content-left">
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="static/assets/images/avatars/1.png" alt="">
+                                            <img width="42" class="rounded-circle" src="/static/assets/images/avatars/1.png" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
@@ -433,13 +457,13 @@
                                           <li>
                                               <a href="{{ url_for('admin_pages.list_sales_items') }}">
                                                   <i class="metismenu-icon"></i>
-                                                    List All
+                                                    View All Items
                                               </a>
                                           </li>
                                           <li>
                                               <a href="{{ url_for('admin_pages.add_shop_item') }}">
                                                   <i class="metismenu-icon">
-                                                  </i> Add
+                                                  </i> Add New Items
                                               </a>
                                           </li>
                                       </ul>
@@ -461,13 +485,13 @@
                                             <li>
                                                 <a href="{{ url_for('admin_pages.list_sales_services') }}">
                                                     <i class="metismenu-icon"></i>
-                                                      List All
+                                                      View All Services
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="{{ url_for('admin_pages.add_shop_service') }}">
                                                     <i class="metismenu-icon">
-                                                    </i> Add
+                                                    </i> Add New Service
                                                 </a>
                                             </li>
                                         </ul>
@@ -490,13 +514,13 @@
                                             <li>
                                                 <a href="{{ url_for('admin_pages.list_sales_packages') }}">
                                                     <i class="metismenu-icon"></i>
-                                                      List All
+                                                      View All Packages
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="{{ url_for('admin_pages.add_shop_package') }}">
                                                     <i class="metismenu-icon">
-                                                    </i> Add
+                                                    </i> Add New Packages
                                                 </a>
                                             </li>
                                         </ul>
@@ -512,20 +536,20 @@
                                     <li>
                                         <a href="#">
                                             <i class="metismenu-icon pe-7s-diamond"></i>
-                                            Shop items
+                                            Coupons
                                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                         </a>
                                         <ul>
                                             <li>
                                                 <a href="{{ url_for('admin_pages.list_coupons') }}">
                                                     <i class="metismenu-icon"></i>
-                                                      List All
+                                                      View All Coupons
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="{{ url_for('admin_pages.add_coupons') }}">
                                                     <i class="metismenu-icon">
-                                                    </i> Add
+                                                    </i> Add New Coupons
                                                 </a>
                                             </li>
                                         </ul>
@@ -535,135 +559,135 @@
                                   <!-- END OF COUPON -->
 
                                   <!-- START OF ACCOUNTS COMPONENT -->
-                                <li class="app-sidebar__heading"></li>
+
+                                  <li class="app-sidebar__heading">Accounts</li>
+                                <li>
+                                  <!-- START OF ADMIN -->
+                                    <a href="#">
+                                        <i class="metismenu-icon pe-7s-car"></i>
+                                        Admin
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                      <li>
+                                          <a href="{{ url_for('admin_pages.list_admin_accounts') }}">
+                                              <i class="metismenu-icon">
+                                              </i>View All Admin Accounts
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a href="{{ url_for('admin_pages.create_admin_accounts') }}">
+                                              <i class="metismenu-icon">
+                                              </i>Create New Admin Accounts
+                                          </a>
+                                      </li>
+                                    </ul>
+                                </li>
+
+                                <!-- END OF ADMIN -->
+
+                                <!-- START OF USERS ACCOUNT -->
 
                                 <li>
 
                                     <a href="#">
                                         <i class="metismenu-icon pe-7s-car"></i>
-                                        Components
+                                        Users
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
-                                    <ul
-
-
-
-
-
-
-
-
-
-
-
-                                    >
+                                    <ul>
                                         <li>
-                                            <a href="components-tabs.html">
+                                            <a href="{{ url_for('admin_pages.list_users_accounts') }}">
                                                 <i class="metismenu-icon">
-                                                </i>Tabs
+                                                </i>List All Users Account
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <!-- START OF SUPPLIERS -->
+
+                                <li class="app-sidebar__heading">Suppliers</li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Suppliers
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.list_suppliers') }}">
+                                                <i class="metismenu-icon"></i>
+                                                  List All Suppliers
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="components-accordions.html">
+                                            <a href="{{ url_for('admin_pages.create_suppliers') }}">
                                                 <i class="metismenu-icon">
-                                                </i>Accordions
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="components-notifications.html">
-                                                <i class="metismenu-icon">
-                                                </i>Notifications
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="components-modals.html">
-                                                <i class="metismenu-icon">
-                                                </i>Modals
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="components-progress-bar.html">
-                                                <i class="metismenu-icon">
-                                                </i>Progress Bar
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="components-tooltips-popovers.html">
-                                                <i class="metismenu-icon">
-                                                </i>Tooltips &amp; Popovers
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="components-carousel.html">
-                                                <i class="metismenu-icon">
-                                                </i>Carousel
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="components-calendar.html">
-                                                <i class="metismenu-icon">
-                                                </i>Calendar
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="components-pagination.html">
-                                                <i class="metismenu-icon">
-                                                </i>Pagination
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="components-scrollable-elements.html">
-                                                <i class="metismenu-icon">
-                                                </i>Scrollable
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="components-maps.html">
-                                                <i class="metismenu-icon">
-                                                </i>Maps
+                                                </i> Add New Suppliers
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li  >
-                                    <a href="tables-regular.html">
-                                        <i class="metismenu-icon pe-7s-display2"></i>
-                                        Tables
-                                    </a>
-                                </li>
-                                <li class="app-sidebar__heading">Widgets</li>
+                                <!-- END OF SUPPLIERS -->
+
+                                <!-- START OF FEEDBACK -->
+                                <li class="app-sidebar__heading">FEEDBACK</li>
+
                                 <li>
-                                    <a href="dashboard-boxes.html">
-                                        <i class="metismenu-icon pe-7s-display2"></i>
-                                        Dashboard Boxes
+                                    <a href="#">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Feedback
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
+                                    <ul>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.retrieveFeedback') }}">
+                                                <i class="metismenu-icon"></i>
+                                                  View All Feedback
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.stats') }}">
+                                                <i class="metismenu-icon">
+                                                </i> Table Statistic
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.stats1') }}">
+                                                <i class="metismenu-icon">
+                                                </i> Graph
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li class="app-sidebar__heading">Forms</li>
+                                <!-- END OF FEEDBACK -->
+
                                 <li>
-                                    <a href="forms-controls.html">
-                                        <i class="metismenu-icon pe-7s-mouse">
-                                        </i>Forms Controls
+                                    <a href="#">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        Suppliers's Orders
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
+                                    <ul>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.list_suppliers_orders') }}">
+                                                <i class="metismenu-icon"></i>
+                                                  List All Orders
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.create_suppliers_orders') }}">
+                                                <i class="metismenu-icon">
+                                                </i> Order From Suppliers
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <a href="forms-layouts.html">
-                                        <i class="metismenu-icon pe-7s-eyedropper">
-                                        </i>Forms Layouts
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="forms-validation.html">
-                                        <i class="metismenu-icon pe-7s-pendrive">
-                                        </i>Forms Validation
-                                    </a>
-                                </li>
-                                <li class="app-sidebar__heading">Charts</li>
-                                <li>
-                                    <a href="charts-chartjs.html">
-                                        <i class="metismenu-icon pe-7s-graph2">
-                                        </i>ChartJS
-                                    </a>
-                                </li>
+
+
+
                             </ul>
                         </div>
                     </div>
@@ -683,8 +707,9 @@
                                 </div>
                         </div>
                     </div>
+                    {% block body %}
+                    {% endblock %}
 
-                <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
 <script type="text/javascript" src="/static/assets/scripts/main.js"></script></body>

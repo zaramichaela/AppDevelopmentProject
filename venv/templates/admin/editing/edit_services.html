@@ -1,8 +1,12 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin_base.html' %}
 
 {%block title %}
-editing service #{{item.get_UID()}} | K's TCM Administration
+Edit service #{{item.get_UID()}} | K's TCM Administration
 {%endblock %}
+
+{% block pagetitle %}
+Edit Service #{{item.get_UID()}}
+{% endblock %}
 
 {%block body %}
 
@@ -13,15 +17,11 @@ editing service #{{item.get_UID()}} | K's TCM Administration
 {% endif %}
 
 
-    </ul>
-      </div>    <!-- Optional JavaScript -->
-<div class="row d-flex justify-content-center">
+<div class="main-card mb-3 card">
 
+<div class="card-body">
 {% from "admin/adding/_formhelper.html" import render_field %}
-<div class="forms col-md-6">
-    <div class="title">
-<h1 class="title1">Edit service #{{item.get_UID()}}</h1>
-</div>
+
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}

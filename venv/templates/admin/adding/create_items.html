@@ -1,10 +1,16 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin_base.html' %}
 
 {% block head %}
 {% endblock %}
 {%block title %}
-Add a new Item | K's TCM Administration
+Add A New Item | K's TCM Administration
 {%endblock %}
+
+
+
+{% block pagetitle %}
+Add A New Item
+{% endblock %}
 
 {%block body %}
 
@@ -35,13 +41,9 @@ Add a new Item | K's TCM Administration
 {% from "admin/adding/_formhelper.html" import render_field %}
 
 
-<div class="row d-flex justify-content-center">
+<div class="main-card mb-3 card">
 
-
-<div class="forms col-md-6">
-    <div class="title">
-<h1 class="title1">Add a new shop item</h1>
-</div>
+<div class="card-body">
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
@@ -58,6 +60,7 @@ Add a new Item | K's TCM Administration
     {{form.submit(class="btn btn-primary")}}
         </dl>
 </form>
+</div>
 </div>
 </div>
 

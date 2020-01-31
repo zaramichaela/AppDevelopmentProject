@@ -1,4 +1,4 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin_base.html' %}
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
@@ -16,6 +16,10 @@
 
 {% block title %}
 List Suppliers
+{% endblock %}
+
+{% block pagetitle %}
+List Supplier
 {% endblock %}
 
 {% block body %}

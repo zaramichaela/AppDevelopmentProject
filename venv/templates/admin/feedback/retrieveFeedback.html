@@ -1,6 +1,11 @@
 
-{% extends "admin/base.html" %}
+{% extends "admin/admin_base.html" %}
 {% block title %}All Feedback {% endblock %}
+
+
+{% block pagetitle %}
+All Feedback
+{% endblock %}
 
 {% block body %}
 <script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/tables.js') }}"></script>
@@ -10,9 +15,9 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
 
-<div class="tables">
-    <H1 class="title1" style="text-align: left;">All Feedback</H1>
+<div class="main-card mb-3 card">
 
+<div class="card-body">
 
 <div>
     {% if count == 0 %}
@@ -68,6 +73,7 @@
         {% endfor %}
         </tbody>
     </table>
+</div>
 </div>
 
 

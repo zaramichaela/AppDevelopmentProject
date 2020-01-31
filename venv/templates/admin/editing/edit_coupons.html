@@ -1,7 +1,11 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin_base.html' %}
 
 {% block title %}
 Edit Coupons #{{item.get_UID()}} | K's TCM Administration
+{% endblock %}
+
+{% block pagetitle %}
+Edit Coupons #{{item.get_UID()}}
 {% endblock %}
 
 {% block head%}
@@ -31,16 +35,17 @@ Edit Coupons #{{item.get_UID()}} | K's TCM Administration
 </div>
 {% endif %}
 
+{% block pagetitle %}
+Edit coupon #{{item.get_UID()}}
+{% endblock %}
 
 
 
-<div class="row d-flex justify-content-center">
 
+<div class="main-card mb-3 card">
+
+<div class="card-body">
 {% from "admin/adding/_formhelper.html" import render_field %}
-<div class="forms col-md-6">
-    <div class="title">
-<h1 class="title1">Edit coupon #{{item.get_UID()}}</h1>
-</div>
 
 
 				{% with messages = get_flashed_messages() %}

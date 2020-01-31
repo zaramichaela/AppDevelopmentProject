@@ -1,7 +1,11 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin_base.html' %}
 
 {%block title %}
-Add a new Coupon | K's TCM Administration
+Add A New Coupon | K's TCM Administration
+{% endblock %}
+
+{%block pagetitle %}
+Add A New Coupon
 {% endblock %}
 
 {% block head%}
@@ -48,14 +52,13 @@ Add a new Coupon | K's TCM Administration
   {% endif %}
 {% endwith %}
 
-<div class="row d-flex justify-content-center">
+
+<div class="main-card mb-3 card">
+
+<div class="card-body">
 
 <!-- import render field from form helper -->
 {% from "admin/adding/_formhelper.html" import render_field %}
-<div class="forms col-md-6">
-    <div class="title">
-<h1 class="title1">Add a new coupon</h1>
-</div>
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
       <dl>
