@@ -6,6 +6,9 @@
 Feedback Statistics Table
 {% endblock %}
 
+{% block icon %}
+<i class="fas fa-eye"></i>
+{% endblock %}
 
 {% block body %}
 {% from "includes/_formHelper.html" import render_field %}
@@ -13,7 +16,6 @@ Feedback Statistics Table
 <link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
 <div class="tables">
     <table class = 'table table-striped'>
-        <h1 class="title1" style="text-align: left;">Feedback Statistics Table</h1>
         <a href="{{url_for('admin_pages.stats1')}}"><button class="btn btn-primary" style="text-align: center;"> View Statistics Graph</button></a>
         <thead>
         <br>

@@ -1,13 +1,16 @@
 {% extends 'admin/admin_base.html' %}
 
 {%block title %}
-editing item #{{item.get_UID()}} | K's TCM Administration
+Edit Item #{{item.get_UID()}} | K's TCM Administration
 {%endblock %}
 
 {%block pagetitle %}
-Edit item #{{item.get_UID()}}
+Edit Item #{{item.get_UID()}}
 {%endblock %}
 
+{% block icon %}
+<i class="fas fa-edit"></i>
+{% endblock %}
 
 {%block body %}
 

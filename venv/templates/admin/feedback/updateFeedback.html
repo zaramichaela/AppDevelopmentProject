@@ -6,6 +6,10 @@
 Update Feedback
 {% endblock %}
 
+{% block icon %}
+<i class="fas fa-edit"></i>
+{% endblock %}
+
 {% block body %}
 {% from "includes/_formHelper.html" import render_field %}
 
@@ -18,7 +22,6 @@ Update Feedback
 <div class="main-card mb-3 card">
 
 <div class="card-body">
-<h1 class="display-4">Update Feedback</h1>
 <form method="POST">
 
  <fieldset disabled="disabled">

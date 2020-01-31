@@ -5,6 +5,10 @@
 Feedback Statistic Graph
 {% endblock %}
 
+{% block icon %}
+<i class="fas fa-eye"></i>
+{% endblock %}
+
 {% block body %}
 <head>
   <meta charset="utf-8" />
@@ -18,7 +22,6 @@ Feedback Statistic Graph
 
     <div class="tables">
         <center>
-    <h1 class="title1" style="text-align: center; font-family: "Roboto", sans-serif;">Feedback Statistics Graph</h1>
             </center>
        <center><a href="{{url_for('admin_pages.stats')}}"><button class="btn btn-primary" style="text-align: center;"> View Statistics Table</button></a>
            </center>

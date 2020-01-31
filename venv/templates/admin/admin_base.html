@@ -127,9 +127,6 @@ function preview_image(event)
             </div>
         </div>
                 <div class="ui-theme-settings">
-            <button type="button" id="TooltipDemo" class="btn-open-options btn btn-warning">
-                <i class="fa fa-cog fa-w-16 fa-spin fa-2x"></i>
-            </button>
             <div class="theme-settings__inner">
                 <div class="scrollbar-container">
                     <div class="theme-settings__options-wrapper">
@@ -441,7 +438,7 @@ function preview_image(event)
                               <li class="app-sidebar__heading">Dashboards</li>
                               <li>
                                   <a href="{{ url_for('admin_pages.admin') }}" class="mm-active">
-                                      <i class="metismenu-icon pe-7s-rocket"></i>
+                                      <i class="fas fa-chart-line"></i>
                                       Dashboard
                                   </a>
                               </li>
@@ -451,7 +448,7 @@ function preview_image(event)
                                 <li>
                                   <li>
                                       <a href="#">
-                                          <i class="metismenu-icon pe-7s-diamond"></i>
+                                          <i class="fas fa-store"></i>
                                           Items
                                           <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                       </a>
@@ -479,7 +476,7 @@ function preview_image(event)
                                   <li>
                                     <li>
                                         <a href="#">
-                                            <i class="metismenu-icon pe-7s-diamond"></i>
+                                            <i class="fas fa-concierge-bell"></i>
                                             Services
                                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                         </a>
@@ -508,7 +505,7 @@ function preview_image(event)
                                   <li>
                                     <li>
                                         <a href="#">
-                                            <i class="metismenu-icon pe-7s-diamond"></i>
+                                            <i class="fas fa-box-open"></i>
                                             Packages
                                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                         </a>
@@ -537,7 +534,7 @@ function preview_image(event)
                                   <li>
                                     <li>
                                         <a href="#">
-                                            <i class="metismenu-icon pe-7s-diamond"></i>
+                                            <i class="fas fa-percentage"></i>
                                             Coupons
                                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                         </a>
@@ -566,7 +563,7 @@ function preview_image(event)
                                 <li>
                                   <!-- START OF ADMIN -->
                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-car"></i>
+                                        <i class="fas fa-user-lock"></i>
                                         Admin
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
@@ -593,7 +590,7 @@ function preview_image(event)
                                 <li>
 
                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-car"></i>
+                                        <i class="fas fa-users"></i>
                                         Users
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
@@ -613,7 +610,7 @@ function preview_image(event)
 
                                 <li>
                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        <i class="fas fa-dolly-flatbed"></i>
                                         Suppliers
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
@@ -639,7 +636,7 @@ function preview_image(event)
 
                                 <li>
                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        <i class="fas fa-comments"></i>
                                         Feedback
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
@@ -668,7 +665,7 @@ function preview_image(event)
 
                                 <li>
                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        <i class="fas fa-paste"></i>
                                         Suppliers's Orders
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
@@ -699,8 +696,10 @@ function preview_image(event)
                             <div class="page-title-wrapper">
                                 <div class="page-title-heading">
                                     <div class="page-title-icon">
-                                        <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                                        {% block icon %}
+                                        <i class="fas fa-plus">
                                         </i>
+                                        {% endblock %}
                                     </div>
                                     <div>{%block pagetitle %} pagetitle {% endblock %}
                                         <div class="page-title-subheading">
