@@ -11,7 +11,7 @@ from login.user_account import user_account
 from backend.forms import checkout_form
 from backend.user_details import *
 from backend.forms import CreateFeedbackForm, UpdateFeedbackForm
-
+from functools import wraps
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
@@ -21,6 +21,7 @@ app.register_blueprint(admin_pages) #split url to 2 files: admin_url and init
 ####################################################################################
 #main items controller
 ####################################################################################
+
 
 
 UPLOAD_FOLDER = '/uploads/'
@@ -42,6 +43,18 @@ def shop():
     sales_items = itemcontroller.get_all_sales_items()
     return render_template('users/shop.html', items = sales_items)
 ####################################################################################
+def user_authorize(f):
+    @wraps(f)
+    def decorated_function(*args, **kws):
+        if(session.get('logged_in_user')):
+            return f(*args, **kws)
+        else:
+            flash("You must login/register first before checking out.")
+            return redirect(url_for("login"))
+    return decorated_function
+####################################################################################
+
+
 @app.route('/contactus', methods=['GET', 'POST'])
 def contact():
     createFeedbackForm = CreateFeedbackForm(request.form)
@@ -188,6 +201,7 @@ def about():
     return render_template('about.html')
 ####################################################################################
 @app.route('/checkout' , methods=['POST', 'GET'])
+@user_authorize
 def checkout():
     user = session.get('logged_in_user')
     # if(not user):

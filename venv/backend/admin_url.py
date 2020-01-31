@@ -26,7 +26,7 @@ def admin():
     if not session.get('admin_logged_in'):
         return render_template('admin/admin_login.html')
     else:
-        return render_template('admin/base.html')
+        return render_template('admin/admin_base.html')
 ####################################################################################
 @admin_pages.route('/admin/login', methods=['POST'])
 def do_admin_login():
