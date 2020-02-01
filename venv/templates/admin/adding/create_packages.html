@@ -9,6 +9,11 @@ Add A New Package
 {% endblock %}
 {%block body %}
 
+
+{% block head%}
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/add.ico" />
+{% endblock %}
+
 {% if message.message %}
 <div class="alert alert-success" role="alert">
   {{ message.message }}
