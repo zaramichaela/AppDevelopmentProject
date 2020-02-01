@@ -170,9 +170,15 @@ def cart():
         for i in items:
             #this is the getting of the item object, and calculating total price for each item * quantity.
             cart_item = dict()
-            cart_item['item'] = itemcontroller.get_item_by_UID(i['itemuid'])
+            item = itemcontroller.get_item_by_UID(i['itemuid'])
+            cart_item['item'] = item
             if(cart_item['item']):
-                cart_item['quantity'] = i['quantity']
+                stocks = item.get_stocks()
+                if(stocks < i['quantity']):
+                    cart_item['quantity'] = stocks
+                    flash("Quantity selected is more than stocks available.", "stockserror") 
+                else:
+                    cart_item['quantity'] = i['quantity']
                 cart_item['total'] = int(i['quantity']) * cart_item['item'].price_after_discount()
                 cart_list.append(cart_item)
                 subtotal_price = subtotal_price + cart_item['total']
