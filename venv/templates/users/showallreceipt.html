@@ -7,6 +7,11 @@
 
 
  {% block body %}
+ <style>
+	.clickable-row  {
+	cursor: pointer;
+	}
+</style>
 <script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/tables.js') }}"></script>
 
     <section class="ftco-section ftco-cart">
@@ -35,18 +40,16 @@
 	    				<table class="table">
 						    <thead class="thead-primary ">
 						      <tr class="text-center">
-						        <th>UID</th>
 						        <th>Date</th>
-						        <th></th>
-						        <th></th>
-						        <th></th>
+								  <th>UID</th>
+						        <th>Number of Items</th>
 						        <th>Total</th>
 						      </tr>
 						    </thead>
 						    <tbody>
-							{% from "users/_cart_helper.html" import list_receipt_item %}
+							{% from "users/_cart_helper.html" import list_receipt %}
 							{% for i in receipts %}
-							{{  }}
+							{{ list_receipt(i) }}
 							{% endfor %}
 						    </tbody>
 						  </table>
@@ -63,40 +66,15 @@
 									$("#code").change(function() {
      								this.form.submit();
 									});
+									$(".clickable-row").click(function() {
+											window.location = $(this).data("href");
+									});
+
 								});
+
 								</script>
 
-    		<div class="row justify-content-start">
-    			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
-    				<div class="cart-total mb-3">
-    					<h3>Cart Totals</h3>
-    					<p class="d-flex">
-    						<span>Subtotal</span>
-							<span>${{'%0.2f'|format(subtotal_price|float)}}</span>
 
-    					</p>
-						<form method="POST" >
-    					<p class="d-flex" >
-
-    						<span>Coupon Code</span>
-
-    						<span ><input type="text" class="discount_voucher" id="code" name="code" value="{{code}}"/></span>
-
-    					</p>
-							</form>
-              <p class="d-flex">
-    						<span>Total Discount</span>
-    						<span id="discount">${{'%0.2f'|format(discount|float)}}</span>
-    					</p>
-    					<hr>
-    					<p class="d-flex total-price">
-    						<span><b>Total</b></span>
-							<span>${{'%0.2f'|format(total_amount|float)}}</span>
-    					</p>
-    				</div>
-    				<p class="text-center"><a  href="{{url_for('checkout')}}"  class="btn btn-primary py-3 px-4 {% if not cart_items %} disabled {% endif %}">Proceed to Checkout</a></p>
-    			</div>
-    		</div>
 			</div>
 		</section>
 

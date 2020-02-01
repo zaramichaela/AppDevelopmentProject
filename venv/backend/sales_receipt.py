@@ -3,13 +3,17 @@ from backend.sales_entry import *
 import pickle
 
 class sales_receipt(object):
-    def __init__(self,sales_UID, sales_entries, total,coupon, user ,  sales_datetime=datetime.today()):
+    def __init__(self,sales_UID, sales_entries, total,coupon, user ,  sales_datetime=datetime.today(), status="Proccessing"):
         self.sales_UID = sales_UID
         self.sales_datetime = sales_datetime
         self.sales_entries = sales_entries #list of sales_items
         self.total = total
         self.coupon = coupon
         self.user = user
+        self.status = status
+
+    def get_date(self):
+        return self.sales_datetime
 
     def get_number_entries(self):
         return len(self.sales_entries)
@@ -64,3 +68,24 @@ class sales_receipt(object):
 
     def serialize(self):
         return pickle.dumps(self)
+
+    def get_sales_count(self):
+        return len(self.sales_entries)
+
+    def get_status(self):
+        return self.status
+
+    def set_status_delivery(self):
+        self.status = "In Transit"
+
+    def set_status_complete(self):
+        self.status = "Completed"
+
+    def get_username(self):
+        return self.user.get_username()
+
+    def get_full_name(self):
+        return self.user.get_full_name()
+
+    def get_address(self):
+        return self.user.get_address()

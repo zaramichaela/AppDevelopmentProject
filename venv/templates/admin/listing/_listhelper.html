@@ -150,6 +150,40 @@
 {% endmacro %}
 
 
+
+{% macro render_receipt_table(i) %}
+      <td>
+          {{ i.get_date() }}
+      </td>
+        <td>
+            {{ i.get_UID() }}
+        </td>
+        <td>
+           {{ i.get_full_name() }}
+        </td>
+
+        <td>
+            {{ i.get_address() }}
+        </td>
+        <td>
+            {{ i.get_sales_count() }}
+        </td>
+        <td>
+           {{'%0.2f'|format(i.get_total()|float)}}
+        </td>
+        <td>
+            {{i.get_status()}}
+        </td>
+        <td>
+            <center>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_coupon', couponid=i.get_UID())}}">Edit</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_coupon', couponid=i.get_UID())}}">Delete</a>
+            </center>
+        </td>
+
+
+{% endmacro %}
+
 {% macro render_user_table(i) %}
         <td>
             {{i.get_username()}}

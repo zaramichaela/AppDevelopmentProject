@@ -801,3 +801,13 @@ def stats1():
     return render_template('admin/feedback/StatGraph.html', title = 'Feedback - Statistics(Graph)', max = 20, labels = bar_labels, values = bar_values, TotalList = TotalList, JanList = JanList, FebList = FebList, MarList = MarList, AprList = AprList, MayList = MayList, JunList = JunList, JulList = JulList, AugList = AugList, SepList = SepList, OctList = OctList, NovList = NovList, DecList = DecList,
                            count = len(TotalList), jancount = len(JanList), febcount = len(FebList), marcount = len(MarList), aprcount = len(AprList), maycount = len(MayList), juncount = len(JunList), julcount = len(JulList), augcount = len(AugList), sepcount = len(SepList), octcount = len(OctList), novcount = len(NovList), deccount = len(DecList))
 ####################################################################################
+
+
+
+####################################################################################
+@admin_pages.route('/admin/receipts/view')
+@authorize
+def list_receipts_admin():
+    items = itemcontroller.get_all_receipt()
+    return render_template('admin/listing/list_receipts.html',items=items)
+####################################################################################

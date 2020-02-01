@@ -234,10 +234,12 @@ def show_receipt(ruid):
         abort(404)
     return render_template("users/receipt.html", receipt=item)
 ####################################################################################
-@app.route('/allreceipt')
+@app.route('/receipt/all')
+@user_authorize
 def show_all_receipt():
     username = session.get('logged_in_user')
     all_receipt = itemcontroller.get_all_receipt_by_name(username)
+    print(all_receipt)
     return render_template('users/showallreceipt.html', receipts=all_receipt)
 ####################################################################################
 @app.route('/feedback')
