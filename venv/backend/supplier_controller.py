@@ -37,8 +37,10 @@ class suppliers_controller:
 
     def update_sales_supplier(self, orderID, status):
         item = self.get_suppliers_orders_by_UID(orderID)
-        item.set_progress()
+        self.__suppliers_orders.remove(item)
+        item.set_progress(status)
         item.save()
+        self.__suppliers_orders.append(item)
 
 
     def create_and_save_suppliers(self, dict):
@@ -83,7 +85,7 @@ class suppliers_controller:
 
 def create_suppliers(dict):
     try:
-        sup = suppliers(dict["UID"],dict["name"], dict["address"], dict["phone_num"], dict["product"], dict["price"])
+        sup = suppliers(dict["UID"],dict["name"], dict["address"], dict["phone_num"], dict["p_UID"],dict["product"], dict["price"])
         return sup
     except Exception as e:
         print(e)
@@ -125,7 +127,7 @@ def delete_db_supplier_order(supplieruid):
 
 def create_supplier_orders(dict, sup):
     try:
-        order = supplier_orders( dict['UID'], sup.get_UID(), sup.get_name() , sup.get_product(), dict['number'], sup.get_price())
+        order = supplier_orders( dict['UID'], sup.get_UID(), sup.get_name() , sup.get_pUID(), sup.get_product(), dict['number'], sup.get_price())
         return order
     except Exception as e:
         print(e)

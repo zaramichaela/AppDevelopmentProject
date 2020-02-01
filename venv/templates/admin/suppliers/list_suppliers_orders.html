@@ -60,6 +60,10 @@ List Supplier Order
         <th class="th-sm">
             <center><b>Supplier Name</b></center>
         </th>
+
+        <th class="th-sm">
+            <center><b>Product UID</b></center>
+        </th>
         <th class="th-sm">
             <center><b>Product</b></center>
         </th>
@@ -72,15 +76,14 @@ List Supplier Order
         <th class="th-sm">
             <center><b>Progress</b></center>
         </th>
-
-<!--           <th class="th-sm" style="width:200px;">-->
-<!--            <center><b>Action</b></center>-->
-<!--        </th>-->
+           <th class="th-sm" style="width:200px;">
+            <center><b>Action</b></center>
+        </th>
 
     </thead>
     <tbody>
     </tr>
-    {% from "admin/listing/_listhelper.html" import render_suppliesrorder_table %}
+    {% from "admin/suppliers/_listhelper.html" import render_suppliesrorder_table %}
     {%for i in items %}
     <tr>
     {{ render_suppliesrorder_table(i) }}

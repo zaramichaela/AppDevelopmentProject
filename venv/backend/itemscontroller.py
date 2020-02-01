@@ -232,3 +232,13 @@ class items_controller:
         self.__all_receipt.append(sales_rept)
         print(sales_rept)
         return sales_rept
+
+
+    def item_received_suppliers(self, itemuid, quantity):
+        item = self.get_item_by_UID(itemuid)
+        if not item:
+            return False
+        self.__all_items.remove(item)
+        stocks =item.get_stocks() + quantity
+        item.set_stocks(stocks)
+        return True

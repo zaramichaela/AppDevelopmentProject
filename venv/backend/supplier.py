@@ -6,11 +6,12 @@ import pickle
 class suppliers(object):
 
     #overwrite super for adding stocks to shop items
-    def __init__(self, UID,name, address, phone_num,product,  price):
+    def __init__(self, UID,name, address, phone_num,product, p_UID,  price):
         self.__UID = UID
         self.__name = name
         self.__address = address
         self.__phone_num = phone_num
+        self.__pUID = p_UID
         self.__product = product
         self.__price = price
 
@@ -64,3 +65,7 @@ class suppliers(object):
     #convert to pickle to store in shelve
     def serialize(self):
         return pickle.dumps(self)
+
+
+    def get_pUID(self):
+        return self.__pUID

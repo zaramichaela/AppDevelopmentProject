@@ -60,8 +60,11 @@ List Suppliers
         <th class="th-sm">
             <center><b>Phone Number</b></center>
         </th>
-        <th class="th-sm">
-            <center><b>Brand</b></center>
+       <th class="th-sm">
+            <center><b>Product UID</b></center>
+        </th>
+         <th class="th-sm">
+            <center><b>Product</b></center>
         </th>
         <th class="th-sm">
             <center><b>Price</b></center>
@@ -73,7 +76,7 @@ List Suppliers
     </thead>
     <tbody>
     </tr>
-    {% from "admin/listing/_listhelper.html" import render_supplier_table %}
+    {% from "admin/suppliers/_listhelper.html" import render_supplier_table %}
     {%for i in items %}
     <tr>
     {{ render_supplier_table(i) }}

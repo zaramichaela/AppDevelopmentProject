@@ -134,7 +134,8 @@ class create_supplier(FlaskForm):
     name = StringField("Supplier Name: ", validators=[validators.Length(min=3, max=200), DataRequired()])
     address = TextAreaField("Address: ", validators=[validators.Length(min=5, max=2000), DataRequired()])
     phone_num = StringField("Phone Number: ",validators=[validators.Length(max=8), validators.Regexp(r'^(?:\+?65)?[689]\d{7}$', message= 'Phone number needs to start with 6,8 or 9'),DataRequired(message='You need to input a number!')])
-    product = StringField("Brand: ", validators=[DataRequired()])
+    p_UID = StringField("Product ID:", validators=[validators.Length(min=3, max=10),DataRequired()])
+    product = StringField("Product Name: ", validators=[DataRequired()])
     price = BetterDecimalField("Price: ", validators=[validators.NumberRange(min=1), DataRequired(message='You need to input a number!')])
     submit = SubmitField()
 ####################################################################################

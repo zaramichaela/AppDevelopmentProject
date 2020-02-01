@@ -545,6 +545,7 @@ def edit_suppliers(supplierid):
     else:
             form.UID.data = item.get_UID()
             form.name.data = item.get_name()
+            form.p_UID.data = item.get_p_UID()
             form.address.data = item.get_address()
             form.phone_num.data = item.get_phone_num()
             form.product.data = item.get_product()
@@ -590,9 +591,9 @@ def create_suppliers_orders():
 
         success_flag = suppliercontroller.create_and_save_supplier_order(form.data)
         if (not success_flag):
-            flash("Error, you cannot list a new supplier", "error")
+            flash("Error, you cannot make a new order", "error")
         else:
-            flash("A new supplier has been listed", "success")
+            flash("A new order has been made", "success")
             return redirect(url_for("admin_pages.list_suppliers_orders"))
     return render_template('admin/suppliers/create_suppliers_orders.html', form=form)
 ####################################################################################
@@ -602,8 +603,7 @@ def cancel_suppliers_order(orderid):
     item = suppliercontroller.get_suppliers_orders_by_UID(orderid)
     if(not item):
         abort(404)
-    item.set_progress("cancelled")
-    item.save()
+    suppliercontroller.update_sales_supplier(orderid, "Cancelled")
     flash("you have cancelled the order.", "success")
     return redirect(url_for("admin_pages.list_suppliers_orders"))
 ####################################################################################
@@ -613,11 +613,12 @@ def received_suppliers_order(orderid):
     item = suppliercontroller.get_suppliers_orders_by_UID(orderid)
     if(not item):
         abort(404)
-    suppliercontroller.remove_sales_supplier_order(item)
-    item.set_progress("received")
-    item.save()
-    suppliercontroller.add_supplier_order(item)
-    flash("you have received the order.", "success")
+    suppliercontroller.update_sales_supplier(orderid, "Received")
+    flag = itemcontroller.item_received_suppliers(item.get_pUID(), item.get_amt())
+    if(flag):
+        flash("you have received the order, item quantity has been added to the store.", "success")
+    else:
+        flash("you have received the order, but item does not exists, please add item manually.", "success")
     return redirect(url_for("admin_pages.list_suppliers_orders"))
 ####################################################################################
 @admin_pages.route('/admin/retrieveFeedback')
