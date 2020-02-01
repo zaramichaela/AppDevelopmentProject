@@ -3,9 +3,9 @@ from backend.sales_entry import *
 import pickle
 
 class sales_receipt(object):
-    def __init__(self,sales_UID, sales_entries, total,coupon, user ,  sales_datetime=datetime.today(), status="Proccessing"):
+    def __init__(self,sales_UID, sales_entries, total,coupon, user , status="Proccessing"):
         self.sales_UID = sales_UID
-        self.sales_datetime = sales_datetime
+        self.sales_datetime = datetime.today()
         self.sales_entries = sales_entries #list of sales_items
         self.total = total
         self.coupon = coupon

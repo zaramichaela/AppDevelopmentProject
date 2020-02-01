@@ -38,11 +38,24 @@ configure_uploads(app, (images,))
 def home():
     return render_template('home.html')
 ####################################################################################
-@app.route('/shop')
+@app.route('/shop/item')
 def shop():
     sales_items = itemcontroller.get_all_sales_items()
     return render_template('users/shop.html', items = sales_items)
 ####################################################################################
+####################################################################################
+@app.route('/shop/service')
+def shop_services():
+    sales_services = itemcontroller.get_all_sales_services()
+    return render_template('users/shop.html', items = sales_services)
+####################################################################################
+####################################################################################
+@app.route('/shop/packages')
+def shop_packages():
+    sales_package = itemcontroller.get_all_sales_packages()
+    return render_template('users/shop.html', items = sales_package)
+####################################################################################
+
 def user_authorize(f):
     @wraps(f)
     def decorated_function(*args, **kws):
