@@ -1,6 +1,11 @@
-
 {% extends "admin/admin_base.html" %}
+
+
 {% block title %}Feedback Statistics | K's TCM Administration{% endblock %}
+
+{% block head%}
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/eye.ico" />
+{% endblock %}
 
 {% block pagetitle %}
 Feedback Statistics Table
@@ -15,8 +20,8 @@ Feedback Statistics Table
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
 <div class="tables">
-    <table class = 'table table-striped'>
-        <a href="{{url_for('admin_pages.stats1')}}"><button class="btn btn-primary" style="text-align: center;"> View Statistics Graph</button></a>
+<table class = 'table table-striped'>
+    <a href="{{url_for('admin_pages.stats1')}}"><button class="btn btn-primary" style="text-align: center;"> View Statistics Graph</button></a>
         <thead>
         <br>
         <tr>

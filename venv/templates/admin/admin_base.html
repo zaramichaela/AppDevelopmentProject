@@ -46,6 +46,7 @@ function preview_image(event)
 
 
 {%block head%}
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 {% endblock %}
 <body>
 
@@ -101,6 +102,14 @@ function preview_image(event)
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
+                                        <div class="widget-content-left  ml-3 header-user-info">
+                                    <div class="widget-heading">
+                                    {{ session.get("admin_username") or Stranger }}
+                                    </div>
+                                    <div class="widget-subheading">
+                                        Administrator
+                                    </div>
+                                </div>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                             <a type="button" href="{{ url_for('admin_pages.change_admin_password') }}" tabindex="0" class="dropdown-item">Change Password</a>
                                             <!-- <h6 tabindex="-1" class="dropdown-header">Header</h6>
@@ -110,14 +119,7 @@ function preview_image(event)
                                         </div>
                                     </div>
                                 </div>
-                                <div class="widget-content-left  ml-3 header-user-info">
-                                    <div class="widget-heading">
-                                    {{ session.get("admin_username") or Stranger }}
-                                    </div>
-                                    <div class="widget-subheading">
-                                        Administrator
-                                    </div>
-                                </div>
+
                                 <div class="widget-content-right header-user-info ml-3">
                                     </button>
                                 </div>

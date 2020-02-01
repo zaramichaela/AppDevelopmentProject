@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
 
-{%block title %}Receipt # {{receipt.get_UID()}} | Karen's TCM {% endblock %}
-{%block pagetitle %}Receipt # {{receipt.get_UID()}}{% endblock %}
+{%block title %}
+Receipt # {{receipt.get_UID()}} | Karen's TCM
+{% endblock %}
+
+{%block pagetitle %}
+Receipt # {{receipt.get_UID()}}
+{% endblock %}
+
+
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/user_receipt.ico" />
+{% endblock %}
+
+
+
  {% block body %}
     <section class="ftco-section ftco-cart">
 			<div class="container">
