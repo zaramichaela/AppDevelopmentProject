@@ -221,6 +221,7 @@ class items_controller:
                 if(isinstance(item_obj, sales_items)):
                     item_obj.set_stocks(stocks - quantity)
                     item_obj.save()
+                    self.__all_items.append(item_obj)
                 print(ccoupon)
         if(ccoupon):
             total_amount = subtotal_price
