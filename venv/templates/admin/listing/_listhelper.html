@@ -161,6 +161,9 @@
         <td>
            {{ i.get_full_name() }}
         </td>
+        <td>
+           {{ i.get_username() }}
+        </td>
 
         <td>
             {{ i.get_address() }}
@@ -176,8 +179,8 @@
         </td>
         <td>
             <center>
-            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_coupon', couponid=i.get_UID())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_coupon', couponid=i.get_UID())}}">Delete</a>
+            <a class="btn btn-warning" href="{{url_for('admin_pages.receipts_delivery', ruid=i.get_UID())}}">Delivery</a>
+            <a class="btn btn-success" href="{{url_for('admin_pages.list_receipts_complete', ruid=i.get_UID())}}">Complete</a>
             </center>
         </td>
 

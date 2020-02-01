@@ -811,3 +811,25 @@ def list_receipts_admin():
     items = itemcontroller.get_all_receipt()
     return render_template('admin/listing/list_receipts.html',items=items)
 ####################################################################################
+####################################################################################
+@admin_pages.route('/admin/receipts/<ruid>/complete')
+@authorize
+def list_receipts_complete(ruid):
+    item = itemcontroller.get_receipt_by_UID(ruid)
+    if( not item):
+        abort(404)
+    item.set_status_complete()
+    flash("Status of receipt #" + ruid + " have changed to completed",  "success")
+    return redirect(url_for("admin_pages.list_receipts_admin"))
+####################################################################################
+####################################################################################
+@admin_pages.route('/admin/receipts//<ruid>/delivery')
+@authorize
+def receipts_delivery(ruid):
+    item = itemcontroller.get_receipt_by_UID(ruid)
+    if( not item):
+        abort(404)
+    item.set_status_delivery()
+    flash("Status of receipt #" + ruid + " have changed to delivery", "success")
+    return redirect(url_for("admin_pages.list_receipts_admin"))
+####################################################################################
