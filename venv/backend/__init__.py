@@ -49,7 +49,7 @@ def user_authorize(f):
         if(session.get('logged_in_user')):
             return f(*args, **kws)
         else:
-            flash("You must login/register first before checking out.")
+            flash("You must login/register first.")
             return redirect(url_for("login"))
     return decorated_function
 ####################################################################################

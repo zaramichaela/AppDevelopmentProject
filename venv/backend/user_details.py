@@ -1,5 +1,3 @@
-
-
 class user_details(object):
     def __init__(self,full_name ,country , street_addr, city, postal, phone, email, card_name, credit_card, exp_year, exp_month, CVV, user_login):
         self.full_name = full_name

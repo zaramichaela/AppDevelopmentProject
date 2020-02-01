@@ -76,6 +76,8 @@
 	          <li class="nav-item"><a href="{{url_for('about')}}" class="nav-link">About</a></li>
 <!--	          <li class="nav-item active"><a href="static/user/blog.html" class="nav-link">Blog</a></li>-->
 	          <li class="nav-item"><a href="{{url_for('contact')}}" class="nav-link">Contact</a></li>
+              <li class="nav-item"><a href="{{url_for('show_all_receipt')}}" class="nav-link">All Receipts</a></li>
+
 	          <li class="nav-item cta cta-colored"><a href="{{url_for('cart')}}" class="nav-link"><span class="icon-shopping_cart"></span>Cart [{% if session.get('cart') %}{{ session.get('cart')|length }}{% else %}{{0}}{%endif%}]</a></li>
 
 	        </ul>
