@@ -5,6 +5,12 @@
 <!--its is like a function and is able to accept parameters-->
 <!--this macro prints sales item in a table format-->
 {% macro render_item_table(i) %}
+{% if i.get_stocks() < 10 %} <style>
+.{{i.get_UID()}}
+{
+ color:red;
+ }
+</style> {% endif %}
         <td>
             <center><img src='/{{i.get_image_url()}}' style="width:300px;height:250px;" class="img600"/></center>
         </td>
@@ -26,8 +32,8 @@
         <td>
             {{'%.0f'|format(i.get_discount()|float)}}
         </td>
-        <td>
-            {{'%.0f'|format(i.get_stocks()|float)}}
+        <td class="{{i.get_UID()}}">
+            {{i.get_stocks()}}
         </td>
         <td>
             {{i.get_available_flag()}}

@@ -5,7 +5,7 @@
 
 
 {% block pagetitle %}
-	Shop
+	Services
 {% endblock %}
 
 {% block head %}
@@ -18,11 +18,11 @@
     		<div class="row">
     			<div class="col-md-8 col-lg-10 order-md-last">
     				<div class="row">
-							  {% from "users/_shophelper.html" import list_shop_item, list_shop_item_disabled %}
+							  {% from "users/_shophelper.html" import list_shop_service %}
 								{%for i in items %}
 
                                     {% if i.get_available_flag() %}
-									{{list_shop_item(i)}}
+									{{list_shop_service(i)}}
                                     {% endif %}
 								{% endfor %}
 		    		</div>
@@ -38,7 +38,7 @@
                      <div class="panel panel-default">
                          <div class="panel-heading" role="tab" id="headingOne">
                              <h4 class="panel-title">
-                                 <a data-toggle="collapse" data-parent="#accordion" href="#" aria-expanded="true" aria-controls="collapseOne">Medicine
+                                 <a href="{{url_for('shop')}}" >Medicine
                                  </a>
                              </h4>
                          </div>
@@ -46,7 +46,7 @@
                      <div class="panel panel-default">
                          <div class="panel-heading" role="tab" id="headingTwo">
                              <h4 class="panel-title">
-                                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#" aria-expanded="false" aria-controls="collapseTwo">Services
+                                 <a  href="{{url_for('shop_services')}}" >Services
                                  </a>
                              </h4>
                          </div>
@@ -54,7 +54,7 @@
                      <div class="panel panel-default">
                          <div class="panel-heading" role="tab" id="headingThree">
                              <h4 class="panel-title">
-                                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#" aria-expanded="false" aria-controls="collapseThree">Packages
+                                 <a  href="{{url_for('shop_packages')}}" >Packages
                                  </a>
                              </h4>
                          </div>

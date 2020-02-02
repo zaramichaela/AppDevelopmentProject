@@ -41,19 +41,24 @@ def home():
 @app.route('/shop/item')
 def shop():
     sales_items = itemcontroller.get_all_sales_items()
-    return render_template('users/shop.html', items = sales_items)
+    return render_template('users/shop_items.html', items = sales_items)
 ####################################################################################
 ####################################################################################
 @app.route('/shop/service')
 def shop_services():
     sales_services = itemcontroller.get_all_sales_services()
-    return render_template('users/shop.html', items = sales_services)
+    return render_template('users/shop_services.html', items = sales_services)
+####################################################################################
+@app.route('/shop/service/<serviceuid>')
+def shop_services_items(serviceuid):
+    sales_service = itemcontroller.get_all_sales_services(serviceuid)
+    return render_template('users/services.html', item = sales_service)
 ####################################################################################
 ####################################################################################
 @app.route('/shop/packages')
 def shop_packages():
     sales_package = itemcontroller.get_all_sales_packages()
-    return render_template('users/shop.html', items = sales_package)
+    return render_template('users/shop_packages.html', items = sales_package)
 ####################################################################################
 
 def user_authorize(f):

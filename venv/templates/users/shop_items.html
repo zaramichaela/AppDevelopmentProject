@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}
+	Shop | Karen's TCM
+{% endblock %}
+
+
+{% block pagetitle %}
+	Items
+{% endblock %}
+
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/user_shop.ico" />
+{% endblock %}
+
+{% block body %}
+    <section class="ftco-section bg-light">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-md-8 col-lg-10 order-md-last">
+    				<div class="row">
+							  {% from "users/_shophelper.html" import list_shop_item, list_shop_item_disabled %}
+								{%for i in items %}
+
+                                    {% if i.get_available_flag() %}
+									{{list_shop_item(i)}}
+                                    {% endif %}
+								{% endfor %}
+		    		</div>
+
+		    	</div>
+
+		    	<div class="col-md-4 col-lg-2">
+		    		<div class="sidebar">
+							<div class="sidebar-box-2">
+								<h2 class="heading">Categories</h2>
+								<div class="fancy-collapse-panel">
+                  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                     <div class="panel panel-default">
+                         <div class="panel-heading" role="tab" id="headingOne">
+                             <h4 class="panel-title">
+                                 <a  href="{{url_for('shop')}}">Medicine
+                                 </a>
+                             </h4>
+                         </div>
+                     </div>
+                     <div class="panel panel-default">
+                         <div class="panel-heading" role="tab" id="headingTwo">
+                             <h4 class="panel-title">
+                                 <a  href="{{url_for('shop_services')}}" >Services
+                                 </a>
+                             </h4>
+                         </div>
+                     </div>
+                     <div class="panel panel-default">
+                         <div class="panel-heading" role="tab" id="headingThree">
+                             <h4 class="panel-title">
+                                 <a  href="{{url_for('shop_packages')}}" >Packages
+                                 </a>
+                             </h4>
+                         </div>
+                     </div>
+
+                  </div>
+               </div>
+							</div>
+
+
+
+						</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+{% endblock%}

@@ -3,10 +3,6 @@
 
 {% block title %}Feedback Statistics | K's TCM Administration{% endblock %}
 
-{% block head%}
-<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/eye.ico" />
-{% endblock %}
-
 {% block pagetitle %}
 Feedback Statistics Table
 {% endblock %}
@@ -15,76 +11,95 @@ Feedback Statistics Table
 <i class="fas fa-eye"></i>
 {% endblock %}
 
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/eye.ico" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+<script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/tables.js') }}"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+{% endblock %}
+
 {% block body %}
 {% from "includes/_formHelper.html" import render_field %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
 <div class="tables">
-<table class = 'table table-striped'>
-    <a href="{{url_for('admin_pages.stats1')}}"><button class="btn btn-primary" style="text-align: center;"> View Statistics Graph</button></a>
+                        {% if count == 0 %}
+                    <p>Total Number of Feedbacks: None</p>
+                    {% elif count == 1 %}
+                    <p>Total Number of Feedbacks : 1</p>
+                    {% else %}
+                    <p>Total Number of Feedbacks : {{ count }}</p>
+                    {% endif %}
+    <br>
+<a href="{{url_for('admin_pages.stats1')}}"><button class="btn btn-primary" style="text-align: center;"> View Statistics Graph</button></a>
+    <br>
+<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"  id="sales_table">
+
         <thead>
         <br>
         <tr>
-            <th colspan = '2'>
-                <div>
-                    {% if count == 0 %}
-                    <p>Total Feedback: None</p>
-                    {% elif count == 1 %}
-                    <p>Total Feedback : 1</p>
-                    {% else %}
-                    <p>Total Feedback : {{ count }}</p>
-                    {% endif %}
-                </div>
+            <th class="th-sm">
+                Month
             </th>
+            <th class="th-sm">
+                Number of Feedbacks
+            </th>
+
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>January :</td>
+            <td>(01) January</td>
             <td>{{ jancount }}</td>
         </tr>
         <tr>
-            <td>February :</td>
+            <td>(02) February</td>
             <td>{{ febcount }}</td>
         </tr>
         <tr>
-            <td>March :</td>
+            <td>(03) March</td>
             <td>{{ marcount }}</td>
         </tr>
         <tr>
-            <td>April :</td>
+            <td>(04) April</td>
             <td>{{ aprcount }}</td>
         </tr>
         <tr>
-            <td>May :</td>
+            <td>(05) May</td>
             <td>{{ maycount }}</td>
         </tr>
         <tr>
-            <td>June :</td>
+            <td>(06) June</td>
             <td>{{ juncount }}</td>
         </tr>
         <tr>
-            <td>July :</td>
+            <td>(07) July</td>
             <td>{{ julcount }}</td>
         </tr>
         <tr>
-            <td>August :</td>
+            <td>(08) August</td>
             <td>{{ augcount }}</td>
         </tr>
         <tr>
-            <td>September :</td>
+            <td>(09) September</td>
             <td>{{ sepcount }}</td>
         </tr>
         <tr>
-            <td>October :</td>
+            <td>(10) October</td>
             <td>{{ octcount }}</td>
         </tr>
         <tr>
-            <td>November :</td>
+            <td>(11) November</td>
             <td>{{ novcount }}</td>
         </tr>
         <tr>
-            <td>December :</td>
+            <td>(12) December</td>
             <td>{{ deccount }}</td>
         </tr>
         </tbody>
