@@ -1,0 +1,41 @@
+{% extends 'admin/admin_base.html' %}
+
+{%block title %}
+Add A New Doctor | K's TCM Administration
+{% endblock %}
+
+{%block pagetitle %}
+Add A New Doctor
+{% endblock %}
+
+{% block head%}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/add.ico" />
+{% endblock %}
+
+{%block body %}
+
+<div class="main-card mb-3 card">
+
+<div class="card-body">
+
+<!-- import render field from form helper -->
+{% from "admin/adding/_formhelper.html" import render_field %}
+
+<form action="" method="POST" novalidate enctype="multipart/form-data">
+      <dl>
+          {{ form.csrf_token }}
+<!--          calls macro render_field for each form field, to display the form-->
+    {{ render_field(form.Name, class='form-control', placeholder="e.g. Tan Wei Ming") }}
+    {{ render_field(form.Specialities, class='form-control') }}
+    {{ render_field(form.gender, class='form-control') }}
+    {{ render_field(form.Profile, class='form-control', placeholder="e.g. Input description of the doctor. You may include things like their qualifications and certificates") }}
+    {{ render_field(form.Status, class='form-control', placeholder="e.g. 100.00") }}
+    {{ render_field(form.Image,  class='form-control') }}
+    {{form.submit(class="btn btn-primary")}}
+  </dl>
+</form>
+    </div>
+</div>
+{%endblock %}

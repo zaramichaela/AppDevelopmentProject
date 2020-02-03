@@ -49,7 +49,7 @@ class new_sales_item(FlaskForm):
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=3000) ,DataRequired()])
     price = BetterDecimalField("Actual Price: ", validators=[DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
-    stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
+    stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),input_required(message='You need to input a number!')])
     discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
 ####################################################################################

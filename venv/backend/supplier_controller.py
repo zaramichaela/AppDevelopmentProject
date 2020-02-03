@@ -58,6 +58,7 @@ class suppliers_controller:
 
         supplier_order = create_supplier_orders(dict, sup)
         print(supplier_order)
+
         supplier_order.save()
         self.__suppliers_orders.append(supplier_order)
         return supplier_order
