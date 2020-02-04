@@ -28,6 +28,9 @@ class Admin:
     def set_adminID(self, adminID):
         self.__adminID = adminID
 
+    def get_password(self):
+        return self.password_hash
+
 
 class User:
     countID = 0
@@ -38,7 +41,6 @@ class User:
         self.username = username
         self.email = email
         self.set_password(password)
-        self.password_hash = ""
 
     def get_userID(self):
         return self.__userID
@@ -54,14 +56,10 @@ class User:
 #            return True
 
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password, salt_length=10)
+        self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        if self.password_hash == password:
-            return True
-        else:
-            return False
-        # return check_password_hash(self.password_hash, password)
+        return check_password_hash(self.password_hash, password)
 
     def set_userID(self, userID):
         self.__userID = userID
@@ -69,3 +67,5 @@ class User:
     def set_email(self, email):
         self.__email = email
 
+    def get_password(self):
+        return self.password_hash

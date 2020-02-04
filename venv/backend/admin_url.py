@@ -2,7 +2,7 @@ from flask import Blueprint, abort
 from flask import render_template, request, flash,session,redirect, url_for
 from backend.forms import *
 from functools import wraps
-from login.forms import create_admin_account
+# from login.forms import create_admin_account
 from backend.settings import *
 from login.user_account import *
 from backend.doctorForm import CreatedoctorForm
@@ -24,24 +24,24 @@ def authorize(f):
             return redirect(url_for("admin_pages.admin"))
     return decorated_function
 ####################################################################################
-@admin_pages.route('/admin')
-def admin():
-    print(session.get('admin_logged_in'))
-    if not session.get('admin_logged_in'):
-        return render_template('admin/admin_login.html')
-    else:
-        return render_template('admin/admin_base.html')
-####################################################################################
-@admin_pages.route('/admin/login', methods=['POST'])
-def do_admin_login():
-    username = request.form['username']
-    password = request.form['password']
-    if(logincontroller.login_admin(username, password)):
-        session['admin_logged_in'] = True
-        session['admin_username'] = request.form['username']
-    else:
-        flash('Wrong credentials!', "error")
-    return redirect(url_for("admin_pages.admin"))
+# @admin_pages.route('/admin')
+# def admin():
+#     print(session.get('admin_logged_in'))
+#     if not session.get('admin_logged_in'):
+#         return render_template('admin/admin_login.html')
+#     else:
+#         return render_template('admin/admin_base.html')
+# ####################################################################################
+# @admin_pages.route('/admin/login', methods=['POST'])
+# def do_admin_login():
+#     username = request.form['username']
+#     password = request.form['password']
+#     if(logincontroller.login_admin(username, password)):
+#         session['admin_logged_in'] = True
+#         session['admin_username'] = request.form['username']
+#     else:
+#         flash('Wrong credentials!', "error")
+#     return redirect(url_for("admin_pages.admin"))
 ####################################################################################
 @admin_pages.route('/admin/logout')
 @authorize
@@ -933,3 +933,20 @@ def deletedoctor(id):
     db.close()
 
     return redirect(url_for('admin_pages.retrieveDoctor'))
+
+
+@admin_pages.route('/admin/retrieveUsers')
+@authorize
+def retrieveUsers():
+    usersDict = {}
+    db = shelve.open('users.db', 'r')
+    usersDict = db['Users']
+    db.close()
+
+    usersList = []
+    for key in usersDict:
+        user = usersDict.get(key)
+        print(user.get_username())
+        usersList.append(user)
+
+    return render_template('retrieveUsers.html', usersList=usersList, count=len(usersList))

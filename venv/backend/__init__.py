@@ -4,13 +4,13 @@ import shelve
 import backend.Feedback as Feedback
 from backend.admin_url import admin_pages
 from backend.settings import *
-from flask_login import LoginManager
-from login.forms import customer_registration
+# from login.forms import customer_registration
 from login.forms import UserRegistration, UserLogin, create_admin, AdminLogin
 from backend.user_details import *
 from backend.forms import CreateFeedbackForm, UpdateFeedbackForm,checkout_form,service_order
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
+from login.admin_and_users import *
 
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
@@ -415,28 +415,43 @@ def login():
             usersDict = db["Users"]
         except:
             print("Unable to access shelve")
+            abort(302)
 
         username = user_login.username.data
         password = user_login.password.data
-        password_hashing = generate_password_hash(password, salt_length=10)
+
 
         for id in usersDict:
-
             user = usersDict.get(id)
             if user.get_username() == username:
-                if user.check_password(password_hashing):
-                    session["loginUser"] = user.get_username()
-
-
-                return render_template('home.html', loginUser=session.get('loginUser'))
-        message = "Invalid Login"
-
-        return render_template('login.html', form=user_login, message=message)
+                if user.check_password(password):
+                    session['logged_in'] = True
+                    session["logged_in_user"] = user.get_username()
+                    return redirect(url_for("home"))
+        flash("Invalid details")
     return render_template('login.html', form=user_login)
 
 
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    userRegister = UserRegistration(request.form)
+    if request.method == 'POST' and userRegister.validate():
+        usersDict = {}
+        db = shelve.open('users.db', 'c')
+        try:
+            usersDict = db["Users"]
+        except:
+            print("Error in retrieving Users from users.db.")
+        #retard dont even save the fucking firstname last name. add for fuck.
+        user = User(userRegister.username.data, userRegister.email.data, userRegister.password.data)
+        usersDict[user.get_userID()] = user
+        db['Users'] = usersDict
+        db.close()
+        flash("You have successfully created your account, please login.", "success")
+        return redirect(url_for('login'))
+    return render_template('register.html', form=userRegister)
 
 
 
