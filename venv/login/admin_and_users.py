@@ -8,7 +8,6 @@ class Admin:
         self.__adminID = Admin.countID
         self.username = username
         self.set_password(password)
-        self.password_hash = ""
 
     def get_adminID(self):
         return self.__adminID
@@ -20,10 +19,7 @@ class Admin:
         self.password_hash = generate_password_hash(password, salt_length=10)
 
     def check_password(self, password):
-        if self.password_hash == password:
-            return True
-        else:
-            return False
+        return check_password_hash(self.password_hash, password)
 
     def set_adminID(self, adminID):
         self.__adminID = adminID

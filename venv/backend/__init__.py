@@ -5,7 +5,7 @@ import backend.Feedback as Feedback
 from backend.admin_url import admin_pages
 from backend.settings import *
 # from login.forms import customer_registration
-from login.forms import UserRegistration, UserLogin, create_admin, AdminLogin
+from login.forms import UserRegistration, UserLogin
 from backend.user_details import *
 from backend.forms import CreateFeedbackForm, UpdateFeedbackForm,checkout_form,service_order
 from functools import wraps
