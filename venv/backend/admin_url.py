@@ -545,7 +545,7 @@ def edit_suppliers(supplierid):
     else:
             form.UID.data = item.get_UID()
             form.name.data = item.get_name()
-            form.p_UID.data = item.get_p_UID()
+            form.p_UID.data = item.get_pUID()
             form.address.data = item.get_address()
             form.phone_num.data = item.get_phone_num()
             form.product.data = item.get_product()
