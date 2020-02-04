@@ -166,20 +166,25 @@ def add_item_to_cart(itemuid):
                 return redirect(url_for("shop_item", itemuid=itemuid))
             else:
                 flag = True
-                flash("item already exists in cart, increase quantity by " +  str(quantity), "success")
+                flash("item already exists in cart, increase quantity by " + str(quantity), "success")
                 break
 
     #if item is not in cart, add to cart
     if(not flag):
         appenditem = dict()
         appenditem['itemuid'] = itemuid
+        # get quantity from html form
         quantity = int(request.form['quantity'])
+        # if amount of items is less than or equal to total stocks, add and send
+        # confirmation message via flash
         if(int(quantity) <= item.get_stocks()):
             appenditem['quantity'] = quantity
             session['cart'].append(appenditem)
-            flash("item added to cart.", "success")
+            # success and error changes the colour of the flash message
+            # success = green, error = red
+            flash("Item added to cart.", "success")
         else:
-            flash("item not added to cart, quantity exceeds stocks available.", "error")
+            flash("Item not added to cart, quantity exceeds stocks available.", "error")
     return redirect(url_for("shop_item", itemuid=itemuid))
 ####################################################################################
 @app.route('/cart/delete/<itemuid>')
@@ -187,25 +192,32 @@ def del_cart_item(itemuid):
     items = session.get("cart")
     remove = None
     for i in items:
+        # find number of that item in cart and remove all quantities of that item
         if(itemuid ==  i['itemuid']):
             remove = i
     items.remove(remove)
+    # update cart
     session['cart'] = items
+    # show cart
     return redirect(url_for("cart"))
 ####################################################################################
-@app.route('/cart' , methods=['POST', 'GET'])
+@app.route('/cart', methods=['POST', 'GET'])
 def cart():
     #need to input coupon code,removing of items and others
     items = session.get("cart")
     cart_list = []
+    # there is no code unless there is an input in the field
     code = ''
+    # auto discount is 0.00
     discount = 0.00
-    total_amount = 0 # every item add together - discount
+    # every item add together - discount
+    total_amount = 0
     if(items):
-        subtotal_price = 0 #all items
+        # all items
+        subtotal_price = 0
         if request.method == 'POST' and request.form.get('quantity'):
-            #get value from the individual form of the uid and quantity
-            #when quantity is change, it will update the session item quantity
+            # get value from the individual form of the uid and quantity
+            # when quantity is change, it will update the session item quantity
             quantity_f = int(request.form['quantity'])
             itemuid_f = request.form['UID']
 
