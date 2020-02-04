@@ -5,6 +5,10 @@ from functools import wraps
 from login.forms import create_admin_account
 from backend.settings import *
 from login.user_account import *
+from backend.doctorForm import CreatedoctorForm
+from backend.Doctor import *
+import backend.Doctor
+
 
 
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
@@ -288,8 +292,10 @@ def edit_item(itemid):
     form = edit_sales_item()
     if request.method == 'POST' and form.validate_on_submit():
         file_ = request.files["image"]
-        if(file_):
-            file_.save(ITEMSDIR+item.get_UID())
+        # if(file_):
+        #     if os.path.exists(ITEMSDIR + item.get_UID()):
+        #         os.remove(ITEMSDIR + item.get_UID())
+        file_.save(ITEMSDIR+item.get_UID())
         update_form = form.data.copy()
         update_form["UID"] = item.get_UID()
         update_form["image_url"] = ITEMSDIR + item.get_UID()
@@ -585,10 +591,11 @@ def create_suppliers_orders():
     form = buy_orders_supplier()
     form.supplier.choices = suppliercontroller.get_choice()
     if request.method == 'POST' and form.validate():
+
         if(suppliercontroller.get_suppliers_orders_by_UID(form.UID.data)):
             flash("Error, UID exists, please choose another UID", "error")
-            return render_template('admin/suppliers/create_suppliers.html', form=form)
-
+        #   print("GG")
+            return render_template('admin/suppliers/create_suppliers_orders.html', form=form)
         success_flag = suppliercontroller.create_and_save_supplier_order(form.data)
         if (not success_flag):
             flash("Error, you cannot make a new order", "error")
@@ -834,3 +841,95 @@ def receipts_delivery(ruid):
     flash("Status of receipt #" + ruid + " have changed to delivery", "success")
     return redirect(url_for("admin_pages.list_receipts_admin"))
 ####################################################################################
+@admin_pages.route('/admin/doctor/createdoctor', methods=['GET', 'POST'])
+@authorize
+def createdoctor():
+    createdoctorForm = CreatedoctorForm()
+    if request.method == 'POST' and createdoctorForm.validate():
+        doctorsdict = {}
+        db = shelve.open('docstorage.db', 'c')
+
+        try:
+            doctorsdict = db['doctor']
+        except:
+            print("Error in retrieving doctor Profile from docstorage.db.")
+        f = createdoctorForm.Image.data
+        f.save(DOCTORDIR + createdoctorForm.Name.data)
+        image_url = DOCTORDIR + createdoctorForm.Name.data
+        doctor = Doctor(createdoctorForm.Name.data, createdoctorForm.Specialities.data, createdoctorForm.gender.data, createdoctorForm.Profile.data, createdoctorForm.Status.data,image_url )
+
+        doctorsdict[doctor.get_doctorID()] = doctor
+        db['doctor'] = doctorsdict
+        db.close()
+        return redirect(url_for('admin_pages.retrieveDoctor'))
+    return render_template('admin/doctor/createdoctor.html', form=createdoctorForm)
+
+@admin_pages.route('/admin/doctor/retrievedoctor')
+@authorize
+def retrieveDoctor():
+    doctorsDict = {}
+    try:
+        db = shelve.open('docstorage.db', 'r')
+        doctorsDict = db['doctor']
+        db.close()
+    except:
+        pass
+    #
+    doctorsList = []
+    for key in doctorsDict:
+        doctor = doctorsDict.get(key)
+        doctorsList.append(doctor)
+
+    return render_template('admin/doctor/retrieveDoctor.html', doctorsList=doctorsList, count=len(doctorsList))
+
+@admin_pages.route('/admin/doctor/updatedoctor/<int:id>', methods=['GET','POST'])
+@authorize
+def updatedoctor(id):
+    print(id)
+    updatedoctorForm = CreatedoctorForm(request.form)
+    if request.method == 'POST' and updatedoctorForm.validate():
+         doctorsDict = {}
+         db = shelve.open('docstorage.db', 'w')
+         doctorsDict = db['doctor']
+         doctor = doctorsDict.get(id)
+         doctor.set_Name(updatedoctorForm.Name.data)
+         doctor.set_Specialities(updatedoctorForm.Specialities.data)
+         doctor.set_gender(updatedoctorForm.gender.data)
+         doctor.set_Profile(updatedoctorForm.Profile.data)
+         doctor.set_Status(updatedoctorForm.Status.data)
+         doctor.set_Image(updatedoctorForm.Image.data)
+         db['doctor'] = doctorsDict
+         db.close()
+
+         return redirect(url_for('admin_pages.retrieveDoctor'))
+
+    else:
+         print('In here')
+         doctorsDict = {}
+         db = shelve.open('docstorage.db', 'r')
+         doctorsDict = db['doctor']
+         db.close()
+         doctor = doctorsDict.get(id)
+         print(doctor.get_Name())
+         updatedoctorForm.Name.data = doctor.get_Name()
+         updatedoctorForm.Specialities.data = doctor.get_Specialities()
+         updatedoctorForm.gender.data = doctor.get_gender()
+         updatedoctorForm.Profile.data = doctor.get_Profile()
+         updatedoctorForm.Status.data = doctor.get_Status()
+         updatedoctorForm.Image.data = doctor.get_Image()
+
+         return render_template('admin/doctor/updatedoctor.html',form=updatedoctorForm)
+
+@admin_pages.route('/admin/doctor/deleteDoctor/<int:id>', methods=['POST'])
+@authorize
+def deletedoctor(id):
+    doctorDict = {}
+    db = shelve.open('docstorage.db', 'w')
+    doctorDict = db['doctor']
+
+    doctorDict.pop(id)
+
+    db['doctor'] = doctorDict
+    db.close()
+
+    return redirect(url_for('admin_pages.retrieveDoctor'))

@@ -49,7 +49,7 @@ class new_sales_item(FlaskForm):
     description = TextAreaField("Description: ", validators=[validators.Length(min=5, max=3000) ,DataRequired()])
     price = BetterDecimalField("Actual Price: ", validators=[DataRequired(message='You need to input a number!')])
     image = FileField("Image of product: ", validators=[FileAllowed(images ,'Image only!'), FileRequired('File was empty!')])
-    stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),DataRequired(message='You need to input a number!')])
+    stocks = IntegerField("Stocks amount: ",  validators=[validators.NumberRange(min=1),input_required(message='You need to input a number!')])
     discount = IntegerField("Discount(%): ", validators=[validators.NumberRange(min=0, max=100), validators.input_required()])
     submit = SubmitField()
 ####################################################################################
@@ -163,7 +163,7 @@ class checkout_form(FlaskForm):
     phone = StringField("Phone *: ", validators=[validators.Regexp(r'^(?:\+?65)?[689]\d{7}$', message= 'Phone number needs to start with 6,8 or 9'),validators.Length(min=3, max=200), DataRequired()])
     email = StringField("Email Address *: ", validators=[validators.Regexp(r'^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$', message= 'Your email is invalid. Please check your email address.'),validators.Length(min=3, max=200), DataRequired()])
     card_name = StringField(" Name on Card *: ", validators=[validators.Length(min=3, max=200), DataRequired()])
-    credit_card = StringField(" Credit card number *: ", validators=[validators.Regexp(r'^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$'),validators.Length(min=3, max=200), DataRequired()])
+    credit_card = StringField(" Credit card number *: ", validators=[validators.Regexp(r'^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}$'),validators.Length(min=3, max=200), DataRequired()])
     exp_month = SelectField(" Expiry Month *: ", validators=[ DataRequired()], choices=[('01', '01'), ('02', '02'), ('03', '03'), ('04', '04'), ('05', '05'), ('06', '06'), ('07', '07'), ('08', '08'), ('09', '09'), ('10', '10'), ('11', '11'), ('12', '12')])
     exp_year = SelectField(" Expiry Year *: ", validators=[validators.Length(min=3, max=200), DataRequired()], choices=[('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023'), ('2024', '2024'), ('2025', '2025'), ('2026', '2026')])
     CVV = StringField(" CVV / CSV *: ", validators=[validators.Length(min=3, max=4), DataRequired()])

@@ -85,7 +85,7 @@ def contact():
 
         except:
             print(Exception)
-            print("Error in retrieving Users from storage.db.")
+            print("Error in retrieving Users from feedstorage.db.")
 
         feedback = Feedback.Feedback(createFeedbackForm.firstName.data, createFeedbackForm.email.data, createFeedbackForm.category.data, createFeedbackForm.feedback.data, createFeedbackForm.status.data, date= date.today())
         usersDict[feedback.get_userID()] = feedback

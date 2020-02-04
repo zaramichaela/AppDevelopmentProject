@@ -12,6 +12,7 @@ USER_DB = "user.db"
 ITEMSDIR= 'static/uploads/items/'
 PACKAGEDIR = 'static/uploads/packages/'
 SERVICEDIR = 'static/uploads/services/'
+DOCTORDIR = 'static/uploads/doctors/'
 SUPPLIERS_DB = "suppliers.db"
 ORDER_DB = "suppliers_order.db"
 USER_ORDER_DB = "user_order.db"

@@ -236,9 +236,13 @@ class items_controller:
 
     def item_received_suppliers(self, itemuid, quantity):
         item = self.get_item_by_UID(itemuid)
+        print(itemuid)
         if not item:
+            print("item not found")
             return False
         self.__all_items.remove(item)
         stocks =item.get_stocks() + quantity
         item.set_stocks(stocks)
+        item.save()
+        self.__all_items.append(item)
         return True
