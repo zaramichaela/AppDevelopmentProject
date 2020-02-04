@@ -967,6 +967,7 @@ def admin():
     return render_template('/admin/admin_login.html', form=adm_login)
 
 @admin_pages.route('/admin/accounts/create', methods=['GET', 'POST'])
+@authorize
 def create_admin_accounts():
     createAdmin = create_admin(request.form)
     if request.method == 'POST' and createAdmin.validate():
@@ -985,6 +986,7 @@ def create_admin_accounts():
         admin = adminsDict[admin.get_adminID()]
 
         db.close()
+        flash("An admin account is created", "success")
         return redirect(url_for('admin_pages.admin'))
     return render_template('/admin/accounts/create_admin_accounts.html', form=createAdmin)
 
@@ -992,12 +994,12 @@ def create_admin_accounts():
 
 
 
-@admin_pages.route('/admin/retrieveUsers')
+@admin_pages.route('/admin/accounts/admins')
 @authorize
 def list_admin_accounts():
     usersDict = {}
-    db = shelve.open('users.db', 'r')
-    usersDict = db['Users']
+    db = shelve.open('admins.db', 'r')
+    usersDict = db['Admin']
     db.close()
 
     usersList = []
@@ -1006,4 +1008,18 @@ def list_admin_accounts():
         print(user.get_username())
         usersList.append(user)
 
-    return render_template('admin/accounts/list_admin_accounts.html', items=usersList, count=len(usersList))
+    return render_template('admin/accounts/list_admin_accounts.html', adminList=usersList, count=len(usersList))
+
+@admin_pages.route('/admin/accounts/admin/<int:id>/delete', methods=['POST'])
+@authorize
+def delete_admin(id):
+    adminsDict = {}
+    db = shelve.open('admins.db', 'w')
+    adminsDict = db['Admin']
+
+    adminsDict.pop(id)
+
+    db['Admin'] = adminsDict
+    db.close()
+
+    return redirect(url_for('list_admin_accounts'))
