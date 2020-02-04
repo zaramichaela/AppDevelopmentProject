@@ -2,16 +2,16 @@ from flask import url_for, redirect, render_template, Flask, request, flash, ses
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 import shelve
 import backend.Feedback as Feedback
-from datetime import date
 from backend.admin_url import admin_pages
 from backend.settings import *
-from flask_login import LoginManager
-from login.forms import customer_registration
-from login.user_account import user_account
-from backend.forms import checkout_form
+# from login.forms import customer_registration
+from login.forms import UserRegistration, UserLogin
 from backend.user_details import *
-from backend.forms import CreateFeedbackForm, UpdateFeedbackForm
+from backend.forms import CreateFeedbackForm, UpdateFeedbackForm,checkout_form,service_order
 from functools import wraps
+from werkzeug.security import generate_password_hash, check_password_hash
+from login.admin_and_users import *
+
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
@@ -54,10 +54,24 @@ def shop_services():
 # eg: /shop/service/12345a
 @app.route('/shop/service/<serviceuid>')
 def shop_services_items(serviceuid):
+    form = service_order()
     sales_service = itemcontroller.get_all_sales_services(serviceuid)
-    return render_template('users/services.html', item = sales_service)
+    return render_template('users/services.html', item = sales_service, form = form)
 ####################################################################################
-####################################################################################
+# @app.route('/shop/service/<serviceuid>/book')
+# def shop_services_book(serviceuid):
+#     sales_service = itemcontroller.get_all_sales_services(serviceuid)
+#     date = request.form['date']
+#     time = request.form['time']
+#     appointment = appointment(date, time, user)
+#     return render_template('users/services.html', item = sales_service, form = form)
+# ####################################################################################
+# @app.route('/shop/service/appointments')
+# def shop_services_appointments(serviceuid):
+#     form = service_order()
+#     sales_service = itemcontroller.get_all_sales_services(serviceuid)
+#     return render_template('users/services.html', item = sales_service, form = form)
+# ####################################################################################
 # Unused at this point of time
 @app.route('/shop/packages')
 def shop_packages():
@@ -240,7 +254,7 @@ def cart():
                 stocks = item.get_stocks()
                 if(stocks < i['quantity']):
                     cart_item['quantity'] = stocks
-                    flash("Quantity selected is more than stocks available.", "stockserror") 
+                    flash("Quantity selected is more than stocks available.", "stockserror")
                 else:
                     cart_item['quantity'] = i['quantity']
                 cart_item['total'] = int(i['quantity']) * cart_item['item'].price_after_discount()
@@ -329,39 +343,39 @@ def show_all_receipt():
 def feedback():
     return render_template('feedback.html')
 ####################################################################################
-@app.route('/login')
-def login():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-    else:
-        return render_template('home.html')
+# @app.route('/login')
+# def login():
+#     if not session.get('logged_in'):
+#         return render_template('login.html')
+#     else:
+#         return render_template('home.html')
 ####################################################################################
-@app.route('/login/validation', methods=['POST'])
-def do_user_login():
-    username = request.form['username']
-    password = request.form['password']
-    user = logincontroller.login_user(username, password)
-    if user:
-        session['logged_in'] = True
-        session['logged_in_user'] = username
-
-    return redirect(url_for("login"))
+# @app.route('/login/validation', methods=['POST'])
+# def do_user_login():
+#     username = request.form['username']
+#     password = request.form['password']
+#     user = logincontroller.login_user(username, password)
+#     if user:
+#         session['logged_in'] = True
+#         session['logged_in_user'] = username
+#
+#     return redirect(url_for("login"))
 ####################################################################################
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = customer_registration()
-    if(logincontroller.find_user_username(form.username.data)):
-        flash("Username exists, please  choose another.", "error")
-    if request.method == 'POST' and form.validate():
-
-        flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
-        if(flag):
-            flash("You have registered, please login", "success")
-            return redirect(url_for('login'))
-        else:
-            flash("you have failed to register, something went wrong, try again", "error")
-
-    return render_template('register.html', form=form)
+# @app.route('/register', methods=['GET', 'POST'])
+# def register():
+#     form = customer_registration()
+#     if(logincontroller.find_user_username(form.username.data)):
+#         flash("Username exists, please  choose another.", "error")
+#     if request.method == 'POST' and form.validate():
+#
+#         flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
+#         if(flag):
+#             flash("You have registered, please login", "success")
+#             return redirect(url_for('login'))
+#         else:
+#             flash("you have failed to register, something went wrong, try again", "error")
+#
+#     return render_template('register.html', form=form)
 ####################################################################################
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -389,5 +403,83 @@ def not_found(e):
 def not_found(e):
     return render_template('error_pages/500.html'), 500
 ####################################################################################
+
+
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    user_login = UserLogin(request.form)
+
+    if request.method == "POST" and user_login.validate():
+
+        usersDict = {}
+        db = shelve.open("users.db", "r")
+
+        try:
+            usersDict = db["Users"]
+        except:
+            print("Unable to access shelve")
+            abort(302)
+
+        username = user_login.username.data
+        password = user_login.password.data
+
+
+        for id in usersDict:
+            user = usersDict.get(id)
+            if user.get_username() == username:
+                if user.check_password(password):
+                    session['logged_in'] = True
+                    session["logged_in_user"] = user.get_username()
+                    return redirect(url_for("home"))
+        flash("Invalid details")
+    return render_template('login.html', form=user_login)
+
+
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    userRegister = UserRegistration(request.form)
+    if request.method == 'POST' and userRegister.validate():
+        usersDict = {}
+        db = shelve.open('users.db', 'c')
+        try:
+            usersDict = db["Users"]
+        except:
+            print("Error in retrieving Users from users.db.")
+        #retard dont even save the fucking firstname last name. add for fuck.
+        user = User(userRegister.username.data, userRegister.email.data, userRegister.password.data)
+        usersDict[user.get_userID()] = user
+        db['Users'] = usersDict
+        db.close()
+        flash("You have successfully created your account, please login.", "success")
+        return redirect(url_for('login'))
+    return render_template('register.html', form=userRegister)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
  app.run(debug=True)

@@ -2,14 +2,13 @@ from flask import Blueprint, abort
 from flask import render_template, request, flash,session,redirect, url_for
 from backend.forms import *
 from functools import wraps
-from login.forms import create_admin_account
+# from login.forms import create_admin_account
 from backend.settings import *
 from login.user_account import *
 from backend.doctorForm import CreatedoctorForm
 from backend.Doctor import *
-import backend.Doctor
-
-
+from login.forms import create_admin, AdminLogin
+from login.admin_and_users import *
 
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
 
@@ -24,24 +23,24 @@ def authorize(f):
             return redirect(url_for("admin_pages.admin"))
     return decorated_function
 ####################################################################################
-@admin_pages.route('/admin')
-def admin():
-    print(session.get('admin_logged_in'))
-    if not session.get('admin_logged_in'):
-        return render_template('admin/admin_login.html')
-    else:
-        return render_template('admin/admin_base.html')
-####################################################################################
-@admin_pages.route('/admin/login', methods=['POST'])
-def do_admin_login():
-    username = request.form['username']
-    password = request.form['password']
-    if(logincontroller.login_admin(username, password)):
-        session['admin_logged_in'] = True
-        session['admin_username'] = request.form['username']
-    else:
-        flash('Wrong credentials!', "error")
-    return redirect(url_for("admin_pages.admin"))
+# @admin_pages.route('/admin')
+# def admin():
+#     print(session.get('admin_logged_in'))
+#     if not session.get('admin_logged_in'):
+#         return render_template('admin/admin_login.html')
+#     else:
+#         return render_template('admin/admin_base.html')
+# ####################################################################################
+# @admin_pages.route('/admin/login', methods=['POST'])
+# def do_admin_login():
+#     username = request.form['username']
+#     password = request.form['password']
+#     if(logincontroller.login_admin(username, password)):
+#         session['admin_logged_in'] = True
+#         session['admin_username'] = request.form['username']
+#     else:
+#         flash('Wrong credentials!', "error")
+#     return redirect(url_for("admin_pages.admin"))
 ####################################################################################
 @admin_pages.route('/admin/logout')
 @authorize
@@ -423,50 +422,50 @@ def edit_coupon(couponid):
             form.expiredate.data = item.get_expiredate()
     return render_template('admin/editing/edit_coupons.html', form=form, message=context, item=item)
 ####################################################################################
-@admin_pages.route('/admin/accounts/add', methods= ['GET','POST'])
-@authorize
-def create_admin_accounts():
-    context = {}
-    form = create_admin_account()
-    if request.method == 'POST' and form.validate():
-        success_flag = logincontroller.add_admin_account(form.username.data, form.password.data)
-        if (not success_flag):
-            flash("Error, you cannot create an account", "error")
-        else:
-            flash("Admin account created.", "success")
-        form = create_admin_account()
-    return render_template('admin/accounts/create_admin_accounts.html', form=form, message=context)
+# @admin_pages.route('/admin/accounts/add', methods= ['GET','POST'])
+# @authorize
+# def create_admin_accounts():
+#     context = {}
+#     form = create_admin_account()
+#     if request.method == 'POST' and form.validate():
+#         success_flag = logincontroller.add_admin_account(form.username.data, form.password.data)
+#         if (not success_flag):
+#             flash("Error, you cannot create an account", "error")
+#         else:
+#             flash("Admin account created.", "success")
+#         form = create_admin_account()
+#     return render_template('admin/accounts/create_admin_accounts.html', form=form, message=context)
 ####################################################################################
-@admin_pages.route('/admin/accounts/admin/view')
-@authorize
-def list_admin_accounts():
-    context = {}
-    items = logincontroller.get_all_admins()
-    return render_template('admin/accounts/list_admin_accounts.html',items=items)
-####################################################################################
-@admin_pages.route('/admin/accounts/admins/<username>/delete/')
-@authorize
-def del_admin_account(username):
-    flag = logincontroller.find_admin_username(username)
-    if flag:
-        a = logincontroller.delete_admin_account(username)
-        flash("You have deleted the admin user " + username, "success")
-    else:
-        flash("an error have occurred, please try again", "error")
-        abort(404)
-    return redirect(url_for("admin_pages.list_admin_accounts"))
-####################################################################################
-@admin_pages.route('/admin/accounts/admin/changepassword/', methods= ['GET','POST'])
-@authorize
-def change_admin_password():
-    context={}
-    item = logincontroller.find_user_username(session['admin_username'])
-    form = edit_admin_account()
-    if(request.method == "POST" and form.validate()):
-        username = session["admin_username"]
-        logincontroller.change_admin_password(username, form.old_password.data, form.password.data)
-    return render_template('admin/accounts/edit_admin_accounts.html',form =form,message=context)
-####################################################################################
+# @admin_pages.route('/admin/accounts/admin/view')
+# @authorize
+# def list_admin_accounts():
+#     context = {}
+#     items = logincontroller.get_all_admins()
+#     return render_template('admin/accounts/list_admin_accounts.html',items=items)
+# ####################################################################################
+# @admin_pages.route('/admin/accounts/admins/<username>/delete/')
+# @authorize
+# def del_admin_account(username):
+#     flag = logincontroller.find_admin_username(username)
+#     if flag:
+#         a = logincontroller.delete_admin_account(username)
+#         flash("You have deleted the admin user " + username, "success")
+#     else:
+#         flash("an error have occurred, please try again", "error")
+#         abort(404)
+#     return redirect(url_for("admin_pages.list_admin_accounts"))
+# ####################################################################################
+# @admin_pages.route('/admin/accounts/admin/changepassword/', methods= ['GET','POST'])
+# @authorize
+# def change_admin_password():
+#     context={}
+#     item = logincontroller.find_user_username(session['admin_username'])
+#     form = edit_admin_account()
+#     if(request.method == "POST" and form.validate()):
+#         username = session["admin_username"]
+#         logincontroller.change_admin_password(username, form.old_password.data, form.password.data)
+#     return render_template('admin/accounts/edit_admin_accounts.html',form =form,message=context)
+# ####################################################################################
 @admin_pages.route('/admin/accounts/users/view')
 @authorize
 def list_users_accounts():
@@ -933,3 +932,94 @@ def deletedoctor(id):
     db.close()
 
     return redirect(url_for('admin_pages.retrieveDoctor'))
+
+##################################################################################
+##################################################################################
+##################################################################################
+##################################################################################
+##################################################################################
+@admin_pages.route('/admin/', methods=['GET', 'POST'])
+def admin():
+    adm_login = AdminLogin(request.form)
+    if request.method == "POST" and adm_login.validate():
+
+        adminsDict = {}
+        db = shelve.open("admins.db", "r")
+
+        try:
+            adminsDict = db["Admin"]
+        except:
+            print("Unable to access shelve")
+
+        username = adm_login.username.data
+        password = adm_login.password.data
+        for id in adminsDict:
+            admin = adminsDict.get(id)
+            if admin.get_username() == username:
+                if admin.check_password(password):
+                    session['admin_logged_in'] = True
+                    session['admin_username'] = request.form['username']
+                return render_template('/admin/admin_base.html')
+
+        flash("Invalid Login, Please try again.", "error")
+
+        return render_template('/admin/admin_login.html', form=adm_login)
+    return render_template('/admin/admin_login.html', form=adm_login)
+
+@admin_pages.route('/admin/accounts/create', methods=['GET', 'POST'])
+@authorize
+def create_admin_accounts():
+    createAdmin = create_admin(request.form)
+    if request.method == 'POST' and createAdmin.validate():
+        adminsDict = {}
+        db = shelve.open('admins.db', 'c')
+        try:
+            adminsDict = db[createAdmin.username.data]
+        except:
+            print("Error in retrieving Admin from admin.db.")
+
+        admin = Admin(createAdmin.username.data, createAdmin.password.data)
+        adminsDict[admin.get_adminID()] = admin
+        db['Admin'] = adminsDict
+
+        adminsDict = db['Admin']
+        admin = adminsDict[admin.get_adminID()]
+
+        db.close()
+        flash("An admin account is created", "success")
+        return redirect(url_for('admin_pages.admin'))
+    return render_template('/admin/accounts/create_admin_accounts.html', form=createAdmin)
+
+
+
+
+
+@admin_pages.route('/admin/accounts/admins')
+@authorize
+def list_admin_accounts():
+    usersDict = {}
+    db = shelve.open('admins.db', 'r')
+    usersDict = db['Admin']
+    db.close()
+
+    usersList = []
+    for key in usersDict:
+        user = usersDict.get(key)
+        print(user.get_username())
+        usersList.append(user)
+
+    return render_template('admin/accounts/list_admin_accounts.html', adminList=usersList, count=len(usersList))
+
+@admin_pages.route('/admin/accounts/admin/<int:id>/delete', methods=['POST'])
+@authorize
+def delete_admin(id):
+    adminsDict = {}
+    db = shelve.open('admins.db', 'w')
+    adminsDict = db['Admin']
+
+    adminsDict.pop(id)
+
+    db['Admin'] = adminsDict
+    db.close()
+
+    return redirect(url_for('list_admin_accounts'))
