@@ -15,7 +15,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
-login = LoginManager(app)
 app.register_blueprint(admin_pages) #split url to 2 files: admin_url and init
 
 ####################################################################################
@@ -41,6 +40,8 @@ def home():
 @app.route('/shop/item')
 def shop():
     sales_items = itemcontroller.get_all_sales_items()
+    # itemcontroller controls all items (eg if you want to take out/put into db,
+    # use item controller (with exceptions)
     return render_template('users/shop_items.html', items = sales_items)
 ####################################################################################
 ####################################################################################
@@ -49,6 +50,8 @@ def shop_services():
     sales_services = itemcontroller.get_all_sales_services()
     return render_template('users/shop_services.html', items = sales_services)
 ####################################################################################
+# <serviceuid> will be taken from get_all_sales_services(serviceuid)
+# eg: /shop/service/12345a
 @app.route('/shop/service/<serviceuid>')
 def shop_services_items(serviceuid):
     form = service_order()
@@ -69,15 +72,42 @@ def shop_services_items(serviceuid):
 #     sales_service = itemcontroller.get_all_sales_services(serviceuid)
 #     return render_template('users/services.html', item = sales_service, form = form)
 # ####################################################################################
+# Unused at this point of time
 @app.route('/shop/packages')
 def shop_packages():
     sales_package = itemcontroller.get_all_sales_packages()
     return render_template('users/shop_packages.html', items = sales_package)
 ####################################################################################
-
+# requires users to be logged in before they can access certain functions like
+# viewing all receipts and checking out
 def user_authorize(f):
+    # f is function
     @wraps(f)
+    # this wraps the function
+##################################################################################
+    # The special syntax *args in function definitions in python is used
+    # to pass a variable number of arguments to a function. It is used to
+    # pass a non-keyworded, variable-length argument list.
+
+    # What *args allows you to do is take in more arguments than the number
+    # of formal arguments that you previously defined. With *args, any number of
+    # extra arguments can be tacked on to your current formal parameters
+    # (including zero extra arguments).
+
+    # For example : we want to make a multiply function that takes any number
+    # of arguments and able to multiply them all together. It can be done using
+    # *args.
+
+    # Using the *, the variable that we associate with the * becomes an iterable
+    # meaning you can do things like iterate over it, run some higher order
+    # functions such as map and filter, etc.
     def decorated_function(*args, **kws):
+    # **kws == **kwargs
+
+    # The special syntax **kwargs in function definitions in python is
+    # used to pass a keyworded, variable-length argument list. We use the
+    # name kwargs with the double star. The reason is because the double
+    # star allows us to pass through keyword arguments (and any number of them).
         if(session.get('logged_in_user')):
             return f(*args, **kws)
         else:
@@ -111,13 +141,17 @@ def contact():
 @app.route('/receipt.html')
 def receipt():
     return render_template("users/receipt.html")
-
+####################################################################################
 @app.route('/shop/items/<itemuid>')
 def shop_item(itemuid):
     item = itemcontroller.get_item_by_UID(itemuid)
+    # if there is no item
     if(not item):
         abort(404)
     return render_template('users/item.html', item = item)
+# item = item is to pass the object to the template so the template can be
+# used to call methods
+
 ####################################################################################
 @app.route('/cart/<itemuid>/add', methods=['POST'])
 def add_item_to_cart(itemuid):
@@ -125,18 +159,31 @@ def add_item_to_cart(itemuid):
     item = itemcontroller.get_item_by_UID(itemuid)
     if(not item):
         abort(404)
+    # if the session has no cart, set session cart to an empty list
     if not session.get('cart'):
         session['cart'] = []
+    #     flag = False when item does not exist in cart
     flag = False
     for i in session['cart']:
+        # session cannot store objects
+        # so, loop through session cart to find if any item uid exists
+
+        # check if item exists in the cart already
         if(itemuid == i['itemuid']):
+            # get quantity from html form
             quantity = int(request.form['quantity'])
+            # add quantity
             i['quantity'] += (quantity)
+            # if quantity > stocks avail, flash message
             if(i['quantity'] > itemcontroller.get_item_by_UID(itemuid).get_stocks()):
                 flash("Error, item quantity cannot exceed amount of stocks.", "error")
-            flag = True
-            flash("item already exists in cart, increase quantity by " +  str(quantity), "success")
-            break
+                return redirect(url_for("shop_item", itemuid=itemuid))
+            else:
+                flag = True
+                flash("item already exists in cart, increase quantity by " +  str(quantity), "success")
+                break
+
+    #if item is not in cart, add to cart
     if(not flag):
         appenditem = dict()
         appenditem['itemuid'] = itemuid
@@ -183,7 +230,7 @@ def cart():
                         items.remove(i)
                     stocks = itemcontroller.get_item_by_UID(i['itemuid']).get_stocks()
                     if(quantity_f >  stocks):
-                        flash("quantity exceeds stocks available.", "error")
+                        flash("Quantity exceeds stocks available.", "error")
                     else:
                         i['quantity'] = (quantity_f)
         for i in items:
@@ -195,7 +242,7 @@ def cart():
                 stocks = item.get_stocks()
                 if(stocks < i['quantity']):
                     cart_item['quantity'] = stocks
-                    flash("Quantity selected is more than stocks available.", "stockserror") 
+                    flash("Quantity selected is more than stocks available.", "stockserror")
                 else:
                     cart_item['quantity'] = i['quantity']
                 cart_item['total'] = int(i['quantity']) * cart_item['item'].price_after_discount()
@@ -409,6 +456,3 @@ def login():
 
 if __name__ == '__main__':
  app.run(debug=True)
-
-
-

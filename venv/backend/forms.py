@@ -15,15 +15,21 @@ images = UploadSet('images', IMAGES)
 class BetterDecimalField(DecimalField):
     """
     Very similar to WTForms DecimalField, except with the option of rounding
-    the data always.
+    the data always.`
     """
     def __init__(self, label=None, validators=None, places=2, rounding=None,
                  round_always=False, **kwargs):
         super(BetterDecimalField, self).__init__(
             label=label, validators=validators, places=places, rounding=
             rounding, **kwargs)
+        # The special syntax **kwargs in function definitions in python is
+        # used to pass a keyworded, variable-length argument list. We use the
+        # name kwargs with the double star. The reason is because the double
+        # star allows us to pass through keyword arguments (and any number of them).
         self.round_always = round_always
 
+    # To allow rounding of 2dp. Default decimal field doesnt round up to
+    # 2dp automatically
     def process_formdata(self, valuelist):
         if valuelist:
             try:
