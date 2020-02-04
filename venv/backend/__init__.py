@@ -2,16 +2,16 @@ from flask import url_for, redirect, render_template, Flask, request, flash, ses
 from flask_uploads import UploadSet, IMAGES,configure_uploads
 import shelve
 import backend.Feedback as Feedback
-from datetime import date
 from backend.admin_url import admin_pages
 from backend.settings import *
 from flask_login import LoginManager
 from login.forms import customer_registration
-from login.user_account import user_account
-from backend.forms import checkout_form
+from login.forms import UserRegistration, UserLogin, create_admin, AdminLogin
 from backend.user_details import *
-from backend.forms import CreateFeedbackForm, UpdateFeedbackForm
+from backend.forms import CreateFeedbackForm, UpdateFeedbackForm,checkout_form,service_order
 from functools import wraps
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
 
@@ -51,10 +51,24 @@ def shop_services():
 ####################################################################################
 @app.route('/shop/service/<serviceuid>')
 def shop_services_items(serviceuid):
+    form = service_order()
     sales_service = itemcontroller.get_all_sales_services(serviceuid)
-    return render_template('users/services.html', item = sales_service)
+    return render_template('users/services.html', item = sales_service, form = form)
 ####################################################################################
-####################################################################################
+# @app.route('/shop/service/<serviceuid>/book')
+# def shop_services_book(serviceuid):
+#     sales_service = itemcontroller.get_all_sales_services(serviceuid)
+#     date = request.form['date']
+#     time = request.form['time']
+#     appointment = appointment(date, time, user)
+#     return render_template('users/services.html', item = sales_service, form = form)
+# ####################################################################################
+# @app.route('/shop/service/appointments')
+# def shop_services_appointments(serviceuid):
+#     form = service_order()
+#     sales_service = itemcontroller.get_all_sales_services(serviceuid)
+#     return render_template('users/services.html', item = sales_service, form = form)
+# ####################################################################################
 @app.route('/shop/packages')
 def shop_packages():
     sales_package = itemcontroller.get_all_sales_packages()
@@ -270,39 +284,39 @@ def show_all_receipt():
 def feedback():
     return render_template('feedback.html')
 ####################################################################################
-@app.route('/login')
-def login():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-    else:
-        return render_template('home.html')
+# @app.route('/login')
+# def login():
+#     if not session.get('logged_in'):
+#         return render_template('login.html')
+#     else:
+#         return render_template('home.html')
 ####################################################################################
-@app.route('/login/validation', methods=['POST'])
-def do_user_login():
-    username = request.form['username']
-    password = request.form['password']
-    user = logincontroller.login_user(username, password)
-    if user:
-        session['logged_in'] = True
-        session['logged_in_user'] = username
-
-    return redirect(url_for("login"))
+# @app.route('/login/validation', methods=['POST'])
+# def do_user_login():
+#     username = request.form['username']
+#     password = request.form['password']
+#     user = logincontroller.login_user(username, password)
+#     if user:
+#         session['logged_in'] = True
+#         session['logged_in_user'] = username
+#
+#     return redirect(url_for("login"))
 ####################################################################################
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = customer_registration()
-    if(logincontroller.find_user_username(form.username.data)):
-        flash("Username exists, please  choose another.", "error")
-    if request.method == 'POST' and form.validate():
-
-        flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
-        if(flag):
-            flash("You have registered, please login", "success")
-            return redirect(url_for('login'))
-        else:
-            flash("you have failed to register, something went wrong, try again", "error")
-
-    return render_template('register.html', form=form)
+# @app.route('/register', methods=['GET', 'POST'])
+# def register():
+#     form = customer_registration()
+#     if(logincontroller.find_user_username(form.username.data)):
+#         flash("Username exists, please  choose another.", "error")
+#     if request.method == 'POST' and form.validate():
+#
+#         flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
+#         if(flag):
+#             flash("You have registered, please login", "success")
+#             return redirect(url_for('login'))
+#         else:
+#             flash("you have failed to register, something went wrong, try again", "error")
+#
+#     return render_template('register.html', form=form)
 ####################################################################################
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -330,5 +344,71 @@ def not_found(e):
 def not_found(e):
     return render_template('error_pages/500.html'), 500
 ####################################################################################
+
+
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+####################################################################################
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    user_login = UserLogin(request.form)
+
+    if request.method == "POST" and user_login.validate():
+
+        usersDict = {}
+        db = shelve.open("users.db", "r")
+
+        try:
+            usersDict = db["Users"]
+        except:
+            print("Unable to access shelve")
+
+        username = user_login.username.data
+        password = user_login.password.data
+        password_hashing = generate_password_hash(password, salt_length=10)
+
+        for id in usersDict:
+
+            user = usersDict.get(id)
+            if user.get_username() == username:
+                if user.check_password(password_hashing):
+                    session["loginUser"] = user.get_username()
+
+
+                return render_template('home.html', loginUser=session.get('loginUser'))
+        message = "Invalid Login"
+
+        return render_template('login.html', form=user_login, message=message)
+    return render_template('login.html', form=user_login)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
  app.run(debug=True)
+
+
+

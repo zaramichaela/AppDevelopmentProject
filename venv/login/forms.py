@@ -3,6 +3,7 @@ from wtforms import *
 import wtforms.validators as validators
 from wtforms.validators import DataRequired
 from login.user_account import *
+
 class admin_login_form(FlaskForm):
     username = StringField("Username:", validators=[DataRequired()])
     password = PasswordField("Password:", validators=[DataRequired()])
@@ -18,3 +19,14 @@ class customer_registration(FlaskForm):
     password = PasswordField("Password:", validators=[validators.Length(min=8, max=16), DataRequired(), validators.EqualTo('cfm_password', message='Password must match')])
     cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16), DataRequired()])
     submit = SubmitField()
+
+class UserRegistration(FlaskForm):
+    firstName = StringField("First Name:", validators=[validators.Length(min=3, max=12), DataRequired()])
+    lastName = StringField("Last Name:", validators=[validators.Length(min=3, max=12), DataRequired()])
+    username = StringField("Username:", validators=[validators.Length(min=3, max=12), DataRequired()])
+    email = StringField("Email:", validators=[validators.Length(min=6, max=60), DataRequired()])
+    password = PasswordField("Password:", validators=[validators.Length(min=4, max=18), DataRequired(), validators.EqualTo('cfm_password', message='Password must match')])
+    cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=4, max=18), DataRequired()])
+    submit = SubmitField()
+
+
