@@ -84,7 +84,7 @@ def user_authorize(f):
     # f is function
     @wraps(f)
     # this wraps the function
-##################################################################################
+
     # The special syntax *args in function definitions in python is used
     # to pass a variable number of arguments to a function. It is used to
     # pass a non-keyworded, variable-length argument list.
@@ -115,7 +115,7 @@ def user_authorize(f):
             return redirect(url_for("login"))
     return decorated_function
 ####################################################################################
-
+####################################################################################
 
 @app.route('/contactus', methods=['GET', 'POST'])
 def contact():
@@ -220,6 +220,7 @@ def cart():
     #need to input coupon code,removing of items and others
     items = session.get("cart")
     cart_list = []
+
     # there is no code unless there is an input in the field
     code = ''
     # auto discount is 0.00
@@ -464,22 +465,6 @@ def register():
         flash("You have successfully created your account, please login.", "success")
         return redirect(url_for('login'))
     return render_template('register.html', form=userRegister)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
  app.run(debug=True)
