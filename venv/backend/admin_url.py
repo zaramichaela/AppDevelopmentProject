@@ -451,7 +451,7 @@ def edit_coupon(couponid):
 #         a = logincontroller.delete_admin_account(username)
 #         flash("You have deleted the admin user " + username, "success")
 #     else:
-#         flash("an error have occurred, please try again", "error")
+#         flash("An error has occurred, please try again", "error")
 #         abort(404)
 #     return redirect(url_for("admin_pages.list_admin_accounts"))
 # ####################################################################################
@@ -500,7 +500,7 @@ def ban_user_account(username):
         else:
             logincontroller.set_ban_user_flag(user, True)
     else:
-        flash("an error have occurred, please try again", "error")
+        flash("An error has occurred, please try again", "error")
     items = logincontroller.get_all_admins()
     return redirect(url_for("admin_pages.list_users_accounts"))
 ####################################################################################

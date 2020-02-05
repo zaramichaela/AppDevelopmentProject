@@ -58,10 +58,8 @@
 
 				<form class="login100-form validate-form p-b-33 p-t-5" method="POST">
 					{{ form.csrf_token }}
-					{{render_name(form.firstName, placeholder="First Name",class="input100")}}
-					{{render_name(form.lastName, placeholder="Last Name",class="input100")}}
-					{{render_email(form.email, placeholder="Email",class="input100")}}
 					{{render_username(form.username, placeholder="Username",class="input100")}}
+					{{render_email(form.email, placeholder="Email",class="input100")}}
 					{{render_password(form.password, placeholder="Password", class="input100")}}
 					{{render_password(form.cfm_password, placeholder="Confirm Password", class="input100")}}
 

@@ -21,8 +21,6 @@ from login.user_account import *
 #     submit = SubmitField()
 
 class UserRegistration(Form):
-    firstName = StringField("First Name:", validators=[validators.Length(min=3, max=12), DataRequired()])
-    lastName = StringField("Last Name:", validators=[validators.Length(min=3, max=12), DataRequired()])
     username = StringField("Username:", validators=[validators.Length(min=3, max=12), DataRequired()])
     email = StringField("Email:", validators=[validators.Length(min=6, max=60), DataRequired()])
     password = PasswordField("Password:", validators=[validators.Length(min=4, max=18), DataRequired(), validators.EqualTo('cfm_password', message='Password must match')])
