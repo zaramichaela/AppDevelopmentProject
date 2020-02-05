@@ -1,32 +1,33 @@
 
 
 {% macro render_supplier_table(i) %}
-        <td>
+        <td><center>
             {{i.get_UID()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_name()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
            {{i.get_address()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_phone_num()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_pUID()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_product()}}
-        </td>
-        <td>
-           {{i.get_price()}}
-        </td>
+        </center></td>
+        <td><center>
+            {{'%0.2f'|format(i.get_price()|float)}}
+        </center></td>
 
         <td>
             <center>
-            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_suppliers', supplierid=i.get_UID())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_suppliers', supplierid=i.get_UID())}}">Delete</a>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_suppliers', supplierid=i.get_UID())}}" style="width:100px">Edit</a>
+                <br><br>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_suppliers', supplierid=i.get_UID())}}" style="width:100px">Delete</a>
             </center>
         </td>
 
@@ -35,37 +36,37 @@
 
 
 {% macro render_suppliesrorder_table(i) %}
-        <td>
+        <td><center>
            {{i.get_date_of_order()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_oid()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_sname()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_pUID()}}
-        </td>
+        </center></td>
 
-        <td>
+        <td><center>
            {{i.get_pname()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_amt()}}
-        </td>
-        <td>
-            {{i.get_total_price()}}
-        </td>
-       <td>
+        </center></td>
+        <td><center>
+            {{'%0.2f'|format(i.get_total_price()|float)}}
+        </center></td>
+       <td><center>
             {{i.get_progress()}}
-        </td>
+        </center></td>
         <td>
             <center>
-            <a class="btn btn-primary" href="{{url_for('admin_pages.received_suppliers_order', orderid=i.get_oid())}}">Received</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.cancel_suppliers_order', orderid=i.get_oid())}}">Cancel</a>
-                            {% if not i.get_progress() == 'Received' %}
-
+                {% if not i.get_progress() == 'Received' %}
+            <a class="btn btn-primary" href="{{url_for('admin_pages.received_suppliers_order', orderid=i.get_oid())}}" style="width:100px">Received</a>
+                <br><br>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.cancel_suppliers_order', orderid=i.get_oid())}} " style="width:100px">Cancel</a>
                 {% else %}
             Action Completed
             {% endif %}

@@ -454,7 +454,7 @@ def register():
         usersDict = {}
         db = shelve.open('users.db', 'c')
         try:
-            usersDict = db["Users"]
+            usersDict = db['Users']
         except:
             print("Error in retrieving Users from users.db.")
         #retard dont even save the fucking firstname last name. add for fuck.

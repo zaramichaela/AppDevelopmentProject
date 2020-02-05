@@ -45,9 +45,8 @@ All Admin Accounts
 
 
 
-<div class="main-card mb-3 card">
+<div class="tables">
 
-<div class="card-body">
 
     {% if count == 0 %}
     <p>No Admins found.</p>
@@ -56,21 +55,21 @@ All Admin Accounts
     {% else %}
     <p>There are {{ count }} admins.</p>
     {% endif %}
-</div>
+
 <div>
-    <table class="table table-striped">
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>Admin ID</th>
-                <th>Username</th>
-                <th>Action</th>
+                <th><center>Admin ID</center></th>
+                <th><center>Username</center></th>
+                <th><center>Action</center></th>
             </tr>
         </thead>
         <tbody>
         {% for admin in adminList %}
         <tr>
-            <td>{{ admin.get_adminID() }}</td>
-            <td>{{ admin.get_username() }}</td>
+            <td><center>{{ admin.get_adminID() }}</center></td>
+            <td><center>{{ admin.get_username() }}</center></td>
             <td>
                <form action="{{url_for('admin_pages.delete_admin', id=admin.get_adminID())}}" method="POST">
                     <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure? This cannot be undone.');">
