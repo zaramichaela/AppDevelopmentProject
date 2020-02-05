@@ -5,7 +5,9 @@
 <!--its is like a function and is able to accept parameters-->
 <!--this macro prints sales item in a table format-->
 {% macro render_item_table(i) %}
-{% if i.get_stocks() < 100 %} <style>
+
+{% if i.get_stocks() < 100 %}
+<style>
 .{{i.get_UID()}}
 {
  color:red;

@@ -12,6 +12,7 @@ Update Doctor
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 <link rel="shortcut icon" type="image/x-icon" href="/static/title_img/add.ico" />
+{%endblock%}
 {%block body %}
 
 <div class="main-card mb-3 card">
@@ -27,7 +28,7 @@ Update Doctor
 <!--          calls macro render_field for each form field, to display the form-->
     {{ render_field(form.Name, class='form-control', placeholder="e.g. Tan Wei Ming") }}
     {{ render_field(form.Specialities, class='form-control') }}
-    {{ render_field(form.gender, class='form-control'}}
+    {{ render_field(form.gender, class='form-control')}}
     {{ render_field(form.Profile, class='form-control', placeholder="e.g. 50.00") }}
     {{ render_field(form.Status, class='form-control', placeholder="e.g. 100.00") }}
     {{ render_field(form.Image,  class='form-control') }}
