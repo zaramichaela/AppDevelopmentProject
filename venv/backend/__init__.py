@@ -204,6 +204,7 @@ def add_item_to_cart(itemuid):
 @app.route('/cart/delete/<itemuid>')
 def del_cart_item(itemuid):
     items = session.get("cart")
+    # essentially allowing a new i to be added later
     remove = None
     for i in items:
         # find number of that item in cart and remove all quantities of that item
@@ -219,6 +220,7 @@ def del_cart_item(itemuid):
 def cart():
     #need to input coupon code,removing of items and others
     items = session.get("cart")
+    # all added items will be put into cart
     cart_list = []
 
     # there is no code unless there is an input in the field
@@ -233,66 +235,113 @@ def cart():
         if request.method == 'POST' and request.form.get('quantity'):
             # get value from the individual form of the uid and quantity
             # when quantity is change, it will update the session item quantity
+
+            # quantity_f is the form quantity in cart
             quantity_f = int(request.form['quantity'])
+            # itemuid_f is the form quantity in cart
             itemuid_f = request.form['UID']
 
             for i in items:
-                #find the item and update the quantity with the updated value
+                # find the item and update the quantity with the updated value
                 if(itemuid_f ==  i['itemuid']):
+                    # if quantity is 0, remove from cart
                     if((quantity_f) == 0):
                         items.remove(i)
+                        break
+                    # if items =/= 0, get stocks from item controller. use itemuid to get stocks
                     stocks = itemcontroller.get_item_by_UID(i['itemuid']).get_stocks()
                     if(quantity_f >  stocks):
                         flash("Quantity exceeds stocks available.", "error")
                     else:
+                        # add quantity into cart
                         i['quantity'] = (quantity_f)
         for i in items:
-            #this is the getting of the item object, and calculating total price for each item * quantity.
+            # this is the getting of the item object, and calculating total price for each item * quantity
+            # for displaying purposes
+
+            # create a dictionary
             cart_item = dict()
+            # get item object from itemcontroller in cart (based on itemuid)
             item = itemcontroller.get_item_by_UID(i['itemuid'])
-            cart_item['item'] = item
-            if(cart_item['item']):
+
+            # if there exists the item in cart
+            if (item):
+                # cart_item = {"item":item_object}
+                # item_object is sales_item
+                cart_item['item'] = item
+
                 stocks = item.get_stocks()
+                # if stocks < quantity in cart
                 if(stocks < i['quantity']):
+                    # maxing out all stock amount
+                    # if user request 10 and stocks only have 5, put 5
                     cart_item['quantity'] = stocks
                     flash("Quantity selected is more than stocks available.", "stockserror")
                 else:
+                    # add quantity to dictionary "cart_item"
                     cart_item['quantity'] = i['quantity']
+                # total price = quantity * price
                 cart_item['total'] = int(i['quantity']) * cart_item['item'].price_after_discount()
+                # cart_item is for each item, cart_list is for full cart
                 cart_list.append(cart_item)
+                # add all totals of items to get final total
+                # subtotal price is before  discount, total price is after discount.
+                # if there is no discount, total amount = subtotal price
                 subtotal_price = subtotal_price + cart_item['total']
                 total_amount = subtotal_price
 
         if request.method == 'POST' and request.form.get('code'):
-            #this part is when coupon code is inputted, it will check and update if it is valid by how much you save
+            # this part is when coupon code is inputted, it will check and update if it is valid by how much you save
+
+            # get code from html form
             code = request.form.get('code')
+            # put code into session so I can access it easily later
             session['code'] = code
+            # just to check code
             print(session.get('code'))
+            # retrieve coupon object from itemcontroller
             coupon = itemcontroller.get_coupon_by_code(code)
+            # if coupon exists
             if coupon:
+                # check if coupon is expired, whether it exists and if there is a minimum spending
                 if coupon.check_validity():
+                    # using coupon to get discount from subtotal price
                     discount = coupon.get_discount(subtotal_price)
+                    # if coupon is valid but minimum spending is not met
                     if(discount == 0):
                         flash("Coupon requires a minimum spending of $" + "{0:.2f}".format(coupon.get_minimumspent()) , "nocoupon")
+                    # putting discount into session to be used in receipt and view all receipts
                     session['discount'] = discount
+                # if coupon is expired
                 else:
                     flash("Coupon code has expired, please try another code.", "nocoupon")
+            # if coupon does not exist in database
             else:
                 flash("Coupon does not exists.", "nocoupon")
+        # if discount exists
         if discount:
+            # get total amount by taking subtotal price - discount price to get the final price (total amount)
             total_amount = float(subtotal_price) - float(discount)
+        # put total_amount and subtotal_price into session so I can access it easily later (for receipt and view all receipts)
         session['total_amount'] = total_amount
         session['subtotal_price'] = subtotal_price
+        # return the page cart and use cart_items=cart_list to fill up the fields (in the template)
         return render_template('users/cart.html', cart_items=cart_list, subtotal_price=subtotal_price, discount=discount, code=code, total_amount=total_amount)
     else:
+        # if cart is empty
         return render_template('users/cart.html', cart_items=[],  subtotal_price=0.00, discount=discount, code=code, total_amount=total_amount)
 ####################################################################################
 @app.route('/cart/clear')
 def del_cart():
+    # empty cart, it becomes none
     session.pop('cart', None)
+    # empty discount, it becomes none
     session.pop('discount', None)
+    # empty subtotal price, it becomes none
     session.pop('subtotal_price', None)
+    # empty total amount, it becomes none
     session.pop('total_amount', None)
+
     return redirect(url_for("cart"))
 ####################################################################################
 @app.route('/about')
@@ -300,43 +349,78 @@ def about():
     return render_template('about.html')
 ####################################################################################
 @app.route('/checkout' , methods=['POST', 'GET'])
+# user needs to be logged in to access this page. if user is not logged in
+# redirect then to login page for users to register/login
 @user_authorize
 def checkout():
+    # get code from session
     code = session.get('code')
+    # get username from session
     user = session.get('logged_in_user')
+    # get cart from session
     items = session.get("cart")
+    # get discount from session
     discount = session.get('discount')
+    # get subtotal price from session
     subtotal_price = session.get('subtotal_price')
+    # get total amount from session
     total_amount = session.get('total_amount')
+    # get code from session
+
+    # assign checkout form to form
     form = checkout_form()
-    voucher = itemcontroller.get_coupon_by_code(code)
-    print(voucher)
+    # get coupon code from itemcontroller
+    coupon = itemcontroller.get_coupon_by_code(code)
+    # print the coupon for checking purposes while running
+    print(coupon)
+    # if items exist
     if(items):
+        # if form validation works
         if form.validate_on_submit() and request.method == "POST":
-            user = create_user_details(form.data, user)
-            receiptz = itemcontroller.checkout_items_users(items, voucher, user)
+            # create user details using the data from the form and assign it to user_details
+            user_details = create_user_details(form.data, user)
+            # create a receipt using item info (a list), coupon and user details
+            receiptz = itemcontroller.checkout_items_users(items, coupon, user_details)
+            # empty cart, it becomes none
             session.pop('cart', None)
+            # empty discount, it becomes none
             session.pop('discount', None)
+            # empty subtotal price, it becomes none
             session.pop('subtotal_price', None)
+            # empty total amount, it becomes none
             session.pop('total_amount', None)
+
+            # generate a receipt for the user
+            # receiptz.get_UID() is found in sales receipt
             return redirect(url_for("show_receipt", ruid=receiptz.get_UID()))
     else:
+        # if cart is empty, user cannot checkout
+        # if they try to go straight into http://127.0.0.1:5000/checkout without adding anything into cart first
         flash("You have nothing in your cart.", "error")
         return redirect(url_for("cart"))
+
+    # return the page cart and use subtotal_price=subtotal_price to fill up the fields (in the template)
     return render_template('users/checkout.html', form=form, subtotal_price=subtotal_price, total_amount=total_amount, discount=discount)
 ####################################################################################
 @app.route('/receipt/<ruid>', methods=['GET'])
 def show_receipt(ruid):
+    # after user checkout, get receipt using uid from itemcontroller
     item = itemcontroller.get_receipt_by_UID(ruid)
+    # if item does not exist
     if not item:
+        # display 404 page
         abort(404)
     return render_template("users/receipt.html", receipt=item)
 ####################################################################################
 @app.route('/receipt/all')
+# user has to be logged in to view all previous receipts
 @user_authorize
 def show_all_receipt():
+    # getting the username from session
     username = session.get('logged_in_user')
+    # get the user's past receipts
     all_receipt = itemcontroller.get_all_receipt_by_name(username)
+    # for checking purposes
     print(all_receipt)
     return render_template('users/showallreceipt.html', receipts=all_receipt)
 ####################################################################################
@@ -391,17 +475,17 @@ def not_found(e):
 
 # To add custom error 403 page
 @app.errorhandler(403)
-def not_found(e):
+def error_403(e):
     return render_template('error_pages/403.html'), 403
 
 # To add custom error 410 page
 @app.errorhandler(410)
-def not_found(e):
+def error_410(e):
     return render_template('error_pages/410.html'), 410
 
 # To add custom error 500 page
 @app.errorhandler(500)
-def not_found(e):
+def error_500(e):
     return render_template('error_pages/500.html'), 500
 ####################################################################################
 
@@ -443,9 +527,6 @@ def login():
                     return redirect(url_for("home"))
         flash("Invalid details")
     return render_template('login.html', form=user_login)
-
-
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

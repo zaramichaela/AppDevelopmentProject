@@ -225,6 +225,7 @@ class items_controller:
                 print(ccoupon)
         if(ccoupon):
             total_amount = subtotal_price
+            # using python function to create a unique id
             sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, subtotal_price, ccoupon, users_details)
         else:
             sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, subtotal_price,None, users_details)
