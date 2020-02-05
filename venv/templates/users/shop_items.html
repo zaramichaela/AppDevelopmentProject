@@ -19,6 +19,7 @@ Shop - Items | Karen's TCM
     			<div class="col-md-8 col-lg-10 order-md-last">
     				<div class="row">
 							  {% from "users/_shophelper.html" import list_shop_item, list_shop_item_disabled %}
+<!--                                    loop through shop item and check if the flag is available-->
 								{%for i in items %}
 
                                     {% if i.get_available_flag() %}

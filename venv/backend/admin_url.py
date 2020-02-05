@@ -1035,6 +1035,8 @@ def deletedoctor(id):
 ##################################################################################
 @admin_pages.route('/admin/', methods=['GET', 'POST'])
 def admin():
+    if(session.get('admin_username')):
+        return redirect(url_for("admin_pages.admin_home"))
     adm_login = AdminLogin(request.form)
     if request.method == "POST" and adm_login.validate():
 
@@ -1054,7 +1056,7 @@ def admin():
                 if admin.check_password(password):
                     session['admin_logged_in'] = True
                     session['admin_username'] = request.form['username']
-                return render_template('/admin/admin_base.html')
+                return redirect(url_for("admin_pages.admin_home"))
 
         flash("Invalid Login, Please try again.", "error")
 
@@ -1121,6 +1123,7 @@ def delete_admin(id):
 
 
 @admin_pages.route('/admin/accounts/users/list')
+@authorize
 def list_users_accounts():
     usersDict = {}
     db = shelve.open('users.db', 'r')
@@ -1136,6 +1139,7 @@ def list_users_accounts():
 
 
 @admin_pages.route('/updateUser/<int:id>/', methods=['GET', 'POST'])
+@authorize
 def updateUser(id):
     updateUserForm = UserRegistration(request.form)
     if request.method == 'POST' and updateUserForm.validate():
@@ -1165,6 +1169,7 @@ def updateUser(id):
 
 
 @admin_pages.route('/deleteUser/<int:id>', methods=['POST'])
+@authorize
 def deleteUser(id):
     usersDict = {}
     db = shelve.open('users.db', 'w')
@@ -1184,5 +1189,34 @@ def deleteUser(id):
 ###############
 ###
 @admin_pages.route('/admin/home', methods=['GET', 'POST'])
+@authorize
 def admin_home():
-    return render_template('/admin/Dashboard.html')
+    #all the below code displays the coupons that are used and the number of times they are used.
+    #get all receipts from itemcontroller
+    all_receipts = itemcontroller.get_all_receipt()
+    #for counted coupons, insert into it
+    all_used = []
+    for i in all_receipts:
+        #get the coupons from the receipts
+        coupon = i.get_coupon()
+        if(coupon):
+            #if the receipts uses a coupon
+            #gets all the coupons that is in the receipts
+            #append it into used_coupons
+            all_used.append(coupon)
+    all_coupon_used_list = []
+    usage_number_list = []
+    usedlist = []
+    #loop through all used coupons
+    for j in all_used:
+        #if coupon is not in usedlist
+        if not (j in usedlist):
+            #appends it into all_coupons_used_list
+            #this list each has a unique coupon code
+            all_coupon_used_list.append(j.get_couponcode())
+            #count how many instance this coupons appear in all_used list
+            usage_number_list.append(all_used.count(j))
+            #appends into used list so we can skip counting the same coupon again
+            usedlist.append(j)
+    #to display chart, uses chartjs, a javascript library to display the chart.
+    return render_template('/admin/Dashboard.html', all_coupons_used_list = all_coupon_used_list, usage_number_list=usage_number_list)

@@ -39,6 +39,9 @@ def home():
 ####################################################################################
 @app.route('/shop/item')
 def shop():
+    # in shop_items, the html will list the item if the available flag is true.
+    #using the marco in _shophelper.html
+    #shop_helper will check if there's any discount and display accordingly.
     sales_items = itemcontroller.get_all_sales_items()
     # itemcontroller controls all items (eg if you want to take out/put into db,
     # use item controller (with exceptions)
