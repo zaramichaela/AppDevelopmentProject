@@ -56,7 +56,7 @@ function preview_image(event)
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
-                <div class="logo-src">Karen's TCM</div>
+                <div class="logo-src">Karen's TCM </div>
                 <div class="header__pane ml-auto">
                     <div>
                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -442,16 +442,16 @@ function preview_image(event)
                             <ul class="vertical-nav-menu">
                               <li class="app-sidebar__heading">Dashboards</li>
                               <li>
-                                  <a href="{{ url_for('admin_pages.admin') }}" class="mm-active">
+                                  <a href="{{ url_for('admin_pages.admin') }}"  {% if  request.endpoint == "admin_pages.admin_home" %}class="mm-active"{% endif %}>
                                       <i class="fas fa-chart-line"></i>
                                       Dashboard
                                   </a>
                               </li>
-                                <li class="app-sidebar__heading">Shop</li>
+                                <li class="app-sidebar__heading" >Shop</li>
 
                                 <!-- SHOP ITEMS NAVIGATION -->
                                 <li>
-                                  <li>
+                                  <li {% if  request.endpoint == "admin_pages.add_shop_item" or  request.endpoint == "admin_pages.list_sales_items"  %}class="mm-active"{% endif %}>
                                       <a href="#">
                                           <i class="fas fa-store"></i>
                                           Items
@@ -480,8 +480,8 @@ function preview_image(event)
                                   <!-- START OF SERVICES  -->
 
                                   <li>
-                                    <li>
-                                        <a href="#">
+                                    <li {% if  request.endpoint == "admin_pages.add_shop_service" or  request.endpoint == "admin_pages.list_sales_services"  %}class="mm-active"{% endif %}>
+                                        <a href="#" >
                                             <i class="fas fa-concierge-bell"></i>
                                             Services
                                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
@@ -510,7 +510,7 @@ function preview_image(event)
                                   <!-- START OF PACKAGE -->
 
                                   <li>
-                                    <li>
+                                    <li {% if  request.endpoint == "admin_pages.add_shop_package" or  request.endpoint == "admin_pages.list_sales_packages"  %}class="mm-active"{% endif %}>
                                         <a href="#">
                                             <i class="fas fa-box-open"></i>
                                             Packages
@@ -540,7 +540,7 @@ function preview_image(event)
                                   <!-- START OF COUPON -->
 
                                   <li>
-                                    <li>
+                                    <li {% if  request.endpoint == "admin_pages.add_coupons" or  request.endpoint == "admin_pages.list_coupons"  %}class="mm-active"{% endif %}>
                                         <a href="#">
                                             <i class="fas fa-percentage"></i>
                                             Coupons
@@ -569,7 +569,7 @@ function preview_image(event)
                                   <!-- START OF ACCOUNTS COMPONENT -->
 
                                   <li class="app-sidebar__heading">Accounts</li>
-                                <li>
+                                <li {% if  request.endpoint == "admin_pages.create_admin_accounts" or  request.endpoint == "admin_pages.list_admin_accounts"  %}class="mm-active"{% endif %}>
                                   <!-- START OF ADMIN -->
                                     <a href="#">
                                         <i class="fas fa-user-lock"></i>
@@ -597,7 +597,7 @@ function preview_image(event)
 
                                 <!-- START OF USERS ACCOUNT -->
 
-                                <li>
+                                <li {% if  request.endpoint == "admin_pages.list_users_accounts" or  request.endpoint == "admin_pages.list_receipts_admin"  %}class="mm-active"{% endif %}>
 
                                     <a href="#">
                                         <i class="fas fa-users"></i>
@@ -623,7 +623,7 @@ function preview_image(event)
 
                                 <li class="app-sidebar__heading">Suppliers</li>
 
-                                <li>
+                                <li {% if  request.endpoint == "admin_pages.create_suppliers" or  request.endpoint == "admin_pages.list_suppliers"  %}class="mm-active"{% endif %}>
                                     <a href="#">
                                         <i class="fas fa-dolly-flatbed"></i>
                                         Suppliers
@@ -645,7 +645,7 @@ function preview_image(event)
 
                                     </ul>
                                 </li>
-                                <li>
+                                <li {% if  request.endpoint == "admin_pages.create_suppliers_orders" or  request.endpoint == "admin_pages.list_suppliers_orders"  %}class="mm-active"{% endif %}>
                                     <a href="#">
                                         <i class="fas fa-paste"></i>
                                         Suppliers's Orders
@@ -672,7 +672,7 @@ function preview_image(event)
                                 <!-- START OF FEEDBACK -->
                                 <li class="app-sidebar__heading">FEEDBACK</li>
 
-                                <li>
+                                <li {% if  request.endpoint == "admin_pages.retrieveFeedback" or  request.endpoint == "admin_pages.stats"  or  request.endpoint == "admin_pages.stats1" %}class="mm-active"{% endif %}>
                                     <a href="#">
                                         <i class="fas fa-comments"></i>
                                         Feedback
@@ -702,7 +702,7 @@ function preview_image(event)
                                 <!-- START OF DOCTOR -->
                                 <li class="app-sidebar__heading">Doctor</li>
 
-                                <li>
+                                <li {% if  request.endpoint == "admin_pages.createdoctor" or  request.endpoint == "admin_pages.retrieveDoctor" %}class="mm-active"{% endif %}>
                                     <a href="#">
                                         <i class="fas fa-first-aid"></i>
                                         Doctor
