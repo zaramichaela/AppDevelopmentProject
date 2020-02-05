@@ -1083,3 +1083,13 @@ def deleteUser(id):
     db.close()
 
     return redirect(url_for('admin_pages.list_users_account'))
+
+
+
+
+################
+###############
+###
+@admin_pages.route('/admin/home', methods=['GET', 'POST'])
+def admin_home():
+    return render_template('/admin/Dashboard.html')
