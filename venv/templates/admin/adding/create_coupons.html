@@ -31,11 +31,6 @@ Add A New Coupon
 
 {%block body %}
 
-{% if message.message %}
-<div class="alert alert-success" role="alert">
-  {{ message.message }}
-</div>
-{% endif %}
 
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}

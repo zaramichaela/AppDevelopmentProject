@@ -51,20 +51,20 @@ def admin_logout():
     return redirect(url_for("admin_pages.admin"))
 ####################################################################################
 @admin_pages.route('/admin/add/coupons', methods= ['GET','POST'])
+# admin needs to be logged in before he/she can view the contents of the page
+# if not logged in, redirect to login page
 @authorize
 def add_coupons():
-    context = {}
+    #
     cform = coupon_form()
     if request.method == 'POST' and cform.validate():
         if(itemcontroller.get_coupon_by_UID(cform.UID.data) or itemcontroller.get_coupon_by_code(cform.couponcode.data)):
             flash("You have input an UID or coupon code that exists, please try again.", "error")
-            return render_template('admin/adding/create_coupons.html', form=cform, message=context)
+            return render_template('admin/adding/create_coupons.html', form=cform)
         new_coupon = itemcontroller.create_and_save_coupon(cform.data)
         if(new_coupon.save()):
-            context = {
-                "message": "You have successfully create a new coupon for users to use."
-            }
-    return render_template('admin/adding/create_coupons.html', form=cform, message=context)
+                flash("You have successfully create a new coupon for users to use.", "success")
+    return render_template('admin/adding/create_coupons.html', form=cform)
 ####################################################################################
 @admin_pages.route('/admin/add/services/', methods= ['GET','POST'])
 @authorize

@@ -37,17 +37,26 @@ Edit Coupons #{{item.get_UID()}}
 {%endblock %}
 {%block body %}
 
-{% if message.message %}
-<div class="alert alert-success" role="alert">
-  {{ message.message }}
-</div>
-{% endif %}
 
 {% block pagetitle %}
 Edit coupon #{{item.get_UID()}}
 {% endblock %}
 
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {%if category =="success"%}
+        <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+  {{ message }}
+    </div>
+{%endif%}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 
 <div class="main-card mb-3 card">
@@ -56,22 +65,6 @@ Edit coupon #{{item.get_UID()}}
 {% from "admin/adding/_formhelper.html" import render_field %}
 
 
-				{% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <div class="alert alert-success" role="alert">
-      <ul class=flashes>
-
-    {% for message in messages %}
-
-    <li>{{ message }}</li>
-
-
-    {% endfor %}
-    </ul>
-      </div>    <!-- Optional JavaScript -->
-
-  {% endif %}
-{% endwith %}
 
 <form action="" method="POST" novalidate enctype="multipart/form-data">
 {{ form.csrf_token }}
