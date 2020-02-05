@@ -7,8 +7,9 @@ from backend.settings import *
 from login.user_account import *
 from backend.doctorForm import CreatedoctorForm
 from backend.Doctor import *
-from login.forms import create_admin, AdminLogin
+from login.forms import create_admin, AdminLogin,UserRegistration
 from login.admin_and_users import *
+
 
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
 
@@ -451,7 +452,7 @@ def edit_coupon(couponid):
 #         a = logincontroller.delete_admin_account(username)
 #         flash("You have deleted the admin user " + username, "success")
 #     else:
-#         flash("an error have occurred, please try again", "error")
+#         flash("An error has occurred, please try again", "error")
 #         abort(404)
 #     return redirect(url_for("admin_pages.list_admin_accounts"))
 # ####################################################################################
@@ -466,12 +467,12 @@ def edit_coupon(couponid):
 #         logincontroller.change_admin_password(username, form.old_password.data, form.password.data)
 #     return render_template('admin/accounts/edit_admin_accounts.html',form =form,message=context)
 # ####################################################################################
-@admin_pages.route('/admin/accounts/users/view')
-@authorize
-def list_users_accounts():
-    context = {}
-    items = logincontroller.get_all_users()
-    return render_template('admin/accounts/list_users_accounts.html',items=items)
+# @admin_pages.route('/admin/accounts/users/view')
+# @authorize
+# def list_users_accounts():
+#     context = {}
+#     items = logincontroller.get_all_users()
+#     return render_template('admin/accounts/list_users_accounts.html',items=items)
 ####################################################################################
 @admin_pages.route('/admin/accounts/users/<username>/delete/')
 @authorize
@@ -500,7 +501,7 @@ def ban_user_account(username):
         else:
             logincontroller.set_ban_user_flag(user, True)
     else:
-        flash("an error have occurred, please try again", "error")
+        flash("An error has occurred, please try again", "error")
     items = logincontroller.get_all_admins()
     return redirect(url_for("admin_pages.list_users_accounts"))
 ####################################################################################
@@ -884,19 +885,21 @@ def retrieveDoctor():
 @admin_pages.route('/admin/doctor/updatedoctor/<int:id>', methods=['GET','POST'])
 @authorize
 def updatedoctor(id):
-    print(id)
-    updatedoctorForm = CreatedoctorForm(request.form)
+    print(request.form)
+    updatedoctorForm = CreatedoctorForm()
     if request.method == 'POST' and updatedoctorForm.validate():
          doctorsDict = {}
          db = shelve.open('docstorage.db', 'w')
          doctorsDict = db['doctor']
+         f = updatedoctorForm.Image.data
+         f.save(DOCTORDIR + updatedoctorForm.Name.data)
          doctor = doctorsDict.get(id)
          doctor.set_Name(updatedoctorForm.Name.data)
          doctor.set_Specialities(updatedoctorForm.Specialities.data)
          doctor.set_gender(updatedoctorForm.gender.data)
          doctor.set_Profile(updatedoctorForm.Profile.data)
          doctor.set_Status(updatedoctorForm.Status.data)
-         doctor.set_Image(updatedoctorForm.Image.data)
+         doctor.set_Image(DOCTORDIR + updatedoctorForm.Name.data)
          db['doctor'] = doctorsDict
          db.close()
 
@@ -915,7 +918,6 @@ def updatedoctor(id):
          updatedoctorForm.gender.data = doctor.get_gender()
          updatedoctorForm.Profile.data = doctor.get_Profile()
          updatedoctorForm.Status.data = doctor.get_Status()
-         updatedoctorForm.Image.data = doctor.get_Image()
 
          return render_template('admin/doctor/updatedoctor.html',form=updatedoctorForm)
 
@@ -966,7 +968,7 @@ def admin():
         return render_template('/admin/admin_login.html', form=adm_login)
     return render_template('/admin/admin_login.html', form=adm_login)
 
-@admin_pages.route('/admin/accounts/create', methods=['GET', 'POST'])
+@admin_pages.route('/admin/accounts/admin/create', methods=['GET', 'POST'])
 @authorize
 def create_admin_accounts():
     createAdmin = create_admin(request.form)
@@ -994,7 +996,7 @@ def create_admin_accounts():
 
 
 
-@admin_pages.route('/admin/accounts/admins')
+@admin_pages.route('/admin/accounts/list_admins')
 @authorize
 def list_admin_accounts():
     usersDict = {}
@@ -1023,3 +1025,61 @@ def delete_admin(id):
     db.close()
 
     return redirect(url_for('list_admin_accounts'))
+
+
+@admin_pages.route('/admin/accounts/users/list')
+def list_users_accounts():
+    usersDict = {}
+    db = shelve.open('users.db', 'r')
+    usersDict = db['Users']
+    db.close()
+
+    usersList = []
+    for key in usersDict:
+        user = usersDict.get(key)
+        usersList.append(user)
+
+    return render_template('admin/accounts/list_users_accounts.html', usersList=usersList, count=len(usersList))
+
+
+@admin_pages.route('/updateUser/<int:id>/', methods=['GET', 'POST'])
+def updateUser(id):
+    updateUserForm = UserRegistration(request.form)
+    if request.method == 'POST' and updateUserForm.validate():
+        usersDict = {}
+        db = shelve.open('users.db', 'w')
+        usersDict = db['Users']
+
+        user = usersDict.get(id)
+        user.set_email(updateUserForm.email.data)
+        user.set_password(updateUserForm.password.data)
+
+        db['Users'] = usersDict
+        db.close()
+
+        return redirect(url_for('admin_pages.list_users_account'))
+    else:
+        usersDict = {}
+        db = shelve.open('users.db', 'r')
+        usersDict = db['Users']
+        db.close()
+
+        user = usersDict.get(id)
+        updateUserForm.username.data = user.get_username()
+        updateUserForm.email.data = user.get_email()
+
+        return render_template('updateUser.html', form=updateUserForm)
+
+
+@admin_pages.route('/deleteUser/<int:id>', methods=['POST'])
+def deleteUser(id):
+    usersDict = {}
+    db = shelve.open('users.db', 'w')
+    usersDict = db['Users']
+
+    usersDict.pop(id)
+
+    db['Users'] = usersDict
+    db.close()
+
+    return redirect(url_for('admin_pages.list_users_account'))

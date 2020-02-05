@@ -456,17 +456,18 @@ function preview_image(event)
                                       </a>
                                       <ul>
                                           <li>
-                                              <a href="{{ url_for('admin_pages.list_sales_items') }}">
-                                                  <i class="metismenu-icon"></i>
-                                                    View All Items
-                                              </a>
-                                          </li>
-                                          <li>
                                               <a href="{{ url_for('admin_pages.add_shop_item') }}">
                                                   <i class="metismenu-icon">
                                                   </i> Add New Items
                                               </a>
                                           </li>
+                                          <li>
+                                              <a href="{{ url_for('admin_pages.list_sales_items') }}">
+                                                  <i class="metismenu-icon"></i>
+                                                    View All Items
+                                              </a>
+                                          </li>
+
                                       </ul>
                                   </li>
                                 </li>
@@ -484,17 +485,18 @@ function preview_image(event)
                                         </a>
                                         <ul>
                                             <li>
-                                                <a href="{{ url_for('admin_pages.list_sales_services') }}">
-                                                    <i class="metismenu-icon"></i>
-                                                      View All Services
-                                                </a>
-                                            </li>
-                                            <li>
                                                 <a href="{{ url_for('admin_pages.add_shop_service') }}">
                                                     <i class="metismenu-icon">
                                                     </i> Add New Service
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a href="{{ url_for('admin_pages.list_sales_services') }}">
+                                                    <i class="metismenu-icon"></i>
+                                                      View All Services
+                                                </a>
+                                            </li>
+
                                         </ul>
                                     </li>
                                   </li>
@@ -513,17 +515,18 @@ function preview_image(event)
                                         </a>
                                         <ul>
                                             <li>
-                                                <a href="{{ url_for('admin_pages.list_sales_packages') }}">
-                                                    <i class="metismenu-icon"></i>
-                                                      View All Packages
-                                                </a>
-                                            </li>
-                                            <li>
                                                 <a href="{{ url_for('admin_pages.add_shop_package') }}">
                                                     <i class="metismenu-icon">
                                                     </i> Add New Packages
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a href="{{ url_for('admin_pages.list_sales_packages') }}">
+                                                    <i class="metismenu-icon"></i>
+                                                      View All Packages
+                                                </a>
+                                            </li>
+
                                         </ul>
                                     </li>
                                   </li>
@@ -542,17 +545,18 @@ function preview_image(event)
                                         </a>
                                         <ul>
                                             <li>
-                                                <a href="{{ url_for('admin_pages.list_coupons') }}">
-                                                    <i class="metismenu-icon"></i>
-                                                      View All Coupons
-                                                </a>
-                                            </li>
-                                            <li>
                                                 <a href="{{ url_for('admin_pages.add_coupons') }}">
                                                     <i class="metismenu-icon">
                                                     </i> Add New Coupons
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a href="{{ url_for('admin_pages.list_coupons') }}">
+                                                    <i class="metismenu-icon"></i>
+                                                      View All Coupons
+                                                </a>
+                                            </li>
+
                                         </ul>
                                     </li>
                                   </li>
@@ -570,18 +574,19 @@ function preview_image(event)
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
                                     <ul>
+                                        <li>
+                                          <a href="{{ url_for('admin_pages.create_admin_accounts') }}">
+                                              <i class="metismenu-icon">
+                                              </i>Create New Admin Accounts
+                                          </a>
+                                      </li>
                                       <li>
                                           <a href="{{ url_for('admin_pages.list_admin_accounts') }}">
                                               <i class="metismenu-icon">
                                               </i>View All Admin Accounts
                                           </a>
                                       </li>
-                                      <li>
-                                          <a href="{{ url_for('admin_pages.create_admin_accounts') }}">
-                                              <i class="metismenu-icon">
-                                              </i>Create New Admin Accounts
-                                          </a>
-                                      </li>
+
                                     </ul>
                                 </li>
 
@@ -623,17 +628,18 @@ function preview_image(event)
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="{{ url_for('admin_pages.list_suppliers') }}">
-                                                <i class="metismenu-icon"></i>
-                                                  List All Suppliers
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a href="{{ url_for('admin_pages.create_suppliers') }}">
                                                 <i class="metismenu-icon">
                                                 </i> Add New Suppliers
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.list_suppliers') }}">
+                                                <i class="metismenu-icon"></i>
+                                                  List All Suppliers
+                                            </a>
+                                        </li>
+
                                     </ul>
                                 </li>
                                 <li>
@@ -644,17 +650,18 @@ function preview_image(event)
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="{{ url_for('admin_pages.list_suppliers_orders') }}">
-                                                <i class="metismenu-icon"></i>
-                                                  List All Orders
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a href="{{ url_for('admin_pages.create_suppliers_orders') }}">
                                                 <i class="metismenu-icon">
                                                 </i> Order From Suppliers
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.list_suppliers_orders') }}">
+                                                <i class="metismenu-icon"></i>
+                                                  List All Orders
+                                            </a>
+                                        </li>
+
                                     </ul>
                                 </li>
                                 <!-- END OF SUPPLIERS -->
@@ -700,11 +707,18 @@ function preview_image(event)
                                     </a>
                                     <ul>
                                         <li>
+                                            <a href="{{ url_for('admin_pages.createdoctor') }}">
+                                                <i class="metismenu-icon"></i>
+                                                Add A Doctor
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="{{ url_for('admin_pages.retrieveDoctor') }}">
                                                 <i class="metismenu-icon"></i>
                                                   View All Doctors
                                             </a>
                                         </li>
+
                                     </ul>
                                 </li>
                                 <!-- END OF DOCTOR -->

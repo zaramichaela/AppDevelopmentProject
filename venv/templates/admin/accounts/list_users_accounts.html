@@ -41,27 +41,44 @@ All Users
   {% endif %}
 {% endwith %}
 <div class="tables">
-<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%"  border="1" id="sales_items">
-    <thead>
-    <tr>
-        <th class="th-sm">
-            <center><b>Users's Account</b></center>
-        </th>
-                <th class="th-sm">
-            <center><b>Ban flag</b></center>
-        </th>
-           <th class="th-sm" style="width:200px;">
-            <center><b>Action</b></center>
-        </th>
-    </thead>
-    <tbody>
-    </tr>
-    {% from "admin/listing/_listhelper.html" import render_user_table %}
-    {%for i in items %}
-    <tr>
-    {{ render_user_table(i) }}
-    </tr>
-    {% endfor %}
-</table>
-{%endblock %}
+<h1 class="display-4">Retrieve Users</h1>
+<div>
+    {% if count == 0 %}
+    <p>There are no users.</p>
+    {% elif count == 1 %}
+    <p>There is 1 user.</p>
+    {% else %}
+    <p>There are {{ count }} users.</p>
+    {% endif %}
 </div>
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th><center>User ID</center></th>
+                <th><center>Username</center></th>
+                <th><center>Action</center></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in usersList %}
+        <tr>
+            <td><center>{{ user.get_userID() }}</center></td>
+            <td><center>{{ user.get_username() }}</center></td>
+            <td>
+                <form action="{{url_for('admin_pages.deleteUser', id=user.get_userID())}}" method="POST">
+                    <center>
+                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure? This cannot be undone.');">
+                        <br><br>
+                    <a href="{{url_for('admin_pages.updateUser', id=user.get_userID())}}" class="btn btn-warning">Update</a>
+                        </center>
+                </form>
+
+            </td>
+
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+
+{% endblock %}

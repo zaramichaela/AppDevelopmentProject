@@ -1,4 +1,4 @@
-<!--all these macro functions helps to organize the project and allow cleaner html files-->
+<td><center><!--all these macro functions helps to organize the project and allow cleaner html files-->
 
 
 <!--this is a macro to help render the table-->
@@ -15,38 +15,39 @@
 </style> {% endif %}
         <td>
             <center><img src='/{{i.get_image_url()}}' style="width:300px;height:250px;" class="img600"/></center>
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_UID()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_name()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_category()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_description()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{'%0.2f'|format(i.get_price()|float)}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{'%.0f'|format(i.get_discount()|float)}}
-        </td>
-        <td class="{{i.get_UID()}}">
+        </center></td>
+        <td class="{{i.get_UID()}}"><center>
             {{i.get_stocks()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_available_flag()}}
-        </td>
+        </center></td>
         <td>
             <center>
-            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i.get_UID())}}">Edit</a>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_item', itemid=i.get_UID())}}" style="width:100px">Edit</a>
+                <br><br>
                 {% if i.get_available_flag() %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_sales_item', itemid=i.get_UID())}}">Invalidate</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_sales_item', itemid=i.get_UID())}}" style="width:100px">Invalidate</a>
                 {% else %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_sales_item', itemid=i.get_UID())}}">Validate</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_sales_item', itemid=i.get_UID())}}" style="width:100px">Validate</a>
                 {% endif %}
             </center>
         </td>
@@ -54,38 +55,39 @@
 {% endmacro %}
 
 {% macro render_package_table(i) %}
-        <td>
+        <td><center>
           <center> <img src='/{{i.get_image_url()}}' class="img600"/></center>
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_UID()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_name()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_description()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_expiry_duration()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{'%.0f'|format(i.get_sessions()|float)}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{'%0.2f'|format(i.get_price()|float)}}
-        </td>
-       <td>
+        </center></td>
+       <td><center>
             {{i.get_available_flag()}}
-        </td>
+        </center></td>
 
         <td>
             <center>
-        <a class="btn btn-primary" href="{{url_for('admin_pages.edit_package', packageid=i.get_UID())}}">Edit</a>
+        <a class="btn btn-primary" href="{{url_for('admin_pages.edit_package', packageid=i.get_UID())}}" style="width:100px">Edit</a>
+                <br><br>
                 {% if i.get_available_flag() %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_package', packageid=i.get_UID())}}">Invalidate</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_package', packageid=i.get_UID())}}" style="width:100px">Invalidate</a>
                 {% else %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_package', packageid=i.get_UID())}}">Validate</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_package', packageid=i.get_UID())}}" style="width:100px">Validate</a>
                 {% endif %}
             </center>
         </td>
@@ -94,33 +96,34 @@
 {% endmacro %}
 
 {% macro render_services_table(i) %}
-        <td>
+        <td><center>
            <center><img src='/{{i.get_image_url()}}' class="img600" /></center>
-        </td>
+        </center></td>
 
-        <td>
+        <td><center>
             {{i.get_UID()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_name()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_description()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{'%0.2f'|format(i.get_price()|float)}}
-        </td>
-       <td>
+        </center></td>
+       <td><center>
             {{i.get_available_flag()}}
-        </td>
+        </center></td>
 
         <td>
             <center>
-            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_service', serviceid=i.get_UID())}}">Edit</a>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_service', serviceid=i.get_UID())}}" style="width:100px">Edit</a>
+                <br><br>
                 {% if i.get_available_flag() %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', serviceid=i.get_UID())}}">Invalidate</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', serviceid=i.get_UID())}}" style="width:100px">Invalidate</a>
                 {% else %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', serviceid=i.get_UID())}}">Validate</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.invalidate_service', serviceid=i.get_UID())}}" style="width:100px">Validate</a>
                 {% endif %}
             </center>
         </td>
@@ -128,29 +131,30 @@
 {% endmacro %}
 
 {% macro render_coupon_table(i) %}
-        <td>
+        <td><center>
             {{i.get_UID()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_couponcode()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
            {{'%.0f'|format(i.get_percentage()|float)}}
-        </td>
+        </center></td>
 
-        <td>
+        <td><center>
             {{'%0.2f'|format(i.get_minimumspent()|float)}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
            {{'%0.2f'|format(i.get_discountlimit()|float)}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_expiredate()}}
-        </td>
+        </center></td>
         <td>
             <center>
-            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_coupon', couponid=i.get_UID())}}">Edit</a>
-            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_coupon', couponid=i.get_UID())}}">Delete</a>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.edit_coupon', couponid=i.get_UID())}}" style="width:100px">Edit</a>
+                <br><br>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.delete_coupon', couponid=i.get_UID())}}" style="width:100px">Delete</a>
             </center>
         </td>
 
@@ -160,35 +164,36 @@
 
 
 {% macro render_receipt_table(i) %}
-      <td>
+      <td><center>
           {{ i.get_date() }}
-      </td>
-        <td>
+      </center></td>
+        <td><center>
             {{ i.get_UID() }}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
            {{ i.get_full_name() }}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
            {{ i.get_username() }}
-        </td>
+        </center></td>
 
-        <td>
+        <td><center>
             {{ i.get_address() }}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{ i.get_sales_count() }}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
            {{'%0.2f'|format(i.get_total()|float)}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_status()}}
-        </td>
+        </center></td>
         <td>
             <center>
-            <a class="btn btn-warning" href="{{url_for('admin_pages.receipts_delivery', ruid=i.get_UID())}}">Delivery</a>
-            <a class="btn btn-success" href="{{url_for('admin_pages.list_receipts_complete', ruid=i.get_UID())}}">Complete</a>
+            <a class="btn btn-warning" href="{{url_for('admin_pages.receipts_delivery', ruid=i.get_UID())}}" style="width:100px">Delivery</a>
+                <br><br>
+            <a class="btn btn-success" href="{{url_for('admin_pages.list_receipts_complete', ruid=i.get_UID())}}" style="width:100px">Complete</a>
             </center>
         </td>
 
@@ -196,34 +201,32 @@
 {% endmacro %}
 
 {% macro render_user_table(i) %}
-        <td>
+        <td><center>
             {{i.get_username()}}
-        </td>
-        <td>
+        </center></td>
+        <td><center>
             {{i.get_ban_flag()}}
-        </td>
+        </center></td>
         <td>
              <center>
                  {% if i.get_ban_flag() %}
-            <a class="btn btn-primary" href="{{url_for('admin_pages.ban_user_account', username=i.get_username())}}">Unban</a>
+            <a class="btn btn-primary" href="{{url_for('admin_pages.ban_user_account', username=i.get_username())}}" style="width:100px">Unban</a>
                 {%else%}
-             <a class="btn btn-primary" href="{{url_for('admin_pages.ban_user_account', username=i.get_username())}}">Ban</a>
+             <a class="btn btn-primary" href="{{url_for('admin_pages.ban_user_account', username=i.get_username())}}" style="width:100px">Ban</a>
                  {% endif %}
-            <a class="btn btn-danger" href="{{url_for('admin_pages.del_user_account', username=i.get_username())}}">Delete</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.del_user_account', username=i.get_username())}}" style="width:100px">Delete</a>
              </center>
         </td>
 {% endmacro %}
 
 {% macro render_admin_table(i) %}
-        <td>
+        <td><center>
             {{i['username']}}
-        </td>
+        </center></td>
         <td>
              <center>
 
-            <a class="btn btn-danger" href="{{url_for('admin_pages.del_admin_account', username=i['username'])}}">Delete</a>
+            <a class="btn btn-danger" href="{{url_for('admin_pages.del_admin_account', username=i['username'])}}" style="width:100px">Delete</a>
              </center>
         </td>
 {% endmacro %}
-
-
