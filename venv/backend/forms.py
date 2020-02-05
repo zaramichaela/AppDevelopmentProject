@@ -167,8 +167,10 @@ class checkout_form(FlaskForm):
     city = StringField("Town / City *: ", validators=[validators.Length(min=3, max=200), DataRequired()])
     postal = StringField("Postcode / ZIP *: ", validators=[validators.Length(min=3, max=200), DataRequired()])
     phone = StringField("Phone *: ", validators=[validators.Regexp(r'^(?:\+?65)?[689]\d{7}$', message= 'Phone number needs to start with 6,8 or 9'),validators.Length(min=3, max=200), DataRequired()])
-    email = StringField("Email Address *: ", validators=[validators.Regexp(r'^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$', message= 'Your email is invalid. Please check your email address.'),validators.Length(min=3, max=200), DataRequired()])
+    email = StringField("Email Address *: ", validators=[validators.Length(min=3, max=200), DataRequired()])
     card_name = StringField(" Name on Card *: ", validators=[validators.Length(min=3, max=200), DataRequired()])
+    # Visa: 4 + up to 12 char of 0-9  + up to 3 char of 0-9. This is to allow for 13 and 16 number visa cards
+    # Master: start with 2 or 5 then 1 digit of 1-7 then 14 char of 0-9
     credit_card = StringField(" Credit card number *: ", validators=[validators.Regexp(r'^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14})$'),validators.Length(min=3, max=200), DataRequired()])
     exp_month = SelectField(" Expiry Month *: ", validators=[ DataRequired()], choices=[('01', '01'), ('02', '02'), ('03', '03'), ('04', '04'), ('05', '05'), ('06', '06'), ('07', '07'), ('08', '08'), ('09', '09'), ('10', '10'), ('11', '11'), ('12', '12')])
     exp_year = SelectField(" Expiry Year *: ", validators=[validators.Length(min=3, max=200), DataRequired()], choices=[('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023'), ('2024', '2024'), ('2025', '2025'), ('2026', '2026')])

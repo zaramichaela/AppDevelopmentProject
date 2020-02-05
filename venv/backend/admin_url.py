@@ -55,13 +55,16 @@ def admin_logout():
 # if not logged in, redirect to login page
 @authorize
 def add_coupons():
-    #
+    # create an empty form from coupon form
     cform = coupon_form()
     if request.method == 'POST' and cform.validate():
+        # if uid or coupon code already exists
         if(itemcontroller.get_coupon_by_UID(cform.UID.data) or itemcontroller.get_coupon_by_code(cform.couponcode.data)):
             flash("You have input an UID or coupon code that exists, please try again.", "error")
             return render_template('admin/adding/create_coupons.html', form=cform)
+        # create a new coupon and save using itemcontroller (using cform data)
         new_coupon = itemcontroller.create_and_save_coupon(cform.data)
+        # when new coupon is saved
         if(new_coupon.save()):
                 flash("You have successfully create a new coupon for users to use.", "success")
     return render_template('admin/adding/create_coupons.html', form=cform)
@@ -69,91 +72,116 @@ def add_coupons():
 @admin_pages.route('/admin/add/services/', methods= ['GET','POST'])
 @authorize
 def add_shop_service():
-    context = {"message": ""}
+    # create a new form for service
     form = new_service()
 
     if request.method == 'POST' and form.validate():
+        # if service uid already exists
         if(itemcontroller.get_service_by_UID(form.UID.data)):
             flash("You have input an UID that exists, please try again.")
-            return render_template('admin/adding/create_services.html', form=form, message=context)
+            return render_template('admin/adding/create_services.html', form=form)
+        # get image data from form
         f = form.image.data
+        # save uid form data into folder SERVICEDIR(in settings)/<uid name>
         f.save(SERVICEDIR + form.UID.data)
-        # form["image_url"] = filename
+        # duplicate dictionary to change data
         update_form = form.data.copy()
+        # add image url that was saved earlier into dictionary.
+        # dictionary will be stored in sales_service.db
         update_form["image_url"] = SERVICEDIR + form.UID.data
-
+        # save service using itemcontroller
         item = itemcontroller.create_and_save_service(update_form)
+        # save again for the purpose of flash
         if (item.save()):
-            context ={"message":"You have created a new item"}
+            flash("You have created a new item","success")
         else:
-            context ={"error":"An error has occurred."}
-    return render_template('admin/adding/create_services.html', form=form, message=context)
+            flash("An error has occurred.","error")
+    return render_template('admin/adding/create_services.html', form=form)
 ####################################################################################
 @admin_pages.route('/admin/add/items/', methods= ['GET','POST'])
 @authorize
 def add_shop_item():
-    context = {"message": ""}
+    # create new form for sales item
     form = new_sales_item()
 
     if request.method == 'POST' and form.validate():
-
+        # check if uid for item exists
         if(itemcontroller.get_item_by_UID(form.UID.data)):
             flash("You have input an UID that exists, please try again.")
-            return render_template('admin/adding/create_items.html', form=form, message=context)
+            return render_template('admin/adding/create_items.html', form=form)
+        # get image data from form
         f = form.image.data
+        # save uid form data into folder ITEMSDIR(in settings)/<uid name>
         f.save(ITEMSDIR + form.UID.data)
+        # duplicate dictionary to change data
         update_form = form.data.copy()
+        # add image url that was saved earlier into dictionary.
+        # dictionary will be stored in sales_items.db
         update_form["image_url"] = ITEMSDIR + form.UID.data
+        # save item using itemcontroller
         item = itemcontroller.create_and_save_item(update_form)
+        # if item exists
         if (item):
-            context ={"message":"You have created a new item"}
+            flash("You have created a new item","success")
         else:
-            context ={"error":"A error has occurred."}
-    return render_template('admin/adding/create_items.html', form=form, message=context)
+            flash("A error has occurred.","error")
+    return render_template('admin/adding/create_items.html', form=form)
 ####################################################################################
 @admin_pages.route('/admin/add/packages/', methods= ['GET','POST'])
 @authorize
 def add_shop_package():
-    context = {"message": ""}
+    # create new form for package
     form = new_package()
 
     if request.method == 'POST' and form.validate():
+        # if uid for package already exists
         if(itemcontroller.get_package_by_UID(form.UID.data)):
             flash("You have input an UID that exists, please try again.")
-            return render_template('admin/adding/create_packages.html', form=form, message=context)
+            return render_template('admin/adding/create_packages.html', form=form)
+        # get image data from form
         f = form.image.data
+        # save uid form data into folder PACKAGEDIR(in settings)/<uid name>
         f.save(PACKAGEDIR + form.UID.data)
+        # duplicate dictionary to change data
         update_form = form.data.copy()
+        # add image url that was saved earlier into dictionary.
+        # dictionary will be stored in sales_package.db
         update_form["image_url"] = PACKAGEDIR + form.UID.data
-
+        # save package using itemcontroller
         item = itemcontroller.create_and_save_package(update_form)
+        # if item exists
         if (item):
-            context ={"message":"You have created a new package"}
+            flash("You have created a new package","success")
+        # if item does not exist
         else:
-            context ={"error":"A error has occurred."}
-    return render_template('admin/adding/create_packages.html', form=form, message=context)
+            flash("A error has occurred.","error")
+    return render_template('admin/adding/create_packages.html', form=form)
 ####################################################################################
 @admin_pages.route('/admin/list/items')
 @authorize
 def list_sales_items():
+    # get all sales items from itemcontroller
     sales = itemcontroller.get_all_sales_items()
     return render_template('admin/listing/list_sales_items.html', items=sales)
 ####################################################################################
 @admin_pages.route('/admin/list/sales_packages')
 @authorize
 def list_sales_packages():
+    # get all sales packages from itemcontroller
     sales = itemcontroller.get_all_sales_packages()
     return render_template('admin/listing/list_sales_packages.html', items=sales)
 ####################################################################################
 @admin_pages.route('/admin/list/sales_services')
 @authorize
 def list_sales_services():
+    # get all sales services from itemcontroller
     sales = itemcontroller.get_all_sales_services()
     return render_template('admin/listing/list_sales_services.html', items=sales)
 ####################################################################################
 @admin_pages.route('/admin/list/coupons')
 @authorize
 def list_coupons():
+    # get all coupons from itemcontroller
     sales = itemcontroller.get_all_coupons()
     return render_template('admin/listing/list_coupons.html', items=sales)
 ####################################################################################
@@ -166,11 +194,14 @@ def list_coupons():
 @admin_pages.route('/admin/list/items/<itemid>/delete/', methods= ['GET','POST'])
 @authorize
 def delete_sales_item(itemid):
-    context = {"message": ""}
+    # look for item using itemid in itemcontroller
     item = itemcontroller.get_item_by_UID(itemid)
+    # if item does not exist, 404
     if(not item):
         abort(404)
+    # else... remove the sales item
     flag = itemcontroller.remove_sales_item(item)
+    # if flag exists
     if flag:
         flash("You have succeed in removing item " + item.get_UID(), "success")
     else:
@@ -180,29 +211,39 @@ def delete_sales_item(itemid):
 @admin_pages.route('/admin/list/items/<itemid>/invalidate/', methods= ['GET','POST'])
 @authorize
 def invalidate_sales_item(itemid):
-    context = {"message": ""}
+    # look for item using itemid in itemcontroller
     item = itemcontroller.get_item_by_UID(itemid)
+    # if item does not exist, 404
     if(not item):
         abort(404)
+    # by default, flag is true
     flag = True
+    # if flag is true, set to false
+    # if flag is false, set to true
     if(item.get_available_flag()):
         flag = False
     else:
         flag = True
+    # show the flag
     item.set_available_flag(flag)
+
     if flag:
+        # if flag is True, it is available
         flash("You have set the item " + item.get_UID() + " to available", "success")
     else:
+        # if flag is False, it is unavailable
         flash("You have set the item " + item.get_UID() + " to unavailable", "success")
     return redirect(url_for("admin_pages.list_sales_items"))
 ####################################################################################
 @admin_pages.route('/admin/list/package/<packageid>/delete/', methods= ['GET','POST'])
 @authorize
 def delete_package(packageid):
-    context = {"message": ""}
+    # look for item using packageid in itemcontroller
     item = itemcontroller.get_package_by_UID(packageid)
+    # if item does not exist, 404
     if(not item):
         abort(404)
+    # this flag is to see if there is an error in removing the package
     flag = itemcontroller.remove_sales_package(item)
     if flag:
         flash("You have succeed in removing item #" + item.get_UID(), "success")
@@ -213,29 +254,38 @@ def delete_package(packageid):
 @admin_pages.route('/admin/list/packages/<packageid>/invalidate/', methods= ['GET','POST'])
 @authorize
 def invalidate_package(packageid):
-    context = {"message": ""}
+    # look for item using packageid in itemcontroller
     item = itemcontroller.get_package_by_UID(packageid)
+    # if item does not exist, 404
     if(not item):
         abort(404)
+    # by default, flag is true
     flag = True
+    # if flag is true, set to false
+    # if flag is false, set to true
     if(item.get_available_flag()):
         flag = False
     else:
         flag = True
+    # show the flag
     item.set_available_flag(flag)
     if flag:
+        # if flag is True, it is available
         flash("You have set the package #" + item.get_UID() + " to available", "success")
     else:
+        # if flag is False, it is unavailable
         flash("You have set the package #" + item.get_UID() + " to unavailable", "success")
     return redirect(url_for("admin_pages.list_sales_packages"))
 ####################################################################################
 @admin_pages.route('/admin/list/service/<serviceid>/delete/', methods= ['GET','POST'])
 @authorize
 def delete_service(serviceid):
-    context = {"message": ""}
+    # look for the serviceuid in itemcontroller
     item = itemcontroller.get_service_by_UID(serviceid)
+    # if item does not exist, 404
     if(not item):
         abort(404)
+    # this flag is to see if there is an error in removing the service
     flag = itemcontroller.remove_sales_service(item)
     if flag:
         flash("You have succeed in removing item " + item.get_UID(), "success")
@@ -246,15 +296,20 @@ def delete_service(serviceid):
 @admin_pages.route('/admin/list/service/<serviceid>/invalidate/', methods= ['GET','POST'])
 @authorize
 def invalidate_service(serviceid):
-    context = {"message": ""}
+    # look for the serviceuid in itemcontroller
     item = itemcontroller.get_package_by_UID(serviceid)
+    # if item does not exist, 404
     if(not item):
         abort(404)
+    # by default, flag is true
     flag = True
+    # if flag is true, set to false
+    # if flag is false, set to true
     if(item.get_available_flag()):
         flag = False
     else:
         flag = True
+    # show the flag
     item.set_available_flag(flag)
     if flag:
         flash("You have set the service #" + item.get_UID() + " to available", "success")
@@ -265,14 +320,15 @@ def invalidate_service(serviceid):
 @admin_pages.route('/admin/list/coupon/<couponid>/delete/', methods= ['GET','POST'])
 @authorize
 def delete_coupon(couponid):
-    context = {"message": ""}
     item = itemcontroller.get_coupon_by_UID(couponid)
     if(not item):
         abort(404)
     flag = itemcontroller.remove_sales_coupon(item)
     if flag:
+        # if flag is True, it is available
         flash("You have succeed in removing item " + item.get_UID(),"success")
     else:
+        # if flag is False, it is unavailable
         flash("There's been a error removing " + item.get_UID(), "error")
     return redirect(url_for("admin_pages.list_coupons"))
 ####################################################################################
@@ -285,53 +341,75 @@ def delete_coupon(couponid):
 @admin_pages.route('/admin/list/items/<itemid>/edit/', methods= ['GET','POST'])
 @authorize
 def edit_item(itemid):
-    context = {"message": ""}
+    # get item id from itemcontroller
     item = itemcontroller.get_item_by_UID(itemid)
+    # if item does not exist, 404
     if(not item):
         abort(404)
+    # create a new form to edit sales items
     form = edit_sales_item()
     if request.method == 'POST' and form.validate_on_submit():
+        # get image from form
         file_ = request.files["image"]
-        # if(file_):
-        #     if os.path.exists(ITEMSDIR + item.get_UID()):
-        #         os.remove(ITEMSDIR + item.get_UID())
+        # save image into ITEMSDIR
         file_.save(ITEMSDIR+item.get_UID())
+        # duplicate dictionary to change data
         update_form = form.data.copy()
+        # add uid into dictionary that will be stored in sales_item.db
         update_form["UID"] = item.get_UID()
+        # add image url that was saved earlier into dictionary.
+        # dictionary will be stored in sales_item.db
         update_form["image_url"] = ITEMSDIR + item.get_UID()
+        # remove old item from itemcontroller list and db
         itemcontroller.remove_sales_item(item)
+        # create a new item and save it into db and itemcontroller
         item2 = itemcontroller.create_and_save_item(update_form)
+        # if item2 (updated one) exists
         if (item2):
             flash("You have updated the item "+ item.get_UID() +" information", "success")
             return redirect(url_for("admin_pages.list_sales_items"))
         else:
-            context ={"error":"A error have occurred..."}
+        # if item2 (updated one) does not exist
+            flash("A error has occurred.","error")
+            # append item in itemcontroller
             itemcontroller.all_items.append(item)
+            # save item
             item.save()
     else:
-            form.name.data = item.get_name()
-            form.category.data = item.get_category()
-            form.discount.data = item.get_discount()
-            form.description.data = item.get_description()
-            form.price.data = item.get_price()
-            form.stocks.data = item.get_stocks()
-    return render_template('admin/editing/edit_items.html', form=form, message=context, item=item)
+        # get the item name from form data
+        form.name.data = item.get_name()
+        # get the item category from form data
+        form.category.data = item.get_category()
+        # get the item discount from form data
+        form.discount.data = item.get_discount()
+        # get the item description from form data
+        form.description.data = item.get_description()
+        # get the item price from form data
+        form.price.data = item.get_price()
+        # get the item stocks from form data
+        form.stocks.data = item.get_stocks()
+
+    return render_template('admin/editing/edit_items.html', form=form, item=item)
 ####################################################################################
 
 @admin_pages.route('/admin/list/packages/<packageid>/edit/', methods= ['GET','POST'])
 @authorize
 def edit_package(packageid):
-    context = {"message": ""}
+    # get package uid from itemcontroller
     item = itemcontroller.get_package_by_UID(packageid)
+    # if item does not exist, 404
     if(not item):
         abort(404)
+    # create a new form to edit package form
     form = edit_package_form(formdata=request.form, obj=item)
 
     if request.method == 'POST' and form.validate():
         file_ = request.files["image"]
         if(file_):
             file_.save(PACKAGEDIR+item.get_UID())
+        # duplicate dictionary to change data
         update_form = form.data.copy()
+        # add uid into dictionary that will be stored in sales_item.db
         update_form["UID"] = item.get_UID()
         update_form["image_url"] = PACKAGEDIR +item.get_UID()
         itemcontroller.remove_sales_package(item)
@@ -340,7 +418,7 @@ def edit_package(packageid):
             flash("You have updated the package "+ item2.get_UID() +" information", "success")
             return redirect(url_for("admin_pages.list_sales_packages"))
         else:
-            context ={"error":"A error have occurred..."}
+            flash("A error has occurred.","error")
             itemcontroller.all_packages(item)
             item.save()
     else:
@@ -351,47 +429,62 @@ def edit_package(packageid):
             form.expiry_duration.data = item.get_expiry_duration()
             form.sessions.data = item.get_sessions()
 
-    return render_template('admin/editing/edit_packages.html', form=form, message=context, item=item)
+    return render_template('admin/editing/edit_packages.html', form=form, item=item)
 ####################################################################################
 @admin_pages.route('/admin/list/services/<serviceid>/edit/', methods= ['GET','POST'])
 @authorize
 def edit_service(serviceid):
-    context = {"message": ""}
+    # get service uid from itemcontroller
     item = itemcontroller.get_service_by_UID(serviceid)
+    # if item does not exist, 404
     if(not item):
         abort(404)
+    # create a new form to edit service
     form = edit_service_form(formdata=request.form, obj=item)
 
     if request.method == 'POST' and form.validate():
-
+        # get image from form
         file_ = request.files["image"]
+        # if file exists
         if(file_):
+        # save image into SERVICEDIR
             file_.save(SERVICEDIR+item.get_UID())
-
+        # duplicate dictionary to change data
         update_form = form.data.copy()
+        # add uid into dictionary that will be stored in sales_service.db
         update_form["UID"] = item.get_UID()
+        # add image url that was saved earlier into dictionary.
+        # dictionary will be stored in sales_item.db
         update_form["image_url"] = SERVICEDIR + item.get_UID()
-
-        item2 = itemcontroller.create_and_save_service(update_form)
+        # remove old item from itemcontroller list and db
         itemcontroller.remove_sales_service(item)
+        # create a new item and save it into db and itemcontroller
+        item2 = itemcontroller.create_and_save_service(update_form)
+        # if item2 exists
         if (item2):
-            flash("You have updated the service "+ item2.get_UID() +" information", "success")
+            flash("You have updated the service "+ item2.get_UID() + "information", "success")
             return redirect(url_for("admin_pages.list_sales_services"))
         else:
-            context ={"error":"A error have occurred..."}
+            # if item2 (updated one) does not exist
+            flash("A error has occurred.", "error")
+            # append item in itemcontroller
             itemcontroller.all_services(item)
+            # save
             item.save()
     else:
+        # get the item name from form data
         form.name.data = item.get_name()
+        # get the item discount from form data
         form.discount.data = item.get_discount()
+        # get the item description from form data
         form.description.data = item.get_description()
+        # get the item name from form data
         form.price.data = item.get_price()
     return render_template('admin/editing/edit_services.html', form=form, message=context, item=item)
 ####################################################################################
 @admin_pages.route('/admin/list/coupons/<couponid>/edit/', methods= ['GET','POST'])
 @authorize
 def edit_coupon(couponid):
-    context = {"message": ""}
     item = itemcontroller.get_coupon_by_UID(couponid)
     if(not item):
         abort(404)
@@ -401,7 +494,7 @@ def edit_coupon(couponid):
 
         if(itemcontroller.get_coupon_by_code(form.couponcode.data)):
             flash("You have input an UID or coupon code that exists, please try again.", "error")
-            return render_template('admin/editing/edit_coupons.html', form=form, message=context, item=item)
+            return render_template('admin/editing/edit_coupons.html', form=form, item=item)
         itemcontroller.remove_sales_coupon(item)
         update_form = form.data.copy()
         update_form["UID"] = item.get_UID()
@@ -421,7 +514,7 @@ def edit_coupon(couponid):
             form.discountlimit.data = item.get_discountlimit()
             form.minimumspent.data = item.get_minimumspent()
             form.expiredate.data = item.get_expiredate()
-    return render_template('admin/editing/edit_coupons.html', form=form, message=context, item=item)
+    return render_template('admin/editing/edit_coupons.html', form=form, item=item)
 ####################################################################################
 # @admin_pages.route('/admin/accounts/add', methods= ['GET','POST'])
 # @authorize
