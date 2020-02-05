@@ -28,21 +28,22 @@ class items_controller:
         #check and find 1 coupon with the coupon_UID
         #return None if more than 1 found
         #can be used to check or search
+        #loop through the list of all coupons
         for i in self.__all_coupons:
+            #if item UID equals to the parameter UID return the item
             if(i.get_UID() == coupon_UID):
                 return i
+        #return False if no item found
         return False
 
 
     def get_coupon_by_code(self, coupon_code):
         #check and find 1 coupon with the couponcode
         #return None if more than 1 found
-        coupon_item = [items for items in self.__all_coupons if items.get_couponcode() == coupon_code]
-        if(len(coupon_item) == 1):
-            return coupon_item[0]
-        else:
-            return False
-
+        for i in self.__all_coupons:
+            if(i.get_couponcode() == coupon_code):
+                return i
+        return False
 
     def get_item_by_UID(self, UID):
         #check and return 1 item finding via item_UID. if more than 1, return None.
@@ -85,18 +86,22 @@ class items_controller:
 
 
     def get_all_sales_items(self):
+        #returns current items lists.
         return self.__all_items
 
 
     def get_all_sales_services(self):
+        #returns current services lists.
         return self.__all_services
 
 
     def get_all_sales_packages(self):
+        #returns current packages lists.
         return self.__all_packages
 
 
     def get_all_coupons(self):
+        #returns current coupon lists.
         return self.__all_coupons
 
     ####################################################
