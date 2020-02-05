@@ -22,9 +22,7 @@ All Doctors
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
 
-<div class="main-card mb-3 card">
-
-<div class="card-body">
+<div class="tables">
 
 <div>
     {% if count == 0 %}
@@ -41,26 +39,26 @@ All Doctors
             <tr class = "header">
 
 
-                <th>Doctor Image</th>
-                <th>Doctor ID</th>
-                <th>Name</th>
-                <th>Specialities</th>
-                <th>Gender</th>
-                <th>Profile</th>
-                <th>Status</th>
-                <th>Action </th>
+                <th><center>Doctor Image</center></th>
+                <th><center>Doctor ID</center></th>
+                <th><center>Name</center></th>
+                <th><center>Specialities</center></th>
+                <th><center>Gender</center></th>
+                <th><center>Profile</center></th>
+                <th><center>Status</center></th>
+                <th><center>Action </center></th>
             </tr>
         </thead>
         <tbody>
         {% for doctor in doctorsList %}
             <tr>
-                <td><img src="/{{ doctor.get_Image() }}" class="img600"></center></td>
-                <td>{{ doctor.get_doctorID() }}</td>
-                <td>{{ doctor.get_Name() }}</td>
-                ><td>{{ doctor.get_Specialities() }}</td>
-                <td>{{ doctor.get_gender() }}</td>
-                <td>{{ doctor.get_Profile() }}</td>
-                <td>{{ doctor.get_Status() }}</td>
+                <td><center><img src="/{{ doctor.get_Image() }}" class="img600"></center></td>
+                <td><center>{{ doctor.get_doctorID() }}</center></td>
+                <td><center>{{ doctor.get_Name() }}</center></td>
+                <td><center>{{ doctor.get_Specialities() }}</center></td>
+                <td><center>{{ doctor.get_gender() }}</center></td>
+                <td><center>{{ doctor.get_Profile() }}</center></td>
+                <td><center>{{ doctor.get_Status() }}</center></td>
 
 
                 <td style="width:300px">
