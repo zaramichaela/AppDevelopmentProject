@@ -36,7 +36,7 @@ var myChart = new Chart(ctx, {
             {% endfor %}],
       datasets: [{
         label: '# of usage',
-        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        backgroundColor: ["#2e279d","#4d80e4","#46b3e6","#dff6f0", "#0f4c75"],
         data: [{% for item in usage_number_list %}
                 {{item}},
               {% endfor %}],
