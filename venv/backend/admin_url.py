@@ -1204,6 +1204,8 @@ def admin_home():
             #gets all the coupons that is in the receipts
             #append it into used_coupons
             all_used.append(coupon.get_couponcode())
+        else:
+            all_used.append("No Coupon Used")
     all_coupon_used_list = []
     usage_number_list = []
     usedlist = []

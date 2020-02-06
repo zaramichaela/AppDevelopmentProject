@@ -89,3 +89,9 @@ class sales_receipt(object):
 
     def get_address(self):
         return self.user.get_address()
+
+
+    def get_couponcode(self):
+        if(self.coupon):
+            return self.coupon.get_couponcode()
+        return None
