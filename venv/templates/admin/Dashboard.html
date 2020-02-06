@@ -31,6 +31,7 @@ var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
               labels: [{% for item in all_coupons_used_list %}
+              <!--get the coupon name-->
              "{{item}}",
             {% endfor %}],
       datasets: [{
