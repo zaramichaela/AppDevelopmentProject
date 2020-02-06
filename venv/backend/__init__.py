@@ -228,6 +228,8 @@ def cart():
 
     # there is no code unless there is an input in the field
     code = ''
+    #clear the session code so that the data will not screw up.
+    session['code'] = None
     # auto discount is 0.00
     discount = 0.00
     # every item add together - discount
@@ -292,16 +294,12 @@ def cart():
                 # if there is no discount, total amount = subtotal price
                 subtotal_price = subtotal_price + cart_item['total']
                 total_amount = subtotal_price
-
         if request.method == 'POST' and request.form.get('code'):
             # this part is when coupon code is inputted, it will check and update if it is valid by how much you save
 
             # get code from html form
             code = request.form.get('code')
-            # put code into session so I can access it easily later
-            session['code'] = code
-            # just to check code
-            print(session.get('code'))
+
             # retrieve coupon object from itemcontroller
             coupon = itemcontroller.get_coupon_by_code(code)
             # if coupon exists
@@ -313,6 +311,11 @@ def cart():
                     # if coupon is valid but minimum spending is not met
                     if(discount == 0):
                         flash("Coupon requires a minimum spending of $" + "{0:.2f}".format(coupon.get_minimumspent()) , "nocoupon")
+                    else:
+                        # put code into session so I can access it easily later
+                        session['code'] = code
+                        # just to check code
+                        print(session.get('code'))
                     # putting discount into session to be used in receipt and view all receipts
                     session['discount'] = discount
                 # if coupon is expired
@@ -340,6 +343,8 @@ def del_cart():
     session.pop('cart', None)
     # empty discount, it becomes none
     session.pop('discount', None)
+     # empty code, it becomes none
+    session.pop('code', None)
     # empty subtotal price, it becomes none
     session.pop('subtotal_price', None)
     # empty total amount, it becomes none
@@ -386,6 +391,8 @@ def checkout():
             receiptz = itemcontroller.checkout_items_users(items, coupon, user_details)
             # empty cart, it becomes none
             session.pop('cart', None)
+            # empty code, it becomes none
+            session.pop('code', None)
             # empty discount, it becomes none
             session.pop('discount', None)
             # empty subtotal price, it becomes none

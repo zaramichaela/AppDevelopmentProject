@@ -1,22 +1,31 @@
-# import datetime
-# import backend.settings as settings
-# import shelve
-# import pickle
-# import uuid
-#
-#
-#
-# ## appointment object
-# class appointment:
-#     def __init__(self, date, time):
-#
-#         self.__UID = uuid.uuid1()
-#         self.__date = date
-#         self.__time = time
-#
-#
-#     def get_UID(self):
-#         return self.__UID
-#
-#     def get_date(self):
-#         return self.__date
+import datetime as
+import backend.settings as settings
+import shelve
+import pickle
+import uuid
+
+
+
+## appointment object
+class appointment:
+    def __init__(self, date, time):
+
+        self.__UID = uuid.uuid1()
+        self.__date = date
+        self.__time = time
+
+
+    def get_UID(self):
+        return self.__UID
+
+    def get_date(self):
+        return self.__date
+
+    def get_time(self):
+        return self.__time
+
+    def set_date(self, date):
+        self.__date = date
+
+    def set_time(self, time):
+        self.__time = time

@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import date
 from backend import settings
 import shelve
 import pickle
 class supplier_orders:
-    def __init__(self, oid, sid,  sname,pUID , pname, amt, unit_price,progress="In-Progress", date_of_order=datetime.now()):
+    def __init__(self, oid, sid,  sname,pUID , pname, amt, unit_price,progress="In-Progress", date_of_order=date.today()):
         self.__oid = oid
         self.__sid = sid
         self.__sname = sname
@@ -13,7 +13,7 @@ class supplier_orders:
         self.__unit_price = unit_price
         self.__total_price = amt * unit_price
         self.__progress = progress
-        self.__date_of_order = datetime.now()
+        self.__date_of_order = date.today()
 
     def get_pUID(self):
         return self.__pUID
