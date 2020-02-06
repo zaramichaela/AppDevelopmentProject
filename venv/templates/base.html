@@ -80,15 +80,15 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item {% if  request.endpoint == 'home' %}cta{% endif %}"><a href="{{url_for('home')}}" class="nav-link">Home</a></li>
-                <li class="nav-item {% if  request.endpoint == 'shop' %}cta{% endif %}"><a href="{{url_for('shop')}}" class="nav-link">Shop</a></li>
+	          <li class="nav-item {% if  request.endpoint == 'home' %}cta{% endif %}"><a href="{{url_for('home')}}" class="nav-link {% if  request.endpoint == 'home' %}active{% endif %}">Home</a></li>
+                <li class="nav-item {% if  request.endpoint == 'shop' %}cta{% endif %}"><a href="{{url_for('shop')}}" class="nav-link {% if  request.endpoint == 'shop' %}active{% endif %}">Shop</a></li>
 
-	          <li class="nav-item {% if  request.endpoint == 'about' %}cta{% endif %}" ><a href="{{url_for('about')}}" class="nav-link">About</a></li>
+	          <li class="nav-item {% if  request.endpoint == 'about' %}cta{% endif %}" ><a href="{{url_for('about')}}" class="nav-link {% if  request.endpoint == 'about' %}active{% endif %}">About</a></li>
 <!--	          <li class="nav-item active"><a href="static/user/blog.html" class="nav-link">Blog</a></li>-->
-	          <li class="nav-item {% if  request.endpoint == 'contact' %}cta{% endif %}"><a href="{{url_for('contact')}}" class="nav-link">Contact</a></li>
-            {% if session.get('logged_in_user') %}<li class="nav-item {% if  request.endpoint == 'show_all_receipt' %}cta{% endif %}"" ><a href="{{url_for('show_all_receipt')}}" class="nav-link">All Receipts</a></li>{% endif %}
+	          <li class="nav-item {% if  request.endpoint == 'contact' %}cta{% endif %}"><a href="{{url_for('contact')}}" class="nav-link {% if  request.endpoint == 'contact' %}active{% endif %}">Contact</a></li>
+            {% if session.get('logged_in_user') %}<li class="nav-item {% if  request.endpoint == 'show_all_receipt' %}cta{% endif %}" ><a href="{{url_for('show_all_receipt')}}" class="nav-link {% if  request.endpoint == 'show_all_receipt' %}active{% endif %}">All Receipts</a></li>{% endif %}
 
-	          <li class="nav-item   {% if  request.endpoint == 'cart' %}cta cta-colored{% endif %}"><a href="{{url_for('cart')}}" class="nav-link"><span class="icon-shopping_cart"></span>Cart [{% if session.get('cart') %}{{ session.get('cart')|length }}{% else %}{{0}}{%endif%}]</a></li>
+	          <li class="nav-item   {% if  request.endpoint == 'cart' %}cta cta-colored{% endif %}"><a href="{{url_for('cart')}}" class="nav-link {% if  request.endpoint == 'cart' %}active{% endif %}"><span class="icon-shopping_cart"></span>Cart [{% if session.get('cart') %}{{ session.get('cart')|length }}{% else %}{{0}}{%endif%}]</a></li>
 
 	        </ul>
 	      </div>

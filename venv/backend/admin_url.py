@@ -1154,7 +1154,7 @@ def updateUser(id):
         db['Users'] = usersDict
         db.close()
 
-        return redirect(url_for('admin_pages.list_users_account'))
+        return redirect(url_for('admin_pages.list_users_accounts'))
     else:
         usersDict = {}
         db = shelve.open('users.db', 'r')
@@ -1165,7 +1165,7 @@ def updateUser(id):
         updateUserForm.username.data = user.get_username()
         updateUserForm.email.data = user.get_email()
 
-        return render_template('updateUser.html', form=updateUserForm)
+        return render_template('admin/accounts/update_user_accounts.html', form=updateUserForm)
 
 
 @admin_pages.route('/deleteUser/<int:id>', methods=['POST'])
@@ -1200,21 +1200,21 @@ def admin_home():
         #get the coupons from the receipts
         coupon = i.get_coupon()
         if(coupon):
-            #if the receipts uses a coupon
+            #if the receipts uses a coupon code
             #gets all the coupons that is in the receipts
             #append it into used_coupons
-            all_used.append(coupon)
+            all_used.append(coupon.get_couponcode())
     all_coupon_used_list = []
     usage_number_list = []
     usedlist = []
-    #loop through all used coupons
+    #loop through all used coupons code
     for j in all_used:
-        #if coupon is not in usedlist
+        #if couponcode is not in usedlist
         if not (j in usedlist):
             #appends it into all_coupons_used_list
             #this list each has a unique coupon code
-            all_coupon_used_list.append(j.get_couponcode())
-            #count how many instance this coupons appear in all_used list
+            all_coupon_used_list.append(j)
+            #count how many instance this coupon code appear in all_used list
             usage_number_list.append(all_used.count(j))
             #appends into used list so we can skip counting the same coupon again
             usedlist.append(j)

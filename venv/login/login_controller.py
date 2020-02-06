@@ -6,8 +6,8 @@ import backend.settings as settings
 import shelve
 class login_controller():
     def __init__(self):
-        self.all_admins = get_all_admin()
-        self.all_users = get_all_users()
+        self.all_admins = []#get_all_admin()
+        self.all_users = []# get_all_users()
     def login_user(self, username, password):
         for i in self.all_users:
             if(i.check_login(username,password)):

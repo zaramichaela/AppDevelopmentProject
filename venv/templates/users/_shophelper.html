@@ -16,7 +16,7 @@
 			<h3><a href="{{ url_for('shop_item', itemuid=i.get_UID()) }}">{{ i.get_name() }}</a></h3>
 			<div class="pricing">
 			<!--Show users old price (with strikethrough) and new price -->
-				<p class="price" >{% if i.discounted_flag() %}<span class="mr-2 price-dc">{% endif %}${{ i.price_before_discount() }}</span>{% if i.discounted_flag() %}<span class="price-sale">${{i.price_after_discount()}}</span>{% endif %}</p>
+				<p class="price" >{% if i.discounted_flag() %}<span class="mr-2 price-dc">{% endif %}${{'%0.2f'|format(i.price_before_discount()|float)}}</span>{% if i.discounted_flag() %}<span class="price-sale">${{'%0.2f'|format(i.price_after_discount()|float)}}</span>{% endif %}</p>
 			</div>
 			<p class="bottom-area d-flex px-3">
 				<!-- <a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a> -->
