@@ -203,6 +203,6 @@ class service_order(FlaskForm):
     choice = [("9am", "9am"),("10am", "10am"),("11am", "11am"),("12pm", "12pm"),("1pm", "1pm"),("2pm", "2pm")
               ,("3pm", "3pm"),("4pm", "4pm"),("5pm", "5pm"),("6pm", "6pm"),("7pm", "7pm")]
     date = DateField("Expiry Date (DD/MM/YYYY): ",  format='%d/%m/%Y', validators=[DataRequired()])
-    Time = SelectField('Time :', choices = choice, validators=[DataRequired()])
+    time = SelectField('Time :', choices = choice, validators=[DataRequired()])
     submit = SubmitField()
 ####################################################################################

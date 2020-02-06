@@ -35,7 +35,7 @@ All Admin Accounts
     </div>
     {% else %}
         <div class="alert alert-danger" role="alert">
-  {{ message.message }}
+  {{ message }}
     </div>
 {%endif%}
     {% endfor %}
@@ -62,7 +62,7 @@ All Admin Accounts
             <tr>
                 <th><center>Admin ID</center></th>
                 <th><center>Username</center></th>
-                <th><center>Action</center></th>
+                <th class="action"><center>Action</center></th>
             </tr>
         </thead>
         <tbody>

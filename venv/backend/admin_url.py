@@ -93,7 +93,7 @@ def add_shop_service():
         item = itemcontroller.create_and_save_service(update_form)
         # save again for the purpose of flash
         if (item.save()):
-            flash("You have created a new item","success")
+            flash("You have created a new service","success")
         else:
             flash("An error has occurred.","error")
     return render_template('admin/adding/create_services.html', form=form)

@@ -57,17 +57,17 @@ def shop_services():
 # eg: /shop/service/12345a
 @app.route('/shop/service/<serviceuid>')
 def shop_services_items(serviceuid):
+    sales_service = itemcontroller.get_service_by_UID(serviceuid)
     form = service_order()
-    sales_service = itemcontroller.get_all_sales_services(serviceuid)
     return render_template('users/services.html', item = sales_service, form = form)
 ####################################################################################
-# @app.route('/shop/service/<serviceuid>/book')
-# def shop_services_book(serviceuid):
-#     sales_service = itemcontroller.get_all_sales_services(serviceuid)
-#     date = request.form['date']
-#     time = request.form['time']
-#     appointment = appointment(date, time, user)
-#     return render_template('users/services.html', item = sales_service, form = form)
+@app.route('/shop/service/<serviceuid>/book')
+def shop_services_book(serviceuid):
+    sales_service = itemcontroller.get_all_sales_services(serviceuid)
+    date = request.form['date']
+    time = request.form['time']
+    appointment = appointment(date, time, user)
+    return render_template('users/services.html', item = sales_service, form = form)
 # ####################################################################################
 # @app.route('/shop/service/appointments')
 # def shop_services_appointments(serviceuid):
