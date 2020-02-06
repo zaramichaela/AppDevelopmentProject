@@ -1,12 +1,17 @@
 {% extends 'admin/admin_base.html' %}
 {% block head%}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/dashboard.ico" />
+
 {% endblock %}
 
 {% block title %} Dashboard  | K's TCM Administration{% endblock %}
-{% block icon %} <i class="pe-7s-bandaid icon-gradient bg-amy-crisp"></i>{% endblock %}
 {% block pagetitle %} Dashboard {% endblock %}
 
+
+{% block icon %}
+<i class="fas fa-chart-line"></i>
+{% endblock %}
 
 {% block body%}
 <div class="row">
