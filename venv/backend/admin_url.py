@@ -1071,7 +1071,7 @@ def create_admin_accounts():
         adminsDict = {}
         db = shelve.open('admins.db', 'c')
         try:
-            adminsDict = db[createAdmin.username.data]
+            adminsDict = db['Admin']
         except:
             print("Error in retrieving Admin from admin.db.")
 
