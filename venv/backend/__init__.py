@@ -11,6 +11,7 @@ from backend.forms import CreateFeedbackForm, UpdateFeedbackForm,checkout_form,s
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from login.admin_and_users import *
+from backend.appointment import *
 
 
 app = Flask(__name__, template_folder='../templates', static_url_path="/static")
@@ -32,54 +33,7 @@ app.config['UPLOAD_PRODUCT'] = UPLOAD_FOLDER, 'product/'
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
-####################################################################################
-@app.route('/')
-def home():
-    return render_template('home.html')
-####################################################################################
-@app.route('/shop/item')
-def shop():
-    # in shop_items, the html will list the item if the available flag is true.
-    #using the marco in _shophelper.html
-    #shop_helper will check if there's any discount and display accordingly.
-    sales_items = itemcontroller.get_all_sales_items()
-    # itemcontroller controls all items (eg if you want to take out/put into db,
-    # use item controller (with exceptions)
-    return render_template('users/shop_items.html', items = sales_items)
-####################################################################################
-####################################################################################
-@app.route('/shop/service')
-def shop_services():
-    sales_services = itemcontroller.get_all_sales_services()
-    return render_template('users/shop_services.html', items = sales_services)
-####################################################################################
-# <serviceuid> will be taken from get_all_sales_services(serviceuid)
-# eg: /shop/service/12345a
-@app.route('/shop/service/<serviceuid>')
-def shop_services_items(serviceuid):
-    sales_service = itemcontroller.get_service_by_UID(serviceuid)
-    form = service_order()
-    return render_template('users/services.html', item = sales_service, form = form)
-####################################################################################
-@app.route('/shop/service/<serviceuid>/book')
-def shop_services_book(serviceuid):
-    sales_service = itemcontroller.get_all_sales_services(serviceuid)
-    date = request.form['date']
-    time = request.form['time']
-    appointment = appointment(date, time, user)
-    return render_template('users/services.html', item = sales_service, form = form)
-# ####################################################################################
-# @app.route('/shop/service/appointments')
-# def shop_services_appointments(serviceuid):
-#     form = service_order()
-#     sales_service = itemcontroller.get_all_sales_services(serviceuid)
-#     return render_template('users/services.html', item = sales_service, form = form)
-# ####################################################################################
-# Unused at this point of time
-@app.route('/shop/packages')
-def shop_packages():
-    sales_package = itemcontroller.get_all_sales_packages()
-    return render_template('users/shop_packages.html', items = sales_package)
+
 ####################################################################################
 # requires users to be logged in before they can access certain functions like
 # viewing all receipts and checking out
@@ -120,6 +74,73 @@ def user_authorize(f):
 ####################################################################################
 ####################################################################################
 
+####################################################################################
+@app.route('/')
+def home():
+    return render_template('home.html')
+####################################################################################
+@app.route('/shop/item')
+def shop():
+    # in shop_items, the html will list the item if the available flag is true.
+    #using the marco in _shophelper.html
+    #shop_helper will check if there's any discount and display accordingly.
+    sales_items = itemcontroller.get_all_sales_items()
+    # itemcontroller controls all items (eg if you want to take out/put into db,
+    # use item controller (with exceptions)
+    return render_template('users/shop_items.html', items = sales_items)
+####################################################################################
+####################################################################################
+@app.route('/shop/service')
+def shop_services():
+    sales_services = itemcontroller.get_all_sales_services()
+    return render_template('users/shop_services.html', items = sales_services)
+####################################################################################
+# <serviceuid> will be taken from get_all_sales_services(serviceuid)
+# eg: /shop/service/12345a
+@app.route('/shop/service/<serviceuid>')
+def shop_services_items(serviceuid):
+    sales_service = itemcontroller.get_service_by_UID(serviceuid)
+    form = service_order()
+    return render_template('users/services.html', item = sales_service, form = form)
+####################################################################################
+@app.route('/shop/service/<serviceuid>/book', methods=['GET', 'POST'])
+@user_authorize
+def shop_services_book(serviceuid):
+    form = checkout_form()
+    sales_service = itemcontroller.get_service_by_UID(serviceuid)
+    total_price =  sales_service.price_after_discount()
+    if(not sales_service):
+        abort(404)
+    date = request.args.get('date')
+    time = request.args.get('time')
+    if(not date or not time):
+        abort(400)
+    if request.method == "POST" and form.validate():
+        user = session.get('logged_in_user')
+        book_appointment = itemcontroller.create_appointment_and_save(date, time, form.full_name.data)
+        user_details = create_user_details(form.data, user)
+        # create a receipt using item info (a list), coupon and user details
+        receiptz = itemcontroller.checkout_services_users([sales_service],total_price, user_details)
+        if( not book_appointment and not receiptz):
+            abort(400)
+        else:
+            return redirect(url_for("shop_services_appointments"))
+
+    return render_template('users/service_checkout.html', item = sales_service, form = form, total = total_price)
+# ####################################################################################
+
+@app.route('/shop/service/appointments')
+def shop_services_appointments():
+    appointments = itemcontroller.get_all_appointments()
+    return render_template('users/appointments.html', appointments=appointments)
+# ####################################################################################
+# Unused at this point of time
+@app.route('/shop/packages')
+def shop_packages():
+    sales_package = itemcontroller.get_all_sales_packages()
+    return render_template('users/shop_packages.html', items = sales_package)
+
+##########################################################################
 @app.route('/contactus', methods=['GET', 'POST'])
 def contact():
     createFeedbackForm = CreateFeedbackForm(request.form)
@@ -329,8 +350,10 @@ def cart():
             # get total amount by taking subtotal price - discount price to get the final price (total amount)
             total_amount = float(subtotal_price) - float(discount)
         # put total_amount and subtotal_price into session so I can access it easily later (for receipt and view all receipts)
+        print(total_amount)
         session['total_amount'] = total_amount
         session['subtotal_price'] = subtotal_price
+
         # return the page cart and use cart_items=cart_list to fill up the fields (in the template)
         return render_template('users/cart.html', cart_items=cart_list, subtotal_price=subtotal_price, discount=discount, code=code, total_amount=total_amount)
     else:
@@ -362,6 +385,7 @@ def about():
 @user_authorize
 def checkout():
     # get code from session
+
     code = session.get('code')
     # get username from session
     user = session.get('logged_in_user')
@@ -376,13 +400,29 @@ def checkout():
     # get code from session
 
     # assign checkout form to form
+    cart_list = []
     form = checkout_form()
+    if not items:
+        flash("cart is empty, unable to checkout.","error")
+        return redirect(url_for("cart"))
     # get coupon code from itemcontroller
     coupon = itemcontroller.get_coupon_by_code(code)
     # print the coupon for checking purposes while running
     print(coupon)
+
     # if items exist
     if(items):
+        for i in items:
+            item = itemcontroller.get_item_by_UID(i['itemuid'])
+
+            # if there exists the item in cart
+            if (item):
+                one_item = dict()
+                one_item['quantity'] = i['quantity']
+                one_item['item'] = item
+                one_item['total'] = int(i['quantity']) * item.price_after_discount()
+
+                cart_list.append(one_item)
         # if form validation works
         if form.validate_on_submit() and request.method == "POST":
             # create user details using the data from the form and assign it to user_details
@@ -408,9 +448,10 @@ def checkout():
         # if they try to go straight into http://127.0.0.1:5000/checkout without adding anything into cart first
         flash("You have nothing in your cart.", "error")
         return redirect(url_for("cart"))
-
+    print()
     # return the page cart and use subtotal_price=subtotal_price to fill up the fields (in the template)
-    return render_template('users/checkout.html', form=form, subtotal_price=subtotal_price, total_amount=total_amount, discount=discount)
+    return render_template('users/checkout.html', form=form, subtotal_price=subtotal_price, total_amount=total_amount, discount=discount,
+                           cart_items=cart_list)
 ####################################################################################
 @app.route('/receipt/<ruid>', methods=['GET'])
 def show_receipt(ruid):

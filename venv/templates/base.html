@@ -81,7 +81,7 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item {% if  request.endpoint == 'home' %}cta{% endif %}"><a href="{{url_for('home')}}" class="nav-link {% if  request.endpoint == 'home' %}active{% endif %}">Home</a></li>
-                <li class="nav-item {% if  request.endpoint == 'shop' %}cta{% endif %}"><a href="{{url_for('shop')}}" class="nav-link {% if  request.endpoint == 'shop' %}active{% endif %}">Shop</a></li>
+                <li class="nav-item {% if  request.endpoint == 'shop' or request.endpoint == 'shop_services' %}cta{% endif %} "><a href="{{url_for('shop')}}" class="nav-link {% if  request.endpoint == 'shop'  or request.endpoint == 'shop_services' %}active{% endif %}">Shop</a></li>
 
 	          <li class="nav-item {% if  request.endpoint == 'about' %}cta{% endif %}" ><a href="{{url_for('about')}}" class="nav-link {% if  request.endpoint == 'about' %}active{% endif %}">About</a></li>
 <!--	          <li class="nav-item active"><a href="static/user/blog.html" class="nav-link">Blog</a></li>-->

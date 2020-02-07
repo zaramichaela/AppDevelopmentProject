@@ -18,6 +18,7 @@ Shop - Items | Karen's TCM
     		<div class="row">
     			<div class="col-md-8 col-lg-10 order-md-last">
     				<div class="row">
+                        {% block items %}
 							  {% from "users/_shophelper.html" import list_shop_item, list_shop_item_disabled %}
 <!--                                    loop through shop item and check if the flag is available-->
 								{%for i in items %}
@@ -26,6 +27,8 @@ Shop - Items | Karen's TCM
 									{{list_shop_item(i)}}
                                     {% endif %}
 								{% endfor %}
+
+                        {% endblock %}
 		    		</div>
 
 		    	</div>

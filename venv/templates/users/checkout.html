@@ -20,6 +20,10 @@
         <div class="row justify-content-center">
           <div class="col-xl-10 ftco-animate">
 
+			  				<div class="row">
+
+    		</div>
+			  <br><br>
 				<h3 class="mb-4 billing-heading">Billing Details</h3>
 	          	<div class="row align-items-end">
 	          		<div class="col-md-12">
@@ -123,9 +127,30 @@
 	            </div>
 
 
+<br><br><br><br><br><br>
 
-
-
+<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        <th>Product</th>
+						        <th>&nbsp;</th>
+						        <th>Unit Price</th>
+						        <th>Quantity</th>
+						        <th>Total</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+							{% from "users/_cart_helper.html" import list_checkout_item %}
+							{% for i in cart_items %}
+							{{ list_checkout_item(i["item"], i["quantity"], i["total"]) }}
+							{% endfor %}
+						    </tbody>
+						  </table>
+						<div></div>
+					  </div>
+    			</div>
 
 	          <div class="row mt-5 pt-3 d-flex">
 	          	<div class="col-md-6 d-flex">

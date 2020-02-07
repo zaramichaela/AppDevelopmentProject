@@ -2,6 +2,7 @@ from backend.sales_factory import *
 from backend.coupon_factory import *
 from backend.sales_receipt import *
 from backend.sales_entry import *
+from backend.appointment import *
 import os
 import uuid
 
@@ -21,6 +22,7 @@ class items_controller:
         self.__all_items = sfactory.get_all_items_db()
         self.__all_packages = sfactory.get_all_packages_db()
         self.__all_services = sfactory.get_all_services_db()
+        self.__all_appointment = get_all_appointments()
         self.__all_receipt = sfactory.get_all_receipt_db()
 
 
@@ -192,6 +194,9 @@ class items_controller:
     def get_all_receipt(self):
         return self.__all_receipt
 
+    def get_all_appointments(self):
+        return self.__all_appointment
+
 
 ######################################################################
 ######################################################################
@@ -236,9 +241,25 @@ class items_controller:
             sales_rept = sales_receipt(str(uuid.uuid1()),sales_list, subtotal_price,None, users_details)
         sales_rept.save()
         self.__all_receipt.append(sales_rept)
-        print(sales_rept)
         return sales_rept
 
+
+######################################
+#for buying service
+    def checkout_services_users(self, object_lists, price,users_details):
+        sales_rept = sales_receipt(str(uuid.uuid1()),object_lists,price,  None, users_details)
+        sales_rept.save()
+        self.__all_receipt.append(sales_rept)
+        return sales_rept
+
+#for keeping services appointment
+    def create_appointment_and_save(self, date, time, name):
+        appt = appointment(date, time, name)
+        if(not appt):
+            return False
+        appt.save()
+        self.__all_appointment.append(appt)
+        return appt
 
     def item_received_suppliers(self, itemuid, quantity):
         item = self.get_item_by_UID(itemuid)
@@ -252,3 +273,24 @@ class items_controller:
         item.save()
         self.__all_items.append(item)
         return True
+
+
+
+def get_all_appointments():
+    s = shelve.open(settings.APPOINTMENT_DB)
+    items = []
+    try:
+        for key in s:
+            items.append(deserialize(s[key]))
+    except Exception as e:
+        print(e)
+    finally:
+        s.close()
+    return items
+
+
+def deserialize(dict):
+    try:
+        return pickle.loads(dict)
+    except:
+        return None

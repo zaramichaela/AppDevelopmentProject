@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+				{%block title %}
+				Checkout | Karen's TCM
+				{% endblock %}
+
+
+				{%block pagetitle %}
+				Checkout
+				{% endblock %}
+
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/user_checkout.ico" />
+{% endblock %}
+
+ {% block body %}
+   <section class="ftco-section">
+	   <form class="billing-form" method="POST">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-10 ftco-animate">
+
+			  				<div class="row">
+
+    		</div>
+			  <br><br>
+				<h3 class="mb-4 billing-heading">Billing Details</h3>
+	          	<div class="row align-items-end">
+	          		<div class="col-md-12">
+	                <div class="form-group">
+						{% from "admin/adding/_formhelper.html" import render_field %}
+					{{ render_field(form.full_name, class='form-control', placeholder="e.g. John Smith") }}
+	                </div>
+	              </div>
+
+                <div class="w-100"></div>
+		            <div class="col-md-12">
+		            	<div class="form-group">
+		            		{{ render_field(form.country, class='form-control', placeholder="e.g. Punggol Ave") }}
+		            	</div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-12">
+		            	<div class="form-group">
+	                	{{ render_field(form.street_addr, class='form-control', placeholder="e.g. Punggol Ave blk 130") }}
+	                </div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+							{{ render_field(form.city, class='form-control', placeholder="e.g. Singapore, Bangkok") }}
+	                </div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+		            		{{ render_field(form.postal, class='form-control', placeholder="e.g. 612345") }}
+	                </div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+	                <div class="form-group">
+	                	{{ render_field(form.phone, class='form-control', placeholder="e.g. 6591231234") }}
+	                </div>
+	              </div>
+	              <div class="col-md-6">
+	                <div class="form-group">
+	                	{{ render_field(form.email, class='form-control', placeholder="e.g. John@gmail.com") }}
+	                </div>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-md-12">
+                <div class="w-100"></div>
+
+
+
+                </div>
+				</div>
+							<br>
+							<br>
+					<h3 class="mb-4 billing-heading">Credit Card Details</h3>
+	          	<div class="row align-items-end">
+	          		<div class="col-md-12">
+	                <div class="form-group">
+						{{ form.csrf_token }}
+						{% from "admin/adding/_formhelper.html" import render_field %}
+					{{ render_field(form.card_name, class='form-control', placeholder="e.g. John Smith") }}
+	                </div>
+	              </div>
+
+		            <div class="w-100"></div>
+		            <div class="col-md-12">
+		            	<div class="form-group">
+	                	{{ render_field(form.credit_card, class='form-control', placeholder="e.g. 1111 2222 3333 4444") }}
+
+	                </div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+							{{ render_field(form.exp_month, class='form-control', placeholder="e.g. 02") }}
+	                </div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+		            		{{ render_field(form.exp_year, class='form-control', placeholder="e.g. 2020") }}
+	                </div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+	                <div class="form-group">
+	                	{{ render_field(form.CVV, class='form-control', placeholder="e.g. 123") }}
+	                </div>
+	              </div>
+
+			<div class="col-md-6">
+		            	<div class="form-group">
+							<dt><label for="cards">Accepted Cards: </label></dt>
+			  <i class="fa fa-cc-visa fa-2x" style="color:navy;"></i>
+              <i class="fa fa-cc-mastercard fa-2x" style="color:red;"></i>
+	                </div>
+		            </div>
+
+                <div class="w-100"></div>
+                <div class="col-md-12">
+
+                </div>
+	            </div>
+
+
+<br><br><br><br><br><br>
+
+<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        <th>Product</th>
+						        <th>&nbsp;</th>
+						        <th>Unit Price</th>
+						        <th>Quantity</th>
+						        <th>Total</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+							{% from "users/_cart_helper.html" import list_checkout_item %}
+							{% for i in cart_items %}
+							{{ list_checkout_item(i["item"], i["quantity"], i["total"]) }}
+							{% endfor %}
+						    </tbody>
+						  </table>
+						<div></div>
+					  </div>
+    			</div>
+
+	          <div class="row mt-5 pt-3 d-flex">
+	          	<div class="col-md-6 d-flex">
+	          		<div class="cart-detail cart-total bg-light p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4">Cart Total</h3>
+	          			<p class="d-flex">
+		    						<span>total</span>
+		    						<span>${{'%0.2f'|format(total|float)}}</span>
+
+								</div>
+	          	</div>
+	          	<div class="col-md-6">
+	          		<div class="cart-detail bg-light p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4"></h3>
+									<p>{{ render_field(form.submit, class="btn btn-primary py-3 px-4", placeholder="e.g. 123") }}</a></p>
+
+								</div>
+	          	</div>
+	          </div>
+          </div> <!-- .col-md-8 -->
+        </div>
+      </div>
+		   </form><!-- END -->
+    </section> <!-- .section -->
+ {% endblock  %}

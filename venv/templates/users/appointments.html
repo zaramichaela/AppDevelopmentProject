@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{%block title %}
+				All Appointments | Karen's TCM
+				{% endblock %}
+
+{%block pagetitle %}All Appointments{% endblock %}
+
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/user_receipt.ico" />
+{% endblock %}
+
+ {% block body %}
+ <style>
+	.clickable-row  {
+	cursor: pointer;
+	}
+</style>
+<script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/tables.js') }}"></script>
+
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {%if category =="success"%}
+        <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+  {{ message }}
+    </div>
+{%endif%}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary ">
+						      <tr class="text-center">
+						        <th>Date</th>
+								 <th>UID</th>
+						        <th>Date Of Appointment</th>
+						        <th>Time</th>
+								  <th>Status</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+							{% from "users/_cart_helper.html" import list_appointments %}
+							{% for i in appointments %}
+							{{ list_appointments(i) }}
+							{% endfor %}
+						    </tbody>
+						  </table>
+					  </div>
+    			</div>
+    		</div>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+			</div>
+		</section>
+
+
+
+{% endblock %}

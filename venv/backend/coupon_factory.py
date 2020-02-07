@@ -37,7 +37,7 @@ class coupon_factory:
         error_flag = False
         try:
             for key in s:
-                all_coupons.append(create_coupon(s[key]))
+                all_coupons.append(self.create_coupon(s[key]))
         except:
             print(Exception)
             error_flag = True
