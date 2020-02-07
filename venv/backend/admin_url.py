@@ -783,8 +783,8 @@ def updateFeedback(id):
 labels = []
 values = []
 colors = [
-    "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
-    "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
+    "#E27D60", "#85DCB", "#E8A87C", "#C38D9E",
+    "#41B3A3", "#DDDDDD", "#ABCABC", "#4169E1",
     "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
 ####################################################################################
 @admin_pages.route('/admin/feedback/stats')
@@ -851,11 +851,8 @@ def stats1():
     db = shelve.open('feedstorage.db', 'r')
     countDict = db['Feedback']
     db.close()
-    for key in countDict:
-        count = countDict.get(key)
-        date = str(count.get_date())
-        datesplit = date.split('-')
 
+#overall
     TotalList = []
     JanList = []
     FebList = []
@@ -869,11 +866,55 @@ def stats1():
     OctList = []
     NovList = []
     DecList = []
+
+#general
+    JanGenList = []
+    FebGenList = []
+    MarGenList = []
+    AprGenList = []
+    MayGenList = []
+    JunGenList = []
+    JulGenList = []
+    AugGenList = []
+    SepGenList = []
+    OctGenList = []
+    NovGenList = []
+    DecGenList = []
+
+#Products
+    JanProdList = []
+    FebProdList = []
+    MarProdList = []
+    AprProdList = []
+    MayProdList = []
+    JunProdList = []
+    JulProdList = []
+    AugProdList = []
+    SepProdList = []
+    OctProdList = []
+    NovProdList = []
+    DecProdList = []
+
+#Treatment
+    JanTreatList = []
+    FebTreatList = []
+    MarTreatList = []
+    AprTreatList = []
+    MayTreatList = []
+    JunTreatList = []
+    JulTreatList = []
+    AugTreatList = []
+    SepTreatList = []
+    OctTreatList = []
+    NovTreatList = []
+    DecTreatList = []
+
     for key in countDict:
         count = countDict.get(key)
         date = str(count.get_date())
         datesplit = date.split('-')
         TotalList.append(count)
+        cat = str(count.get_category())
 
         if datesplit[1] == '01':
             JanList.append(count)
@@ -899,9 +940,267 @@ def stats1():
             NovList.append(count)
         elif datesplit[1]:
             DecList.append(count)
+
+        #generalList
+        if datesplit[1] == '01' and cat == 'G':
+            JanGenList.append(count)
+        elif datesplit[1] == '02' and cat == 'G':
+            FebGenList.append(count)
+        elif datesplit[1] == '03' and cat == 'G':
+            MarGenList.append(count)
+        elif datesplit[1] == '04' and cat == 'G':
+            AprGenList.append(count)
+        elif datesplit[1] == '05' and cat == 'G':
+            MayGenList.append(count)
+        elif datesplit[1] == '06' and cat == 'G':
+            JunGenList.append(count)
+        elif datesplit[1] == '07' and cat == 'G':
+            JulGenList.append(count)
+        elif datesplit[1] == '08' and cat == 'G':
+            AugGenList.append(count)
+        elif datesplit[1] == '09' and cat == 'G':
+            SepGenList.append(count)
+        elif datesplit[1] == '10' and cat == 'G':
+            OctGenList.append(count)
+        elif datesplit[1] == '11' and cat == 'G':
+            NovGenList.append(count)
+        elif datesplit[1] == '12' and cat == 'G':
+            DecGenList.append(count)
+
+
+        #ProductList
+        if datesplit[1] == '01' and cat == 'P':
+            JanProdList.append(count)
+        elif datesplit[1] == '02' and cat == 'P':
+            FebProdList.append(count)
+        elif datesplit[1] == '03' and cat == 'P':
+            MarProdList.append(count)
+        elif datesplit[1] == '04' and cat == 'P':
+            AprProdList.append(count)
+        elif datesplit[1] == '05' and cat == 'P':
+            MayProdList.append(count)
+        elif datesplit[1] == '06' and cat == 'P':
+            JunProdList.append(count)
+        elif datesplit[1] == '07' and cat == 'P':
+            JulProdList.append(count)
+        elif datesplit[1] == '08' and cat == 'P':
+            AugProdList.append(count)
+        elif datesplit[1] == '09' and cat == 'P':
+            SepProdList.append(count)
+        elif datesplit[1] == '10' and cat == 'P':
+            OctProdList.append(count)
+        elif datesplit[1] == '11' and cat == 'P':
+            NovProdList.append(count)
+        elif datesplit[1] == '12' and cat == 'P':
+            DecProdList.append(count)
+
+
+        #TreatmentList
+        if datesplit[1] == '01' and cat == 'T':
+            JanTreatList.append(count)
+        elif datesplit[1] == '02' and cat == 'T':
+            FebTreatList.append(count)
+        elif datesplit[1] == '03' and cat == 'T':
+            MarTreatList.append(count)
+        elif datesplit[1] == '04' and cat == 'T':
+            AprTreatList.append(count)
+        elif datesplit[1] == '05' and cat == 'T':
+            MayTreatList.append(count)
+        elif datesplit[1] == '06' and cat == 'T':
+            JunTreatList.append(count)
+        elif datesplit[1] == '07' and cat == 'T':
+            JulTreatList.append(count)
+        elif datesplit[1] == '08' and cat == 'T':
+            AugTreatList.append(count)
+        elif datesplit[1] == '09' and cat == 'T':
+            SepTreatList.append(count)
+        elif datesplit[1] == '10' and cat == 'T':
+            OctTreatList.append(count)
+        elif datesplit[1] == '11' and cat == 'T':
+            NovTreatList.append(count)
+        elif datesplit[1] == '12' and cat == 'T':
+            DecTreatList.append(count)
+
     return render_template('admin/feedback/StatGraph.html', title = 'Feedback - Statistics(Graph)', max = 20, labels = bar_labels, values = bar_values, TotalList = TotalList, JanList = JanList, FebList = FebList, MarList = MarList, AprList = AprList, MayList = MayList, JunList = JunList, JulList = JulList, AugList = AugList, SepList = SepList, OctList = OctList, NovList = NovList, DecList = DecList,
-                           count = len(TotalList), jancount = len(JanList), febcount = len(FebList), marcount = len(MarList), aprcount = len(AprList), maycount = len(MayList), juncount = len(JunList), julcount = len(JulList), augcount = len(AugList), sepcount = len(SepList), octcount = len(OctList), novcount = len(NovList), deccount = len(DecList))
+                           count = len(TotalList), jancount = len(JanList), febcount = len(FebList), marcount = len(MarList), aprcount = len(AprList), maycount = len(MayList), juncount = len(JunList), julcount = len(JulList), augcount = len(AugList), sepcount = len(SepList), octcount = len(OctList), novcount = len(NovList), deccount = len(DecList),
+                           JanGenList = JanGenList, FebGenList = FebGenList, MarGenList = MarGenList, AprGenList = AprGenList, MayGenList = MayGenList, JunGenList = JunGenList, JulGenList = JulGenList, AugGenList = AugGenList, SepGenList = SepGenList, OctGenList = OctGenList, NovGenList = NovGenList, DecGenList = DecGenList,
+                            jangencount = len(JanGenList), febgencount = len(FebGenList), margencount = len(MarGenList), aprgencount = len(AprGenList), maygencount = len(MayGenList), jungencount = len(JunGenList), julgencount = len(JulGenList), auggencount = len(AugGenList), sepgencount = len(SepGenList), octgencount = len(OctGenList), novgencount = len(NovGenList), decgencount = len(DecGenList),
+                           JanProdList = JanProdList, FebProdList = FebProdList, MarProdList = MarProdList, AprProdList = AprProdList, MayProdList = MayProdList, JunProdList = JunProdList, JulProdList = JulProdList, AugProdList = AugProdList, SepProdList = SepProdList, OctProdList = OctProdList, NovProdList = NovProdList, DecProdList = DecProdList,
+                            janprodcount = len(JanProdList), febprodcount = len(FebProdList), marprodcount = len(MarProdList), aprprodcount = len(AprProdList), mayprodcount = len(MayProdList), junprodcount = len(JunProdList), julprodcount = len(JulProdList), augprodcount = len(AugProdList), sepprodcount = len(SepProdList), octprodcount = len(OctProdList), novprodcount = len(NovProdList), decprodcount = len(DecProdList),
+                           JanTreatList = JanTreatList, FebTreatList = FebTreatList, MarTreatList = MarTreatList, AprTreatList = AprTreatList, MayTreatList = MayTreatList, JunTreatList = JunTreatList, JulTreatList = JulTreatList, AugTreatList = AugTreatList, SepTreatList = SepTreatList, OctTreatList = OctTreatList, NovTreatList = NovTreatList, DecTreatList = DecTreatList,
+                            jantreatcount = len(JanTreatList), febtreatcount = len(FebTreatList), martreatcount = len(MarTreatList), aprtreatcount = len(AprTreatList), maytreatcount = len(MayTreatList), juntreatcount = len(JunTreatList), jultreatcount = len(JulTreatList), augtreatcount = len(AugTreatList), septreatcount = len(SepTreatList), octtreatcount = len(OctTreatList), novtreatcount = len(NovTreatList), dectreatcount = len(DecTreatList))
 ####################################################################################
+
+#Stat-Gen
+@admin_pages.route('/admin/feedback/StatGen')
+@authorize
+def CatGen():
+    bar_labels = labels
+    bar_values = values
+    db = shelve.open('feedstorage.db', 'r')
+    countDict = db['Feedback']
+    db.close()
+
+    JanGenList = []
+    FebGenList = []
+    MarGenList = []
+    AprGenList = []
+    MayGenList = []
+    JunGenList = []
+    JulGenList = []
+    AugGenList = []
+    SepGenList = []
+    OctGenList = []
+    NovGenList = []
+    DecGenList = []
+
+    for key in countDict:
+        count = countDict.get(key)
+        date = str(count.get_date())
+        datesplit = date.split('-')
+        cat = str(count.get_category())
+
+        if datesplit[1] == '01' and cat == 'G':
+            JanGenList.append(count)
+        elif datesplit[1] == '02' and cat == 'G':
+            FebGenList.append(count)
+        elif datesplit[1] == '03' and cat == 'G':
+            MarGenList.append(count)
+        elif datesplit[1] == '04' and cat == 'G':
+            AprGenList.append(count)
+        elif datesplit[1] == '05' and cat == 'G':
+            MayGenList.append(count)
+        elif datesplit[1] == '06' and cat == 'G':
+            JunGenList.append(count)
+        elif datesplit[1] == '07' and cat == 'G':
+            JulGenList.append(count)
+        elif datesplit[1] == '08' and cat == 'G':
+            AugGenList.append(count)
+        elif datesplit[1] == '09' and cat == 'G':
+            SepGenList.append(count)
+        elif datesplit[1] == '10' and cat == 'G':
+            OctGenList.append(count)
+        elif datesplit[1] == '11' and cat == 'G':
+            NovGenList.append(count)
+        elif datesplit[1] == '12' and cat == 'G':
+            DecGenList.append(count)
+    return render_template('admin/feedback/StatGen.html', title = 'Feedback - Category(General)', max = 20, labels = bar_labels, values = bar_values, JanGenList = JanGenList, FebGenList = FebGenList, MarGenList = MarGenList, AprGenList = AprGenList, MayGenList = MayGenList, JunGenList = JunGenList, JulGenList = JulGenList, AugGenList = AugGenList, SepGenList = SepGenList, OctGenList = OctGenList, NovGenList = NovGenList, DecGenList = DecGenList,
+                    jangencount = len(JanGenList), febgencount = len(FebGenList), margencount = len(MarGenList), aprgencount = len(AprGenList), maygencount = len(MayGenList), jungencount = len(JunGenList), julgencount = len(JulGenList), auggencount = len(AugGenList), sepgencount = len(SepGenList), octgencount = len(OctGenList), novgencount = len(NovGenList), decgencount = len(DecGenList))
+
+
+#Stat-Prod
+@admin_pages.route('/admin/feedback/StatProd')
+@authorize
+def CatProd():
+    bar_labels = labels
+    bar_values = values
+    db = shelve.open('feedstorage.db', 'r')
+    countDict = db['Feedback']
+    db.close()
+
+    JanProdList = []
+    FebProdList = []
+    MarProdList = []
+    AprProdList = []
+    MayProdList = []
+    JunProdList = []
+    JulProdList = []
+    AugProdList = []
+    SepProdList = []
+    OctProdList = []
+    NovProdList = []
+    DecProdList = []
+
+    for key in countDict:
+        count = countDict.get(key)
+        date = str(count.get_date())
+        datesplit = date.split('-')
+        cat = str(count.get_category())
+
+        if datesplit[1] == '01' and cat == 'P':
+            JanProdList.append(count)
+        elif datesplit[1] == '02' and cat == 'P':
+            FebProdList.append(count)
+        elif datesplit[1] == '03' and cat == 'P':
+            MarProdList.append(count)
+        elif datesplit[1] == '04' and cat == 'P':
+            AprProdList.append(count)
+        elif datesplit[1] == '05' and cat == 'P':
+            MayProdList.append(count)
+        elif datesplit[1] == '06' and cat == 'P':
+            JunProdList.append(count)
+        elif datesplit[1] == '07' and cat == 'P':
+            JulProdList.append(count)
+        elif datesplit[1] == '08' and cat == 'P':
+            AugProdList.append(count)
+        elif datesplit[1] == '09' and cat == 'P':
+            SepProdList.append(count)
+        elif datesplit[1] == '10' and cat == 'P':
+            OctProdList.append(count)
+        elif datesplit[1] == '11' and cat == 'P':
+            NovProdList.append(count)
+        elif datesplit[1] == '12' and cat == 'P':
+            DecProdList.append(count)
+    return render_template('admin/feedback/StatProd.html', title = 'Feedback - Category(Products)', max = 20, labels = bar_labels, values = bar_values, JanProdList = JanProdList, FebProdList = FebProdList, MarProdList = MarProdList, AprProdList = AprProdList, MayProdList = MayProdList, JunProdList = JunProdList, JulProdList = JulProdList, AugProdList = AugProdList, SepProdList = SepProdList, OctProdList = OctProdList, NovProdList = NovProdList, DecProdList = DecProdList,
+                    janprodcount = len(JanProdList), febprodcount = len(FebProdList), marprodcount = len(MarProdList), aprprodcount = len(AprProdList), mayprodcount = len(MayProdList), junprodcount = len(JunProdList), julprodcount = len(JulProdList), augprodcount = len(AugProdList), sepprodcount = len(SepProdList), octprodcount = len(OctProdList), novprodcount = len(NovProdList), decprodcount = len(DecProdList))
+
+
+
+#Stat-Treat
+@admin_pages.route('/admin/feedback/StatTreat')
+@authorize
+def CatTreat():
+    bar_labels = labels
+    bar_values = values
+    db = shelve.open('feedstorage.db', 'r')
+    countDict = db['Feedback']
+    db.close()
+
+    JanTreatList = []
+    FebTreatList = []
+    MarTreatList = []
+    AprTreatList = []
+    MayTreatList = []
+    JunTreatList = []
+    JulTreatList = []
+    AugTreatList = []
+    SepTreatList = []
+    OctTreatList = []
+    NovTreatList = []
+    DecTreatList = []
+
+    for key in countDict:
+        count = countDict.get(key)
+        date = str(count.get_date())
+        datesplit = date.split('-')
+        cat = str(count.get_category())
+
+        if datesplit[1] == '01' and cat == 'T':
+            JanTreatList.append(count)
+        elif datesplit[1] == '02' and cat == 'T':
+            FebTreatList.append(count)
+        elif datesplit[1] == '03' and cat == 'T':
+            MarTreatList.append(count)
+        elif datesplit[1] == '04' and cat == 'T':
+            AprTreatList.append(count)
+        elif datesplit[1] == '05' and cat == 'T':
+            MayTreatList.append(count)
+        elif datesplit[1] == '06' and cat == 'T':
+            JunTreatList.append(count)
+        elif datesplit[1] == '07' and cat == 'T':
+            JulTreatList.append(count)
+        elif datesplit[1] == '08' and cat == 'T':
+            AugTreatList.append(count)
+        elif datesplit[1] == '09' and cat == 'T':
+            SepTreatList.append(count)
+        elif datesplit[1] == '10' and cat == 'T':
+            OctTreatList.append(count)
+        elif datesplit[1] == '11' and cat == 'T':
+            NovTreatList.append(count)
+        elif datesplit[1] == '12' and cat == 'T':
+            DecTreatList.append(count)
+    return render_template('admin/feedback/StatTreat.html', title = 'Feedback - Category(Treatment)', max = 20, labels = bar_labels, values = bar_values, JanTreatList = JanTreatList, FebTreatList = FebTreatList, MarTreatList = MarTreatList, AprTreatList = AprTreatList, MayTreatList = MayTreatList, JunTreatList = JunTreatList, JulTreatList = JulTreatList, AugTreatList = AugTreatList, SepTreatList = SepTreatList, OctTreatList = OctTreatList, NovTreatList = NovTreatList, DecTreatList = DecTreatList,
+                    jantreatcount = len(JanTreatList), febtreatcount = len(FebTreatList), martreatcount = len(MarTreatList), aprtreatcount = len(AprTreatList), maytreatcount = len(MayTreatList), juntreatcount = len(JunTreatList), jultreatcount = len(JulTreatList), augtreatcount = len(AugTreatList), septreatcount = len(SepTreatList), octtreatcount = len(OctTreatList), novtreatcount = len(NovTreatList), dectreatcount = len(DecTreatList))
 
 
 
@@ -1211,14 +1510,16 @@ def admin_home():
     usedlist = []
     #loop through all used coupons code
     for j in all_used:
-        #if couponcode is not in usedlist
+        # if couponcode is not in usedlist
         if not (j in usedlist):
-            #appends it into all_coupons_used_list
-            #this list each has a unique coupon code
+            # appends it into all_coupons_used_list
+            # this list each has a unique coupon code
             all_coupon_used_list.append(j)
-            #count how many instance this coupon code appear in all_used list
+            # count how many instance this coupon code appear in all_used list
             usage_number_list.append(all_used.count(j))
-            #appends into used list so we can skip counting the same coupon again
+            # appends into used list so we can skip counting the same coupon again
             usedlist.append(j)
-    #to display chart, uses chartjs, a javascript library to display the chart.
+    # to display chart, uses chartjs, a javascript library to display the chart.
     return render_template('/admin/Dashboard.html', all_coupons_used_list = all_coupon_used_list, usage_number_list=usage_number_list)
+
+

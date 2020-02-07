@@ -15,22 +15,96 @@ Feedback Statistic Graph
 
 {% block body %}
 <head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
   <meta charset="utf-8" />
   <title>{{ title }}</title>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <style>
+    .dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
 </head>
 
 <body>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
-
 
     <div class="tables">
-        <center>
-            </center>
-       <center><a href="{{url_for('admin_pages.stats')}}"><button class="btn btn-primary" style="text-align: center;"> View Statistics Table</button></a>
+       <center>
+
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn btn-primary" style="width: 161px;">Categories</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href ='statgraph'>All</a>
+    <a href="StatGen">General</a>
+    <a href="StatProd">Products</a>
+    <a href="StatTreat">Treatment</a>
+  </div>
+</div>
+
+
+
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
            </center>
-        <center>
-    <canvas id="chart" width="600" height="400"></canvas>
+    <center>
+    <canvas id="chart" width="1000" height="400"></canvas>
+        {% block scripts %}
     <script>
       // bar chart data
       var barData = {
@@ -38,29 +112,59 @@ Feedback Statistic Graph
            'JAN', 'FEB', 'MAR', 'APR',
     'MAY', 'JUN', 'JUL', 'AUG',
     'SEP', 'OCT', 'NOV', 'DEC',
-
 	],
 
+
+
         datasets : [{
-          fillColor: "rgba(151,187,205,0.2)",
-          strokeColor: "rgba(151,187,205,1)",
-          pointColor: "rgba(151,187,205,1)",
+          fillColor: "#41B3A3",
+          strokeColor: "#41B3A3",
+          pointColor: "#41B3A3",
+          label : "All",
           data : [
            {{ jancount }},{{ febcount }},{{ marcount }}, {{ aprcount }}, {{ maycount }}, {{ juncount }}, {{ julcount }}, {{ augcount }}, {{ sepcount }}, {{ octcount }}, {{ novcount }}, {{ deccount }}
-
-	    ]
-          }
+           ]
+          },
+          {
+          fillColor: "#E8A87C",
+          strokeColor: "#E8A87C",
+          pointColor: "#E8A87C",
+          label : 'General',
+          data : [
+           {{ jangencount }},{{ febgencount }},{{ margencount }}, {{ aprgencount }}, {{ maygencount }}, {{ jungencount }}, {{ julgencount }}, {{ auggencount }}, {{ sepgencount }}, {{ octgencount }}, {{ novgencount }}, {{ decgencount }}
+           ]
+        },
+        {
+          fillColor: "#3FEEE6",
+          strokeColor: "#3FEEE6",
+          pointColor: "#3FEEE6",
+          label : 'Products',
+          data : [
+           {{ janprodcount }},{{ febprodcount }},{{ marprodcount }}, {{ aprprodcount }}, {{ mayprodcount }}, {{ junprodcount }}, {{ julprodcount }}, {{ augprodcount }}, {{ sepprodcount }}, {{ octprodcount }}, {{ novprodcount }}, {{ decprodcount }}           ]
+        },
+        {
+          fillColor: "#F64C72",
+          strokeColor: "#F64C72",
+          pointColor: "#F64C72",
+          label : 'Treatment',
+          data : [
+           {{ jantreatcount }},{{ febtreatcount }},{{ martreatcount }}, {{ aprtreatcount }}, {{ maytreatcount }}, {{ juntreatcount }}, {{ jultreatcount }}, {{ augtreatcount }}, {{ septreatcount }}, {{ octtreatcount }}, {{ novtreatcount }}, {{ dectreatcount }}           ]
+        }
         ]
       }
 
      // get bar chart canvas
      var mychart = document.getElementById("chart").getContext("2d");
+     var options = {
+        multiTooltipTemplate: "<%= datasetLabel %>: <%= value %>"
+    };
+
 
        steps = 10
-       max = {{max}}
+       max = 20
 
      // draw bar chart
-     new Chart(mychart).Bar(barData, {
+     new Chart(mychart).Bar(barData, options,{
        scaleOverride: true,
        scaleSteps: steps,
        scaleStepWidth: Math.ceil(max / steps),
@@ -73,6 +177,8 @@ Feedback Statistic Graph
      );
 
     </script>
+        {% endblock %}
+  </center>
   </center>
 </div>
 </body>
