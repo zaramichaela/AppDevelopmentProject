@@ -447,6 +447,57 @@ function preview_image(event)
                                       Dashboard
                                   </a>
                               </li>
+                                <!-- START OF SUPPLIERS -->
+
+                                <li class="app-sidebar__heading">Suppliers</li>
+
+                                <li {% if  request.endpoint == "admin_pages.create_suppliers" or  request.endpoint == "admin_pages.list_suppliers"  %}class="mm-active"{% endif %}>
+                                    <a href="#">
+                                        <i class="fas fa-dolly-flatbed"></i>
+                                        Suppliers
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.create_suppliers') }}">
+                                                <i class="metismenu-icon">
+                                                </i> Add New Suppliers
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.list_suppliers') }}">
+                                                <i class="metismenu-icon"></i>
+                                                  List All Suppliers
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li {% if  request.endpoint == "admin_pages.create_suppliers_orders" or  request.endpoint == "admin_pages.list_suppliers_orders"  %}class="mm-active"{% endif %}>
+                                    <a href="#">
+                                        <i class="fas fa-paste"></i>
+                                        Suppliers's Orders
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.create_suppliers_orders') }}">
+                                                <i class="metismenu-icon">
+                                                </i> Order From Suppliers
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url_for('admin_pages.list_suppliers_orders') }}">
+                                                <i class="metismenu-icon"></i>
+                                                  List All Orders
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <!-- END OF SUPPLIERS -->
+
+
                                 <li class="app-sidebar__heading" >Shop</li>
 
                                 <!-- SHOP ITEMS NAVIGATION -->
@@ -499,43 +550,18 @@ function preview_image(event)
                                                       View All Services
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a href="{{ url_for('admin_pages.list_sales_appointments') }}">
+                                                    <i class="metismenu-icon"></i>
+                                                      View All Appointments
+                                                </a>
+                                            </li>
 
                                         </ul>
                                     </li>
                                   </li>
 
                                   <!-- END OF SERVICES -->
-
-
-                                  <!-- START OF PACKAGE -->
-
-<!--                                  <li>-->
-<!--                                    <li {% if  request.endpoint == "admin_pages.add_shop_package" or  request.endpoint == "admin_pages.list_sales_packages"  %}class="mm-active"{% endif %}>-->
-<!--                                        <a href="#">-->
-<!--                                            <i class="fas fa-box-open"></i>-->
-<!--                                            Packages-->
-<!--                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>-->
-<!--                                        </a>-->
-<!--                                        <ul>-->
-<!--                                            <li>-->
-<!--                                                <a href="{{ url_for('admin_pages.add_shop_package') }}">-->
-<!--                                                    <i class="metismenu-icon">-->
-<!--                                                    </i> Add New Packages-->
-<!--                                                </a>-->
-<!--                                            </li>-->
-<!--                                            <li>-->
-<!--                                                <a href="{{ url_for('admin_pages.list_sales_packages') }}">-->
-<!--                                                    <i class="metismenu-icon"></i>-->
-<!--                                                      View All Packages-->
-<!--                                                </a>-->
-<!--                                            </li>-->
-
-<!--                                        </ul>-->
-<!--                                    </li>-->
-<!--                                  </li>-->
-
-                                  <!-- END OF PACKAGE -->
-
 
                                   <!-- START OF COUPON -->
 
@@ -619,55 +645,6 @@ function preview_image(event)
                                         </li>
                                     </ul>
                                 </li>
-                                <!-- START OF SUPPLIERS -->
-
-                                <li class="app-sidebar__heading">Suppliers</li>
-
-                                <li {% if  request.endpoint == "admin_pages.create_suppliers" or  request.endpoint == "admin_pages.list_suppliers"  %}class="mm-active"{% endif %}>
-                                    <a href="#">
-                                        <i class="fas fa-dolly-flatbed"></i>
-                                        Suppliers
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href="{{ url_for('admin_pages.create_suppliers') }}">
-                                                <i class="metismenu-icon">
-                                                </i> Add New Suppliers
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ url_for('admin_pages.list_suppliers') }}">
-                                                <i class="metismenu-icon"></i>
-                                                  List All Suppliers
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                                <li {% if  request.endpoint == "admin_pages.create_suppliers_orders" or  request.endpoint == "admin_pages.list_suppliers_orders"  %}class="mm-active"{% endif %}>
-                                    <a href="#">
-                                        <i class="fas fa-paste"></i>
-                                        Suppliers's Orders
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href="{{ url_for('admin_pages.create_suppliers_orders') }}">
-                                                <i class="metismenu-icon">
-                                                </i> Order From Suppliers
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ url_for('admin_pages.list_suppliers_orders') }}">
-                                                <i class="metismenu-icon"></i>
-                                                  List All Orders
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                                <!-- END OF SUPPLIERS -->
 
                                 <!-- START OF FEEDBACK -->
                                 <li class="app-sidebar__heading">FEEDBACK</li>
