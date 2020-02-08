@@ -48,7 +48,7 @@
 
 	</td>
 
-	<td class="price">${{i.price_after_discount()}}</td>
+	<td class="price">${{'%0.2f'|format(i.price_after_discount()|float)}}</td>
 	<td class="quantity">
 		{{ quantity }}
 

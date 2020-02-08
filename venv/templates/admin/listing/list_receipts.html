@@ -5,13 +5,18 @@ All User Receipts | K's TCM Administration
 {% endblock %}
 
 
+{% block icon %}
+<i class="fas fa-eye"></i>
+{% endblock %}
+
 
 {% block pagetitle %}
 All User Receipts
 {% endblock %}
 
-{% block icon %}
-<i class="fas fa-eye"></i>
+
+{% block head %}
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/eye.ico" />
 {% endblock %}
 
 {% block body %}
@@ -31,7 +36,6 @@ All User Receipts
     {% endfor %}
   {% endif %}
 {% endwith %}
-
 
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/listing.css') }}">
