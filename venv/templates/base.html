@@ -82,6 +82,10 @@
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item {% if  request.endpoint == 'home' %}cta{% endif %}"><a href="{{url_for('home')}}" class="nav-link {% if  request.endpoint == 'home' %}active{% endif %}">Home</a></li>
 
+
+          <li class="nav-item {% if  request.endpoint == 'about' %}cta{% endif %}" ><a href="{{url_for('about')}}" class="nav-link {% if  request.endpoint == 'about' %}active{% endif %}">About</a></li>
+
+
                  <li class="nav-item dropdown nav-item {% if  request.endpoint == 'shop' or request.endpoint == 'shop_services' %}cta{% endif %}">
               <a class=" nav-link dropdown-toggle {% if  request.endpoint == 'shop'  or request.endpoint == 'shop_services' %}active{% endif %}" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
@@ -91,8 +95,6 @@
             </li>
 
 
-	          <li class="nav-item {% if  request.endpoint == 'about' %}cta{% endif %}" ><a href="{{url_for('about')}}" class="nav-link {% if  request.endpoint == 'about' %}active{% endif %}">About</a></li>
-<!--	          <li class="nav-item active"><a href="static/user/blog.html" class="nav-link">Blog</a></li>-->
 	          <li class="nav-item {% if  request.endpoint == 'contact' %}cta{% endif %}"><a href="{{url_for('contact')}}" class="nav-link {% if  request.endpoint == 'contact' %}active{% endif %}">Contact</a></li>
             {% if session.get('logged_in_user') %}
               <li class="nav-item dropdown nav-item {% if  request.endpoint == 'show_all_receipt' %}cta{% endif %}">
