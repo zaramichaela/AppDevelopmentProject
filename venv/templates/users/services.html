@@ -84,7 +84,7 @@
 				<div class="col-md-4">
 
 				<form method="GET" action="{{url_for('shop_services_book', serviceuid=item.get_UID())}}">
-						{{ form.date(style="height:42px;width:200px;", placeholder="DD/MM/YYYY") }}
+						{{ form.date(style="height:42px;width:200px;", placeholder="DD/MM/YYYY", autocomplete="off") }}
 						{{ form.time(style="height:42px;text-align:right;") }}
 						{{ form.submit(class="btn btn-primary", style="width:100px;height:42px")}}
 						</form>

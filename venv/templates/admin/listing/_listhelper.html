@@ -233,3 +233,45 @@
              </center>
         </td>
 {% endmacro %}
+
+
+
+
+{% macro render_appointment_table(i) %}
+      <td><center>
+          {{i.get_ordered_date()}}
+      </center></td>
+        <td><center>
+            {{ i.get_UID() }}
+        </center></td>
+        <td><center>
+            {{ i.get_name() }}
+        </center></td>
+        <td><center>
+           {{ i.get_doctor().get_Name() }}
+        </center></td>
+        <td><center>
+            {{ i.get_address() }}
+        </center></td>
+        <td><center>
+           {{i.get_date()}}
+        </center></td>
+
+
+        <td><center>
+            {{i.get_time()}}
+        </center></td>
+      <td><center>
+           {{i.get_status()}}
+        </center></td>
+        <td>
+            <center>
+            <a class="btn btn-warning" href="{{url_for('admin_pages.complete_sales_appointments', uid=i.get_UID())}}" style="width:100px">No-Show
+            </a>
+                <br><br>
+            <a class="btn btn-success" href="{{url_for('admin_pages.list_receipts_complete', ruid=i.get_UID())}}" style="width:100px">Completed</a>
+            </center>
+        </td>
+
+
+{% endmacro %}

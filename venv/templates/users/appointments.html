@@ -10,11 +10,7 @@
 {% endblock %}
 
  {% block body %}
- <style>
-	.clickable-row  {
-	cursor: pointer;
-	}
-</style>
+
 <script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/tables.js') }}"></script>
 
     <section class="ftco-section ftco-cart">
@@ -45,7 +41,10 @@
 						      <tr class="text-center">
 						        <th>Date</th>
 								 <th>UID</th>
+								  <th>Doctor </th>
+
 						        <th>Date Of Appointment</th>
+								  <th>Address</th>
 						        <th>Time</th>
 								  <th>Status</th>
 						      </tr>

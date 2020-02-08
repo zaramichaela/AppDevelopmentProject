@@ -117,10 +117,11 @@ def shop_services_book(serviceuid):
         abort(400)
     if request.method == "POST" and form.validate():
         user = session.get('logged_in_user')
-        book_appointment = itemcontroller.create_appointment_and_save(date, time, form.full_name.data)
+
         user_details = create_user_details(form.data, user)
+        book_appointment = itemcontroller.create_appointment_and_save(date, time, user_details, sales_service.get_name())
         # create a receipt using item info (a list), coupon and user details
-        receiptz = itemcontroller.checkout_services_users([sales_service],total_price, user_details)
+        receiptz = itemcontroller.checkout_services_users(sales_service,total_price, user_details)
         if( not book_appointment and not receiptz):
             abort(400)
         else:
@@ -131,6 +132,7 @@ def shop_services_book(serviceuid):
 
 @app.route('/shop/service/appointments')
 def shop_services_appointments():
+    itemcontroller.arrange_appointments()
     appointments = itemcontroller.get_all_appointments()
     return render_template('users/appointments.html', appointments=appointments)
 # ####################################################################################

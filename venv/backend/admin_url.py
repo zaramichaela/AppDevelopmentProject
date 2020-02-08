@@ -185,8 +185,25 @@ def list_coupons():
     sales = itemcontroller.get_all_coupons()
     return render_template('admin/listing/list_coupons.html', items=sales)
 ####################################################################################
+####################################################################################
+@admin_pages.route('/admin/list/appointments')
+@authorize
+def list_sales_appointments():
+    # get all sales items from itemcontroller
+    appt = itemcontroller.get_all_appointments()
+    return render_template('admin/listing/list_appointments.html', items=appt)
 
-
+#########################################################################################
+@admin_pages.route('/admin/list/appointments/<uid>/complete')
+@authorize
+def complete_sales_appointments(uid):
+    # get all sales items from itemcontroller
+    flag = itemcontroller.complete_service_appointment(uid, "Completed")
+    if flag:
+        flash("Appointment has been completed.", "success")
+    else:
+        flash("Failed to find appointment, please refresh and try again", "error")
+    return redirect(url_for("admin_pages.list_sales_appointments"))
 #########################################################################################
 ############### deleting items and objects ########################################
 #########################################################################################

@@ -1,13 +1,15 @@
-from datetime import date
+import datetime
 import shelve
 from backend import settings
 import simplejson as jsons
 import pickle
+from backend.sales_items import *
 
 #superclass for all sales objects
 class sales_objects(object):
     #default init for creating a new object
     def __init__(self, UID,name, description, price, image_url, discount):
+        self.__datetime = datetime.datetime.now()
         self.__UID = UID #all item should have their unique UID
         #a string to be able to save to database shelve requirement
         self.__name = name
@@ -31,6 +33,9 @@ class sales_objects(object):
         if self.__discount == 0:
             return False
         return True
+
+    def is_item(self):
+        return isinstance(object, sales_items)
 
     def price_before_discount(self):
         return self.__price

@@ -8,41 +8,51 @@ import uuid
 
 ## appointment object
 class appointment:
-    def __init__(self, date, time, name):
+    def __init__(self, date, time, user, doctor):
+        self.UID = str(uuid.uuid1())
+        self.ordered_date = datetime.datetime.now()
+        self.date = date
+        self.time = time
+        self.user = user
+        self.status = "Confirmed"
+        self.doctor = doctor
 
-        self.__UID = str(uuid.uuid1())
-        self.__ordered_date = datetime.date.today()
-        self.__date = date
-        self.__time = time
-        self.__name = name
-        self.__status = "Confirmed"
+
+    def get_address(self):
+        return self.user.get_address()
+
+    def get_doctor(self):
+        return self.doctor
 
     def set_status(self, status):
-        self.__status = status
+        self.status = status
 
     def get_status(self):
-        return self.__status
+        return self.status
 
     def get_ordered_date(self):
-        return self.__ordered_date
+        return self.ordered_date
 
     def get_name(self):
-        return self.__name
+        return self.user.get_full_name()
 
     def get_UID(self):
-        return self.__UID
+        return self.UID
 
     def get_date(self):
-        return self.__date
+        return self.date
+
+    def set_date(self ,date):
+        self.date = date
 
     def get_time(self):
-        return self.__time
+        return self.time
 
     def set_date(self, date):
-        self.__date = date
+        self.date = date
 
     def set_time(self, time):
-        self.__time = time
+        self.time = time
 
     #convert to pickle to store in shelve
     def serialize(self):
@@ -52,7 +62,7 @@ class appointment:
     def save(self):
         s = shelve.open(settings.APPOINTMENT_DB)
         try:
-            s[self.__UID] = self.serialize()
+            s[self.UID] = self.serialize()
 
             return True
         finally:
@@ -62,7 +72,7 @@ class appointment:
     def delete(self):
         s = shelve.open(settings.APPOINTMENT_DB)
         try:
-            del s[self.__UID]
+            del s[self.UID]
             return True
         finally:
             s.close()

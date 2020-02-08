@@ -5,6 +5,7 @@ from backend.sales_entry import *
 from backend.appointment import *
 import os
 import uuid
+from random import randint
 
 ####################################################################################
 sfactory = sales_factory()
@@ -24,7 +25,10 @@ class items_controller:
         self.__all_services = sfactory.get_all_services_db()
         self.__all_appointment = get_all_appointments()
         self.__all_receipt = sfactory.get_all_receipt_db()
+        self.arrange_appointments()
 
+    def arrange_appointments(self):
+        self.__all_appointment = sorted(self.__all_appointment, key=lambda object1: object1.date)
 
     def get_coupon_by_UID(self, coupon_UID):
         #check and find 1 coupon with the coupon_UID
@@ -246,20 +250,31 @@ class items_controller:
 
 ######################################
 #for buying service
-    def checkout_services_users(self, object_lists, price,users_details):
-        sales_rept = sales_receipt(str(uuid.uuid1()),object_lists,price,  None, users_details)
+    def checkout_services_users(self, service, price,users_details):
+        entry = sales_entry(service, 1)
+        sales_rept = sales_receipt(str(uuid.uuid1()),[entry],price,  None, users_details)
+        sales_rept.set_status_complete()
         sales_rept.save()
         self.__all_receipt.append(sales_rept)
         return sales_rept
 
 #for keeping services appointment
-    def create_appointment_and_save(self, date, time, name):
-        appt = appointment(date, time, name)
+    def create_appointment_and_save(self, date, time, user, servicename):
+        doctor = self.get_doctor_for_services(servicename)
+        appt = appointment(date, time, user, doctor)
         if(not appt):
             return False
         appt.save()
         self.__all_appointment.append(appt)
         return appt
+
+    def complete_service_appointment(self, uid, status):
+        for i in self.get_all_appointments():
+            if(uid == i.get_UID()):
+                i.set_status(status)
+                i.save()
+                return True
+        return False
 
     def item_received_suppliers(self, itemuid, quantity):
         item = self.get_item_by_UID(itemuid)
@@ -273,6 +288,31 @@ class items_controller:
         item.save()
         self.__all_items.append(item)
         return True
+
+
+    def get_doctors(self):
+        doctorsDict = {}
+        try:
+            db = shelve.open('docstorage.db', 'r')
+            doctorsDict = db['doctor']
+            db.close()
+        except:
+            pass
+        #
+        doctorsList = []
+        for key in doctorsDict:
+            doctor = doctorsDict.get(key)
+            doctorsList.append(doctor)
+        return doctorsList
+
+    def get_doctor_for_services(self, service_name):
+        doctor = self.get_doctors()
+        for i in doctor:
+            if(i.get_Specialities() == service_name):
+                return i.get_name()
+        rand = randint(0, len(doctor)-1)
+        return doctor[rand]
+
 
 
 
@@ -294,3 +334,4 @@ def deserialize(dict):
         return pickle.loads(dict)
     except:
         return None
+
