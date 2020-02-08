@@ -1268,7 +1268,7 @@ def createdoctor():
     createdoctorForm = CreatedoctorForm()
     if request.method == 'POST' and createdoctorForm.validate():
         doctorsdict = {}
-        db = shelve.open('docstorage.db', 'c')
+        db = shelve.open(settings.DOCTOR_DB, 'c')
 
         try:
             doctorsdict = db['doctor']
@@ -1290,7 +1290,7 @@ def createdoctor():
 def retrieveDoctor():
     doctorsDict = {}
     try:
-        db = shelve.open('docstorage.db', 'r')
+        db = shelve.open(settings.DOCTOR_DB, 'r')
         doctorsDict = db['doctor']
         db.close()
     except:
@@ -1310,7 +1310,7 @@ def updatedoctor(id):
     updatedoctorForm = CreatedoctorForm()
     if request.method == 'POST' and updatedoctorForm.validate():
          doctorsDict = {}
-         db = shelve.open('docstorage.db', 'w')
+         db = shelve.open(settings.DOCTOR_DB, 'w')
          doctorsDict = db['doctor']
          f = updatedoctorForm.Image.data
          f.save(DOCTORDIR + updatedoctorForm.Name.data)
@@ -1329,7 +1329,7 @@ def updatedoctor(id):
     else:
          print('In here')
          doctorsDict = {}
-         db = shelve.open('docstorage.db', 'r')
+         db = shelve.open(settings.DOCTOR_DB, 'r')
          doctorsDict = db['doctor']
          db.close()
          doctor = doctorsDict.get(id)
@@ -1346,7 +1346,7 @@ def updatedoctor(id):
 @authorize
 def deletedoctor(id):
     doctorDict = {}
-    db = shelve.open('docstorage.db', 'w')
+    db = shelve.open(settings.DOCTOR_DB, 'w')
     doctorDict = db['doctor']
 
     doctorDict.pop(id)

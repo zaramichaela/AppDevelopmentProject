@@ -107,7 +107,25 @@ def shop_services_items(serviceuid):
 @app.route('/shop/service/<serviceuid>/book', methods=['GET', 'POST'])
 @user_authorize
 def shop_services_book(serviceuid):
+    user = session.get('logged_in_user')
+    receipt = itemcontroller.get_receipt_by_user(user)
+    # get code from session
+    user_details = None
+    if(receipt):
+        user_details = receipt.get_user()
+    # assign checkout form to form
+
+    cart_list = []
     form = checkout_form()
+    if(user_details):
+        form.full_name.data = user_details.get_full_name()
+        form.country.data = user_details.country
+        form.street_addr.data = user_details.street_addr
+        form.city.data = user_details.city
+        form.postal.data = user_details.postal
+        form.phone.data =  user_details.phone
+        form.email.data =  user_details.email
+        form.card_name.data =  user_details.card_name
     sales_service = itemcontroller.get_service_by_UID(serviceuid)
     total_price =  sales_service.price_after_discount()
     if(not sales_service):
@@ -136,6 +154,13 @@ def shop_services_appointments():
     itemcontroller.arrange_appointments()
     appointments = itemcontroller.get_all_appointments()
     return render_template('users/appointments.html', appointments=appointments)
+# ####################################################################################
+# ####################################################################################
+
+@app.route('/doctors/<uid>')
+def show_doctor(uid):
+    doctorchosen = itemcontroller.get_doctor_by_uid(uid)
+    return render_template('users/doctors.html', item=doctorchosen)
 # ####################################################################################
 # Unused at this point of time
 @app.route('/shop/packages')
@@ -400,18 +425,32 @@ def checkout():
     subtotal_price = session.get('subtotal_price')
     # get total amount from session
     total_amount = session.get('total_amount')
-    # get code from session
 
+    receipt = itemcontroller.get_receipt_by_user(user)
+    # get code from session
+    user_details = None
+    if(receipt):
+        user_details = receipt.get_user()
     # assign checkout form to form
+
     cart_list = []
     form = checkout_form()
+    if(user_details):
+        form.full_name.data = user_details.get_full_name()
+        form.country.data = user_details.country
+        form.street_addr.data = user_details.street_addr
+        form.city.data = user_details.city
+        form.postal.data = user_details.postal
+        form.phone.data =  user_details.phone
+        form.email.data =  user_details.email
+        form.card_name.data =  user_details.card_name
     if not items:
         flash("cart is empty, unable to checkout.","error")
         return redirect(url_for("cart"))
     # get coupon code from itemcontroller
     coupon = itemcontroller.get_coupon_by_code(code)
     # print the coupon for checking purposes while running
-    print(coupon)
+    # print(coupon)
 
     # if items exist
     if(items):
@@ -603,4 +642,4 @@ def register():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80,debug=True)

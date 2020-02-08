@@ -18,15 +18,23 @@
     <div class="col-md-6">
         <div class="main-card mb-3 card">
             <div class="card-body">
-
-                <canvas id="myChart" width="200" height="200" class="chartjs-render-monitor"></canvas>
+                <center><h3>Number of users that use each coupon</h3></center>
+                <canvas id="CouponChart" width="200" height="200" class="chartjs-render-monitor"></canvas>
+            </div>
+        </div>
+    </div>
+       <div class="col-md-6">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <center><h3>Number of users that use each coupon</h3></center>
+                <canvas id="" width="200" height="200" class="chartjs-render-monitor"></canvas>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-var ctx = document.getElementById('myChart').getContext('2d');
+var ctx = document.getElementById('CouponChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -43,10 +51,7 @@ var myChart = new Chart(ctx, {
       }]
     },
     options: {
-      title: {
-        display: true,
-        text: 'Number of users that use each coupon'
-      }
+
     }
 });
 </script>

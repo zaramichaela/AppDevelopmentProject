@@ -90,6 +90,13 @@ class items_controller:
                 return i
         return None
 
+    def get_receipt_by_user(self, username):
+        #check and return 1 item finding via suppliers_UID. if more than 1, return None.
+        list1 = sorted(self.__all_receipt, key=lambda receipt: receipt.sales_datetime, reverse=True)
+        for i in self.__all_receipt:
+            if(i.get_username() == username):
+                return i
+        return None
 
     def get_all_sales_items(self):
         #returns current items lists.
@@ -293,7 +300,7 @@ class items_controller:
     def get_doctors(self):
         doctorsDict = {}
         try:
-            db = shelve.open('docstorage.db', 'r')
+            db = shelve.open(settings.DOCTOR_DB, 'r')
             doctorsDict = db['doctor']
             db.close()
         except:
@@ -313,6 +320,13 @@ class items_controller:
         rand = randint(0, len(doctor)-1)
         return doctor[rand]
 
+    def get_doctor_by_uid(self, uid):
+        doct = self.get_doctors()
+        print(doct)
+        for i in doct:
+            if i.get_doctorID() == int(uid):
+                return i
+        return None
 
 
 

@@ -34,7 +34,6 @@ Home
 				            <h1 class="mb-4 mt-3">As a token of our appreciation...</h1>
 				            <p class="mb-4">Here is a 20% off coupon for all purchases, with minimum spending of $50. Simply quote "<b>OPENING</b>" before you check out.</p>
 
-				            <p><a href="{{url_for('shop')}}" class="btn-custom">Shop Now!</a></p>
 				          </div>
 		            </div>
 		          </div>
@@ -53,7 +52,6 @@ Home
 				            <h1 class="mb-4 mt-3">Ate too much heaty food?</h1>
 				            <p class="mb-4">We understand. Here's a 10% off coupon for all items purchased, with a minimum spending of $20. <br>Simply quote "<b>CNY2020</b>" before you check out.</p>
 
-				            <p><a href="shop.html" class="btn-custom">Shop Now!</a></p>
 				          </div>
 		            </div>
 		          </div>
@@ -115,8 +113,11 @@ Home
     	</div>
     	<div class="container">
     		<div class="row">
+                {% from "includes/home_helper.html" import render_doctor  %}
 
-
+								{%for i in doctors %}
+									{{render_doctor(i)}}
+								{% endfor %}
 			</div>
     		</div>
     	</div>
