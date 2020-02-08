@@ -77,7 +77,8 @@ def user_authorize(f):
 ####################################################################################
 @app.route('/')
 def home():
-    return render_template('home.html')
+    doctors = itemcontroller.get_doctors()
+    return render_template('home.html', doctors=doctors)
 ####################################################################################
 @app.route('/shop/item')
 def shop():
