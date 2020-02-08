@@ -6,7 +6,7 @@ import pickle
 class suppliers(object):
 
     #overwrite super for adding stocks to shop items
-    def __init__(self, UID,name, address, phone_num,product, p_UID,  price):
+    def __init__(self, UID,name, address, phone_num, p_UID, product,   price):
         self.__UID = UID
         self.__name = name
         self.__address = address
