@@ -378,7 +378,7 @@ def cart():
             # get total amount by taking subtotal price - discount price to get the final price (total amount)
             total_amount = float(subtotal_price) - float(discount)
         # put total_amount and subtotal_price into session so I can access it easily later (for receipt and view all receipts)
-        print(total_amount)
+
         session['total_amount'] = total_amount
         session['subtotal_price'] = subtotal_price
 
@@ -490,7 +490,6 @@ def checkout():
         # if they try to go straight into http://127.0.0.1:5000/checkout without adding anything into cart first
         flash("You have nothing in your cart.", "error")
         return redirect(url_for("cart"))
-    print()
     # return the page cart and use subtotal_price=subtotal_price to fill up the fields (in the template)
     return render_template('users/checkout.html', form=form, subtotal_price=subtotal_price, total_amount=total_amount, discount=discount,
                            cart_items=cart_list)
@@ -642,4 +641,5 @@ def register():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80,debug=True)
+    app.run(debug=True)
+# host='0.0.0.0', port=80,

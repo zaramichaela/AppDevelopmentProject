@@ -9,7 +9,7 @@ from backend.doctorForm import CreatedoctorForm
 from backend.Doctor import *
 from login.forms import create_admin, AdminLogin,UserRegistration
 from login.admin_and_users import *
-
+import pandas as pd
 
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
 
@@ -326,7 +326,7 @@ def delete_service(serviceid):
 @authorize
 def invalidate_service(serviceid):
     # look for the serviceuid in itemcontroller
-    item = itemcontroller.get_package_by_UID(serviceid)
+    item = itemcontroller.get_service_by_UID(serviceid)
     # if item does not exist, 404
     if(not item):
         abort(404)
@@ -509,7 +509,7 @@ def edit_service(serviceid):
         form.description.data = item.get_description()
         # get the item name from form data
         form.price.data = item.get_price()
-    return render_template('admin/editing/edit_services.html', form=form, message=context, item=item)
+    return render_template('admin/editing/edit_services.html', form=form, item=item)
 ####################################################################################
 @admin_pages.route('/admin/list/coupons/<couponid>/edit/', methods= ['GET','POST'])
 @authorize
@@ -1523,10 +1523,32 @@ def admin_home():
     #get all receipts from itemcontroller
     all_receipts = itemcontroller.get_all_receipt()
     #for counted coupons, insert into it
+    items_total = dict()
+    #create a empty list to insert data into it
+    items_total['date'] = []
+    items_total['total'] = []
+    #create a empty list to insert data into it
+    services_total = dict()
+    services_total['date'] = []
+    services_total['total'] = []
     all_used = []
     for i in all_receipts:
         #get the coupons from the receipts
         coupon = i.get_coupon()
+        for j in i.get_sales_entries():
+            #get each object + quantity
+            #if object is items add to item otherwise service
+
+            if(isinstance(j.sales_object, sales_items)):
+                #adding into a list of dictionary so pandas can handle later
+                items_total['date'].append(i.get_date())
+                items_total['total'].append(i.get_total())
+                break
+            else:
+                #adding into a list of dictionary so pandas can handle later
+                services_total['date'].append(i.get_date())
+                services_total['total'].append(i.get_total())
+                break
         if(coupon):
             #if the receipts uses a coupon code
             #gets all the coupons that is in the receipts
@@ -1534,6 +1556,7 @@ def admin_home():
             all_used.append(coupon.get_couponcode())
         else:
             all_used.append("No Coupon Used")
+
     all_coupon_used_list = []
     usage_number_list = []
     usedlist = []
@@ -1548,7 +1571,44 @@ def admin_home():
             usage_number_list.append(all_used.count(j))
             # appends into used list so we can skip counting the same coupon again
             usedlist.append(j)
+
+    # create a new DataFrame(an object of pandas)
+    df = pd.DataFrame(items_total)
+    #if argument if not in datetime, convert them to datetime
+    df.date = pd.to_datetime(df.date)
+    #group by date, with freq of 1 month per group. and sum all the value
+    dg = df.groupby(pd.Grouper(key='date', freq='1M')).sum() # groupby each 1 month
+    #only display by month and year
+    dg.index = dg.index.strftime('%m')
+    ##same for service total. group them by date with pandas
+    df2 = pd.DataFrame(services_total)
+    df2.date = pd.to_datetime(df.date)
+    dg2 = df2.groupby(pd.Grouper(key='date', freq='1M')).sum() # groupby each 1 month
+    dg2.index = dg2.index.strftime('%m')
+    services_data = []
+    items_data = []
+    for date in range(1,13):
+        #this loops adds to a list to ensures that the data is 0 if there was no purchase in each month.
+        ##needs refractor. need a better way to do this.
+        for i in dg.index:
+            #converts the date format 01 to int to get 1 to get a list of 12 with total of each month
+            if (int(i) == date):
+                if (dg['total'].any()):
+                    items_data.append(float(dg['total'][i]))
+            else:
+                items_data.append(0)
+        for i in dg2.index:
+
+            if (int(i) == date):
+                if (dg2['total'].any()):
+                    services_data.append(float(dg2['total'][i]))
+            else:
+                services_data.append(0)
+    months_choices = []
+    for i in range(1,13):
+        months_choices.append( datetime.date(2020, i, 1).strftime('%b-%Y'))
     # to display chart, uses chartjs, a javascript library to display the chart.
-    return render_template('/admin/Dashboard.html', all_coupons_used_list = all_coupon_used_list, usage_number_list=usage_number_list)
+    return render_template('/admin/Dashboard.html', all_coupons_used_list = all_coupon_used_list, usage_number_list=usage_number_list,
+                           months=months_choices,services_data=services_data, items_data=items_data)
 
 

@@ -9,7 +9,7 @@
 
 	</td>
 
-	<td class="price">${{i.price_after_discount()}}</td>
+	<td class="price">${{'%0.2f'|format(i.price_after_discount()|float)}}</td>
 	<td class="quantity">
 		<div class="input-group mb-3">
 			<form method="POST">

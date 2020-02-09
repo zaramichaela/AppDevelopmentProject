@@ -97,8 +97,8 @@
 
 	          <li class="nav-item {% if  request.endpoint == 'contact' %}cta{% endif %}"><a href="{{url_for('contact')}}" class="nav-link {% if  request.endpoint == 'contact' %}active{% endif %}">Contact</a></li>
             {% if session.get('logged_in_user') %}
-              <li class="nav-item dropdown nav-item {% if  request.endpoint == 'show_all_receipt' %}cta{% endif %}">
-              <a class=" nav-link dropdown-toggle {% if  request.endpoint == 'show_all_receipt' %}active{% endif %}" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Purchases</a>
+              <li class="nav-item dropdown nav-item {% if  request.endpoint == 'show_all_receipt' or request.endpoint == 'shop_services_appointments' %}cta{% endif %}">
+              <a class=" nav-link dropdown-toggle {% if  request.endpoint == 'show_all_receipt' or request.endpoint == 'shop_services_appointments' %}active{% endif %}" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Purchases</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
                 <a class="dropdown-item" href="{{url_for('show_all_receipt')}}">Show All Receipts</a>
                 <a class="dropdown-item" href="{{url_for('shop_services_appointments')}}">Show All Appointments</a>

@@ -63,7 +63,7 @@
         </center></td>
         <td>
             <center>
-                {% if not i.get_progress() == 'Received' %}
+                {% if i.get_progress() == 'In-Progress' %}
             <a class="btn btn-primary" href="{{url_for('admin_pages.received_suppliers_order', orderid=i.get_oid())}}" style="width:100px">Received</a>
                 <br><br>
             <a class="btn btn-danger" href="{{url_for('admin_pages.cancel_suppliers_order', orderid=i.get_oid())}} " style="width:100px">Cancel</a>

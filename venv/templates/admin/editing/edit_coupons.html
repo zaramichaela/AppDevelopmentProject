@@ -4,9 +4,6 @@
 Edit Coupons #{{item.get_UID()}} | K's TCM Administration
 {% endblock %}
 
-{% block head%}
-<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/edit.ico" />
-{% endblock %}
 
 {% block icon %}
 <i class="fas fa-edit"></i>
@@ -16,10 +13,10 @@ Edit Coupons #{{item.get_UID()}} | K's TCM Administration
 Edit Coupons #{{item.get_UID()}}
 {% endblock %}
 
-{% block head%}
+{% block head %}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-
+<link rel="shortcut icon" type="image/x-icon" href="/static/title_img/edit.ico" />
 <script>
     $(document).ready(function(){
       var date_input=$('input[name="expiredate"]'); //our date input has the name "date"
@@ -38,9 +35,7 @@ Edit Coupons #{{item.get_UID()}}
 {%block body %}
 
 
-{% block pagetitle %}
-Edit coupon #{{item.get_UID()}}
-{% endblock %}
+
 
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -72,7 +67,7 @@ Edit coupon #{{item.get_UID()}}
 
           <dt>Coupon UID:
               <dd style="">
-    {{item.get_UID()}}
+    <h4>{{item.get_UID()}}</h4>
           </dd>
     {{ render_field(form.couponcode, class='form-control', placeholder="e.g. DISC10") }}
     {{ render_field(form.percentage, class='form-control', placeholder="e.g. 50%") }}

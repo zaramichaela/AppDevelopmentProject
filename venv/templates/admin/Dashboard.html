@@ -26,8 +26,8 @@
        <div class="col-md-6">
         <div class="main-card mb-3 card">
             <div class="card-body">
-                <center><h3>Number of users that use each coupon</h3></center>
-                <canvas id="" width="200" height="200" class="chartjs-render-monitor"></canvas>
+                <center><h3>Total Revenue of Items against Services(Monthly)</h3></center>
+                <canvas id="linegraph" width="200" height="200" class="chartjs-render-monitor"></canvas>
             </div>
         </div>
     </div>
@@ -35,6 +35,7 @@
 
 <script>
 var ctx = document.getElementById('CouponChart').getContext('2d');
+
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -56,4 +57,49 @@ var myChart = new Chart(ctx, {
 });
 </script>
 
+
+<script>
+  var speedCanvas = document.getElementById("linegraph");
+
+  Chart.defaults.global.defaultFontFamily = "Lato";
+  Chart.defaults.global.defaultFontSize = 18;
+
+  var dataFirst = {
+      label: "Items",
+      data: [{% for i in items_data %} '{{i}}',{% endfor %}],
+      lineTension: 0,
+      fill: false,
+      borderColor: 'red'
+    };
+
+  var dataSecond = {
+      label: "Services",
+      data: [{% for i in services_data %} '{{i}}',{% endfor %}],
+      lineTension: 0,
+      fill: false,
+    borderColor: 'blue'
+    };
+
+  var Monthly = {
+    labels: [{% for i in months %} '{{i}}',{%endfor%}],
+    datasets: [dataFirst, dataSecond]
+  };
+
+  var chartOptions = {
+    legend: {
+      display: true,
+      position: 'top',
+      labels: {
+        boxWidth: 80,
+        fontColor: 'black'
+      }
+    }
+  };
+
+  var lineChart = new Chart(speedCanvas, {
+    type: 'line',
+    data: Monthly,
+    options: chartOptions
+  });
+  </script>
 {% endblock%}
