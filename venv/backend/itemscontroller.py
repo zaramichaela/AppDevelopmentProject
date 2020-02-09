@@ -208,7 +208,12 @@ class items_controller:
     def get_all_appointments(self):
         return self.__all_appointment
 
-
+    def get_all_appointment_by_username(self, username):
+        list = []
+        for i in self.__all_appointment:
+            if(i.get_username() == username):
+                list.append(i)
+        return list
 ######################################################################
 ######################################################################
 ######################################################################
@@ -268,7 +273,7 @@ class items_controller:
 #for keeping services appointment
     def create_appointment_and_save(self, date, time, user, servicename):
         doctor = self.get_doctor_for_services(servicename)
-        appt = appointment(date, time, user, doctor)
+        appt = appointment(date, time, user, doctor, servicename)
         if(not appt):
             return False
         appt.save()
@@ -316,7 +321,7 @@ class items_controller:
         doctor = self.get_doctors()
         for i in doctor:
             if(i.get_Specialities() == service_name):
-                return i.get_name()
+                return i
         rand = randint(0, len(doctor)-1)
         return doctor[rand]
 

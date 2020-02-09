@@ -150,9 +150,11 @@ def shop_services_book(serviceuid):
 # ####################################################################################
 
 @app.route('/shop/service/appointments')
+@user_authorize
 def shop_services_appointments():
+    user = session.get("logged_in_user")
     itemcontroller.arrange_appointments()
-    appointments = itemcontroller.get_all_appointments()
+    appointments = itemcontroller.get_all_appointment_by_username(user)
     return render_template('users/appointments.html', appointments=appointments)
 # ####################################################################################
 # ####################################################################################

@@ -194,9 +194,14 @@
         </center></td>
         <td>
             <center>
+                {% if not i.get_status() == "Completed" %}
             <a class="btn btn-warning" href="{{url_for('admin_pages.receipts_delivery', ruid=i.get_UID())}}" style="width:100px">Delivery</a>
                 <br><br>
             <a class="btn btn-success" href="{{url_for('admin_pages.list_receipts_complete', ruid=i.get_UID())}}" style="width:100px">Complete</a>
+                {% else %}
+            Action Completed
+            {% endif %}
+
             </center>
         </td>
 
@@ -251,6 +256,9 @@
            {{ i.get_doctor().get_Name() }}
         </center></td>
         <td><center>
+           {{ i.get_servicename() }}
+        </center></td>
+        <td><center>
             {{ i.get_address() }}
         </center></td>
         <td><center>
@@ -266,10 +274,14 @@
         </center></td>
         <td>
             <center>
+                {% if not (i.get_status() == "No-Show" or i.get_status() == "Completed") %}
             <a class="btn btn-warning" href="{{url_for('admin_pages.no_show_sales_appointments', uid=i.get_UID())}}" style="width:100px">No-Show
             </a>
                 <br><br>
             <a class="btn btn-success" href="{{url_for('admin_pages.complete_sales_appointments', uid=i.get_UID())}}" style="width:100px">Completed</a>
+                {% else %}
+                Action Completed
+                {% endif %}
             </center>
         </td>
 

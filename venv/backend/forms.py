@@ -202,7 +202,7 @@ class UpdateFeedbackForm(FlaskForm):
 class service_order(FlaskForm):
     choice = [("9am", "9am"),("9.30am", "9.30am"),("10am", "10am"),("10.30am", "10.30am"),("11am", "11am"),("11.30am", "11.30am")
                 ,("1pm", "1pm"),("1.30pm", "1.30pm"),("2pm", "2pm"),("2.30pm", "2.30pm")
-              ,("3pm", "3pm"),("3.30pm", "3.30pm"),("4pm", "4pm"),("4.30am", "4.30am"),("5pm", "5pm")]
+              ,("3pm", "3pm"),("3.30pm", "3.30pm"),("4pm", "4pm"),("4.30pm", "4.30pm"),("5pm", "5pm")]
     date = DateField("Expiry Date (DD/MM/YYYY): ",  format='%d/%m/%Y', validators=[DataRequired()])
     time = SelectField('Time :', choices = choice, validators=[DataRequired()])
     submit = SubmitField()

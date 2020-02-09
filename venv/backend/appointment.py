@@ -8,7 +8,7 @@ import uuid
 
 ## appointment object
 class appointment:
-    def __init__(self, date, time, user, doctor):
+    def __init__(self, date, time, user, doctor, servicename):
         self.UID = str(uuid.uuid1())
         self.ordered_date = datetime.datetime.now()
         self.date = date
@@ -16,6 +16,16 @@ class appointment:
         self.user = user
         self.status = "Confirmed"
         self.doctor = doctor
+        self.servicename = servicename
+
+    def get_servicename(self):
+        return self.servicename
+
+    def get_username(self):
+        return self.user.get_username()
+
+    def set_servicename(self, servicename):
+        self.servicename = servicename
 
 
     def get_address(self):
