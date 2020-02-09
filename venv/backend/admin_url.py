@@ -1587,6 +1587,7 @@ def admin_home():
     dg2.index = dg2.index.strftime('%m')
     services_data = []
     items_data = []
+    #this loop is for showing more data and that it is dynamic for month to month.
     for date in range(1,13):
         #this loops adds to a list to ensures that the data is 0 if there was no purchase in each month.
         ##needs refractor. need a better way to do this.
@@ -1605,10 +1606,33 @@ def admin_home():
             else:
                 services_data.append(0)
     months_choices = []
+    print(dg['total'].to_dict())
     for i in range(1,13):
         months_choices.append( datetime.date(2020, i, 1).strftime('%b-%Y'))
     # to display chart, uses chartjs, a javascript library to display the chart.
     return render_template('/admin/Dashboard.html', all_coupons_used_list = all_coupon_used_list, usage_number_list=usage_number_list,
                            months=months_choices,services_data=services_data, items_data=items_data)
+    #############################################################
+    #############################################################
+    #############################################################
+    #better code for readablity but data shown is abit off
+    #the above must change to %B-%Y
+    # months_items = dict()
+    # for i in dg.index:
+    #     months_items.append(i)
+    #     for key, i in dg['total'].to_dict():
+    #         months_items['date'].append(key)
+    #         months_items['total'].append(i)
+    # for i in dg2.index:
+    #     months_items.append(i)
+    #     for key, i in dg2['total'].to_dict():
+    #         months_items['date'].append(key)
+    #         months_items['total'].append(i)
+    # return render_template('/admin/Dashboard.html', all_coupons_used_list = all_coupon_used_list, usage_number_list=usage_number_list,
+    #                        months=months_items,services_data=services_data, items_data=items_data)
+    ############################################################
+    #############################################################
+    #############################################################
+
 
 
