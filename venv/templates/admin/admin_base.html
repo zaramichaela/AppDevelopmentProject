@@ -531,7 +531,7 @@ function preview_image(event)
                                   <!-- START OF SERVICES  -->
 
                                   <li>
-                                    <li {% if  request.endpoint == "admin_pages.add_shop_service" or  request.endpoint == "admin_pages.list_sales_services"  %}class="mm-active"{% endif %}>
+                                    <li {% if  request.endpoint == "admin_pages.add_shop_service" or  request.endpoint == "admin_pages.list_sales_services"  or  request.endpoint == "admin_pages.list_sales_appointments" %}class="mm-active"{% endif %}>
                                         <a href="#" >
                                             <i class="fas fa-concierge-bell"></i>
                                             Services

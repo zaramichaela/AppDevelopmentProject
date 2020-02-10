@@ -234,7 +234,7 @@ def add_item_to_cart(itemuid):
                 return redirect(url_for("shop_item", itemuid=itemuid))
             else:
                 flag = True
-                flash("item already exists in cart, increase quantity by " + str(quantity), "success")
+                flash("Item already exists in cart, increase quantity by " + str(quantity), "success")
                 break
 
     #if item is not in cart, add to cart
