@@ -668,7 +668,7 @@ def edit_suppliers(supplierid):
             flash("Error, you cannot edit the supplier " + item.get_UID(), "error")
             return redirect(url_for("admin_pages.list_suppliers"))
         else:
-            flash("You have edited the supplier", "success")
+            flash("You have edited the supplier ", "success")
             return redirect(url_for("admin_pages.list_suppliers"))
     else:
             form.UID.data = item.get_UID()
@@ -690,7 +690,7 @@ def delete_suppliers(supplierid):
     if (not success_flag):
         flash("Error, you cannot delete the supplier " + supplier.get_UID() , "error")
     else:
-        flash("The supplier" + supplier.get_UID() +  " has been deleted", "success")
+        flash("The supplier " + supplier.get_UID() +  " has been deleted", "success")
     return redirect(url_for("admin_pages.list_suppliers"))
 ####################################################################################
 @admin_pages.route('/admin/suppliers/view')
@@ -1633,6 +1633,3 @@ def admin_home():
     ############################################################
     #############################################################
     #############################################################
-
-
-
