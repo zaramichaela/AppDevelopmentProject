@@ -210,7 +210,7 @@ def complete_sales_appointments(uid):
 @authorize
 def no_show_sales_appointments(uid):
     # get all sales items from itemcontroller
-    flag = itemcontroller.complete_service_appointment(uid, "No-Show")
+    flag = itemcontroller.complete_service_appointment(uid, "Completed")
     if flag:
         flash("Appointment has been updated.", "success")
     else:
