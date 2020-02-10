@@ -1606,6 +1606,7 @@ def admin_home():
             else:
                 services_data.append(0)
     months_choices = []
+    print(services_data)
     print(dg['total'].to_dict())
     for i in range(1,13):
         months_choices.append( datetime.date(2020, i, 1).strftime('%b-%Y'))

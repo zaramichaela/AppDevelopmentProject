@@ -66,7 +66,7 @@ var myChart = new Chart(ctx, {
 
   var dataFirst = {
       label: "Items",
-      data: [{% for i in items_data %} '{{i}}',{% endfor %}],
+      data: [{% for i in items_data %} '{{'%0.2f'|format(i|float)}}',{% endfor %}],
       lineTension: 0,
       fill: false,
       borderColor: 'red'
@@ -74,7 +74,7 @@ var myChart = new Chart(ctx, {
 
   var dataSecond = {
       label: "Services",
-      data: [{% for i in services_data %} '{{i}}',{% endfor %}],
+      data: [{% for i in services_data %} '{{'%0.2f'|format(i|float)}}',{% endfor %}],
       lineTension: 0,
       fill: false,
     borderColor: 'blue'
