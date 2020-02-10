@@ -1508,7 +1508,7 @@ def deleteUser(id):
     db['Users'] = usersDict
     db.close()
 
-    return redirect(url_for('admin_pages.list_users_account'))
+    return redirect(url_for('admin_pages.list_users_accounts'))
 
 
 
