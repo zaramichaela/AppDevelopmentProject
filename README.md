@@ -1,6 +1,6 @@
-# App Development Project (Flask)
+# App Development Project (Flask) IT1666, IT1x66
 
-This is for Nanyang Polytechnic, School of Information Technology **App Devlopment Project IT1666** or **ITxx66**.
+This is for Nanyang Polytechnic, School of Information Technology **App Devlopment Project IT1666** or **IT1x66**.
 
 I am using Python 3.7
 
