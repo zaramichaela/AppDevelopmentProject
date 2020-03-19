@@ -1447,7 +1447,7 @@ def delete_admin(id):
     db['Admin'] = adminsDict
     db.close()
 
-    return redirect(url_for('list_admin_accounts'))
+    return redirect(url_for('admin_pages.list_admin_accounts'))
 
 
 @admin_pages.route('/admin/accounts/users/list')
