@@ -26,5 +26,5 @@ The login was done by my groupmate and not me, please don't ask me why the admin
 
 I have no idea either.
 
-### Contact Information
+## Contact Information
 If you need anything, feel free to email me at zarateo@gmail.com or 194123u@mymail.nyp.edu.sg
