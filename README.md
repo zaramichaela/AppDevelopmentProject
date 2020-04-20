@@ -21,10 +21,8 @@ pip install -r requirements.txt
 
 The default username and password is ```Username``` and ```Password```
 
-## DISCLAIMER
-The login was done by my groupmate and not me, please don't ask me why the admin can change the user's password. 
-
-I have no idea either.
+## DISCLAIMER AND CREDITS
+The log in, creation of new user accounts, the creation and displaying of doctors and the feedback and displaying of feedback were not done by me. They were done by my groupmates Ong Zhen Han, Karen Loh and Tan Sheng De. They deserve full credit for their work :-)
 
 ## Contact Information
 If you need anything, feel free to email me at zarateo@gmail.com or 194123u@mymail.nyp.edu.sg
