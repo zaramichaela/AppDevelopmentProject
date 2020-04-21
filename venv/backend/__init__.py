@@ -4,8 +4,7 @@ import shelve
 import backend.Feedback as Feedback
 from backend.admin_url import admin_pages
 from backend.settings import *
-# from login.forms import customer_registration
-from login.forms import UserRegistration, UserLogin
+from login.forms import UserLogin,customer_registration
 from backend.user_details import *
 from backend.forms import CreateFeedbackForm, UpdateFeedbackForm,checkout_form,service_order
 from functools import wraps
@@ -522,39 +521,42 @@ def show_all_receipt():
 def feedback():
     return render_template('feedback.html')
 ####################################################################################
-# @app.route('/login')
-# def login():
-#     if not session.get('logged_in'):
-#         return render_template('login.html')
-#     else:
-#         return render_template('home.html')
+@app.route('/login')
+def login():
+    user_login = UserLogin(request.form)
+    if not session.get('logged_in'):
+        return render_template('login.html', form = user_login)
+    else:
+        return render_template('home.html')
+
 ####################################################################################
-# @app.route('/login/validation', methods=['POST'])
-# def do_user_login():
-#     username = request.form['username']
-#     password = request.form['password']
-#     user = logincontroller.login_user(username, password)
-#     if user:
-#         session['logged_in'] = True
-#         session['logged_in_user'] = username
-#
-#     return redirect(url_for("login"))
+# correct
+@app.route('/login/validation', methods=['POST'])
+def do_user_login():
+    username = request.form['username']
+    password = request.form['password']
+    user = logincontroller.login_user(username, password)
+    if user:
+        session['logged_in'] = True
+        session['logged_in_user'] = username
+
+    return redirect(url_for("login"))
 ####################################################################################
-# @app.route('/register', methods=['GET', 'POST'])
-# def register():
-#     form = customer_registration()
-#     if(logincontroller.find_user_username(form.username.data)):
-#         flash("Username exists, please  choose another.", "error")
-#     if request.method == 'POST' and form.validate():
-#
-#         flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
-#         if(flag):
-#             flash("You have registered, please login", "success")
-#             return redirect(url_for('login'))
-#         else:
-#             flash("you have failed to register, something went wrong, try again", "error")
-#
-#     return render_template('register.html', form=form)
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = customer_registration()
+    if(logincontroller.find_user_username(form.username.data)):
+        flash("Username exists, please  choose another.", "error")
+    if request.method == 'POST' and form.validate():
+
+        flag = logincontroller.create_user_account(form.username.data, form.password.data, form.email.data)
+        if(flag):
+            flash("You have registered, please login", "success")
+            return redirect(url_for('login'))
+        else:
+            flash("you have failed to register, something went wrong, try again", "error")
+
+    return render_template('register.html', form=form)
 ####################################################################################
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -593,53 +595,6 @@ def error_500(e):
 ####################################################################################
 ####################################################################################
 
-@app.route('/login', methods=["GET", "POST"])
-def login():
-    user_login = UserLogin(request.form)
-
-    if request.method == "POST" and user_login.validate():
-
-        usersDict = {}
-        db = shelve.open("users.db", "r")
-
-        try:
-            usersDict = db["Users"]
-        except:
-            print("Unable to access shelve")
-            abort(302)
-
-        username = user_login.username.data
-        password = user_login.password.data
-
-
-        for id in usersDict:
-            user = usersDict.get(id)
-            if user.get_username() == username:
-                if user.check_password(password):
-                    session['logged_in'] = True
-                    session["logged_in_user"] = user.get_username()
-                    return redirect(url_for("home"))
-        flash("Invalid details")
-    return render_template('login.html', form=user_login)
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    userRegister = UserRegistration(request.form)
-    if request.method == 'POST' and userRegister.validate():
-        usersDict = {}
-        db = shelve.open('users.db', 'c')
-        try:
-            usersDict = db['Users']
-        except:
-            print("Error in retrieving Users from users.db.")
-        #retard dont even save the fucking firstname last name. add for fuck.
-        user = User(userRegister.username.data, userRegister.email.data, userRegister.password.data)
-        usersDict[user.get_userID()] = user
-        db['Users'] = usersDict
-        db.close()
-        flash("You have successfully created your account, please login.", "success")
-        return redirect(url_for('login'))
-    return render_template('register.html', form=userRegister)
 
 
 if __name__ == '__main__':
