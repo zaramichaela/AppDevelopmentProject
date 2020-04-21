@@ -6,6 +6,7 @@ from backend.appointment import *
 import os
 import uuid
 from random import randint
+from login.utilities import *
 
 ####################################################################################
 sfactory = sales_factory()
@@ -348,9 +349,4 @@ def get_all_appointments():
     return items
 
 
-def deserialize(dict):
-    try:
-        return pickle.loads(dict)
-    except:
-        return None
 
