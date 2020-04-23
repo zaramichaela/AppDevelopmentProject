@@ -59,7 +59,15 @@
 					    </div>
 					    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
 							{% if session['logged_in']%}
-							<a class="text"><a href="{{url_for('logout')}}" class="btn btn-light">Logout</a></span>
+                            <div class="dropdown text">
+                              <button class="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ACCOUNT
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item text"><a href="{{url_for('user_change_password')}}" class="btn btn-light">Change Password</a></span>
+							<a class="dropdown-item text"><a href="{{url_for('logout')}}" class="btn btn-light">Logout</a></span>
+                              </div>
+                            </div>
 								{% else %}
 							<a class="text"><a href="{{url_for('login')}}" class="btn btn-light">Login</a></span>
 								{% endif %}

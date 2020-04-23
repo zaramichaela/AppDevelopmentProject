@@ -195,10 +195,10 @@ class UpdateFeedbackForm(FlaskForm):
     email = EmailField('Email', [validators.Email(), validators.Optional()])
 ####################################################################################
 class ChangeUserPassword(FlaskForm):
-    password = PasswordField("Password:", validators=[validators.Length(min=8, max=16),DataRequired(), validators.EqualTo('cfm_password', message='Passwords must match')])
-    cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16),DataRequired()])
+    old_password =PasswordField("Old Password:", validators=[validators.Length(min=8, max=16),DataRequired()])
+    password = PasswordField("New Password:", validators=[validators.Length(min=8, max=16),DataRequired(), validators.EqualTo('cfm_password', message='Passwords must match')])
+    cfm_password = PasswordField("Confirm New Password:", validators=[validators.Length(min=8, max=16),DataRequired()])
     submit = SubmitField()
-
 
 ####################################################################################
 class service_order(FlaskForm):

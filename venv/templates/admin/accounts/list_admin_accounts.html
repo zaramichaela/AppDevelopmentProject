@@ -71,11 +71,13 @@ All Admin Accounts
             <td><center>{{ admin.get_adminID() }}</center></td>
             <td><center>{{ admin.get_username() }}</center></td>
             <td>
-            {% if currentadmin.get_adminID() == 1 %}
+            {% if currentadmin.get_adminID() == 1 and admin.get_adminID() != 1  %}
                <form action="{{url_for('admin_pages.delete_admin', id=admin.get_adminID())}}" method="POST">
                     <center><input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure? This cannot be undone.');"></center>
                 </form>
-            {% else %}
+            {% elif admin.get_adminID() == 1 %}
+                   <center>You Cannot Delete The Super Admin's Account</center>
+             {%else%}
             <center>Only Super Admin Can Delete Admin Accounts</center>
             {% endif %}
             </td>

@@ -8180,7 +8180,7 @@ h1, h2, h3, h4, h5,
   .topper .icon span {
     color: #fff; }
   .topper .text {
-    width: calc(100% - 30px);
+    width: calc(100% - 20px);
     color: white; }
 
 .ftco-navbar-light {

@@ -64,11 +64,12 @@ def user_authorize(f):
     # used to pass a keyworded, variable-length argument list. We use the
     # name kwargs with the double star. The reason is because the double
     # star allows us to pass through keyword arguments (and any number of them).
-        if(session.get('logged_in_user')):
-            return f(*args, **kws)
-        else:
-            flash("You must login/register first.")
-            return redirect(url_for("login"))
+        log_username = session.get('logged_in_user')
+        if(log_username):
+            if(login_controller.find_user_username(log_username)):
+                return f(*args, **kws)
+        flash("You must login/register first.")
+        return redirect(url_for("login"))
     return decorated_function
 ####################################################################################
 ####################################################################################
@@ -563,15 +564,17 @@ def logout():
     session['logged_in_user'] = ''
     return redirect(url_for('home'))
 ####################################################################################
-# to change pw, in progress
-# need to replace userid by actual username
-@app.route('/userid/change_password', methods=['GET', 'POST'])
+@app.route('/change_password', methods=['GET', 'POST'])
 def user_change_password():
-    form = ChangeUserPassword()
-    if(request.method == "POST" and form.validate()):
+     form = ChangeUserPassword()
+     if(request.method == "POST" and form.validate()):
         username = session["logged_in_user"]
-        logincontroller.user_change_pass(username, form.old_password.data, form.password.data)
-    return render_template('users/change_password.html', form = form)
+        kick = logincontroller.user_change_pass(username, form.old_password.data, form.password.data)
+        if (kick):
+            session['logged_in_user'] = ''
+            session['logged_in'] = False
+            return redirect(url_for("login"))
+     return render_template('users/change_password.html', form = form)
 
 ####################################################################################
 # To add custom error 404 page

@@ -42,13 +42,18 @@ class login_controller():
         user.save()
 
     def user_change_pass(self, username, oldpassword, newpassword):
-        user = self.login_admin(username, oldpassword)
-        if (user):
+        user = self.find_user_username(username)
+        print( "username : ", username , "old password : ", oldpassword)
+        correct = user.check_password(oldpassword)
+
+        if (user and correct):
+            print("change")
             self.all_users.remove(user)
             user.set_password(newpassword)
             user.save()
             self.all_users.append(user)
-            flash("Your password has been changed.", "success")
+            flash("Your password has been changed. Please log in using your new password.", "success")
+            return True
         else:
             flash("You have input the wrong password, password is not changed.", "error")
             return False
