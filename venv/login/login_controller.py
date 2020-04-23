@@ -36,6 +36,7 @@ class login_controller():
     def del_user_account(self, username):
         user = self.find_user_username(username)
         user.delete()
+        self.all_users.remove(user)
 
     def set_ban_user_flag(self,user ,flag):
         user.set_ban_flag(flag)
@@ -63,6 +64,7 @@ class login_controller():
         return self.all_users
 
     def find_admin_username(self, username):
+        print(self.all_admins)
         for i in self.all_admins:
             if username == i.get_username():
                 return i
@@ -95,12 +97,6 @@ class login_controller():
             return False
         finally:
             s.close()
-
-    def find_admin_username(self, username):
-        for i in self.all_admins:
-            if i.get_username() == username:
-                return i
-        return None
 
 
     def delete_admin_account(self, id):
@@ -137,16 +133,6 @@ class login_controller():
         return self.all_admins
 
 
-
-# def delete_admin_from_shelve(username):
-#     s = shelve.open(settings.ADMIN_DB)
-#     try:
-#         del s[username]
-#         return True
-#     except Exception as e:
-#         return False
-#     finally:
-#         s.close()
 
 def hash_password(plaintext):
     h = hashlib.sha1()

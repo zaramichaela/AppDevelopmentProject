@@ -4,11 +4,17 @@ import pickle
 
 USER_DB = "user.db"
 class user_account(object):
+    countID = 0
     def __init__(self, username, email, password, ban_flag=False):
+        user_account.countID += 1
+        self.userID = user_account.countID
         self.username = username
         self.email = email
         self.set_password(password)
         self.ban_flag = ban_flag
+
+    def get_userID(self):
+        return self.userID
 
     def get_username(self):
         return self.username

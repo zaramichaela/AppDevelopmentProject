@@ -7,7 +7,6 @@ from backend.settings import *
 from login.user_account import *
 from backend.doctorForm import CreatedoctorForm
 from backend.Doctor import *
-from login.admin_and_users import *
 import pandas as pd
 
 admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
@@ -16,14 +15,16 @@ admin_pages = Blueprint('admin_pages', __name__, template_folder='templates')
 def authorize(f):
     @wraps(f)
     def decorated_function(*args, **kws):
-        if(session.get('admin_logged_in')):
-            return f(*args, **kws)
-        else:
-            flash("You must log in as an admin first.")
-            return redirect(url_for("admin_pages.admin"))
+        log_admin_username = session.get('admin_username')
+        if log_admin_username:
+            if logincontroller.find_admin_username(log_admin_username):
+                return f(*args, **kws)
+        flash("You must log in as an admin first.")
+        session['admin_username'] = ''
+        session['admin_logged_in'] = ''
+        return redirect(url_for("admin_pages.admin"))
     return decorated_function
 ####################################################################################
-# Correct
 @admin_pages.route('/admin/', methods= ['GET','POST'])
 def admin():
     print(session.get('admin_logged_in'))
@@ -570,6 +571,9 @@ def list_admin_accounts():
 @admin_pages.route('/admin/accounts/admin/<int:id>/delete', methods=['POST'])
 @authorize
 def delete_admin(id):
+    if(id == 1):
+        flash("Error, you cannot delete SuperAdmin", "error")
+        return redirect(url_for("admin_pages.list_admin_accounts"))
     flag = logincontroller.find_admin_id(id)
     if flag:
         a = logincontroller.delete_admin_account(id)
@@ -585,7 +589,7 @@ def delete_admin(id):
 @admin_pages.route('/admin/accounts/admin/changepassword/', methods= ['GET','POST'])
 @authorize
 def change_admin_password():
-    context={}
+    context = {}
     item = logincontroller.find_user_username(session['admin_username'])
     form = edit_admin_account()
     if(request.method == "POST" and form.validate()):
@@ -593,14 +597,14 @@ def change_admin_password():
         logincontroller.change_admin_password(username, form.old_password.data, form.password.data)
     return render_template('admin/accounts/edit_admin_accounts.html',form =form,message=context)
 # ####################################################################################
-# @admin_pages.route('/admin/accounts/users/view')
-# @authorize
-# def list_users_accounts():
-#     context = {}
-#     items = logincontroller.get_all_users()
-#     return render_template('admin/accounts/list_users_accounts.html',items=items)
+@admin_pages.route('/admin/accounts/users/list')
+@authorize
+def list_users_accounts():
+    context = {}
+    items = logincontroller.get_all_users()
+    return render_template('admin/accounts/list_users_accounts.html', usersList=items)
 ####################################################################################
-@admin_pages.route('/admin/accounts/users/<username>/delete/')
+@admin_pages.route('/admin/accounts/users/<username>/delete/' , methods= ['POST'])
 @authorize
 def del_user_account(username):
     item = logincontroller.find_user_username(username)
@@ -1365,45 +1369,6 @@ def deletedoctor(id):
 ##################################################################################
 ##################################################################################
 ##################################################################################
-
-
-
-
-
-
-
-@admin_pages.route('/admin/accounts/users/list')
-@authorize
-def list_users_accounts():
-    usersDict = {}
-    db = shelve.open('users.db', 'r')
-    usersDict = db['Users']
-    db.close()
-
-    usersList = []
-    for key in usersDict:
-        user = usersDict.get(key)
-        usersList.append(user)
-
-    return render_template('admin/accounts/list_users_accounts.html', usersList=usersList, count=len(usersList))
-
-@admin_pages.route('/deleteUser/<int:id>', methods=['POST'])
-@authorize
-def deleteUser(id):
-    usersDict = {}
-    db = shelve.open('users.db', 'w')
-    usersDict = db['Users']
-
-    usersDict.pop(id)
-
-    db['Users'] = usersDict
-    db.close()
-
-    return redirect(url_for('admin_pages.list_users_accounts'))
-
-
-
-
 ################
 ###############
 ###

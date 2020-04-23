@@ -64,7 +64,7 @@ All Users
             <td><center>{{ user.get_userID() }}</center></td>
             <td><center>{{ user.get_username() }}</center></td>
             <td>
-                <form action="{{url_for('admin_pages.deleteUser', id=user.get_userID())}}" method="POST">
+                <form action="{{url_for('admin_pages.del_user_account', username=user.get_username())}}" method="POST">
                     <center>
                     <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure? This cannot be undone.');">
                         </center>

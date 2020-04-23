@@ -9,7 +9,6 @@ from backend.user_details import *
 from backend.forms import CreateFeedbackForm, UpdateFeedbackForm,checkout_form,service_order, ChangeUserPassword
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
-from login.admin_and_users import *
 from backend.appointment import *
 
 
@@ -65,10 +64,12 @@ def user_authorize(f):
     # name kwargs with the double star. The reason is because the double
     # star allows us to pass through keyword arguments (and any number of them).
         log_username = session.get('logged_in_user')
-        if(log_username):
-            if(login_controller.find_user_username(log_username)):
+        if log_username:
+            if logincontroller.find_user_username(log_username):
                 return f(*args, **kws)
         flash("You must login/register first.")
+        session['logged_in'] = ''
+        session['logged_in_user'] = ''
         return redirect(url_for("login"))
     return decorated_function
 ####################################################################################
@@ -570,7 +571,7 @@ def user_change_password():
      if(request.method == "POST" and form.validate()):
         username = session["logged_in_user"]
         kick = logincontroller.user_change_pass(username, form.old_password.data, form.password.data)
-        if (kick):
+        if kick:
             session['logged_in_user'] = ''
             session['logged_in'] = False
             return redirect(url_for("login"))
