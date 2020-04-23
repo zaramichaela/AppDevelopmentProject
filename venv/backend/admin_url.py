@@ -1387,37 +1387,6 @@ def list_users_accounts():
 
     return render_template('admin/accounts/list_users_accounts.html', usersList=usersList, count=len(usersList))
 
-
-@admin_pages.route('/updateUser/<int:id>/', methods=['GET', 'POST'])
-@authorize
-def updateUser(id):
-    updateUserForm = UserRegistration(request.form)
-    if request.method == 'POST' and updateUserForm.validate():
-        usersDict = {}
-        db = shelve.open('users.db', 'w')
-        usersDict = db['Users']
-
-        user = usersDict.get(id)
-        user.set_email(updateUserForm.email.data)
-        user.set_password(updateUserForm.password.data)
-
-        db['Users'] = usersDict
-        db.close()
-
-        return redirect(url_for('admin_pages.list_users_accounts'))
-    else:
-        usersDict = {}
-        db = shelve.open('users.db', 'r')
-        usersDict = db['Users']
-        db.close()
-
-        user = usersDict.get(id)
-        updateUserForm.username.data = user.get_username()
-        updateUserForm.email.data = user.get_email()
-
-        return render_template('admin/accounts/update_user_accounts.html', form=updateUserForm)
-
-
 @admin_pages.route('/deleteUser/<int:id>', methods=['POST'])
 @authorize
 def deleteUser(id):

@@ -6,7 +6,7 @@ from backend.admin_url import admin_pages
 from backend.settings import *
 from login.forms import UserLogin,customer_registration
 from backend.user_details import *
-from backend.forms import CreateFeedbackForm, UpdateFeedbackForm,checkout_form,service_order
+from backend.forms import CreateFeedbackForm, UpdateFeedbackForm,checkout_form,service_order, ChangeUserPassword
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from login.admin_and_users import *
@@ -530,7 +530,6 @@ def login():
         return render_template('home.html')
 
 ####################################################################################
-# correct
 @app.route('/login/validation', methods=['POST'])
 def do_user_login():
     username = request.form['username']
@@ -563,6 +562,17 @@ def logout():
     session['logged_in'] = False
     session['logged_in_user'] = ''
     return redirect(url_for('home'))
+####################################################################################
+# to change pw, in progress
+# need to replace userid by actual username
+@app.route('/userid/change_password', methods=['GET', 'POST'])
+def user_change_password():
+    form = ChangeUserPassword()
+    if(request.method == "POST" and form.validate()):
+        username = session["logged_in_user"]
+        logincontroller.user_change_pass(username, form.old_password.data, form.password.data)
+    return render_template('users/change_password.html', form = form)
+
 ####################################################################################
 # To add custom error 404 page
 @app.errorhandler(404)

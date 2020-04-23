@@ -10,9 +10,9 @@ class admin_login_form(FlaskForm):
     submit = SubmitField()
 
 class create_admin_account(FlaskForm):
-    username = StringField("Username:", validators=[validators.Length(min=3, max=12) ,DataRequired()])
-    password = PasswordField("Password:", validators=[validators.Length(min=8, max=16) ,DataRequired(), validators.EqualTo('cfm_password', message='Passwords must match')])
-    cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16) ,DataRequired()])
+    username = StringField("Username:", validators=[validators.Length(min=3, max=12), DataRequired()])
+    password = PasswordField("Password:", validators=[validators.Length(min=8, max=16),DataRequired(), validators.EqualTo('cfm_password', message='Passwords must match')])
+    cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16),DataRequired()])
     submit = SubmitField()
 
 class customer_registration(FlaskForm):

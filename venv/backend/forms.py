@@ -180,7 +180,6 @@ class checkout_form(FlaskForm):
 
 class CreateFeedbackForm(FlaskForm):
     firstName = StringField('Name', [validators.Regexp('^[a-zA-Z]+$', message="Name must cotain only alphabets"),validators.Length (min = 1, max = 150), validators.DataRequired()])
-    #lastName = StringField('Last Name', [validators.Length (min = 1, max = 150), validators.DataRequired()])
     category = RadioField('Category', choices = [('G', "General"), ("P", "Product"), ("T", 'Treatment')], default= "G")
     feedback = TextAreaField('Feedback', [validators.DataRequired()])
     status = SelectField('Status(**FOR ADMIN USE**)', choices = [('P', 'PENDING'), ('C', 'CLOSED')], default= 'P')
@@ -195,7 +194,10 @@ class UpdateFeedbackForm(FlaskForm):
     status = SelectField('Status(**FOR ADMIN USE**)', choices = [('P', 'PENDING'), ('C', 'CLOSED')], default= 'P')
     email = EmailField('Email', [validators.Email(), validators.Optional()])
 ####################################################################################
-
+class ChangeUserPassword(FlaskForm):
+    password = PasswordField("Password:", validators=[validators.Length(min=8, max=16),DataRequired(), validators.EqualTo('cfm_password', message='Passwords must match')])
+    cfm_password = PasswordField("Confirm Password:", validators=[validators.Length(min=8, max=16),DataRequired()])
+    submit = SubmitField()
 
 
 ####################################################################################

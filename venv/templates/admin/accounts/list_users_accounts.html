@@ -67,8 +67,6 @@ All Users
                 <form action="{{url_for('admin_pages.deleteUser', id=user.get_userID())}}" method="POST">
                     <center>
                     <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure? This cannot be undone.');">
-                        <br><br>
-                    <a href="{{url_for('admin_pages.updateUser', id=user.get_userID())}}" class="btn btn-warning">Update</a>
                         </center>
                 </form>
 
