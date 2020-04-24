@@ -19,8 +19,41 @@ pip install -r requirements.txt
 
 [Admin Home Page](http://127.0.0.1:5000/admin/home)
 
-The default username and password is ```Username``` and ```Password```
+### USER ACCOUNTS
+```
+Username: User1
+Password: password
+```
+```
+Username: User2
+Password: password
+```
+```
+Username: User3
+Password: password
+```
 
+## ADMIN ACCOUNTS
+```
+Username: SuperAdmin
+Password: password
+```
+```
+Username: SuperAdmin2
+Password: password
+```
+```
+Username: Admin
+Password: password
+```
+```
+Username: Admin2
+Password: password
+```
+```
+Username: Admin3
+Password: password
+```
 ## DISCLAIMER AND CREDITS
 The log in, creation of new user accounts, the creation and displaying of doctors and the feedback and displaying of feedback were not done by me. They were done by my groupmates <b>Ong Zhen Han</b>, <b>Karen Loh</b> and <b>Tan Sheng De</b>. They deserve full credit for their work :-)
 
