@@ -9,6 +9,31 @@ To start the project,
 pip install -r requirements.txt
 ```
 
+## Project Scenario
+You are a group of creative, innovative and energetic programmers who intend to build a web
+application to solve a problem. Using Design Thinking methodology, each team will come up with the
+project specification, create the design and build the entire application.
+The application must create user accounts, process transactions and provide useful enquiries and
+reports. There will be two groups of users for the application:
+<br><br>
+• Public / Customer
+This group will do online transaction requests. The customer interfaces are desktop PC, Kiosk
+and mobile devices (e.g. smartphone, pad, etc.).
+<br><br>
+• Staff
+The staff will do backend processing of transactions and generate information for analysis to
+make critical decisions for the company. The staff interface is desktop PC based. 
+
+## Project Theme
+• eCommerce: How might we use IT to improve inventory management system?
+
+## Project Minimum Requirements
+• Must be web-based, primarily targeting desktop and laptop users. <br><br>
+• Must utilize Python class and object in the application.<br><br>
+• Must utilize Shelve for implementing persistent storage for Python objects.<br><br>
+• Data validation to ensure data consistency must be performed.<br><br>
+• Information update operation must be performed via Shelve.
+
 ## Accounts for Users and Admins
 [Users Login Page](http://127.0.0.1:5000/login)
 
