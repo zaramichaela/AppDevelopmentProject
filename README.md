@@ -16,11 +16,11 @@ project specification, create the design and build the entire application.
 The application must create user accounts, process transactions and provide useful enquiries and
 reports. There will be two groups of users for the application:
 <br><br>
-• Public / Customer
+• Public / Customer <br>
 This group will do online transaction requests. The customer interfaces are desktop PC, Kiosk
 and mobile devices (e.g. smartphone, pad, etc.).
 <br><br>
-• Staff
+• Staff<br>
 The staff will do backend processing of transactions and generate information for analysis to
 make critical decisions for the company. The staff interface is desktop PC based. 
 
